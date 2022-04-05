@@ -1,8 +1,13 @@
 ## Portfolio-Website
-This is my portfolio.
+![](https://raw.githubusercontent.com/halfrost/halfrost/master/icons/header_.png)
+<h1 align='center'> Hi ! <img src="https://github.com/ABSphreak/ABSphreak/blob/master/gifs/Hi.gif" width="30px"></h1>
+<p align='center'>
+I'm Shravan & I ❤️ to code.
+</p>
+This is my portfolio Website.
 It was built using HTML5, CSS3, JavaScript and jQuery.
 
-<a href="https://myselfshravan.github.io/shravan.github.io/" target="_blank">**Visit Now** 🚀</a>
+<a href="https://myselfshravan.github.io/" target="_blank">**Visit Now** 🚀</a>
 
 
 ## 📌 Tech Stack
@@ -18,7 +23,7 @@ Particle.js, Typed.js, Tilt.js, Scroll Reveal, Tawkto, Font Awesome and JSON
 ![Screenshot (901)](https://user-images.githubusercontent.com/71520844/136664677-c855cea0-cd24-4949-ade7-8490a167e504.png)
 ![Screenshot (902)](https://user-images.githubusercontent.com/71520844/136664680-a562664d-6455-4d46-a2c3-dca53f121541.png)
 
-<a href="https://myselfshravan.github.io/shravan.github.io/" target="_blank">**Visit Now** 🚀</a>
+<a href="https://myselfshravan.github.io/" target="_blank">**Visit Now** 🚀</a>
 
 
 <h2>📬 Contact</h2>
@@ -31,7 +36,10 @@ You can reach me through these below handles.
   <a href="https://twitter.com/myselfshravan" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="_ansuman_behera_/" height="30" width="40" /></a>
   <a href="https://stackoverflow.com/users/17003616/shravan" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/stack-overflow.svg" alt="_ansuman_behera_/" height="30" width="40" /></a>
    <a href="https://github.com/myselfshravan" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg" alt="_ansuman_behera_/" height="30" width="40" /></a>
+   <p>For enquiries, reach out <a href="mailto:shravanrevanna158@gmail.com">shravanrevanna@gmail.com</a> </p>
+   
    
 © 2021 Shravan
 
 ![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)
+<h1 align='center'><i>Stay Awesome!</i></h1>
