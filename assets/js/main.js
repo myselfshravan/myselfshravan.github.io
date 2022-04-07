@@ -65,11 +65,13 @@ sr.reveal(".about__subtitle1", { delay: 400 });
 sr.reveal(".text_1", { delay: 500 });
 sr.reveal(".text_2", { delay: 500 });
 sr.reveal(".about__text", { delay: 500 });
-sr.reveal(".about__social-icon", { delay: 600, interval: 200 });
+sr.reveal(".social-share-inner-left span.title", { delay: 550 });
+sr.reveal(".about__social-icon", { delay: 600, interval: 150 });
 
 /*SCROLL SKILLS*/
 sr.reveal(".skills__subtitle", {});
 sr.reveal(".skills__name", { distance: "20px", delay: 60, interval: 100 });
+sr.reveal(".skills__name1", { distance: "20px", delay: 60, interval: 150 });
 sr.reveal(".skills__img", { delay: 400 });
 
 /*SCROLL PORTFOLIO*/
@@ -89,7 +91,7 @@ sr.reveal(".education .box .content .box img .box-container .box .image", {delay
 var btn = $('#button');
 
 $(window).scroll(function() {
-  if ($(window).scrollTop() > 300) {
+  if ($(window).scrollTop() > 300)  {
     btn.addClass('show');
   } else {
     btn.removeClass('show');
