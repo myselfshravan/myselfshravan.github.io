@@ -4,8 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- ===== CSS ===== -->
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/animation.css">
+    <link rel="stylesheet" href="assets/css/media_query.css">
+    <link rel="stylesheet" href="assets/css/oldstyle.css">
+
     <!-- ===== BOX ICONS ===== -->
     <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
@@ -18,7 +23,6 @@
     <link rel="icon" href="assets/img/bg removed s icon.png">
     <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css">
-
     <title>Shravan Portfolio</title>
 </head>
 
@@ -36,14 +40,17 @@
             </div>
             <div class="nav__menu" id="nav-menu">
                 <ul class="nav__list">
-                    <li class="nav__item">
+                    <!-- <li class="nav__item">
                         <a href="#home" class="nav__link active">Home</a>
-                    </li>
+                    </li> -->
                     <li class="nav__item">
                         <a href="#about" class="nav__link">About</a>
                     </li>
                     <li class="nav__item">
                         <a href="#skills" class="nav__link">Skills</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#likes" class="nav__link">Likes</a>
                     </li>
                     <li class="nav__item">
                         <a href="#projects" class="nav__link">Projects</a>
@@ -60,14 +67,15 @@
                 </ul>
             </div>
             <div class="nav__toggle" id="nav-toggle">
-                <i class='bx bx-menu'></i>
+                <div class="menu__toggler"><span></span></div>
+                <!-- <i class='bx bx-menu'></i> -->
             </div>
         </nav>
     </header>
 
     <main class="l-main">
         <!--===== HOME =====-->
-        <section class="home" id="home">
+        <!-- <section class="home" id="home">
             <div class="home__container bd-grid">
                 <h1 class="home__title">
                     <span>HE</span>
@@ -79,23 +87,23 @@
                         <i class='bx bx-up-arrow-alt'></i>Scroll down </a>
                 </div>
             </div>
-        </section>
+        </section> -->
         <!--===== ABOUT =====-->
         <section class="about section" id="about">
             <h2 class="section-title">About</h2>
             <div class="about__container bd-grid">
                 <div class="about__img">
-                    <img src="assets/img/profile.jpg" alt="">
+                    <img src="assets/img/profile.jpg" alt="Profile Picture">
                 </div>
                 <div>
-                    <p class="about__subtitle1">I’m <span>Shravan </span><i class="sc-kfPtPH cJssHP fas fa-code"
+                    <p class="about__subtitle1">Hi, I’m <span>Shravan </span><i class="fas fa-code"
                             aria-hidden="true"></i>
                     </p>
                     <h1>
                         <span class="text_1">Self taught Web Developer</span>
                         <span class="text_2">Passionate Android Developer</span>
                     </h1>
-                    <p class="about__text">A little about myself :<br>I am currently in First-Year, pursuing a
+                    <!-- <p class="about__text">A little about myself :<br>I am currently in First-Year, pursuing a
                         Computer Science and Engineering (Spl. AI & ML) degree from the
                         <b>Ramaiah Institute of Technology</b>, Bangalore.<br><br> Apart from academics, I invest a
                         significant amount of time in learning and practising Coding. Right now, I'm concentrating on
@@ -104,7 +112,100 @@
                         keen interest in UX/UI Design, but I still
                         wish to
                         explore other fields as well.
-                    </p>
+                    </p> -->
+                    <div class="backani">
+                        <p class="ani">
+                            <span>A</span>
+                            <span>little</span>
+                            <span>about</span>
+                            <span>myself</span>
+                            <span>:</span><br>
+                            <span>I</span>
+                            <span>am</span>
+                            <span>currently</span>
+                            <span>in</span>
+                            <span>First-Year,</span>
+                            <span>pursuing</span>
+                            <span>a</span>
+                            <span>Computer</span>
+                            <span>Science</span>
+                            <span>and</span>
+                            <span>Engineering</span>
+                            <span>(Spl.</span>
+                            <span>AI</span>
+                            <span>&</span>
+                            <span>ML)</span>
+                            <span>degree</span>
+                            <span>from</span>
+                            <span>the</span>
+                            <span><b>Ramaiah</b></span>
+                            <span><b>Institute</b></span>
+                            <span><b>of</b></span>
+                            <span><b>Technology</b>,</span>
+                            <span>Bangalore.</span><br><br>
+                            <span>Apart</span>
+                            <span>from</span>
+                            <span>academics,</span>
+                            <span>I</span>
+                            <span>invest</span>
+                            <span>a</span>
+                            <span>significant</span>
+                            <span>amount</span>
+                            <span>of</span>
+                            <span>time</span>
+                            <span>in</span>
+                            <span>learning</span>
+                            <span>and</span>
+                            <span>practising</span>
+                            <span>Coding.</span>
+                            <span>Right</span>
+                            <span>now,</span>
+                            <span>I'm</span>
+                            <span>concentrating</span>
+                            <span>on</span>
+                            <span>App</span>
+                            <span>development</span>
+                            <span>(Flutter)</span>
+                            <span>and</span>
+                            <span>Working</span>
+                            <span>on</span>
+                            <span>Full-Stack</span>
+                            <span>Web</span>
+                            <span>Development.</span>
+                            <span>My</span>
+                            <span>Goal</span>
+                            <span>is</span>
+                            <span>to</span>
+                            <span>Contribute</span>
+                            <span>to</span>
+                            <span>as</span>
+                            <span>many</span>
+                            <span>open</span>
+                            <span>source</span>
+                            <span>projects</span>
+                            <span>as</span>
+                            <span>possible.</span>
+                            <span>I</span>
+                            <span>also</span>
+                            <span>have</span>
+                            <span>a</span>
+                            <span>keen</span>
+                            <span>interest</span>
+                            <span>in</span>
+                            <span>UX/UI</span>
+                            <span>Design,</span>
+                            <span>but</span>
+                            <span>I</span>
+                            <span>still</span>
+                            <span>wish</span>
+                            <span>to</span>
+                            <span>explore</span>
+                            <span>other</span>
+                            <span>fields</span>
+                            <span>as</span>
+                            <span>well.</span>
+                        </p>
+                    </div>
 
 
                     <div class="social-share-inner-left">
@@ -132,12 +233,12 @@
                             <a href="https://facebook.com/Shravan.3.07" target="_blank" class="about__social-icon">
                                 <i class='bx bxl-facebook'></i>
                             </a>
-                            <a href="https://znap.link/shravan" target="_blank" class="about__social-icon">
+                            <!-- <a href="https://znap.link/shravan" target="_blank" class="about__social-icon">
                                 <i class='bx bx-link'></i>
                             </a>
-                            <!-- <a href="https://telegram.me/shravanrevanna" class="about__social-icon">
-                            <i class="bx bxl-telegram"></i>
-                        </a> -->
+                            <a href="https://telegram.me/shravanrevanna" class="about__social-icon">
+                                <i class="bx bxl-telegram"></i>
+                            </a> -->
                         </div>
                     </div>
                 </div>
@@ -149,10 +250,9 @@
                 <div class="skills__box">
                     <h3 class="skills__subtitle">Development</h3>
 
+                    <span class="skills__name"><i class="fas fa-laptop-code" aria-hidden="true"></i> Website</span>
                     <span class="skills__name"><i class="devicon-android-plain"></i>
                         Mobile Application</span>
-                    <span class="skills__name">Web Designing</span>
-                    <span class="skills__name">MERN Stack</span>
 
 
                     <h3 class="skills__subtitle">Languages and Frameworks</h3>
@@ -160,7 +260,7 @@
                     <span class="skills__name"><i class="devicon-html5-plain"></i> HTML</span>
                     <span class="skills__name"><i class="devicon-css3-plain"></i> CSS</span>
                     <span class="skills__name"><i class="devicon-javascript-plain"></i> Javascript</span>
-                    <span class="skills__name"><i class="devicon-bootstrap-plain"></i> Bootstrap</span>
+                    <!-- <span class="skills__name"><i class="devicon-bootstrap-plain"></i> Bootstrap</span> -->
                     <span class="skills__name"><i class="devicon-sass-original"></i> Sass</span>
                     <span class="skills__name"><i class="devicon-nodejs-plain"></i> Node.js</span>
                     <span class="skills__name"><i class="devicon-express-original"></i> Express.js</span>
@@ -173,7 +273,7 @@
 
                     <span class="skills__name"><i class="devicon-github-original"></i> Github</span>
                     <span class="skills__name"><i class="devicon-figma-plain"></i> Figma</span>
-                    <span class="skills__name"><i class="devicon-xd-plain"></i> Adobe XD</span>
+                    <!-- <span class="skills__name"><i class="devicon-xd-plain"></i> Adobe XD</span> -->
                     <span class="skills__name"><i class="devicon-canva-original"></i> Canva</span>
                     <span class="skills__name">Whimsical</span>
                     <span class="skills__name">Vistacreate</span>
@@ -181,6 +281,7 @@
 
                     <h3 class="skills__subtitle">Learning</h3>
 
+                    <span class="skills__name">MERN Stack</span>
                     <span class="skills__name"><i class="devicon-flutter-plain"></i> Flutter</span>
                     <span class="skills__name"><i class="devicon-react-original"></i> React.js</span>
                     <!-- <span class="skills__name"><i class="devicon-azure-plain"></i> Azure</span> -->
@@ -197,41 +298,41 @@
         </section>
 
 
-        <section class="skills section" id="skills">
+        <section class="skills section1" id="likes">
 
             <h2 class="section-title1">What I Like?</h2>
-            <div class="skills__container bd-grid">
+            <div class="likes__container bd-grid">
 
                 <div class="skills__name1">
-                    <p><i class="fas fa-headphones" aria-hidden="true"></i>  Listen to Podcasts and Music</p>
+                    <p><i class="fas fa-headphones" aria-hidden="true"></i> Listening to Podcasts and Music</p>
                 </div>
 
                 <div class="skills__name1">
-                    <p><i class="fas fa-laptop-code" aria-hidden="true"></i>  Develop Apps and Design Websites</p>
+                    <p><i class="fas fa-laptop-code" aria-hidden="true"></i> Develop Apps and Design Websites</p>
                 </div>
 
                 <div class="skills__name1">
-                    <p><i class="fas fa-book-open" aria-hidden="true"></i>  Write Blogs &amp; Read Books</p>
+                    <p><i class="fas fa-book-open" aria-hidden="true"></i> Writing Blogs &amp; Reading Books</p>
                 </div>
 
                 <div class="skills__name1">
-                    <p><i class="fas fa-gamepad" aria-hidden="true"></i>  Play Video Games</p>
+                    <p><i class="fas fa-gamepad" aria-hidden="true"></i> Playing Video Games</p>
                 </div>
 
                 <div class="skills__name1">
-                    <p><i class="fas fa-graduation-cap" aria-hidden="true"></i>  Learn &amp; Teach</p>
+                    <p><i class="fas fa-graduation-cap" aria-hidden="true"></i> Learning &amp; Teaching</p>
                 </div>
 
                 <div class="skills__name1">
-                    <p><i class="fas fa-palette" aria-hidden="true"></i>  UX &amp; UI Designing</p>
+                    <p><i class="fas fa-palette" aria-hidden="true"></i> UX &amp; UI Designing</p>
                 </div>
 
                 <div class="skills__name1">
-                    <p><i class="fas fa-route"></i>  Travel &amp; Explore</p>
+                    <p><i class="fas fa-route"></i> Travelling &amp; Exploring Nature</p>
                 </div>
 
                 <div class="skills__name1">
-                    <p><i class="devicon-canva-original"></i>  Design Templet, Logo &amp; Post</p>
+                    <p><i class="devicon-canva-original"></i> Designing Templets, Logos &amp; Posts</p>
                 </div>
 
                 <!-- <div class="skills__box">
@@ -252,14 +353,13 @@
 
         <!--===== PORTFOLIO =====-->
         <section class="portfolio section" id="projects">
-            <h2 class="section-title">My Projects</h2>
-            <div class="portfolio__container bd-grid">
+            <h2 class="section-title1">My Projects</h2>
+            <div class="portfolio__container1 bd-grid2">
                 <div class="portfolio__img">
                     <img src="assets/img/Make a Perfect Choice.png" alt="">
                     <div class="portfolio__link">
                         <a href="https://securechoice.github.io/securechoice" target="_blank"
-                            class="portfolio__link-name">View
-                            details</a>
+                            class="portfolio__link-name">Visit Website</a>
                     </div>
                 </div>
 
@@ -275,28 +375,32 @@
                 <div class="portfolio__img">
                     <img src="assets/img/Untitled design (3).png" alt="">
                     <div class="portfolio__link">
-                        <a href="404.html" class="portfolio__link-name">Still Working</a>
+                        <a href="404.html" target="_blank" class="portfolio__link-name">Still Working</a>
                     </div>
                 </div>
+        </section>
 
-                <h2 class="section-title">Team Projects</h2>
+        <section class="portfolio section" id="projects">
+
+            <h2 class="section-title">Team Projects</h2>
+            <div class="portfolio__container1 bd-grid">
+
                 <div class="portfolio__img">
                     <img src="assets/img/keygainer.png" alt="">
                     <div class="portfolio__link">
-                        <a href="https://drive.google.com/file/d/1WzA0lqLBA2cXB1uoa8BJSV11RTIaATxH/view?usp=sharing"
-                            target="_blank" class="portfolio__link-name">View PDF</a>
+                        <a href="https://znap.link/keygainer" target="_blank" class="portfolio__link-name">Discover</a>
                     </div>
                 </div>
                 <!--<div class="portfolio__img"><img src="assets/img/comingsoon.jpg" alt=""><div class="portfolio__link"><a href="#" class="portfolio__link-name">View details</a></div></div><div class="portfolio__img"><img src="assets/img/comingsoon.jpg" alt=""><div class="portfolio__link"><a href="#" class="portfolio__link-name">View details</a></div></div><div class="portfolio__img"><img src="assets/img/comingsoon.jpg" alt=""><div class="portfolio__link"><a href="#" class="portfolio__link-name">View details</a></div>-->
             </div>
-            </div>
+
         </section>
 
 
         <section class="portfolio section" id="projects">
 
             <h2 class="section-title">Mini Projects</h2>
-            <div class="portfolio__container bd-grid">
+            <div class="portfolio__container1 bd-grid">
 
                 <div class="portfolio__img">
                     <img src="assets/img/Idea Rep system.png" alt="">
@@ -323,14 +427,11 @@
                     </div>
                 </div>
 
-
-
-            </div>
             </div>
         </section>
         <!-- education section starts -->
         <section class="education" id="education">
-            <h2 class="section-title">Education</h2>
+            <h2 class="section-title2">Education</h2>
             <div class="quote">
                 <a href="https://in.one.un.org/education-is-not-the-learning-of-facts-but-the-training-of-minds-to-think/#:~:text=Albert%20Einstein%20during,for%20even%20today."
                     target="_blank">Education is not the learning of facts, but the training of the mind to think. </a>
@@ -404,15 +505,15 @@
                     free to drop a message. I will be glad to help. <br>
                     <br> Please wait for a while, all major projects will be listed soon. It's a work in progress so
                     check back often!<br><br>
-                    Also Thanks to bedimcode and inbio for this awesome template. Learnt a lot while decoding it.
+                    Also Thanks to bedimcode and inbio for this awesome templates. Learnt a lot while decoding it.
                 </p>
             </div>
             <div class="footer__data">
                 <h2 class="footer__title">EXPLORE</h2>
                 <ul>
-                    <li>
+                    <!-- <li>
                         <a href="#home" class="footer__link">Home</a>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="#about" class="footer__link">About</a>
                     </li>
@@ -428,20 +529,19 @@
                     <li>
                         <a href="#Contact" class="footer__link">Contact</a>
                     </li>
-                    <br>
                     <li>
                         <a href="whatsapp://send?text=https://myselfshravan.github.io"
-                        data-action="share/whatsapp/share" target="_blank" class="footer__link">Share</a>
+                            data-action="share/whatsapp/share" target="_blank" class="footer__link">Share</a>
                     </li>
                 </ul>
             </div>
             <div class="footer__data1">
                 <h2 class="footer__title">FOLLOW</h2>
                 <a href="https://github.com/myselfshravan" target="_blank" class="footer__social">
-                    <i class='bx bxl-github'></i>
-                    <a href="https://www.instagram.com/Shravan_revanna" target="_blank" class="footer__social">
-                        <i class='bx bxl-instagram'></i>
-                    </a>
+                    <i class='bx bxl-github'></i></a>
+
+                <a href="https://www.instagram.com/shravan_revanna" target="_blank" class="footer__social">
+                    <i class='bx bxl-instagram'></i>
                 </a>
                 <a href="https://m.facebook.com/Shravan.3.07" target="_blank" class="footer__social">
                     <i class='bx bxl-facebook'></i>
@@ -478,6 +578,7 @@
                 <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
                   c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z" />
             </svg> by <b>Shravan</b></h1>
+            <p class="credit1">Last Updated on 10 April</p>
     </footer>
     <!--===== SCROLL REVEAL =====-->
     <script src="https://unpkg.com/scrollreveal"></script>
