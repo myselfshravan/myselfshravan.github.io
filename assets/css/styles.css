@@ -619,13 +619,16 @@ img {
   row-gap: 1rem;
   margin-bottom: 0px;
   padding: 0.25rem 0.5rem;
-  padding-left: 0.25rem;
+  padding-left: 0.5rem;
   padding-right: 0.5rem;
   background-color: white;
   /* background-color: var(--white-color); */
   box-shadow: 0 0 85px 0 #e9eefc;
   border-radius: 0.3rem;
   /* box-shadow: var(--shadow-white-3); */
+}
+.skills__namei {
+  margin-right: 8px;
 }
 
 .skills__name:hover {
@@ -715,8 +718,8 @@ img {
 }
 .portfolio__link-name {
   color: var(--dark-color);
-  font-size: 1rem;
-  color: #000;
+  font-size: 1.5rem;
+  /* color: #000; */
 }
 
 /* education section starts */
