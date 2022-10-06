@@ -71,9 +71,9 @@ sr.reveal(".home__scroll", { delay: 200 });
 sr.reveal(".home__img", { origin: "right", delay: 200 });
 
 /*SCROLL ABOUT*/
-sr.reveal(".about__img", { origin: "top", delay: 400, reset: false });
-sr.reveal(".about__subtitle", { delay: 300 });
-sr.reveal(".about__subtitle1", { delay: 350 });
+sr.reveal(".about__img", { origin: "top", delay: 300, reset: false });
+sr.reveal(".about__subtitle", { delay: 200 });
+sr.reveal(".about__subtitle1", { delay: 250 });
 sr.reveal(".text_1", { delay: 400 });
 sr.reveal(".text_2", { delay: 400 });
 // sr.reveal(".about__text", { delay: 500 });
@@ -122,4 +122,22 @@ $(window).scroll(function () {
 btn.on("click", function (e) {
   e.preventDefault();
   $("html, body").animate({ scrollTop: 0 }, "300");
+});
+
+const btntog = document.querySelector(".btn-toggle");
+const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+// btntog.addEventListener("click", function () {
+//   if (prefersDarkScheme.matches) {
+//     document.body.classList.toggle("dark-theme");
+//   } else {
+//     document.body.classList.toggle("light-theme");
+//   }
+// });
+btntog.addEventListener("click", function () {
+  if (prefersDarkScheme.matches) {
+    document.body.classList.toggle("light-theme");
+  } else {
+    document.body.classList.toggle("dark-theme");
+  }
 });
