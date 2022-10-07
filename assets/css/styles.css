@@ -469,6 +469,7 @@ img {
 
 .nav__item {
   margin-bottom: var(--mb-4);
+  padding-top: 0 !important;
 }
 .nav__link {
   position: relative;
@@ -1383,4 +1384,18 @@ label svg.moon {
   cursor: pointer;
   transition: 0.3s;
   z-index: 100;
+}
+
+li {
+  padding-top: 0.8rem;
+}
+
+.shravan {
+  color: #fff;
+  text-shadow: 0 0 0 0.2rem rgba(41, 148, 255, 0.25), 0 0 0 0.1rem #fff;
+}
+
+.likes-count {
+  color: rgba(255, 255, 255, 0.627);
+
 }

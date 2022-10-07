@@ -158,3 +158,30 @@ btntog.addEventListener("click", function () {
   }
   localStorage.setItem("theme", theme);
 });
+
+$(document).ready(function () {
+  $(".btn-toggle").click(function () {
+    var $this = $(this);
+    $this.removeClass("btn-toggle");
+    $this.addClass("notliked");
+    $count = $(".likes-count");
+    $count.text(function (idx, txt) {
+      return +txt == 0 ? "\n myselfshravan.github.io/riddle.html \n" : +txt - 1;
+    });
+  });
+});
+
+function validateForm() {
+  let x = document.forms["myForm"]["fname"].value;
+  if (x != "coffin") {
+    alert("You Failed Nigga!!!");
+    return false;
+  }
+}
+function validateForm2() {
+  let x = document.forms["myForm2"]["fname2"].value;
+  if (x != "lawsuit") {
+    alert("You Failed Nigga!!!");
+    return false;
+  }
+}
