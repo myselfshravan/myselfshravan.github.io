@@ -157,6 +157,19 @@
     font-weight: 500;
     color: #fff;
   }
+
+    /* place theme icon below the nav__toggle */
+  .theme-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1rem;
+    padding-top: 1.5rem;
+    font-size: 1rem;
+    color: var(--white-color);
+    cursor: pointer;
+  }
+ 
 }
 
 /* For LARGE devices */
@@ -313,14 +326,6 @@
 .heading span {
   color: #5361ff;
 }
-.quote {
-  text-align: center;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  font-size: 1rem;
-  font-weight: 600;
-  position: relative;
-}
 .image {
   flex: 1 1 40rem;
   z-index: 1;
@@ -347,7 +352,7 @@
   color: #fff;
 }
 
-/* education media queries starts*/
+/* ducation media queries starts*/
 @media screen and (max-width: 600px) {
   .education .box-container .box {
     flex-direction: column;
@@ -395,3 +400,4 @@
     backdrop-filter: blur(10px);
   }
 }
+

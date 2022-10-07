@@ -184,6 +184,10 @@ body.dark-theme {
     --label-translate: -100%;
     --label-fill-s: #7e7e7e;
     --label-fill-m: #fff;
+    --label-shadow: 0 0 0 0.2rem rgba(41, 148, 255, 0.25), 0 0 0 0.1rem #fff;
+    --label-shadow-2: 7px 15px 31px 0px rgba(255, 255, 255, 0.3);
+    --label-shadow-3: 6px 6px 6px 0px rgba(255, 255, 255, 0.3);
+    --nav-color: #002a8f;
   }
   body.light-theme {
     --text-color: #222;
@@ -215,6 +219,12 @@ body.dark-theme {
     --label-translate: 0;
     --label-fill-s: #fff;
     --label-fill-m: #7e7e7e;
+    --label-shadow: 0 0 0 0.1rem rgba(4, 102, 200, 0.25),
+      0 0 0 0.2rem rgba(4, 102, 200, 0.15);
+    --label-shadow-2: 7px 15px 31px 0px rgba(0, 0, 0, 0.3);
+    --label-shadow-3: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+      rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    --nav-color: #0072ff;
   }
 }
 
@@ -380,7 +390,7 @@ img {
   top: 0;
   left: 0;
   z-index: var(--z-fixed);
-  background: #2575fc;
+  background: var(--nav-color);
   border-bottom: 0.1rem solid rgb(255, 255, 255);
   /* NEW */
   /* background: rgba(255, 255, 255, 0.3);
@@ -835,11 +845,15 @@ img {
   background: var(--title-bottom);
 }
 .quote {
-  font-size: 1.5rem;
   align-self: flex-end;
   font-family: "Nunito", sans-serif;
   font-weight: 600;
   padding-top: 1rem;
+  text-align: center;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  font-size: 1rem;
+  position: relative;
 }
 
 .education .box-container {
@@ -1317,7 +1331,7 @@ label {
     inset 0px -5px 15px rgba(255, 255, 255, 0.4); */
   cursor: pointer;
   transition: 0.3s;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow: var(--label-shadow);
 }
 
 label:after {
@@ -1361,8 +1375,10 @@ label svg.moon {
 
 .theme-icon {
   position: absolute;
-  top: -30px;
-  right: 50px;
+  top: -28px;
+  right: 60px;
   margin: 1rem;
-  z-index: 1000;
+  cursor: pointer;
+  transition: 0.3s;
+  z-index: 100;
 }
