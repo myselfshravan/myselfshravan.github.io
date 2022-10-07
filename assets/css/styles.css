@@ -188,6 +188,7 @@ body.dark-theme {
     --label-shadow-2: 7px 15px 31px 0px rgba(255, 255, 255, 0.3);
     --label-shadow-3: 6px 6px 6px 0px rgba(255, 255, 255, 0.3);
     --nav-color: #002a8f;
+    --footer-bg: #1e2125;
   }
   body.light-theme {
     --text-color: #222;
@@ -225,6 +226,7 @@ body.dark-theme {
     --label-shadow-3: rgba(0, 0, 0, 0.25) 0px 14px 28px,
       rgba(0, 0, 0, 0.22) 0px 10px 10px;
     --nav-color: #0072ff;
+    --footer-bg: #212428;
   }
 }
 
@@ -982,8 +984,8 @@ img {
 
 /* ===== FOOTER=====*/
 .footer {
-  background-color: #212428;
-  /* background-color: var(--dark-color); */
+  /* background-color: #212428; */
+  background-color: var(--footer-bg);
 }
 
 .footer__text {
