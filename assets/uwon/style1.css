@@ -1,0 +1,75 @@
+body {
+  display: flex;
+  font-family: "Lato", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
+cite {
+  font-stretch: condensed;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.block {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  margin: auto;
+  text-transform: uppercase;
+  width: max-content;
+}
+
+.texts,
+.block cite {
+  display: flex;
+  grid-column: 1;
+  justify-content: space-between;
+}
+
+.input-res {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font: 15px/1 "Open Sans", sans-serif;
+  color: #333;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  max-width: 500px;
+  background-color: #ddd;
+  border: none;
+  padding: 10px 11px 11px 11px;
+  border-radius: 3px;
+  box-shadow: none;
+  outline: none;
+  margin: 0;
+  box-sizing: border-box;
+}
+.button2 {
+  display: inline-block;
+  padding: 0.5em 3em;
+  border: 0.16em solid #ffffff;
+  margin: 0 0.3em 0.3em 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color: #000000;
+  text-align: center;
+  transition: all 0.15s;
+}
+.button2:hover {
+  color: #dddddd;
+  border-color: #dddddd;
+}
+.button2:active {
+  color: #bbbbbb;
+  border-color: #bbbbbb;
+}
+@media all and (max-width: 30em) {
+  .button2 {
+    display: block;
+    margin: 0.4em auto;
+  }
+}
