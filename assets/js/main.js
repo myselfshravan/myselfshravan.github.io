@@ -78,6 +78,7 @@ sr.reveal(".text_1", { delay: 400 });
 sr.reveal(".text_2", { delay: 400 });
 // sr.reveal(".about__text", { delay: 500 });
 sr.reveal(".backani", { delay: 500 });
+sr.reveal(".abtli", { delay: 400, interval: 50 });
 sr.reveal(".social-share-inner-left span.title", { delay: 200 });
 sr.reveal(".about__social-icon", { delay: 200, interval: 150 });
 

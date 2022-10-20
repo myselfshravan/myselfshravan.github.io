@@ -171,6 +171,12 @@
     color: var(--white-color);
     cursor: pointer;
   }
+
+  /* place name below about image  */
+  .name {
+    margin-top: 1rem;
+    position: relative;
+  }
 }
 
 /* For LARGE devices */

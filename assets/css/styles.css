@@ -237,11 +237,11 @@ p {
   color: var(--text-color);
 }
 
-ul {
+/* ul {
   margin: 0;
   padding: 0;
   list-style: none;
-}
+} */
 a {
   text-decoration: none;
   color: var(--text-color);
@@ -470,6 +470,7 @@ img {
 .nav__item {
   margin-bottom: var(--mb-4);
   padding-top: 0 !important;
+  list-style-type: none;
 }
 .nav__link {
   position: relative;
