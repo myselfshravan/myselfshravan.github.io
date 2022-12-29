@@ -175,14 +175,14 @@ $(document).ready(function () {
 function validateForm() {
   let x = document.forms["myForm"]["fname"].value;
   if (x != "coffin") {
-    alert("You Failed Nigga!!!");
+    alert("You Failed !!!");
     return false;
   }
 }
 function validateForm2() {
   let x = document.forms["myForm2"]["fname2"].value;
   if (x != "lawsuit") {
-    alert("You Failed Nigga!!!");
+    alert("You Failed !!!");
     return false;
   }
 }
