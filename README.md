@@ -1,4 +1,4 @@
-## Portfolio-Website
+## This is my Portfolio Website
 
 ![](https://raw.githubusercontent.com/halfrost/halfrost/master/icons/header_.png)
 
@@ -8,7 +8,8 @@ I'm Shravan & I ❤️ to code.
 </p>
 This is my Developer portfolio Website built using HTML5, CSS3, JavaScript and jQuery.
 And this is one of my early project.
-Made a lot of changes till now. Recently I added dark theme toogle and an Easter egg
+Made a lot of changes till now. Recently I added dark theme toogle and an Easter egg.
+I am also open for suggestions and Feedback.
 
 <a href="https://myselfshravan.github.io/" target="_blank">**Check it out!** 🚀</a>
 
@@ -49,7 +50,7 @@ You can reach me through these below handles.
 <p>For enquiries, reach out <a href="mailto:shravanrevanna158@gmail.com">shravanrevanna@gmail.com</a> </p>
    
    
-© 2021 Shravan
+© 2023 Shravan
 
 ![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)
 

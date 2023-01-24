@@ -167,7 +167,7 @@ $(document).ready(function () {
     $this.addClass("notliked");
     $count = $(".likes-count");
     $count.text(function (idx, txt) {
-      return +txt == 0 ? "\n myselfshravan.github.io/riddle.html \n" : +txt - 1;
+      return +txt == 0 ? "\n myselfshravan.github.io/riddle1.html \n" : +txt - 1;
     });
   });
 });
