@@ -188,8 +188,9 @@ body.dark-theme {
     --nav-color: #002a8f;
     --footer-bg: #1e2125;
     --nav-button: #2994ff;
-    --nav-menu: rgba(30, 33, 37, 0.5);
+    --nav-menu: rgba(30, 33, 37, 0.2);
     --shravan-name: -webkit-linear-gradient(#7ee3ff, #3892ff);
+    --skill-hover: -webkit-linear-gradient(#484848, #747474);
   }
   body.light-theme {
     --text-color: #222;
@@ -230,6 +231,7 @@ body.dark-theme {
     --nav-button: #002a8f;
     --nav-menu: rgba(255, 255, 255, 0.5);
     --shravan-name: -webkit-linear-gradient(#00c6ff, #0072ff);
+    --skill-hover: -webkit-linear-gradient(#00c6ff, #0072ff);
   }
 }
 
@@ -410,6 +412,13 @@ img {
   -webkit-backdrop-filter: blur(5.1px);
   border: 1px solid rgba(255, 255, 255, 1);
 }
+
+.container{
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  
+}
 /*
  * MENU BUTTON
  */
@@ -475,7 +484,6 @@ img {
 }
 .nav__link {
   position: relative;
-  color: black;
 }
 .nav__link:hover {
   color: var(--first-color);
@@ -755,10 +763,10 @@ img {
 }
 
 .skills__name:hover {
-  background: -webkit-linear-gradient(#00c6ff, #0072ff);
-
+  background: var(--skill-hover);
   color: var(--white-color);
 }
+
 .skills__name1:hover {
   background: -webkit-linear-gradient(#00c6ff, #0072ff);
   color: var(--white-color);
