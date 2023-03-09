@@ -20,11 +20,11 @@ I am also open for suggestions and Feedback.
 [![JS](https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](https://github.com/myselfshravan/Portfolio-Website/search?l=javascript)
 <img alt="jQuery" src="https://img.shields.io/badge/jquery-%230769AD.svg?style=for-the-badge&logo=jquery&logoColor=white"/>
 
-### Extras :
+### Extras
 
 Particle.js, Typed.js, Tilt.js, Scroll Reveal, Tawkto, Font Awesome, Ionic Framework and JSON
 
-### Content Delivery Network :
+### Content Delivery Network
 
 AJAX Libraries API, Varnish, BootstrapCDN, Cloudflare JS, jsDelivr and UNPKG.
 <a href="https://builtwith.com/?https://myselfshravan.github.io/" target="_blank">**More Here**</a>
@@ -48,8 +48,7 @@ You can reach me through these below handles.
 <a href="https://github.com/myselfshravan" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg" alt="_ansuman_behera_/" height="30" width="40" /></a>
 
 <p>For enquiries, reach out <a href="mailto:shravanrevanna158@gmail.com">shravanrevanna@gmail.com</a> </p>
-   
-   
+
 © 2023 Shravan
 
 ![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)

@@ -129,6 +129,12 @@
     column-gap: 2rem;
     padding-bottom: 2rem;
   }
+  .portfolio__container2 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    column-gap: 2rem;
+    padding-bottom: 2rem;
+  }
   .portfolio__imgt {
     height: 13rem;
     width: 20rem;
