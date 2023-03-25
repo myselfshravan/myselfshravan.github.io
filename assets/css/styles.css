@@ -168,7 +168,7 @@ body.dark-theme {
     --shadow-i: 10px 10px 19px #1c1e22, -10px -10px 19px #262a2e;
     --shadow-dev: 0 0 0 0.2rem rgba(41, 148, 255, 0.25);
     --back-grad: linear-gradient(145deg, #1e2024, #23272b);
-    --skill-name: #c4cfde;
+    --skill-name: #ffffff;
     --title-text-shadow: -1px -1px 3px #020202, 2px 2px 4px #1b1b1b;
     --title-text-shadow-main: -1px -1px 3px #fff, 2px 2px 4px #d1d9e6;
     --title-shravan-shadow: 2px 2px 3px rgba(255, 255, 255, 0.1);
@@ -191,6 +191,7 @@ body.dark-theme {
     --nav-menu: rgba(30, 33, 37, 0.2);
     --shravan-name: -webkit-linear-gradient(#7ee3ff, #3892ff);
     --skill-hover: -webkit-linear-gradient(#484848, #747474);
+    --skill-name-hover: #fefefe;
   }
   body.light-theme {
     --text-color: #222;
@@ -232,6 +233,7 @@ body.dark-theme {
     --nav-menu: rgba(255, 255, 255, 0.5);
     --shravan-name: -webkit-linear-gradient(#00c6ff, #0072ff);
     --skill-hover: -webkit-linear-gradient(#00c6ff, #0072ff);
+    --skill-name-hover: #ffffff;
   }
 }
 
@@ -763,7 +765,7 @@ img {
 
 .skills__name:hover {
   background: var(--skill-hover);
-  color: var(--white-color);
+  color: var(--skill-name-hover);
 }
 
 .skills__name1:hover {
