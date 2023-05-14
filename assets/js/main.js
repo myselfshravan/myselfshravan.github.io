@@ -108,6 +108,7 @@ sr.reveal(".contact__button", { delay: 600 });
 sr.reveal(".education .box", { interval: 200 });
 sr.reveal(".education .box .content .box img .box-container .box .image", {
   delay: 300,
+  reset: false,
 });
 
 var btn = $("#button");
@@ -124,16 +125,6 @@ btn.on("click", function (e) {
   e.preventDefault();
   $("html, body").animate({ scrollTop: 0 }, "300");
 });
-
-// const btntog = document.querySelector(".btn-toggle");
-// const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
-// btntog.addEventListener("click", function () {
-//   if (prefersDarkScheme.matches) {
-//     document.body.classList.toggle("light-theme");
-//   } else {
-//     document.body.classList.toggle("dark-theme");
-//   }
-// });
 
 const btntog = document.querySelector(".btn-toggle");
 const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
