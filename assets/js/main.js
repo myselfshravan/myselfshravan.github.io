@@ -105,7 +105,7 @@ sr.reveal(".contact__input", { delay: 400 });
 sr.reveal(".contact__button", { delay: 600 });
 
 /* SCROLL EDUCATION */
-sr.reveal(".education .box", { interval: 200 });
+sr.reveal(".education .box", { interval: 200, reset: false });
 sr.reveal(".education .box .content .box img .box-container .box .image", {
   delay: 300,
   reset: false,
