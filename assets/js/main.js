@@ -1,7 +1,7 @@
-/*===== MENU SHOW =====*/
-const showMenu = (toggleId, navId) => {
-  const toggle = document.getElementById(toggleId),
-    nav = document.getElementById(navId);
+// Function to show/hide the mobile navigation menu
+const toggleMobileMenu = (toggleId, navId) => {
+  const toggle = document.getElementById(toggleId);
+  const nav = document.getElementById(navId);
 
   if (toggle && nav) {
     toggle.addEventListener("click", () => {
@@ -9,53 +9,63 @@ const showMenu = (toggleId, navId) => {
     });
   }
 };
-showMenu("nav-toggle", "nav-menu");
 
-const toggler = document.querySelector(".menu__toggler");
-const menu = document.querySelector(".menu");
+// Function to toggle the 'active' class on the menu and the toggler button
+const toggleMenu = () => {
+  const toggler = document.querySelector(".menu__toggler");
+  const menu = document.querySelector(".menu");
 
-/*
- * Toggles on and off the 'active' class on the menu
- * and the toggler button.
- */
-toggler.addEventListener("click", () => {
-  toggler.classList.toggle("active");
-  menu.classList.toggle("active");
-});
-
-/*===== REMOVE MENU MOBILE =====*/
-const navLink = document.querySelectorAll(".nav__link");
-
-function linkAction() {
-  const navMenu = document.getElementById("nav-menu");
-  navMenu.classList.remove("show");
-}
-navLink.forEach((n) => n.addEventListener("click", linkAction));
-
-/*===== SCROLL SECTIONS ACTIVE LINK =====*/
-const sections = document.querySelectorAll("section[id]");
-
-window.addEventListener("scroll", scrollActive);
-
-function scrollActive() {
-  const scrollY = window.pageYOffset;
-
-  sections.forEach((current) => {
-    const sectionHeight = current.offsetHeight;
-    const sectionTop = current.offsetTop - 50;
-    sectionId = current.getAttribute("id");
-
-    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-      document
-        .querySelector(".nav__menu a[href*=" + sectionId + "]")
-        .classList.add("active");
-    } else {
-      document
-        .querySelector(".nav__menu a[href*=" + sectionId + "]")
-        .classList.remove("active");
-    }
+  toggler.addEventListener("click", () => {
+    toggler.classList.toggle("active");
+    menu.classList.toggle("active");
   });
-}
+};
+
+// Function to remove the mobile menu when a navigation link is clicked
+const removeMobileMenu = () => {
+  const navLinks = document.querySelectorAll(".nav__link");
+
+  function linkAction() {
+    const navMenu = document.getElementById("nav-menu");
+    navMenu.classList.remove("show");
+  }
+
+  navLinks.forEach((link) => link.addEventListener("click", linkAction));
+};
+
+// Function to highlight active navigation links based on scroll position
+const highlightActiveLinks = () => {
+  const sections = document.querySelectorAll("section[id]");
+
+  function scrollActive() {
+    const scrollY = window.pageYOffset;
+
+    sections.forEach((section) => {
+      const sectionHeight = section.offsetHeight;
+      const sectionTop = section.offsetTop - 50;
+      const sectionId = section.getAttribute("id");
+      const navLink = document.querySelector(
+        `.nav__menu a[href*=${sectionId}]`
+      );
+
+      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+        navLink.classList.add("active");
+      } else {
+        navLink.classList.remove("active");
+      }
+    });
+  }
+
+  window.addEventListener("scroll", scrollActive);
+};
+
+// Initialize all functions when the DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  toggleMobileMenu("nav-toggle", "nav-menu");
+  toggleMenu();
+  removeMobileMenu();
+  highlightActiveLinks();
+});
 
 /*===== SCROLL REVEAL ANIMATION =====*/
 const sr = ScrollReveal({
@@ -78,7 +88,9 @@ sr.reveal(".text_1", { delay: 400 });
 sr.reveal(".text_2", { delay: 400 });
 // sr.reveal(".about__text", { delay: 500 });
 sr.reveal(".backani", { delay: 500 });
+sr.reveal(".introtitle", { delay: 400, interval: 50 });
 sr.reveal(".abtli", { delay: 400, interval: 50 });
+sr.reveal("#downloadButton", { delay: 200 });
 sr.reveal(".social-share-inner-left span.title", { delay: 200 });
 sr.reveal(".about__social-icon", { delay: 200, interval: 150 });
 
@@ -179,3 +191,17 @@ function validateForm2() {
     return false;
   }
 }
+
+document
+  .getElementById("downloadButton")
+  .addEventListener("click", function () {
+    // Replace 'your_pdf_file.pdf' with the actual file path or URL of the PDF you want to download
+    var pdfFile = "Shravan_Revanna_Resume.pdf";
+
+    var anchor = document.createElement("a");
+    anchor.href = pdfFile;
+
+    anchor.download = "Resume-Shravan_Revanna.pdf";
+
+    anchor.click();
+  });

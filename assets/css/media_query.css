@@ -61,10 +61,6 @@
     padding-bottom: 1rem;
   }
 
-  .section-title {
-    margin-bottom: 1rem;
-  }
-
   .section-title::after {
     width: 110px;
     top: 3rem;

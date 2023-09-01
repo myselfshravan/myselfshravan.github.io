@@ -473,21 +473,21 @@ img {
   top: 8px;
 }
 
-.menu__toggler.active>span {
+.menu__toggler.active > span {
   background: transparent;
 }
 
-.menu__toggler.active>span::before,
-.menu__toggler.active>span::after {
+.menu__toggler.active > span::before,
+.menu__toggler.active > span::after {
   background: var(--nav-button);
   top: 0px;
 }
 
-.menu__toggler.active>span::before {
+.menu__toggler.active > span::before {
   transform: rotate(-225deg);
 }
 
-.menu__toggler.active>span::after {
+.menu__toggler.active > span::after {
   transform: rotate(225deg);
 }
 
@@ -1225,7 +1225,6 @@ img {
 
 /* The typewriter cursor effect */
 @keyframes blink-caret {
-
   from,
   to {
     border-color: transparent;
@@ -1269,7 +1268,6 @@ img {
 }
 
 @keyframes typewriter {
-
   0%,
   100% {
     width: 0;
@@ -1282,7 +1280,6 @@ img {
 }
 
 @keyframes caret {
-
   0%,
   100% {
     opacity: 0;
@@ -1294,7 +1291,6 @@ img {
 }
 
 @keyframes text2 {
-
   0%,
   50%,
   100% {
@@ -1308,7 +1304,6 @@ img {
 }
 
 @keyframes text1 {
-
   0%,
   50%,
   100% {
@@ -1328,7 +1323,6 @@ h6 {
   position: relative;
   width: max-content;
 }
-
 
 #button {
   display: inline-block;
