@@ -19,7 +19,7 @@ I am also open for suggestions and Feedback.
 
 ### Extras
 
-Particle.js, Typed.js, Tilt.js, Scroll Reveal, Tawkto, Font Awesome, Ionic Framework and JSON
+Tailwind CSS, Particle.js, Typed.js, Tilt.js, Scroll Reveal, Tawkto, Font Awesome, Ionic Framework and JSON
 
 ### Content Delivery Network
 
