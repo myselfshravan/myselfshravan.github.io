@@ -195,8 +195,7 @@ function validateForm2() {
 document
   .getElementById("downloadButton")
   .addEventListener("click", function () {
-    // Replace 'your_pdf_file.pdf' with the actual file path or URL of the PDF you want to download
-    var pdfFile = "Shravan_Revanna_Resume.pdf";
+    var pdfFile = "Shravan_Revanna_Resume_new.pdf";
 
     var anchor = document.createElement("a");
     anchor.href = pdfFile;
