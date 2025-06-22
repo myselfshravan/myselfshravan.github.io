@@ -263,7 +263,44 @@ img {
 }
 
 .abtli {
-  padding-top: 10px;
+  padding-top: 12px;
+  line-height: 1.6;
+}
+
+@media screen and (min-width: 768px) {
+  .backani {
+    padding: 1.5rem 2rem;
+    margin-top: 1rem;
+  }
+  
+  .about__subtitle1 {
+    margin-top: 0;
+    font-size: 1.75rem;
+  }
+
+  .about__subtitle1 span {
+    font-size: 2rem;
+  }
+  
+  .name {
+    margin-bottom: 0;
+  }
+
+  .text_1, .text_2 {
+    font-size: 1.2rem;
+  }
+
+  .introtitle {
+    padding-bottom: 0.5rem;
+  }
+
+  #downloadButton {
+    margin-top: 1rem;
+  }
+
+  .social-share-inner-left {
+    padding-top: 1rem;
+  }
 }
 
 /*===== CLASS CSS ===== */
@@ -615,18 +652,81 @@ img {
 
 /* ===== ABOUT =====*/
 .about__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
   justify-items: center;
   text-align: center;
 }
 
+.left-column {
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
 .about__img {
-  margin-top: 1.5rem;
   position: relative;
-  height: 300px;
-  width: 300px;
+  width: 100%;
+  padding-top: 100%; /* Creates a square aspect ratio */
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: var(--shadow-i);
+}
+
+.about__img img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#downloadButton {
+  width: 100%;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.social-share-inner-left {
+  text-align: center;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.social-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  .about__container {
+    grid-template-columns: 450px 1fr;
+    align-items: start;
+    text-align: left;
+    gap: 3rem;
+  }
+
+  .left-column {
+    position: sticky;
+    top: 80px;
+    max-width: 450px;
+  }
+
+  .right-column {
+    padding-top: 1rem;
+  }
+
+  .about__img {
+    width: 450px;
+    height: 450px;
+    padding-top: 0;
+  }
 }
 
 .profile__img {
@@ -639,8 +739,10 @@ img {
 }
 
 .about__img img {
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .about__subtitle {

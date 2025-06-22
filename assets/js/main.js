@@ -195,12 +195,12 @@ function validateForm2() {
 document
   .getElementById("downloadButton")
   .addEventListener("click", function () {
-    var pdfFile = "Shravan_Resume_Final.pdf";
+    var pdfFile = "Shravan_Resume_v7.pdf";
 
     var anchor = document.createElement("a");
     anchor.href = pdfFile;
 
-    anchor.download = "Shravan_Resume_Final.pdf";
+    anchor.download = "Shravan_Resume_v7.pdf";
 
     anchor.click();
   });
