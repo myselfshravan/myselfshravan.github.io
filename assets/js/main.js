@@ -191,16 +191,3 @@ function validateForm2() {
     return false;
   }
 }
-
-document
-  .getElementById("downloadButton")
-  .addEventListener("click", function () {
-    var pdfFile = "Shravan_Resume_v7.pdf";
-
-    var anchor = document.createElement("a");
-    anchor.href = pdfFile;
-
-    anchor.download = "Shravan_Resume_v7.pdf";
-
-    anchor.click();
-  });
