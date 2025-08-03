@@ -58,12 +58,12 @@
     ]
   },
   "hobbies": [
-    {"icon": "fa-solid fa-headphones", "text": "Listening to Podcasts and Music"},
-    {"icon": "fa-solid fa-laptop-code", "text": "Building Websites and Apps"},
-    {"icon": "fa-solid fa-book-open", "text": "Writing Blogs & Reading Books"},
-    {"icon": "fa-solid fa-gamepad", "text": "Playing Video Games"},
-    {"icon": "fa-solid fa-palette", "text": "UX & UI Designing"},
-    {"icon": "fa-solid fa-route", "text": "Travelling & Exploring Nature"}
+    {"icon": "fa-headphones", "text": "Listening to Podcasts and Music"},
+    {"icon": "fa-laptop-code", "text": "Building Websites and Apps"},
+    {"icon": "fa-book-open", "text": "Writing Blogs & Reading Books"},
+    {"icon": "fa-gamepad", "text": "Playing Video Games"},
+    {"icon": "fa-palette", "text": "UX & UI Designing"},
+    {"icon": "fa-route", "text": "Travelling & Exploring Nature"}
   ],
   "projects": {
     "personal": [

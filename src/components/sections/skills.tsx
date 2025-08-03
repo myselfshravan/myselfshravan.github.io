@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { Code2, Wrench, Heart, Gamepad2 } from "lucide-react"
+import { Code2, Wrench, Heart, Gamepad2, Headphones, Laptop, BookOpen, Palette, Route } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import portfolioData from "@/lib/portfolio-data.json"
@@ -11,6 +11,15 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
+}
+
+const hobbyIcons = {
+  "fa-headphones": Headphones,
+  "fa-laptop-code": Laptop,
+  "fa-book-open": BookOpen,
+  "fa-gamepad": Gamepad2,
+  "fa-palette": Palette,
+  "fa-route": Route,
 }
 
 export function Skills() {
@@ -176,11 +185,10 @@ export function Skills() {
                   <CardContent className="p-0">
                     <div className="flex flex-col items-center space-y-3">
                       <div className="p-3 bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors">
-                        {hobby.icon.startsWith('fa') || hobby.icon.startsWith('devicon') ? (
-                          <i className={`${hobby.icon} text-2xl text-primary`} />
-                        ) : (
-                          <Heart className="h-6 w-6 text-primary" />
-                        )}
+                        {(() => {
+                          const IconComponent = hobbyIcons[hobby.icon as keyof typeof hobbyIcons] || Heart
+                          return <IconComponent className="h-6 w-6 text-primary" />
+                        })()}
                       </div>
                       <p className="text-sm font-medium text-center leading-relaxed">
                         {hobby.text}
