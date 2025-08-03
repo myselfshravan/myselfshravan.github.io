@@ -10,7 +10,7 @@ This is my Developer portfolio Website built using HTML5, CSS3, JavaScript and j
 And this is one of my early project.
 Made a lot of changes till now. Recently I added dark theme toogle and an Easter egg.
 I am also open for suggestions and Feedback.
-<a href="https://myselfshravan.github.io/" target="_blank">**Check it out!** 🚀</a>
+<a href="https://shravanrevanna.me" target="_blank">**Check it out!** 🚀</a>
 
 ## 📌 Tech Stack
 
@@ -44,7 +44,7 @@ You can reach me through these below handles.
 <a href="https://stackoverflow.com/users/17003616/shravan" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/stack-overflow.svg" alt="_ansuman_behera_/" height="30" width="40" /></a>
 <a href="https://github.com/myselfshravan" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg" alt="_ansuman_behera_/" height="30" width="40" /></a>
 
-<p>For enquiries, reach out <a href="mailto:shravan.revanna@gmail.com">shravan.revanna@gmail.com</a> </p>
+<p>For enquiries, reach out <a href="mailto:shravanrevanna@gmail.com">shravan.revanna@gmail.com</a> </p>
 
 © 2023 Shravan Revanna
 
