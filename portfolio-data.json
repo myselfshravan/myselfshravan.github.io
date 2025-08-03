@@ -1,0 +1,187 @@
+{
+  "personal": {
+    "name": "Shravan Revanna",
+    "title": "AI Full-Stack Developer",
+    "subtitle": "Full-stack ML Developer",
+    "description": "Passionate about Generative AI",
+    "email": "shravanrevanna@gmail.com",
+    "phone": "+91 9945332995",
+    "location": "India",
+    "bio": "Hi! I'm Shravan, a AI full stack developer. Explore my expertise in AI and ML, see examples of my work, and learn more about my skills and experience.",
+    "intro": [
+      "🌝 You already know my name, it's like right there",
+      "🎓 I graduated with a B.E. in CSE (AI & ML) from Ramaiah Institute of Technology",
+      "💼 Currently working at Udaan as Software Development Engineer Intern.",
+      "💻 Previously worked at Spritle Software as Machine Learning Intern, NextWealth as Gen-AI Intern and Foodingo Pvt. Ltd as Full Stack Developer.",
+      "🤔 What have I created? Let me tell you, I've built a lots of websites, dashboards, and a bunch of GenAI Solutions that will blow your mind.",
+      "😎 I have also developed a study material website called NoteRep that everyone uses to prepare just days before exams.",
+      "🧑‍💻 I have developed more than 180 full stack project which includes multiple SaaS products and automation tools and scripts. I love to explore new tech and build cool stuff.",
+      "💡 Other than this, I've also worked with tons of other technologies mentioned below",
+      "😁 Y'all can find few projects but trust me some of the best projects are private (just like you, you sneaky sneaky)"
+    ],
+    "goal": "My Goal is to Contribute to as many open source project as possible and also create something that can save time of people. PERIOD.",
+    "profileImages": [
+      "profile_0.jpg", "profile_1.jpg", "profile_2.jpg", "profile_3.jpg", 
+      "profile_4.jpg", "profile_5.jpg", "profile_6.png", "profile_7.png"
+    ],
+    "resumeFile": "Shravan_Resume_v9.pdf"
+  },
+  "social": {
+    "linkedin": "https://www.linkedin.com/in/shravanrevanna",
+    "github": "https://github.com/myselfshravan",
+    "github2": "https://github.com/githubhosting",
+    "instagram": "https://www.instagram.com/Shravan_revanna",
+    "facebook": "https://facebook.com/Shravan.3.07",
+    "twitter": "https://twitter.com/myselfshravan",
+    "linktr": "https://linktr.ee/shravan_revanna",
+    "blog": "https://shravanrevanna.hashnode.dev/",
+    "youtube": "https://www.youtube.com/channel/UC5NNBFQqhbuU2f5wprDVaVg",
+    "telegram": "https://telegram.me/siddharth_channel",
+    "stackoverflow": "https://stackoverflow.com/users/17003616/shravan"
+  },
+  "skills": {
+    "languages": [
+      {"name": "NextJS", "icon": "nextjs"},
+      {"name": "React", "icon": "react"},
+      {"name": "Node.js", "icon": "nodejs"},
+      {"name": "Python", "icon": "python"},
+      {"name": "JavaScript", "icon": "javascript"},
+      {"name": "Firebase", "icon": "firebase"},
+      {"name": "Tailwind", "icon": "tailwindcss"}
+    ],
+    "tools": [
+      {"name": "GitHub", "icon": "github"},
+      {"name": "Git", "icon": "git"},
+      {"name": "VS Code", "icon": "visualstudio"},
+      {"name": "Figma", "icon": "figma"},
+      {"name": "Canva", "icon": "canva"}
+    ]
+  },
+  "hobbies": [
+    {"icon": "fas fa-headphones", "text": "Listening to Podcasts and Music"},
+    {"icon": "fas fa-laptop-code", "text": "Building Websites and Apps"},
+    {"icon": "fas fa-book-open", "text": "Writing Blogs & Reading Books"},
+    {"icon": "fas fa-gamepad", "text": "Playing Video Games"},
+    {"icon": "fas fa-palette", "text": "UX & UI Designing"},
+    {"icon": "fas fa-route", "text": "Travelling & Exploring Nature"},
+    {"icon": "devicon-canva-original", "text": "Designing Templates, Logos & Posts"}
+  ],
+  "projects": {
+    "personal": [
+      {
+        "name": "NoteRep",
+        "image": "project_noterep.png",
+        "url": "https://noterep.vercel.app",
+        "linkText": "Visit Website",
+        "description": "Study material website that everyone uses to prepare just days before exams"
+      },
+      {
+        "name": "AI Meal Planner",
+        "image": "project_ai_meal_planner.png",
+        "url": "https://ai-meal-planner.streamlit.app",
+        "linkText": "Try Web App"
+      },
+      {
+        "name": "Enigma Escape",
+        "image": "project_enigma_escape.png",
+        "url": "https://enigma-escape-bot.streamlit.app",
+        "linkText": "Play Game"
+      },
+      {
+        "name": "Idea Repository System",
+        "image": "project_idea_repository_system.png",
+        "url": "https://idearepo.vercel.app",
+        "linkText": "Visit Website"
+      }
+    ],
+    "team": [
+      {
+        "name": "KeyGainer",
+        "image": "project_keygainer.png",
+        "url": "https://myselfshravan.github.io/keygainer",
+        "linkText": "Discover"
+      },
+      {
+        "name": "Calculla",
+        "image": "project_calculla.png",
+        "url": "https://gpaestimator.streamlit.app",
+        "linkText": "Check it out"
+      }
+    ],
+    "pending": [
+      {
+        "name": "Secure Choice",
+        "image": "project_secure_choice.png",
+        "url": "https://securechoice.github.io/securechoice",
+        "linkText": "Visit Website"
+      },
+      {
+        "name": "Assist Ideas",
+        "image": "project_assist_ideas.png",
+        "url": "https://www.youtube.com/channel/UCyT4D-vxOvv7OIsVXv-V8kQ",
+        "linkText": "View details"
+      },
+      {
+        "name": "Better Facts",
+        "image": "project_better_facts.png",
+        "url": "404.html",
+        "linkText": "Still Working"
+      }
+    ]
+  },
+  "education": [
+    {
+      "institution": "M S Ramaiah Institute of Technology",
+      "degree": "Bachelor of Engineering in Computer Science and Engineering (AI & ML)",
+      "duration": "2021 - 25 | Completed",
+      "image": "education_ramaiah_institute_of_technology.jpg",
+      "website": "http://www.msrit.edu/index.html"
+    },
+    {
+      "institution": "FIITJEE Miyapur, Hyderabad",
+      "degree": "Junior College | PCM",
+      "duration": "2019 - 21",
+      "image": "education_fiitjee_college.jpg",
+      "website": "https://www.fiitjeehyderabad.com"
+    },
+    {
+      "institution": "Varin International Residential School",
+      "degree": "High School | ICSE",
+      "duration": "2016 - 19",
+      "image": "education_varin_school.jpg",
+      "website": "https://virstumkur.in/about-varin"
+    }
+  ],
+  "work": [
+    {
+      "company": "Udaan",
+      "position": "Software Development Engineer Intern",
+      "status": "Current",
+      "website": "https://udaan.com"
+    },
+    {
+      "company": "Spritle Software",
+      "position": "Machine Learning Intern",
+      "status": "Previous",
+      "website": "https://www.spritle.com"
+    },
+    {
+      "company": "NextWealth",
+      "position": "Gen-AI Intern",
+      "status": "Previous",
+      "website": "https://nextwealth.com"
+    },
+    {
+      "company": "Foodingo Pvt. Ltd",
+      "position": "Full Stack Developer",
+      "status": "Previous"
+    }
+  ],
+  "meta": {
+    "title": "Shravan Revanna | AI Full-Stack Developer | ReactJS | Python",
+    "description": "Hi! I'm Shravan, a AI full stack developer. Explore my expertise in AI and ML, see examples of my work, and learn more about my skills and experience.",
+    "keywords": "shravan, myselfshravan, shravanrevanna, revanna, shravangithubio, shravan portfolio, shravan revanna, shravan github",
+    "googleSiteVerification": "gbboCIIlLPMipBxgBvVtFTKE40RWFYONeLI6IDmHJ40",
+    "domain": "shravanrevanna.me"
+  }
+}
