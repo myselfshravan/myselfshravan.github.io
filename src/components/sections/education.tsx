@@ -90,7 +90,7 @@ export function Education() {
             <Card className="bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 border-primary/20">
               <CardContent className="p-6 text-center">
                 <p className="text-lg italic text-muted-foreground leading-relaxed">
-                  "Education is not the learning of facts, but the training of the mind to think."
+                  &quot;Education is not the learning of facts, but the training of the mind to think.&quot;
                 </p>
               </CardContent>
             </Card>

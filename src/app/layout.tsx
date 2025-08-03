@@ -16,6 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(`https://${portfolioData.meta.domain}`),
   title: portfolioData.meta.title,
   description: portfolioData.meta.description,
   keywords: portfolioData.meta.keywords,

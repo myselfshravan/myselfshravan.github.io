@@ -72,7 +72,7 @@ export function Footer() {
                 >
                   Instagram
                 </a>{" "}
-                or if you're the classic type, mail me at{" "}
+                or if you&apos;re the classic type, mail me at{" "}
                 <a
                   href={`mailto:${portfolioData.personal.email}`}
                   className="text-primary hover:underline font-medium"
@@ -89,7 +89,7 @@ export function Footer() {
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              Soon other projects will be listed. It's a work in progress so
+              Soon other projects will be listed. It&apos;s a work in progress so
               check back often!
             </motion.p>
           </div>

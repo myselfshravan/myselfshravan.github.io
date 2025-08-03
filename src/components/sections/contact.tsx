@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { Mail, Phone, MapPin, Send, MessageCircle, Github, Linkedin, Instagram, Facebook, Twitter, Youtube } from "lucide-react"
+import { Mail, Phone, Send, MessageCircle, Github, Linkedin, Instagram, Facebook, Twitter, Youtube } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import portfolioData from "@/lib/portfolio-data.json"
@@ -95,7 +95,7 @@ export function Contact() {
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ready to collaborate? Let's discuss your next project or just have a friendly chat about technology.
+            Ready to collaborate? Let&apos;s discuss your next project or just have a friendly chat about technology.
           </p>
         </motion.div>
 
@@ -109,17 +109,17 @@ export function Contact() {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <div>
-                <h3 className="text-2xl font-bold mb-6">Let's Connect</h3>
+                <h3 className="text-2xl font-bold mb-6">Let&apos;s Connect</h3>
                 <p className="text-muted-foreground leading-relaxed mb-8">
-                  I'm always excited to work on new projects and collaborate with passionate individuals. 
+                  I&apos;m always excited to work on new projects and collaborate with passionate individuals. 
                   Whether you have a project in mind, want to discuss opportunities, or just want to say hello, 
-                  I'd love to hear from you!
+                  I&apos;d love to hear from you!
                 </p>
               </div>
 
               {/* Contact Methods */}
               <div ref={cardsRef} className="space-y-4">
-                {contactMethods.map((method, index) => {
+                {contactMethods.map((method) => {
                   const Icon = method.icon
                   return (
                     <motion.div
@@ -242,8 +242,8 @@ export function Contact() {
                     <h4 className="text-lg font-semibold">Available for Work</h4>
                   </div>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    I'm currently open to new opportunities and exciting projects. 
-                    Let's create something amazing together!
+                    I&apos;m currently open to new opportunities and exciting projects. 
+                    Let&apos;s create something amazing together!
                   </p>
                 </CardContent>
               </Card>
@@ -276,7 +276,7 @@ export function Contact() {
             <CardContent className="p-0 text-center">
               <h3 className="text-xl font-bold mb-4">Ready to Start a Project?</h3>
               <p className="text-muted-foreground mb-6">
-                Let's discuss how we can bring your ideas to life with cutting-edge technology and creative solutions.
+                Let&apos;s discuss how we can bring your ideas to life with cutting-edge technology and creative solutions.
               </p>
               <Button
                 size="lg"

@@ -105,7 +105,7 @@ export function Skills() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {skillCategories.map((category, categoryIndex) => {
+          {skillCategories.map((category) => {
             const Icon = category.icon
             return (
               <motion.div key={category.title} variants={itemVariants}>
@@ -120,7 +120,7 @@ export function Skills() {
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-wrap gap-3">
-                      {category.skills.map((skill, skillIndex) => (
+                      {category.skills.map((skill) => (
                         <motion.div
                           key={skill.name}
                           className="skill-badge"
@@ -158,7 +158,7 @@ export function Skills() {
               </span>
             </h3>
             <p className="text-muted-foreground">
-              When I'm not coding, you'll find me doing these things
+              When I&apos;m not coding, you&apos;ll find me doing these things
             </p>
           </div>
 
@@ -207,7 +207,7 @@ export function Skills() {
                 <h4 className="text-xl font-bold">Fun Fact</h4>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                I've built over <span className="font-bold text-primary">180 full-stack projects</span> and 
+                I&apos;ve built over <span className="font-bold text-primary">180 full-stack projects</span> and 
                 still get excited about each new challenge. My secret? I treat every project like a 
                 game level to complete! 🎮
               </p>

@@ -69,7 +69,7 @@ export function Projects() {
     },
   ]
 
-  const ProjectCard = ({ project, index }: { project: any; index: number }) => (
+  const ProjectCard = ({ project, index }: { project: { name: string; image: string; url: string; linkText: string; description?: string }; index: number }) => (
     <motion.div
       className="project-card group"
       initial={{ opacity: 0, y: 30 }}
