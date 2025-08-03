@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Code, Briefcase, GraduationCap, Heart } from "lucide-react";
+import { Code, Briefcase, GraduationCap, Heart, ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import portfolioData from "@/lib/portfolio-data.json";
@@ -134,18 +134,30 @@ export function About() {
                   {portfolioData.work.map((job, index) => (
                     <motion.div
                       key={index}
-                      className="flex items-center justify-between p-3 bg-muted/20 rounded-lg"
+                      className="flex items-center justify-between p-3 bg-muted/20 rounded-lg group hover:bg-muted/30 transition-colors duration-200"
                       initial={{ opacity: 0, y: 10 }}
                       animate={isInView ? { opacity: 1, y: 0 } : {}}
                       transition={{ duration: 0.4, delay: index * 0.1 }}
                     >
-                      <div>
+                      <div className="flex-1">
                         <h4 className="font-medium text-foreground">
                           {job.position}
                         </h4>
-                        <p className="text-sm text-muted-foreground">
-                          {job.company}
-                        </p>
+                        {job.website ? (
+                          <a
+                            href={job.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center space-x-1 group-hover:text-primary/80"
+                          >
+                            <span>{job.company}</span>
+                            <ExternalLink className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                          </a>
+                        ) : (
+                          <p className="text-sm text-muted-foreground">
+                            {job.company}
+                          </p>
+                        )}
                       </div>
                       <Badge
                         variant={
