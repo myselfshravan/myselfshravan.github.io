@@ -21,8 +21,8 @@ export default function Home() {
   useEffect(() => {
     // Initialize smooth scrolling and scroll-triggered animations
     if (typeof window !== "undefined") {
-      // Set up scroll-triggered animations
-      const sections = document.querySelectorAll("section")
+      // Set up scroll-triggered animations (exclude hero section)
+      const sections = document.querySelectorAll("section:not(.hero-section)")
       
       sections.forEach((section) => {
         gsap.fromTo(

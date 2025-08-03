@@ -60,7 +60,6 @@ export function Header() {
               className="flex items-center space-x-2 text-xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent hover:scale-105 transition-transform"
             >
               SHRAVAN
-              <ExternalLink className="h-4 w-4 text-muted-foreground" />
             </Link>
           </motion.div>
 

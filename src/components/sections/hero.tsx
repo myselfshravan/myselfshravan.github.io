@@ -81,7 +81,7 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-background via-background/95 to-muted/20"
+      className="hero-section min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-background via-background/95 to-muted/20"
     >
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
