@@ -21,8 +21,14 @@
     ],
     "goal": "My Goal is to Contribute to as many open source project as possible and also create something that can save time of people. PERIOD.",
     "profileImages": [
-      "profile_0.jpg", "profile_1.jpg", "profile_2.jpg", "profile_3.jpg", 
-      "profile_4.jpg", "profile_5.jpg", "profile_6.png", "profile_7.png"
+      "profile_0.jpg",
+      "profile_1.jpg",
+      "profile_2.jpg",
+      "profile_3.jpg",
+      "profile_4.jpg",
+      "profile_5.jpg",
+      "profile_6.png",
+      "profile_7.png"
     ],
     "resumeFile": "Shravan_Resume_v9.pdf"
   },
@@ -41,29 +47,29 @@
   },
   "skills": {
     "languages": [
-      {"name": "NextJS", "icon": "nextjs"},
-      {"name": "React", "icon": "react"},
-      {"name": "Node.js", "icon": "nodejs"},
-      {"name": "Python", "icon": "python"},
-      {"name": "JavaScript", "icon": "javascript"},
-      {"name": "Firebase", "icon": "firebase"},
-      {"name": "Tailwind", "icon": "tailwindcss"}
+      { "name": "NextJS", "icon": "nextjs" },
+      { "name": "React", "icon": "react" },
+      { "name": "Node.js", "icon": "nodejs" },
+      { "name": "Python", "icon": "python" },
+      { "name": "JavaScript", "icon": "javascript" },
+      { "name": "Firebase", "icon": "firebase" },
+      { "name": "Tailwind", "icon": "tailwindcss" }
     ],
     "tools": [
-      {"name": "GitHub", "icon": "github"},
-      {"name": "Git", "icon": "git"},
-      {"name": "VS Code", "icon": "visualstudio"},
-      {"name": "Figma", "icon": "figma"},
-      {"name": "Canva", "icon": "canva"}
+      { "name": "GitHub", "icon": "github" },
+      { "name": "Git", "icon": "git" },
+      { "name": "VS Code", "icon": "visualstudio" },
+      { "name": "Figma", "icon": "figma" },
+      { "name": "Canva", "icon": "canva" }
     ]
   },
   "hobbies": [
-    {"icon": "fa-headphones", "text": "Listening to Podcasts and Music"},
-    {"icon": "fa-laptop-code", "text": "Building Websites and Apps"},
-    {"icon": "fa-book-open", "text": "Writing Blogs & Reading Books"},
-    {"icon": "fa-gamepad", "text": "Playing Video Games"},
-    {"icon": "fa-palette", "text": "UX & UI Designing"},
-    {"icon": "fa-route", "text": "Travelling & Exploring Nature"}
+    { "icon": "Headphones", "text": "Listening to Podcasts and Music" },
+    { "icon": "Laptop", "text": "Building Websites and Apps" },
+    { "icon": "BookOpen", "text": "Writing Blogs & Reading Books" },
+    { "icon": "Gamepad2", "text": "Playing Video Games" },
+    { "icon": "Palette", "text": "UX & UI Designing" },
+    { "icon": "Route", "text": "Travelling & Exploring Nature" }
   ],
   "projects": {
     "personal": [
@@ -134,28 +140,37 @@
       "degree": "Bachelor of Engineering in Computer Science and Engineering (AI & ML)",
       "duration": "2021 - 25 | Completed",
       "image": "education_ramaiah_institute_of_technology.jpg",
-      "website": "http://www.msrit.edu/index.html"
+      "website": "http://www.msrit.edu/index.html",
+      "location": "Bangalore, India"
     },
     {
       "institution": "FIITJEE Miyapur, Hyderabad",
       "degree": "Junior College | PCM",
       "duration": "2019 - 21",
       "image": "education_fiitjee_college.jpg",
-      "website": "https://www.fiitjeehyderabad.com"
+      "website": "https://www.fiitjeehyderabad.com",
+      "location": "Hyderabad, India"
     },
     {
       "institution": "Varin International Residential School",
       "degree": "High School | ICSE",
       "duration": "2016 - 19",
       "image": "education_varin_school.jpg",
-      "website": "https://virstumkur.in/about-varin"
+      "website": "https://virstumkur.in/about-varin",
+      "location": "Tumkur, India"
     }
   ],
   "work": [
     {
-      "company": "Udaan",
-      "position": "Software Development Engineer Intern",
+      "company": "udaanCapital",
+      "position": "Software Engineer Intern",
       "status": "Current",
+      "website": "https://udaancapital.com"
+    },
+    {
+      "company": "UDAAN",
+      "position": "Software Engineer Intern",
+      "status": "previous",
       "website": "https://udaan.com"
     },
     {

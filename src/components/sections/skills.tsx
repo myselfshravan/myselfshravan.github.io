@@ -13,13 +13,13 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-const hobbyIcons = {
-  "fa-headphones": Headphones,
-  "fa-laptop-code": Laptop,
-  "fa-book-open": BookOpen,
-  "fa-gamepad": Gamepad2,
-  "fa-palette": Palette,
-  "fa-route": Route,
+const hobbyIconMap = {
+  Headphones,
+  Laptop,
+  BookOpen,
+  Gamepad2,
+  Palette,
+  Route,
 }
 
 export function Skills() {
@@ -186,7 +186,7 @@ export function Skills() {
                     <div className="flex flex-col items-center space-y-3">
                       <div className="p-3 bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors">
                         {(() => {
-                          const IconComponent = hobbyIcons[hobby.icon as keyof typeof hobbyIcons] || Heart
+                          const IconComponent = hobbyIconMap[hobby.icon as keyof typeof hobbyIconMap] || Heart
                           return <IconComponent className="h-6 w-6 text-primary" />
                         })()}
                       </div>
