@@ -20,50 +20,15 @@ export function Hero() {
   const imageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (heroRef.current) {
-      // GSAP animations
-      const tl = gsap.timeline()
-      
-      tl.from(".hero-title", {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out"
+    // Only handle profile image rotation with GSAP
+    // Let Framer Motion handle all other animations to avoid conflicts
+    if (imageRef.current) {
+      gsap.to(imageRef.current, {
+        rotation: 360,
+        duration: 20,
+        repeat: -1,
+        ease: "none"
       })
-      .from(".hero-subtitle", {
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out"
-      }, "-=0.5")
-      .from(".hero-description", {
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
-        ease: "power3.out"
-      }, "-=0.3")
-      .from(".hero-buttons", {
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
-        ease: "power3.out"
-      }, "-=0.2")
-      .from(".hero-socials", {
-        x: -30,
-        opacity: 0,
-        duration: 0.6,
-        ease: "power3.out"
-      }, "-=0.3")
-
-      // Profile image animation
-      if (imageRef.current) {
-        gsap.to(imageRef.current, {
-          rotation: 360,
-          duration: 20,
-          repeat: -1,
-          ease: "none"
-        })
-      }
     }
   }, [])
 
@@ -99,7 +64,12 @@ export function Hero() {
               transition={{ duration: 0.6 }}
               className="space-y-4"
             >
-              <h1 className="hero-title text-4xl sm:text-5xl lg:text-6xl font-bold">
+              <motion.h1 
+                className="hero-title text-4xl sm:text-5xl lg:text-6xl font-bold"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
                 Hi, I&apos;m{" "}
                 <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
                   {portfolioData.personal.name.split(" ")[0]}
@@ -111,16 +81,21 @@ export function Hero() {
                 >
                   👋
                 </motion.span>
-              </h1>
+              </motion.h1>
               
-              <div className="hero-subtitle space-y-2">
+              <motion.div 
+                className="hero-subtitle space-y-2"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              >
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-muted-foreground">
                   {portfolioData.personal.subtitle}
                 </h2>
                 <h3 className="text-lg sm:text-xl text-primary font-medium">
                   {portfolioData.personal.description}
                 </h3>
-              </div>
+              </motion.div>
             </motion.div>
 
             <motion.p

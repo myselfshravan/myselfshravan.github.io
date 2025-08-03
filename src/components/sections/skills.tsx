@@ -176,7 +176,7 @@ export function Skills() {
                   <CardContent className="p-0">
                     <div className="flex flex-col items-center space-y-3">
                       <div className="p-3 bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors">
-                        {hobby.icon.startsWith('fas') || hobby.icon.startsWith('devicon') ? (
+                        {hobby.icon.startsWith('fa') || hobby.icon.startsWith('devicon') ? (
                           <i className={`${hobby.icon} text-2xl text-primary`} />
                         ) : (
                           <Heart className="h-6 w-6 text-primary" />
