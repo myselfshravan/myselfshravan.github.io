@@ -77,7 +77,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <Header />
-      <main>
+      <main className="pt-16">
         <Hero />
         <About />
         <Skills />
