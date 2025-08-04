@@ -98,34 +98,106 @@ export function Education() {
         </motion.div>
 
         {/* Education Timeline */}
-        <div ref={timelineRef} className="relative max-w-4xl mx-auto">
-          {/* Timeline Line */}
-          <div className="absolute left-8 top-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-primary timeline-line" />
+        <div ref={timelineRef} className="relative max-w-4xl mx-auto px-4 md:px-0">
+          {/* Timeline Line - Hidden on mobile, visible on larger screens */}
+          <div className="absolute left-8 top-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-primary timeline-line hidden md:block" />
 
-          <div className="space-y-12">
+          <div className="space-y-8 md:space-y-12">
             {portfolioData.education.map((edu, index) => (
               <motion.div
                 key={index}
-                className="education-card relative flex items-start space-x-8"
+                className="education-card relative"
                 initial={{ opacity: 0, x: -50 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
               >
-                {/* Timeline Dot */}
-                <div className="relative z-10 flex-shrink-0">
+                {/* Mobile Layout - Stack vertically */}
+                <div className="md:hidden">
                   <motion.div
-                    className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    className="w-full"
+                    whileHover={{ scale: 1.02, y: -5 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <GraduationCap className="h-8 w-8 text-primary-foreground" />
-                  </motion.div>
-                  
-                  {/* Timeline connector */}
-                  {index < portfolioData.education.length - 1 && (
-                    <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-0.5 h-12 bg-gradient-to-b from-primary/50 to-transparent" />
-                  )}
+                      <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:border-primary/30">
+                        <div className="flex flex-col">
+                          {/* Institution Image */}
+                          <div className="relative">
+                            <div className="aspect-video relative bg-gradient-to-br from-primary/5 to-secondary/5">
+                              <Image
+                                src={`/assets/img/${edu.image}`}
+                                alt={edu.institution}
+                                fill
+                                className="object-cover"
+                                sizes="100vw"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                            </div>
+                          </div>
+
+                          {/* Content */}
+                          <div className="flex-1">
+                            <CardHeader className="pb-3">
+                              <div className="flex items-start justify-between flex-wrap gap-2">
+                                <div>
+                                  <CardTitle className="text-lg mb-2 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
+                                    {edu.institution}
+                                  </CardTitle>
+                                  <p className="text-muted-foreground font-medium text-sm">
+                                    {edu.degree}
+                                  </p>
+                                </div>
+                                <Badge variant="outline" className="flex items-center space-x-1">
+                                  <Calendar className="h-3 w-3" />
+                                  <span className="text-xs">{edu.duration}</span>
+                                </Badge>
+                              </div>
+                            </CardHeader>
+
+                            <CardContent className="pt-0">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                                  <MapPin className="h-4 w-4" />
+                                  <span>{edu.location}</span>
+                                </div>
+                                
+                                {edu.website && (
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => window.open(edu.website, "_blank")}
+                                    className="hover:bg-primary/10 transition-colors"
+                                  >
+                                    Visit Website
+                                    <ExternalLink className="ml-2 h-3 w-3" />
+                                  </Button>
+                                )}
+                              </div>
+                            </CardContent>
+                          </div>
+                        </div>
+                      </Card>
+                    </motion.div>
                 </div>
+
+                {/* Desktop Layout - Timeline style */}
+                <div className="hidden md:flex items-start space-x-8">
+                  {/* Timeline Dot */}
+                  <div className="relative z-10 flex-shrink-0">
+                    <motion.div
+                      className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <GraduationCap className="h-8 w-8 text-primary-foreground" />
+                    </motion.div>
+                    
+                    {/* Timeline connector */}
+                    {index < portfolioData.education.length - 1 && (
+                      <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-0.5 h-12 bg-gradient-to-b from-primary/50 to-transparent" />
+                    )}
+                  </div>
+
+                  {/* Desktop Education Card */}
 
                 {/* Education Card */}
                 <motion.div
@@ -192,6 +264,7 @@ export function Education() {
                     </div>
                   </Card>
                 </motion.div>
+                </div>
               </motion.div>
             ))}
           </div>
