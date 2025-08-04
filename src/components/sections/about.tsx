@@ -1,8 +1,16 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { Code, Briefcase, GraduationCap, Heart, ExternalLink } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import {
+  Code,
+  Briefcase,
+  GraduationCap,
+  Heart,
+  ExternalLink,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import portfolioData from "@/lib/portfolio-data.json";
@@ -16,6 +24,7 @@ if (typeof window !== "undefined") {
 export function About() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const [expandedJob, setExpandedJob] = useState<number | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined" && sectionRef.current) {
@@ -55,6 +64,10 @@ export function About() {
     visible: { y: 0, opacity: 1 },
   };
 
+  const toggleJobDescription = (index: number) => {
+    setExpandedJob(expandedJob === index ? null : index);
+  };
+
   return (
     <section
       id="about"
@@ -80,14 +93,318 @@ export function About() {
           </p>
         </motion.div>
 
+        {/* Mobile Layout - Stack all cards vertically */}
         <motion.div
-          className="grid lg:grid-cols-2 gap-12 items-start"
+          className="lg:hidden space-y-6"
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {/* Left Column - Introduction */}
+          {/* My Story */}
+          <motion.div variants={itemVariants}>
+            <Card className="about-card p-4 bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-lg transition-all duration-300">
+              <CardContent className="p-0">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Code className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold">My Story</h3>
+                </div>
+                <div className="space-y-4 text-muted-foreground">
+                  {portfolioData.personal.intro
+                    .slice(0, 3)
+                    .map((line, index) => (
+                      <motion.p
+                        key={index}
+                        className="leading-relaxed"
+                        dangerouslySetInnerHTML={{
+                          __html: line
+                            .replace(
+                              /<b><a class="text-blue-500" href="([^"]*)">/g,
+                              '<strong><a class="text-primary hover:underline" href="$1" target="_blank">'
+                            )
+                            .replace(/<\/a><\/b>/g, "</a></strong>"),
+                        }}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                      />
+                    ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Professional Experience */}
+          <motion.div variants={itemVariants}>
+            <Card className="about-card p-3 bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-lg transition-all duration-300">
+              <CardContent className="p-0">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Briefcase className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold">
+                    Professional Experience
+                  </h3>
+                </div>
+                <div className="space-y-3">
+                  {portfolioData.work.map((job, index) => (
+                    <motion.div
+                      key={index}
+                      className="bg-muted/20 rounded-lg group hover:bg-muted/30 transition-colors duration-200"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                    >
+                      <div
+                        className="flex items-center justify-between p-3 cursor-pointer"
+                        onClick={() => toggleJobDescription(index)}
+                      >
+                        <div className="flex-1">
+                          <h4 className="font-medium text-foreground">
+                            {job.position}
+                          </h4>
+                          <div className="flex items-center space-x-2">
+                            {job.website && job.website !== "#" ? (
+                              <a
+                                href={job.website}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center space-x-1 group-hover:text-primary/80"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <span>{job.company}</span>
+                                <ExternalLink className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                              </a>
+                            ) : (
+                              <p className="text-sm text-muted-foreground">
+                                {job.company}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Badge variant="outline" className="text-xs">
+                            {job.startDate} - {job.endDate}
+                          </Badge>
+                          {expandedJob === index ? (
+                            <ChevronUp className="h-4 w-4 text-muted-foreground" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                          )}
+                        </div>
+                      </div>
+
+                      <AnimatePresence>
+                        {expandedJob === index && job.description && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-3 pb-3 pt-0">
+                              <div className="border-t border-muted/30 pt-3">
+                                <ul className="space-y-2">
+                                  {job.description.map((desc, descIndex) => (
+                                    <li
+                                      key={descIndex}
+                                      className="text-sm text-muted-foreground flex items-start space-x-2"
+                                    >
+                                      <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
+                                      <span>{desc}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* What I Do */}
+          <motion.div variants={itemVariants}>
+            <Card className="about-card p-4 bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-lg transition-all duration-300">
+              <CardContent className="p-0">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Heart className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold">What I Do</h3>
+                </div>
+                <div className="space-y-4 text-muted-foreground">
+                  {portfolioData.personal.intro
+                    .slice(3, 7)
+                    .map((line, index) => (
+                      <motion.p
+                        key={index}
+                        className="leading-relaxed"
+                        dangerouslySetInnerHTML={{
+                          __html: line
+                            .replace(
+                              /<a class="text-blue-500 underline" href="([^"]*)">/g,
+                              '<a class="text-primary hover:underline font-medium" href="$1" target="_blank">'
+                            )
+                            .replace(
+                              /<a class="text-blue-500 font-bold" href="([^"]*)">/g,
+                              '<a class="text-primary hover:underline font-bold" href="$1" target="_blank">'
+                            ),
+                        }}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                      />
+                    ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* My Mission */}
+          <motion.div variants={itemVariants}>
+            <Card className="about-card p-4 bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-lg transition-all duration-300">
+              <CardContent className="p-0">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <GraduationCap className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold">My Mission</h3>
+                </div>
+                <motion.div
+                  className="space-y-4"
+                  initial={{ opacity: 0 }}
+                  animate={isInView ? { opacity: 1 } : {}}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                >
+                  <p className="text-muted-foreground leading-relaxed">
+                    {portfolioData.personal.goal}
+                  </p>
+                  <div className="p-4 bg-primary/5 rounded-lg border-l-4 border-primary">
+                    <p className="text-sm text-muted-foreground italic">
+                      {
+                        portfolioData.personal.intro[
+                          portfolioData.personal.intro.length - 1
+                        ]
+                      }
+                    </p>
+                  </div>
+                </motion.div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </motion.div>
+
+        {/* Desktop Layout - Professional Experience left, others right */}
+        <motion.div
+          className="hidden lg:grid lg:grid-cols-2 gap-12 items-start"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          {/* Left Column - Professional Experience */}
+          <motion.div variants={itemVariants}>
+            <Card className="about-card p-6 bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-lg transition-all duration-300">
+              <CardContent className="p-0">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Briefcase className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold">
+                    Professional Experience
+                  </h3>
+                </div>
+                <div className="space-y-3">
+                  {portfolioData.work.map((job, index) => (
+                    <motion.div
+                      key={index}
+                      className="bg-muted/20 rounded-lg group hover:bg-muted/30 transition-colors duration-200"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                    >
+                      <div
+                        className="flex items-center justify-between p-3 cursor-pointer"
+                        onClick={() => toggleJobDescription(index)}
+                      >
+                        <div className="flex-1">
+                          <h4 className="font-medium text-foreground">
+                            {job.position}
+                          </h4>
+                          <div className="flex items-center space-x-2">
+                            {job.website && job.website !== "#" ? (
+                              <a
+                                href={job.website}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center space-x-1 group-hover:text-primary/80"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <span>{job.company}</span>
+                                <ExternalLink className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                              </a>
+                            ) : (
+                              <p className="text-sm text-muted-foreground">
+                                {job.company}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Badge variant="outline" className="text-xs">
+                            {job.startDate} - {job.endDate}
+                          </Badge>
+                          {expandedJob === index ? (
+                            <ChevronUp className="h-4 w-4 text-muted-foreground" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                          )}
+                        </div>
+                      </div>
+
+                      <AnimatePresence>
+                        {expandedJob === index && job.description && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-3 pb-3 pt-0">
+                              <div className="border-t border-muted/30 pt-3">
+                                <ul className="space-y-2">
+                                  {job.description.map((desc, descIndex) => (
+                                    <li
+                                      key={descIndex}
+                                      className="text-sm text-muted-foreground flex items-start space-x-2"
+                                    >
+                                      <span className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0" />
+                                      <span>{desc}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Right Column - My Story, What I Do, My Mission */}
           <motion.div variants={itemVariants} className="space-y-6">
+            {/* My Story */}
             <Card className="about-card p-6 bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-lg transition-all duration-300">
               <CardContent className="p-0">
                 <div className="flex items-center space-x-3 mb-4">
@@ -120,61 +437,7 @@ export function About() {
               </CardContent>
             </Card>
 
-            <Card className="about-card p-6 bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-lg transition-all duration-300">
-              <CardContent className="p-0">
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <Briefcase className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-semibold">
-                    Professional Experience
-                  </h3>
-                </div>
-                <div className="space-y-3">
-                  {portfolioData.work.map((job, index) => (
-                    <motion.div
-                      key={index}
-                      className="flex items-center justify-between p-3 bg-muted/20 rounded-lg group hover:bg-muted/30 transition-colors duration-200"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ duration: 0.4, delay: index * 0.1 }}
-                    >
-                      <div className="flex-1">
-                        <h4 className="font-medium text-foreground">
-                          {job.position}
-                        </h4>
-                        {job.website ? (
-                          <a
-                            href={job.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center space-x-1 group-hover:text-primary/80"
-                          >
-                            <span>{job.company}</span>
-                            <ExternalLink className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                          </a>
-                        ) : (
-                          <p className="text-sm text-muted-foreground">
-                            {job.company}
-                          </p>
-                        )}
-                      </div>
-                      <Badge
-                        variant={
-                          job.status === "Current" ? "default" : "secondary"
-                        }
-                      >
-                        {job.status}
-                      </Badge>
-                    </motion.div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Right Column - More Details */}
-          <motion.div variants={itemVariants} className="space-y-6">
+            {/* What I Do */}
             <Card className="about-card p-6 bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-lg transition-all duration-300">
               <CardContent className="p-0">
                 <div className="flex items-center space-x-3 mb-4">
@@ -210,6 +473,7 @@ export function About() {
               </CardContent>
             </Card>
 
+            {/* My Mission */}
             <Card className="about-card p-6 bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-lg transition-all duration-300">
               <CardContent className="p-0">
                 <div className="flex items-center space-x-3 mb-4">
@@ -251,7 +515,7 @@ export function About() {
         >
           {[
             { number: "180+", label: "Projects Built" },
-            { number: "4", label: "Companies Worked" },
+            { number: "6", label: "Companies Worked" },
             { number: "3+", label: "Years Experience" },
             { number: "∞", label: "Learning Never Stops" },
           ].map((stat, index) => (

@@ -12,7 +12,7 @@
       "🌝 You already know my name, it's like right there",
       "🎓 I graduated with a B.E. in CSE (AI & ML) from Ramaiah Institute of Technology",
       "💼 Currently working at Udaan as Software Development Engineer Intern.",
-      "💻 Previously worked at Spritle Software as Machine Learning Intern, NextWealth as Gen-AI Intern and Foodingo Pvt. Ltd as Full Stack Developer.",
+      "",
       "🤔 What have I created? Let me tell you, I've built a lots of websites, dashboards, and a bunch of GenAI Solutions that will blow your mind.",
       "😎 I have also developed a study material website called NoteRep that everyone uses to prepare just days before exams.",
       "🧑‍💻 I have developed more than 180 full stack project which includes multiple SaaS products and automation tools and scripts. I love to explore new tech and build cool stuff.",
@@ -165,30 +165,64 @@
       "company": "udaanCapital",
       "position": "Software Engineer Intern",
       "status": "Current",
-      "website": "https://udaancapital.com"
+      "startDate": "Jul-2025",
+      "endDate": "Present",
+      "website": "https://udaancapital.com",
+      "description": [
+        "Working on onboarding team to build risk asisessment BRE system.",
+        "Optimizing application performance and ensuring scalability in onboarding."
+      ]
     },
     {
-      "company": "UDAAN",
+      "company": "Udaan",
       "position": "Software Engineer Intern",
       "status": "previous",
-      "website": "https://udaan.com"
+      "startDate": "Jun-2025",
+      "endDate": "May-2025",
+      "website": "https://udaan.com",
+      "description": [
+        "Built full-stack features in Kotlin & TypeScript for multiple consoles.",
+        "Automated competitor-account APIs, cutting setup errors by 70%.",
+        "Enhanced data workflows & improved MM and Pricing console efficiency.",
+        "Engineered resilient pricing pipelines with 99% uptime & live insights."
+      ]
     },
     {
-      "company": "Spritle Software",
+      "company": "CADRE ODR",
       "position": "Machine Learning Intern",
       "status": "Previous",
-      "website": "https://www.spritle.com"
+      "startDate": "Jan-2024",
+      "endDate": "Apr-2024",
+      "website": "https://cadreodr.com",
+      "description": [
+        "Built a real-time grievance redressal app using ChromaDB + Mistral 7B/LLaMA 2 for interaction & info extraction.",
+        "Fine-tuned BART for zero-shot hierarchical classification of government departments, integrated into chatbot workflows."
+      ]
     },
     {
       "company": "NextWealth",
       "position": "Gen-AI Intern",
       "status": "Previous",
-      "website": "https://nextwealth.com"
+      "startDate": "Oct-2023",
+      "endDate": "Jan-2024",
+      "website": "https://nextwealth.com",
+      "description": [
+        "Developed a GenAI-based solution for automating data extraction from unstructured documents, cutting handling time by 5 mins/task.",
+        "Built AI workflows removing a QC layer, streamlining operations.",
+        "Led AI prototype development, solving complex client challenges & reducing costs."
+      ]
     },
     {
       "company": "Foodingo Pvt. Ltd",
       "position": "Full Stack Developer",
-      "status": "Previous"
+      "status": "Previous",
+      "startDate": "Jun-2022",
+      "endDate": "Aug-2023",
+      "website": "#",
+      "description": [
+        "Collaboratively designed and developed the backend architecture.",
+        "Built a dynamic landing page and admin panel web app with role-based access controls."
+      ]
     }
   ],
   "meta": {
