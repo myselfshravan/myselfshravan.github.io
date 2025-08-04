@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { Code2, Wrench, Heart, Gamepad2, Headphones, Laptop, BookOpen, Palette, Route } from "lucide-react"
+import { Code2, Wrench, Heart, Gamepad2, Headphones, Laptop, BookOpen, Palette, Route, CookingPot, Camera } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import portfolioData from "@/lib/portfolio-data.json"
@@ -20,6 +20,8 @@ const hobbyIconMap = {
   Gamepad2,
   Palette,
   Route,
+  CookingPot,
+  Camera
 }
 
 export function Skills() {
@@ -140,7 +142,7 @@ export function Skills() {
                             variant="secondary"
                             className="px-4 py-2 text-sm font-medium bg-background/80 hover:bg-primary/10 transition-colors cursor-pointer"
                           >
-                            <i className={`devicon-${skill.icon}-original mr-2 text-base`} />
+                            <i className={`${skill.icon} mr-2 text-base`} />
                             {skill.name}
                           </Badge>
                         </motion.div>

@@ -47,20 +47,28 @@
   },
   "skills": {
     "languages": [
-      { "name": "NextJS", "icon": "nextjs" },
-      { "name": "React", "icon": "react" },
-      { "name": "Node.js", "icon": "nodejs" },
-      { "name": "Python", "icon": "python" },
-      { "name": "JavaScript", "icon": "javascript" },
-      { "name": "Firebase", "icon": "firebase" },
-      { "name": "Tailwind", "icon": "tailwindcss" }
+      { "name": "NextJS", "icon": "devicon-nextjs-original" },
+      { "name": "React", "icon": "devicon-react-original" },
+      { "name": "Node.js", "icon": "devicon-nodejs-plain" },
+      { "name": "Python", "icon": "devicon-python-plain" },
+      { "name": "JavaScript", "icon": "devicon-javascript-plain" },
+      { "name": "Firebase", "icon": "devicon-firebase-plain" },
+      { "name": "TypeScript", "icon": "devicon-typescript-plain" },
+      { "name": "HTML5", "icon": "devicon-html5-plain" },
+      { "name": "CSS3", "icon": "devicon-css3-plain" },
+      { "name": "Tailwind CSS", "icon": "devicon-tailwindcss-plain" }
     ],
     "tools": [
-      { "name": "GitHub", "icon": "github" },
-      { "name": "Git", "icon": "git" },
-      { "name": "VS Code", "icon": "visualstudio" },
-      { "name": "Figma", "icon": "figma" },
-      { "name": "Canva", "icon": "canva" }
+      { "name": "GitHub", "icon": "devicon-github-original" },
+      { "name": "Git", "icon": "devicon-git-plain" },
+      { "name": "VS Code", "icon": "devicon-vscode-plain" },
+      { "name": "IntelliJ IDEA", "icon": "devicon-intellij-plain" },
+      { "name": "Postman", "icon": "devicon-postman-plain" },
+      { "name": "Docker", "icon": "devicon-docker-plain" },
+      { "name": "Kubernetes", "icon": "devicon-kubernetes-plain" },
+      { "name": "Linux", "icon": "devicon-linux-plain" },
+      { "name": "Figma", "icon": "devicon-figma-plain" },
+      { "name": "Canva", "icon": "devicon-canva-original" }
     ]
   },
   "hobbies": [
@@ -69,7 +77,9 @@
     { "icon": "BookOpen", "text": "Writing Blogs & Reading Books" },
     { "icon": "Gamepad2", "text": "Playing Video Games" },
     { "icon": "Palette", "text": "UX & UI Designing" },
-    { "icon": "Route", "text": "Travelling & Exploring Nature" }
+    { "icon": "Route", "text": "Travelling & Exploring Nature" },
+    { "icon": "CookingPot", "text": "Cooking & Trying New Recipes" },
+    { "icon": "Camera", "text": "Photography & Videography" }
   ],
   "projects": {
     "personal": [
