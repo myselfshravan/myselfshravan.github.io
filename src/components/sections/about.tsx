@@ -402,7 +402,7 @@ export function About() {
             </Card>
           </motion.div>
 
-          {/* Right Column - My Story, What I Do, My Mission */}
+          {/* Right Column - My Story, What I Do */}
           <motion.div variants={itemVariants} className="space-y-6">
             {/* My Story */}
             <Card className="about-card p-6 bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-lg transition-all duration-300">
@@ -472,38 +472,40 @@ export function About() {
                 </div>
               </CardContent>
             </Card>
-
-            {/* My Mission */}
-            <Card className="about-card p-6 bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-lg transition-all duration-300">
-              <CardContent className="p-0">
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <GraduationCap className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-semibold">My Mission</h3>
-                </div>
-                <motion.div
-                  className="space-y-4"
-                  initial={{ opacity: 0 }}
-                  animate={isInView ? { opacity: 1 } : {}}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                >
-                  <p className="text-muted-foreground leading-relaxed">
-                    {portfolioData.personal.goal}
-                  </p>
-                  <div className="p-4 bg-primary/5 rounded-lg border-l-4 border-primary">
-                    <p className="text-sm text-muted-foreground italic">
-                      {
-                        portfolioData.personal.intro[
-                          portfolioData.personal.intro.length - 1
-                        ]
-                      }
-                    </p>
-                  </div>
-                </motion.div>
-              </CardContent>
-            </Card>
           </motion.div>
+        </motion.div>
+
+        {/* My Mission */}
+        <motion.div className="mt-12 text-center">
+          <Card className="about-card p-6 bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-lg transition-all duration-300">
+            <CardContent className="p-0">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <GraduationCap className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold">My Mission</h3>
+              </div>
+              <motion.div
+                className="space-y-4"
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                <p className="text-muted-foreground leading-relaxed">
+                  {portfolioData.personal.goal}
+                </p>
+                <div className="p-4 bg-primary/5 rounded-lg border-l-4 border-primary">
+                  <p className="text-sm text-muted-foreground italic">
+                    {
+                      portfolioData.personal.intro[
+                        portfolioData.personal.intro.length - 1
+                      ]
+                    }
+                  </p>
+                </div>
+              </motion.div>
+            </CardContent>
+          </Card>
         </motion.div>
 
         {/* Stats Section */}
