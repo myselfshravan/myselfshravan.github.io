@@ -99,8 +99,8 @@ export function Contact() {
           </p>
         </motion.div>
 
-        <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             {/* Contact Information */}
             <motion.div
               className="space-y-8"
@@ -118,7 +118,7 @@ export function Contact() {
               </div>
 
               {/* Contact Methods */}
-              <div ref={cardsRef} className="space-y-4">
+              <div ref={cardsRef} className="space-y-3 sm:space-y-4">
                 {contactMethods.map((method) => {
                   const Icon = method.icon
                   return (
@@ -128,18 +128,18 @@ export function Contact() {
                       whileHover={{ scale: 1.02, x: 5 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <Card className={`bg-gradient-to-r ${method.gradient} border-muted/20 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 cursor-pointer hover:border-primary/30`}>
-                        <CardContent className="p-6">
-                          <div className="flex items-center space-x-4">
-                            <div className="p-3 bg-background/50 rounded-lg">
-                              <Icon className={`h-6 w-6 ${method.iconColor}`} />
+                      <Card className={`bg-gradient-to-r ${method.gradient} border-muted/20 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 cursor-pointer hover:border-primary/30 w-full`}>
+                        <CardContent className="p-4 sm:p-6">
+                          <div className="flex items-center space-x-3 sm:space-x-4">
+                            <div className="p-2 sm:p-3 bg-background/50 rounded-lg flex-shrink-0">
+                              <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${method.iconColor}`} />
                             </div>
-                            <div className="flex-1">
-                              <h4 className="font-semibold text-foreground">{method.title}</h4>
-                              <p className="text-sm text-muted-foreground mb-1">{method.description}</p>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-semibold text-foreground truncate">{method.title}</h4>
+                              <p className="text-xs sm:text-sm text-muted-foreground mb-1 truncate">{method.description}</p>
                               <a
                                 href={method.href}
-                                className="text-primary hover:underline font-medium"
+                                className="text-primary hover:underline font-medium text-sm sm:text-base truncate block"
                                 target={method.href.startsWith('http') ? '_blank' : undefined}
                                 rel={method.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                               >
@@ -150,7 +150,7 @@ export function Contact() {
                               variant="ghost"
                               size="icon"
                               onClick={() => window.open(method.href, method.href.startsWith('http') ? '_blank' : '_self')}
-                              className="opacity-0 group-hover:opacity-100 transition-opacity"
+                              className="opacity-0 group-hover:opacity-100 transition-opacity hidden sm:flex flex-shrink-0"
                             >
                               <Send className="h-4 w-4" />
                             </Button>
