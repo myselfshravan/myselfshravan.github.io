@@ -50,7 +50,7 @@ export function Skills() {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-5 gap-6"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
