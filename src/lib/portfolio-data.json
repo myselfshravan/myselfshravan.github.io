@@ -74,9 +74,9 @@
         "github_url": "https://github.com/myselfshravan/noterep",
         "blog_url": "https://blog.shravanrevanna.me/story-behind-noterep-the-popular-site-of-college",
         "linkText": "Visit Website",
-        "description": "Study platform serving 2000+ students with AI chatbot, CGPA predictor, and community-driven content",
-        "tech": "Next.js, TypeScript, Firebase, AI Integration",
-        "metrics": "200+ active users, 85K+ views till date"
+        "description": "The go-to platform for 2000+ students who ace their exams with last-minute prep, featuring 20+ tools including real-time timetables, live calendars, AI Chatbot, and open-source community content",
+        "tech": "Next.js, TypeScript, Firebase, LLM Integration",
+        "metrics": "200+ active users, 85K+ views till date, Ranks top 1 on Google for 'NoteRep'"
       },
       {
         "name": "F&B QR Ordering System",
@@ -85,7 +85,7 @@
         "github_url": "https://github.com/myselfshravan/fandb-client-website",
         "demo_url": "https://drive.google.com/file/d/1WgFVc09hAKIXi08Q4JZq9eqSP_mLNs2z/view",
         "linkText": "Live Demo",
-        "description": "QR-based restaurant ordering system with real-time kitchen updates and digital billing",
+        "description": "QR-based table food ordering system with real-time kitchen updates and seamless digital billing",
         "tech": "React, TypeScript, Node.js, AWS S3",
         "metrics": "2000+ monthly users, 100+ daily orders"
       },
@@ -96,7 +96,7 @@
         "github_url": "https://github.com/myselfshravan/hdfc-statement-explorer",
         "blog_url": "https://blog.shravanrevanna.me/hdfc-statement-analyse-like-a-pro",
         "linkText": "Try It Out",
-        "description": "AI-powered bank statement analyzer with spending insights and community transaction tagging",
+        "description": "AI-powered bank statement analyzer with MCP-driven smart auto-tagging and intelligent reconciliation for effortless financial insights",
         "tech": "React, PostgreSQL, AI Integration",
         "metrics": "B-tree optimized queries, community tagging"
       },
@@ -107,7 +107,7 @@
         "github_url": "https://github.com/myselfshravan/AI-Meal-Planner",
         "blog_url": "https://blog.shravanrevanna.me/ai-meal-planner-using-llama-70b-and-knapsack-algorithm",
         "linkText": "Try Web App",
-        "description": "Personalized meal planning using Llama 70B and knapsack algorithm for optimal nutrition",
+        "description": "Personalized BMI-based meal generator using Llama 70B to craft perfect calorie-matched nutrition plans tailored to your body's needs",
         "tech": "Python, Streamlit, Llama 70B",
         "metrics": "37 GitHub stars, dynamic programming optimization"
       },
@@ -118,9 +118,9 @@
         "github_url": "https://github.com/myselfshravan/VigilAI-IoT-HealthMonitor",
         "blog_url": "https://blog.shravanrevanna.me/vigilai-iot-health-monitoring-system-with-ai-and-esp32",
         "linkText": "View Website",
-        "description": "Affordable elderly care system with ESP32 sensors, fall detection, and AI health monitoring",
-        "tech": "ESP32, Python, Firebase, TensorFlow Lite",
-        "metrics": "Real-time vitals tracking, anomaly detection"
+        "description": "Affordable elderly healthcare system with ESP32 sensors featuring AI-powered voice and chat interfaces for direct interaction with real-time vital monitoring",
+        "tech": "ESP32, Python, Firebase Realtime DB, LLM Integration",
+        "metrics": "Real-time vitals tracking, anomaly detections with SMS and Call alert system"
       },
       {
         "name": "Enigma Escape",
@@ -129,19 +129,9 @@
         "github_url": "https://github.com/myselfshravan/EnigmaEscape",
         "blog_url": "https://blog.shravanrevanna.me/enigma-escape-a-game-of-ai-manipulation-and-social-engineering",
         "linkText": "Play Game",
-        "description": "AI manipulation game where players make LLMs say specific phrases without direct prompting",
+        "description": "AI manipulation game where players master social engineering to make LLMs reveal secret phrases without direct prompting",
         "tech": "Streamlit, Llama-2-70b, Firebase",
         "metrics": "Social engineering for AI systems"
-      },
-      {
-        "name": "Idea Repository System",
-        "image": "project_idea_repository_system.png",
-        "website_url": "https://idearepo.vercel.app",
-        "github_url": "https://github.com/githubhosting/idearepo",
-        "linkText": "Visit Website",
-        "description": "Collaborative platform for storing, sharing, and developing project ideas",
-        "tech": "Next.js, Database Integration",
-        "metrics": "Community idea sharing"
       }
     ],
     "automation": [
@@ -150,7 +140,7 @@
         "blog_url": "https://blog.shravanrevanna.me/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
         "demo_url": "https://drive.google.com/file/d/1hqv6UWN_l7O6izAR9qSxotSxC-vwrF8R/view",
         "linkText": "Read Article",
-        "description": "Python automation bot that books restaurant reservations faster than manual booking",
+        "description": "Python bot that secures Naru Noodle reservations in seconds, beating the 2-minute sellout window every Monday at 8 PM",
         "tech": "Python, Selenium",
         "metrics": "Never missed a reservation"
       },
@@ -178,7 +168,7 @@
         "website_url": "https://gpaestimator.streamlit.app",
         "github_url": "https://github.com/githubhosting/GPAEstimator",
         "linkText": "Try It Out",
-        "description": "Precise GPA calculator that shows exactly what scores you need for target grades",
+        "description": "Advanced GPA calculator and predictor using class averages, weights, and exponential factors to precisely forecast your academic trajectory",
         "tech": "Streamlit, Python",
         "metrics": "Student productivity tool"
       },
@@ -187,7 +177,7 @@
         "image": "project_fastiq.png",
         "website_url": "https://fastiq.vercel.app",
         "linkText": "View Project",
-        "description": "Multi-API LLM playground with community prompt templates and model comparison",
+        "description": "Multi-API LLM playground with community-driven prompt templates showcasing the art of prompt engineering",
         "tech": "React, Multiple LLM APIs",
         "metrics": "Community prompt sharing"
       }

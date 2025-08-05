@@ -123,7 +123,7 @@ export function Hero() {
           </motion.div>
 
           {/* Key Stats */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
@@ -141,7 +141,7 @@ export function Hero() {
               <div className="text-2xl font-bold text-primary">4+</div>
               <div className="text-sm text-muted-foreground">Years</div>
             </div>
-          </motion.div>
+          </motion.div> */}
 
           {/* CTA Buttons */}
           <motion.div
