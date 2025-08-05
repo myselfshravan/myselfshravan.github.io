@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     siteName: portfolioData.personal.name,
     images: [
       {
-        url: `/assets/img/${portfolioData.personal.profileImages[4]}`,
+        url: "/og_image.png",
         width: 1200,
         height: 630,
         alt: portfolioData.personal.name,
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: portfolioData.meta.title,
     description: portfolioData.meta.description,
-    images: [`/assets/img/${portfolioData.personal.profileImages[4]}`],
+    images: ["/og_image.png"],
     creator: "@myselfshravan",
   },
   verification: {
