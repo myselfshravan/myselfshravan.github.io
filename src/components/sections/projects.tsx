@@ -2,7 +2,8 @@
 
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { ExternalLink, Github, FileText, Play, Code } from "lucide-react";
+import { ExternalLink, FileText, Play, Code } from "lucide-react";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import portfolioData from "@/lib/portfolio-data.json";
@@ -33,7 +34,13 @@ export function Projects() {
     ...portfolioData.projects.tools,
   ];
 
-  const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+  const ProjectCard = ({
+    project,
+    index,
+  }: {
+    project: Project;
+    index: number;
+  }) => {
     // Get all available URLs
     const urls = [
       {
@@ -45,7 +52,7 @@ export function Projects() {
       {
         type: "github",
         url: project.github_url,
-        icon: Github,
+        icon: GitHubLogoIcon,
         label: "GitHub",
       },
       { type: "blog", url: project.blog_url, icon: FileText, label: "Blog" },
@@ -66,20 +73,26 @@ export function Projects() {
         <Card className="h-full overflow-hidden bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group-hover:border-primary/30">
           {hasImage ? (
             <div className="relative overflow-hidden">
-              <div className="aspect-video relative bg-gradient-to-br from-primary/5 to-secondary/5">
+              <div className="relative bg-gradient-to-br from-primary/5 to-secondary/5 min-h-[200px] max-h-[280px] flex items-center justify-center">
                 <Image
                   src={`/assets/img/${project.image}`}
                   alt={project.name}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  width={400}
+                  height={250}
+                  className="object-contain max-w-full max-h-full transition-transform duration-300 group-hover:scale-[1.02]"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
             </div>
           ) : (
-            <div className="aspect-video relative bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-              <Code className="h-12 w-12 text-primary/40" />
+            <div className="relative bg-gradient-to-br from-primary/10 to-secondary/10 min-h-[200px] max-h-[280px] flex items-center justify-center">
+              <div className="text-center space-y-3">
+                <Code className="h-16 w-16 text-primary/40 mx-auto" />
+                <div className="text-xs text-muted-foreground font-mono">
+                  {project.tech ? project.tech.split(',')[0].trim() : 'Code'}
+                </div>
+              </div>
             </div>
           )}
 
@@ -191,7 +204,7 @@ export function Projects() {
         >
           <div className="text-center mb-12">
             <h3 className="text-2xl sm:text-3xl font-bold mb-4 font-mono">
-              <span className="text-primary">$</span> git --stats
+              <span className="text-primary">{">"}</span> github stats
             </h3>
             <p className="text-muted-foreground">
               My coding journey visualized through GitHub statistics
@@ -203,7 +216,7 @@ export function Projects() {
             <Card className="p-4 bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border-muted/20">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center space-x-2 font-mono text-sm">
-                  <Github className="h-5 w-5" />
+                  <GitHubLogoIcon className="h-5 w-5" />
                   <span>Primary Account</span>
                   <button
                     className="text-primary hover:text-primary/80 transition-colors font-mono text-xs underline underline-offset-2"
@@ -260,7 +273,7 @@ export function Projects() {
             <Card className="p-4 bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border-muted/20">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center space-x-2 font-mono text-sm">
-                  <Github className="h-5 w-5" />
+                  <GitHubLogoIcon className="h-5 w-5" />
                   <span>Secondary Account</span>
                   <button
                     className="text-primary hover:text-primary/80 transition-colors font-mono text-xs underline underline-offset-2"

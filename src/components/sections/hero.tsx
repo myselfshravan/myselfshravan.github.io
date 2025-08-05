@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Terminal, Github, FileText, ArrowDown } from "lucide-react";
+import { Terminal, FileText, ArrowDown } from "lucide-react";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import portfolioData from "@/lib/portfolio-data.json";
 
@@ -102,8 +103,9 @@ export function Hero() {
                 transition={{ delay: 2.5, duration: 0.5 }}
                 className="text-muted-foreground pt-2"
               >
-                Currently @ <span className="text-primary">udaanCapital</span> |
-                150+ projects shipped
+                Currently SE Intern @{" "}
+                <span className="text-primary">udaanCapital</span> | 150+
+                projects shipped
               </motion.div>
             </div>
           </motion.div>
@@ -175,7 +177,7 @@ export function Hero() {
               onClick={() => window.open(portfolioData.social.github, "_blank")}
               className="px-6 py-3 border-primary/20 hover:bg-primary/5"
             >
-              <Github className="mr-2 h-4 w-4" />
+              <GitHubLogoIcon className="mr-2 h-4 w-4" />
               source code
             </Button>
           </motion.div>
@@ -198,6 +200,14 @@ export function Hero() {
               className="hover:text-primary transition-colors underline underline-offset-4"
             >
               work
+            </button>
+            <button
+              onClick={() =>
+                window.open(`/${portfolioData.personal.resumeFile}`, "_blank")
+              }
+              className="hover:text-primary transition-colors underline underline-offset-4"
+            >
+              resume
             </button>
             <button
               onClick={() => scrollToSection("#contact")}

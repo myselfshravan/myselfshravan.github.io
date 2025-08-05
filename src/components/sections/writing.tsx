@@ -24,8 +24,8 @@ export function Writing() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold mb-4 font-mono">
-            <span className="text-primary">$</span> cat /writings/*
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 font-mono">
+            <span className="text-primary">#</span> writings
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             I write about automation, AI projects, and the tools I build. Real
@@ -33,7 +33,7 @@ export function Writing() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {portfolioData.writing.featured_posts.map((post, index) => (
             <motion.div
               key={index}

@@ -54,12 +54,6 @@
       { "name": "React", "icon": "devicon-react-original" },
       { "name": "Node.js", "icon": "devicon-nodejs-plain" }
     ],
-    "ai_ml": [
-      { "name": "TensorFlow", "icon": "devicon-tensorflow-original" },
-      { "name": "PyTorch", "icon": "devicon-pytorch-original" },
-      { "name": "Llama", "icon": "devicon-python-plain" },
-      { "name": "ChromaDB", "icon": "devicon-python-plain" }
-    ],
     "databases": [
       { "name": "MongoDB", "icon": "devicon-mongodb-plain" },
       { "name": "PostgreSQL", "icon": "devicon-postgresql-plain" },
@@ -86,6 +80,7 @@
       },
       {
         "name": "F&B QR Ordering System",
+        "image": "project_fnb_qr_ordering_system.png",
         "website_url": "https://fnb-client-website.vercel.app",
         "github_url": "https://github.com/myselfshravan/fandb-client-website",
         "demo_url": "https://drive.google.com/file/d/1WgFVc09hAKIXi08Q4JZq9eqSP_mLNs2z/view",
@@ -96,6 +91,7 @@
       },
       {
         "name": "HDFC Account Explorer",
+        "image": "project_hdfc_statement_analyser.png",
         "website_url": "https://hdfc-account-explorer.vercel.app",
         "github_url": "https://github.com/myselfshravan/hdfc-statement-explorer",
         "blog_url": "https://blog.shravanrevanna.me/hdfc-statement-analyse-like-a-pro",
@@ -117,6 +113,7 @@
       },
       {
         "name": "VigilAI - IoT Health Monitor",
+        "image": "project_vigilai.png",
         "website_url": "https://vigilai-iot-health-monitor.vercel.app",
         "github_url": "https://github.com/myselfshravan/VigilAI-IoT-HealthMonitor",
         "blog_url": "https://blog.shravanrevanna.me/vigilai-iot-health-monitoring-system-with-ai-and-esp32",
@@ -187,6 +184,7 @@
       },
       {
         "name": "FastIQ LLM Playground",
+        "image": "project_fastiq.png",
         "website_url": "https://fastiq.vercel.app",
         "linkText": "View Project",
         "description": "Multi-API LLM playground with community prompt templates and model comparison",
@@ -223,7 +221,7 @@
   ],
   "work": [
     {
-      "company": "udaanCapital",
+      "company": "Udaan Capital",
       "position": "Software Engineer Intern",
       "status": "Current",
       "startDate": "Jul-2024",
@@ -236,7 +234,7 @@
     },
     {
       "company": "Udaan",
-      "position": "Software Engineer Intern",
+      "position": "SDE Intern",
       "status": "previous",
       "startDate": "Jun-2024",
       "endDate": "May-2025",

@@ -21,11 +21,6 @@ export function Skills() {
       skills: portfolioData.skills.frameworks.map((s) => s.name),
     },
     {
-      title: "AI/ML",
-      icon: "🤖",
-      skills: portfolioData.skills.ai_ml.map((s) => s.name),
-    },
-    {
       title: "Databases",
       icon: "💾",
       skills: portfolioData.skills.databases.map((s) => s.name),
@@ -75,7 +70,7 @@ export function Skills() {
                 </h3>
               </div>
               <div className="space-y-1">
-                {category.skills.map((skill, skillIndex) => (
+                {category.skills.map((skill) => (
                   <div
                     key={skill}
                     className="text-xs text-muted-foreground font-mono text-center py-1 px-2 bg-muted/20 rounded border border-muted/40 hover:border-primary/30 hover:text-primary transition-colors"

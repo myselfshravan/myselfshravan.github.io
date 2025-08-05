@@ -6,6 +6,7 @@ import { Hero } from "@/components/sections/hero";
 import { Skills } from "@/components/sections/skills";
 import { Projects } from "@/components/sections/projects";
 import { Writing } from "@/components/sections/writing";
+import { Work } from "@/components/sections/work";
 import { Contact } from "@/components/sections/contact";
 import { Footer } from "@/components/layout/footer";
 import { gsap } from "gsap";
@@ -80,6 +81,7 @@ export default function Home() {
         <Hero />
         <Projects />
         <Writing />
+        <Work />
         <Skills />
         <Contact />
       </main>
