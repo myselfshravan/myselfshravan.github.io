@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from "react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { Menu, ExternalLink } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Menu, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const navItems = [
   { name: "About", href: "#about" },
@@ -14,25 +14,25 @@ const navItems = [
   { name: "Projects", href: "#projects" },
   { name: "Education", href: "#education" },
   { name: "Contact", href: "#contact" },
-]
+];
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href)
+    const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      element.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   return (
     <motion.header
@@ -85,7 +85,7 @@ export function Header() {
               </motion.button>
             ))}
             <Link
-              href="https://shravanrevanna.hashnode.dev/"
+              href="https://blog.shravanrevanna.me/"
               target="_blank"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center space-x-1"
             >
@@ -97,7 +97,7 @@ export function Header() {
           {/* Theme Toggle & Mobile Menu */}
           <div className="flex items-center space-x-4">
             <ThemeToggle />
-            
+
             {/* Mobile Menu */}
             <Sheet>
               <SheetTrigger asChild>
@@ -117,7 +117,7 @@ export function Header() {
                     </button>
                   ))}
                   <Link
-                    href="https://shravanrevanna.hashnode.dev/"
+                    href="https://blog.shravanrevanna.me/"
                     target="_blank"
                     className="text-left text-lg font-medium hover:text-primary transition-colors py-2 flex items-center space-x-2"
                   >
@@ -131,5 +131,5 @@ export function Header() {
         </div>
       </div>
     </motion.header>
-  )
+  );
 }

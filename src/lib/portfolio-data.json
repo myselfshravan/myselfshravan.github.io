@@ -36,7 +36,7 @@
     "facebook": "https://facebook.com/Shravan.3.07",
     "twitter": "https://twitter.com/myselfshravan",
     "linktr": "https://linktr.ee/shravan_revanna",
-    "blog": "https://shravanrevanna.hashnode.dev/",
+    "blog": "https://blog.shravanrevanna.me/",
     "blog_redirect": "https://blog.shravanrevanna.me",
     "youtube": "https://www.youtube.com/channel/UC5NNBFQqhbuU2f5wprDVaVg",
     "telegram": "https://telegram.me/siddharth_channel",
@@ -147,7 +147,7 @@
     "automation": [
       {
         "name": "Restaurant Booking Bot",
-        "blog_url": "https://shravanrevanna.hashnode.dev/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
+        "blog_url": "https://blog.shravanrevanna.me/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
         "demo_url": "https://drive.google.com/file/d/1hqv6UWN_l7O6izAR9qSxotSxC-vwrF8R/view",
         "linkText": "Read Article",
         "description": "Python automation bot that books restaurant reservations faster than manual booking",
@@ -156,7 +156,7 @@
       },
       {
         "name": "IPL Ticket Automation",
-        "url": "https://shravanrevanna.hashnode.dev/automating-the-ipl-ticket-booking-for-rcb-match",
+        "url": "https://blog.shravanrevanna.me/automating-the-ipl-ticket-booking-for-rcb-match",
         "linkText": "Read Article",
         "description": "Automated ticket booking system for high-demand IPL matches",
         "tech": "Python, Web Automation",
@@ -299,12 +299,12 @@
       },
       {
         "title": "Automating Table Reservations with Script",
-        "url": "https://shravanrevanna.hashnode.dev/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
+        "url": "https://blog.shravanrevanna.me/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
         "description": "How I built a Python bot to secure restaurant reservations faster than manual booking (Naru Noodels Bar, Bangalore)"
       },
       {
         "title": "IPL Ticket Booking Automation",
-        "url": "https://shravanrevanna.hashnode.dev/automating-the-ipl-ticket-booking-for-rcb-match",
+        "url": "https://blog.shravanrevanna.me/automating-the-ipl-ticket-booking-for-rcb-match",
         "description": "Automated solution for high-demand sports ticket acquisition"
       }
     ]

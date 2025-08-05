@@ -173,7 +173,7 @@ export function Footer() {
             {/* Additional Links */}
             <div className="mt-4 space-y-2">
               <a
-                href="https://shravanrevanna.hashnode.dev"
+                href="https://blog.shravanrevanna.me"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center space-x-1"
