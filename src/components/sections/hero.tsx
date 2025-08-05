@@ -141,30 +141,30 @@ export function Hero() {
             <Button
               size="lg"
               onClick={() => scrollToSection("#projects")}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-mono px-6 py-3"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3"
             >
               <Terminal className="mr-2 h-4 w-4" />
-              ./view_projects.sh
+              view projects
             </Button>
             
             <Button
               variant="outline"
               size="lg"
               onClick={() => window.open(portfolioData.writing.blog_url, '_blank')}
-              className="font-mono px-6 py-3 border-primary/20 hover:bg-primary/5"
+              className="px-6 py-3 border-primary/20 hover:bg-primary/5"
             >
               <FileText className="mr-2 h-4 w-4" />
-              ./read_blog.sh
+              read blog
             </Button>
             
             <Button
               variant="outline"
               size="lg"
               onClick={() => window.open(portfolioData.social.github, '_blank')}
-              className="font-mono px-6 py-3 border-primary/20 hover:bg-primary/5"
+              className="px-6 py-3 border-primary/20 hover:bg-primary/5"
             >
               <Github className="mr-2 h-4 w-4" />
-              ./github.sh
+              source code
             </Button>
           </motion.div>
 

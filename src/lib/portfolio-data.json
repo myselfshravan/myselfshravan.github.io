@@ -287,17 +287,25 @@
     }
   ],
   "writing": {
-    "blog_url": "https://shravanrevanna.hashnode.dev/",
+    "blog_url": "https://blog.shravanrevanna.me",
     "featured_posts": [
       {
-        "title": "Automating Restaurant Reservations with Python",
+        "title": "Fast, Smart & Subtly Selling: Inside NoteRep's AI Chatbot with Ad-Integrated",
+        "url": "https://blog.shravanrevanna.me/a-brief-look-at-how-the-noterep-ai-chatbot-works",
+        "description" : "How I built a Groq-powered chatbot for NoteRep that delivers lightning-fast responses, remembers conversations, and seamlessly integrates ads making chat sessions smarter and monetization invisible."
+      },
+      {
+        "title": "Automating Table Reservations with Script",
         "url": "https://shravanrevanna.hashnode.dev/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
-        "description": "How I built a Python bot to secure restaurant reservations faster than manual booking"
+        "description": "How I built a Python bot to secure restaurant reservations faster than manual booking (Naru Noodels Bar, Bangalore)"
       },
       {
         "title": "IPL Ticket Booking Automation",
         "url": "https://shravanrevanna.hashnode.dev/automating-the-ipl-ticket-booking-for-rcb-match",
         "description": "Automated solution for high-demand sports ticket acquisition"
+      },
+      {
+        
       }
     ]
   },

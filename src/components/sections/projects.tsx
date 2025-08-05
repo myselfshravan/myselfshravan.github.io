@@ -2,13 +2,7 @@
 
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import {
-  ExternalLink,
-  Github,
-  FileText,
-  Play,
-  Code,
-} from "lucide-react";
+import { ExternalLink, Github, FileText, Play, Code } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import portfolioData from "@/lib/portfolio-data.json";
@@ -25,21 +19,25 @@ export function Projects() {
     ...portfolioData.projects.tools,
   ];
 
-  const ProjectCard = ({
-    project,
-    index,
-  }: {
-    project: any;
-    index: number;
-  }) => {
+  const ProjectCard = ({ project, index }: { project: any; index: number }) => {
     // Get all available URLs
     const urls = [
-      { type: 'website', url: project.website_url, icon: ExternalLink, label: 'Live Site' },
-      { type: 'github', url: project.github_url, icon: Github, label: 'GitHub' },
-      { type: 'blog', url: project.blog_url, icon: FileText, label: 'Blog' },
-      { type: 'demo', url: project.demo_url, icon: Play, label: 'Demo' },
-      { type: 'url', url: project.url, icon: ExternalLink, label: 'View' }, // fallback for old structure
-    ].filter(link => link.url);
+      {
+        type: "website",
+        url: project.website_url,
+        icon: ExternalLink,
+        label: "Live Site",
+      },
+      {
+        type: "github",
+        url: project.github_url,
+        icon: Github,
+        label: "GitHub",
+      },
+      { type: "blog", url: project.blog_url, icon: FileText, label: "Blog" },
+      { type: "demo", url: project.demo_url, icon: Play, label: "Demo" },
+      { type: "url", url: project.url, icon: ExternalLink, label: "View" }, // fallback for old structure
+    ].filter((link) => link.url);
 
     const hasImage = project.image;
 
@@ -86,7 +84,9 @@ export function Projects() {
 
             {project.tech && (
               <div className="space-y-2">
-                <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide">Tech Stack</div>
+                <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide">
+                  Tech Stack
+                </div>
                 <div className="text-xs text-primary font-mono bg-primary/5 px-2 py-1 rounded border border-primary/20">
                   {project.tech}
                 </div>
@@ -95,7 +95,9 @@ export function Projects() {
 
             {project.metrics && (
               <div className="space-y-2">
-                <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide">Impact</div>
+                <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide">
+                  Impact
+                </div>
                 <div className="text-xs text-green-400 font-mono bg-green-400/5 px-2 py-1 rounded border border-green-400/20">
                   {project.metrics}
                 </div>
@@ -142,10 +144,11 @@ export function Projects() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 font-mono">
-            <span className="text-primary">$</span> ls -la /projects/
+            <span className="text-primary">$</span> ls projects/
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Production applications, automation scripts, and tools that solve real problems
+            Production applications, automation scripts, and tools that solve
+            real problems
           </p>
         </motion.div>
 
@@ -204,20 +207,28 @@ export function Projects() {
               <CardContent className="space-y-4 px-2">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
-                    <div className="text-2xl font-bold text-primary font-mono">100+</div>
+                    <div className="text-2xl font-bold text-primary font-mono">
+                      100+
+                    </div>
                     <div className="text-xs text-muted-foreground font-mono">
                       repositories
                     </div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-primary font-mono">3+</div>
+                    <div className="text-2xl font-bold text-primary font-mono">
+                      3+
+                    </div>
                     <div className="text-xs text-muted-foreground font-mono">
                       years_active
                     </div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-primary font-mono">∞</div>
-                    <div className="text-xs text-muted-foreground font-mono">commits</div>
+                    <div className="text-2xl font-bold text-primary font-mono">
+                      ∞
+                    </div>
+                    <div className="text-xs text-muted-foreground font-mono">
+                      commits
+                    </div>
                   </div>
                 </div>
                 <div className="aspect-video relative bg-muted/20 rounded-lg overflow-hidden">
@@ -253,20 +264,28 @@ export function Projects() {
               <CardContent className="space-y-4 px-2">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
-                    <div className="text-2xl font-bold text-primary font-mono">50+</div>
+                    <div className="text-2xl font-bold text-primary font-mono">
+                      50+
+                    </div>
                     <div className="text-xs text-muted-foreground font-mono">
                       repositories
                     </div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-primary font-mono">2+</div>
+                    <div className="text-2xl font-bold text-primary font-mono">
+                      2+
+                    </div>
                     <div className="text-xs text-muted-foreground font-mono">
                       years_active
                     </div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-primary font-mono">∞</div>
-                    <div className="text-xs text-muted-foreground font-mono">commits</div>
+                    <div className="text-2xl font-bold text-primary font-mono">
+                      ∞
+                    </div>
+                    <div className="text-xs text-muted-foreground font-mono">
+                      commits
+                    </div>
                   </div>
                 </div>
                 <div className="aspect-video relative bg-muted/20 rounded-lg overflow-hidden">

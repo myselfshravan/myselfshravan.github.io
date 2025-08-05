@@ -59,9 +59,9 @@ export function Writing() {
                   <Button
                     variant="outline"
                     onClick={() => window.open(post.url, '_blank')}
-                    className="w-full font-mono text-sm border-primary/20 hover:bg-primary/5"
+                    className="w-full text-sm border-primary/20 hover:bg-primary/5"
                   >
-                    ./read_article.sh
+                    read article
                     <ExternalLink className="ml-2 h-3 w-3" />
                   </Button>
                 </CardContent>
@@ -80,10 +80,10 @@ export function Writing() {
           <Button
             size="lg"
             onClick={() => window.open(portfolioData.writing.blog_url, '_blank')}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-mono px-8 py-3"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
           >
             <FileText className="mr-2 h-4 w-4" />
-            ./view_all_posts.sh
+            view all posts
           </Button>
         </motion.div>
       </div>

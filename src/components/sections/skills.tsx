@@ -51,10 +51,10 @@ export function Skills() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-2xl font-bold mb-4 font-mono">
-            <span className="text-primary">$</span> cat /skills/tech_stack.txt
+            <span className="text-primary">$</span> skills --list
           </h2>
           <p className="text-muted-foreground">
-            Current arsenal for building production systems
+            Current tech stack for building production systems
           </p>
         </motion.div>
 
