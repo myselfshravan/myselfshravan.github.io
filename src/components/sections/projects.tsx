@@ -56,24 +56,24 @@ export function Projects() {
   const projectTabs = [
     {
       id: "personal",
-      label: "Personal Projects",
+      label: "AI & Full-Stack",
       icon: Star,
       projects: portfolioData.projects.personal,
-      description: "Projects I've built independently",
+      description: "Production applications serving thousands of users",
     },
     {
-      id: "team",
-      label: "Team Projects",
+      id: "automation",
+      label: "Automation",
       icon: Users,
-      projects: portfolioData.projects.team,
-      description: "Collaborative projects with teams",
+      projects: portfolioData.projects.automation,
+      description: "Scripts and bots that eliminate manual processes",
     },
     {
-      id: "pending",
-      label: "In Progress",
+      id: "tools",
+      label: "Tools",
       icon: Clock,
-      projects: portfolioData.projects.pending,
-      description: "Projects currently in development",
+      projects: portfolioData.projects.tools,
+      description: "Developer tools and utilities I've built",
     },
   ];
 
@@ -87,6 +87,8 @@ export function Projects() {
       url: string;
       linkText: string;
       description?: string;
+      tech?: string;
+      metrics?: string;
     };
     index: number;
   }) => (
@@ -140,24 +142,42 @@ export function Projects() {
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="pt-0">
+        <CardContent className="pt-0 space-y-4">
           {project.description && (
-            <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+            <p className="text-muted-foreground text-sm leading-relaxed">
               {project.description}
             </p>
           )}
 
-          <div className="flex items-center justify-between">
+          {project.tech && (
+            <div className="space-y-2">
+              <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide">Tech Stack</div>
+              <div className="text-xs text-primary font-mono bg-primary/5 px-2 py-1 rounded">
+                {project.tech}
+              </div>
+            </div>
+          )}
+
+          {project.metrics && (
+            <div className="space-y-2">
+              <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide">Impact</div>
+              <div className="text-xs text-green-400 font-mono bg-green-400/5 px-2 py-1 rounded">
+                {project.metrics}
+              </div>
+            </div>
+          )}
+
+          <div className="flex items-center justify-between pt-2">
             <div className="flex items-center space-x-2 text-xs text-muted-foreground">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <span>Live</span>
+              <span className="font-mono">live</span>
             </div>
 
             <Button
               variant="ghost"
               size="sm"
               onClick={() => window.open(project.url, "_blank")}
-              className="group-hover:bg-primary/10 transition-colors"
+              className="group-hover:bg-primary/10 transition-colors font-mono text-xs"
             >
               {project.linkText}
               <ExternalLink className="ml-2 h-3 w-3" />
@@ -181,15 +201,11 @@ export function Projects() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            My{" "}
-            <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Work
-            </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 font-mono">
+            <span className="text-primary">$</span> ls -la /projects/
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A showcase of projects that demonstrate my skills and passion for
-            creating innovative solutions
+            Production applications, automation scripts, and tools that solve real problems
           </p>
         </motion.div>
 

@@ -1,40 +1,36 @@
 "use client"
 
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
-import { ArrowDown, Download, Github, Linkedin, Instagram, Facebook } from "lucide-react"
+import { Terminal, Github, ExternalLink, FileText, ArrowDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import portfolioData from "@/lib/portfolio-data.json"
-import { gsap } from "gsap"
-
-const socialIcons = {
-  github: Github,
-  linkedin: Linkedin,
-  instagram: Instagram,
-  facebook: Facebook,
-}
 
 export function Hero() {
-  const heroRef = useRef<HTMLElement>(null)
-  const imageRef = useRef<HTMLDivElement>(null)
+  const [text, setText] = useState("")
+  const [showCursor, setShowCursor] = useState(true)
+  const fullText = `${portfolioData.personal.name.toLowerCase().replace(" ", "_")}@portfolio:~$ whoami`
 
   useEffect(() => {
-    // Only handle profile image rotation with GSAP
-    // Let Framer Motion handle all other animations to avoid conflicts
-    if (imageRef.current) {
-      gsap.to(imageRef.current, {
-        rotation: 360,
-        duration: 20,
-        repeat: -1,
-        ease: "none"
-      })
-    }
-  }, [])
+    let index = 0
+    const timer = setInterval(() => {
+      if (index < fullText.length) {
+        setText(fullText.slice(0, index + 1))
+        index++
+      } else {
+        clearInterval(timer)
+      }
+    }, 100)
 
-  const handleDownloadResume = () => {
-    window.open(`/${portfolioData.personal.resumeFile}`, "_blank")
-  }
+    const cursorTimer = setInterval(() => {
+      setShowCursor(prev => !prev)
+    }, 500)
+
+    return () => {
+      clearInterval(timer)
+      clearInterval(cursorTimer)
+    }
+  }, [fullText])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId)
@@ -44,168 +40,159 @@ export function Hero() {
   }
 
   return (
-    <section
-      ref={heroRef}
-      className="hero-section min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-background via-background/95 to-muted/20"
-    >
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-1000" />
+    <section className="hero-section min-h-screen flex items-center justify-center relative overflow-hidden bg-background">
+      {/* Terminal-style background grid */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <div 
+          className="w-full h-full" 
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(0,255,0,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0,255,0,0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '20px 20px'
+          }}
+        />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Content */}
-          <div className="space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="space-y-4"
-            >
-              <motion.h1 
-                className="hero-title text-4xl sm:text-5xl lg:text-6xl font-bold"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-              >
-                Hi, I&apos;m{" "}
-                <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-                  {portfolioData.personal.name.split(" ")[0]}
-                </span>
-                <motion.span
-                  className="inline-block ml-2"
-                  animate={{ rotate: [0, 20, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                >
-                  👋
-                </motion.span>
-              </motion.h1>
-              
-              <motion.div 
-                className="hero-subtitle space-y-2"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              >
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-muted-foreground">
-                  {portfolioData.personal.subtitle}
-                </h2>
-                <h3 className="text-lg sm:text-xl text-primary font-medium">
-                  {portfolioData.personal.description}
-                </h3>
-              </motion.div>
-            </motion.div>
-
-            <motion.p
-              className="hero-description text-lg text-muted-foreground leading-relaxed max-w-lg"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              {portfolioData.personal.bio}
-            </motion.p>
-
-            {/* Action Buttons */}
-            <motion.div
-              className="hero-buttons flex flex-col sm:flex-row gap-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              <Button
-                size="lg"
-                onClick={handleDownloadResume}
-                className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              >
-                <Download className="mr-2 h-5 w-5" />
-                Download Resume
-              </Button>
-              
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => scrollToSection("#projects")}
-                className="font-semibold px-8 py-3 rounded-lg border-2 hover:bg-primary/5 transition-all duration-300"
-              >
-                View My Work
-                <ArrowDown className="ml-2 h-5 w-5" />
-              </Button>
-            </motion.div>
-
-            {/* Social Links */}
-            <motion.div
-              className="hero-socials flex items-center space-x-4"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              <span className="text-sm text-muted-foreground font-medium">Find me on:</span>
-              <div className="flex space-x-3">
-                {Object.entries(portfolioData.social).slice(0, 4).map(([platform, url]) => {
-                  const Icon = socialIcons[platform as keyof typeof socialIcons]
-                  if (!Icon) return null
-                  
-                  return (
-                    <motion.a
-                      key={platform}
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-full bg-muted hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all duration-300"
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Icon className="h-5 w-5" />
-                    </motion.a>
-                  )
-                })}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Right Column - Profile Image */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-4xl">
+        <div className="text-center space-y-8">
+          
+          {/* Terminal Header */}
           <motion.div
-            className="flex justify-center lg:justify-end"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="bg-muted/20 backdrop-blur-sm border border-muted/40 rounded-lg p-6 font-mono text-left max-w-2xl mx-auto"
           >
-            <div className="relative">
-              {/* Animated Border */}
-              <div
-                ref={imageRef}
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-secondary to-primary p-1 animate-spin-slow"
-                style={{ animationDuration: "20s" }}
-              >
-                <div className="w-full h-full bg-background rounded-full" />
+            <div className="flex items-center gap-2 mb-4 pb-2 border-b border-muted/20">
+              <div className="w-3 h-3 rounded-full bg-red-500"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+              <span className="ml-2 text-xs text-muted-foreground">terminal</span>
+            </div>
+            
+            <div className="space-y-2 text-sm">
+              <div className="text-green-400">
+                {text}
+                <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}>|</span>
               </div>
               
-              {/* Profile Image */}
-              <Avatar className="relative w-64 h-64 sm:w-80 sm:h-80 border-4 border-background shadow-2xl">
-                <AvatarImage
-                  src="/assets/img/profile_5.jpg"
-                  alt={portfolioData.personal.name}
-                  className="object-cover"
-                />
-                <AvatarFallback className="text-4xl font-bold bg-gradient-to-br from-primary to-secondary text-primary-foreground">
-                  {portfolioData.personal.name.split(" ").map(n => n[0]).join("")}
-                </AvatarFallback>
-              </Avatar>
-
-              {/* Floating Elements */}
               <motion.div
-                className="absolute -top-4 -right-4 w-8 h-8 bg-primary rounded-full"
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              />
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2, duration: 0.5 }}
+                className="text-muted-foreground"
+              >
+                {portfolioData.personal.description}
+              </motion.div>
+              
               <motion.div
-                className="absolute -bottom-6 -left-6 w-6 h-6 bg-secondary rounded-full"
-                animate={{ y: [10, -10, 10] }}
-                transition={{ duration: 4, repeat: Infinity }}
-              />
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2.5, duration: 0.5 }}
+                className="text-muted-foreground pt-2"
+              >
+                Currently @ <span className="text-primary">udaanCapital</span> | 150+ projects shipped
+              </motion.div>
             </div>
+          </motion.div>
+
+          {/* Bio Statement */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="max-w-2xl mx-auto"
+          >
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              {portfolioData.personal.bio}
+            </p>
+          </motion.div>
+
+          {/* Key Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="grid grid-cols-3 gap-6 max-w-md mx-auto"
+          >
+            <div className="text-center">
+              <div className="text-2xl font-bold text-primary">150+</div>
+              <div className="text-sm text-muted-foreground">Projects</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-primary">2K+</div>
+              <div className="text-sm text-muted-foreground">Users</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-primary">4+</div>
+              <div className="text-sm text-muted-foreground">Years</div>
+            </div>
+          </motion.div>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            <Button
+              size="lg"
+              onClick={() => scrollToSection("#projects")}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-mono px-6 py-3"
+            >
+              <Terminal className="mr-2 h-4 w-4" />
+              ./view_projects.sh
+            </Button>
+            
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => window.open(portfolioData.writing.blog_url, '_blank')}
+              className="font-mono px-6 py-3 border-primary/20 hover:bg-primary/5"
+            >
+              <FileText className="mr-2 h-4 w-4" />
+              ./read_blog.sh
+            </Button>
+            
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => window.open(portfolioData.social.github, '_blank')}
+              className="font-mono px-6 py-3 border-primary/20 hover:bg-primary/5"
+            >
+              <Github className="mr-2 h-4 w-4" />
+              ./github.sh
+            </Button>
+          </motion.div>
+
+          {/* Quick Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            className="flex justify-center gap-6 text-sm text-muted-foreground"
+          >
+            <button 
+              onClick={() => scrollToSection("#projects")}
+              className="hover:text-primary transition-colors underline underline-offset-4"
+            >
+              projects
+            </button>
+            <button 
+              onClick={() => scrollToSection("#work")}
+              className="hover:text-primary transition-colors underline underline-offset-4"
+            >
+              work
+            </button>
+            <button 
+              onClick={() => scrollToSection("#contact")}
+              className="hover:text-primary transition-colors underline underline-offset-4"
+            >
+              contact
+            </button>
           </motion.div>
         </div>
       </div>
@@ -219,7 +206,7 @@ export function Hero() {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => scrollToSection("#about")}
+          onClick={() => scrollToSection("#projects")}
           className="rounded-full hover:bg-primary/10"
         >
           <ArrowDown className="h-6 w-6 text-muted-foreground" />
