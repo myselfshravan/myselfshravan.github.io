@@ -65,15 +65,13 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-muted/20 backdrop-blur-sm border border-muted/40 rounded-lg p-6 font-mono text-left max-w-2xl mx-auto"
+            className="bg-card/70 backdrop-blur-sm border border-primary/20 rounded-lg p-6 font-mono text-left max-w-2xl mx-auto shadow-xl hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:border-primary/40 hover:bg-card/80"
           >
-            <div className="flex items-center gap-2 mb-4 pb-2 border-b border-muted/20">
-              <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500"></div>
-              <span className="ml-2 text-xs text-muted-foreground">
-                terminal
-              </span>
+            <div className="flex items-center gap-2 mb-4 pb-2 border-b border-primary/30">
+              <div className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-colors"></div>
+              <div className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-colors"></div>
+              <span className="ml-2 text-xs text-primary">terminal</span>
             </div>
 
             <div className="space-y-2 text-sm">
@@ -104,8 +102,15 @@ export function Hero() {
                 className="text-muted-foreground pt-2"
               >
                 Currently SE Intern @{" "}
-                <span className="text-primary">udaanCapital</span> | 150+
-                projects shipped
+                <a
+                  href="https://udaancapital.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
+                >
+                  udaanCapital
+                </a>{" "}
+                | 150+ projects shipped
               </motion.div>
             </div>
           </motion.div>

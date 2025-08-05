@@ -22,6 +22,19 @@ export const metadata: Metadata = {
   keywords: portfolioData.meta.keywords,
   authors: [{ name: portfolioData.personal.name }],
   creator: portfolioData.personal.name,
+  icons: {
+    icon: [
+      { url: '/favicon_io/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon_io/favicon-16x16.png', sizes: '16x16', type: 'image/png' }
+    ],
+    apple: [
+      { url: '/favicon_io/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+    ],
+    other: [
+      { url: '/favicon_io/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon_io/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' }
+    ]
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -69,7 +82,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/assets/img/s_icon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png" />
+        <link rel="manifest" href="/favicon_io/site.webmanifest" />
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css"

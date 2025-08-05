@@ -74,9 +74,9 @@
         "github_url": "https://github.com/myselfshravan/noterep",
         "blog_url": "https://blog.shravanrevanna.me/story-behind-noterep-the-popular-site-of-college",
         "linkText": "Visit Website",
-        "description": "The go-to platform for 2000+ students who ace their exams with last-minute prep, featuring 20+ tools including real-time timetables, live calendars, AI Chatbot, and open-source community content",
-        "tech": "Next.js, TypeScript, Firebase, LLM Integration",
-        "metrics": "200+ active users, 85K+ views till date, Ranks top 1 on Google for 'NoteRep'"
+        "description": "The go-to platform for 2000+ students who ace their exams with last-minute prep, featuring 20+ features/tools including live timetables, real-time calendars, AI Chatbot, Mini SIS and open-source community content",
+        "tech": "Next.js, TypeScript, Firebase, Vercel",
+        "metrics": "200+ active users, 85K+ views till date"
       },
       {
         "name": "F&B QR Ordering System",
@@ -85,31 +85,31 @@
         "github_url": "https://github.com/myselfshravan/fandb-client-website",
         "demo_url": "https://drive.google.com/file/d/1WgFVc09hAKIXi08Q4JZq9eqSP_mLNs2z/view",
         "linkText": "Live Demo",
-        "description": "QR-based table food ordering system with real-time kitchen updates and seamless digital billing",
+        "description": "QR-based table food ordering system with real-time kitchen updates and seamless digital billing and built-in NGO contribution feature for socially conscious dining",
         "tech": "React, TypeScript, Node.js, AWS S3",
         "metrics": "2000+ monthly users, 100+ daily orders"
       },
       {
-        "name": "HDFC Account Explorer",
+        "name": "ParseFi - Statement Analyzer",
         "image": "project_hdfc_statement_analyser.png",
         "website_url": "https://hdfc-account-explorer.vercel.app",
         "github_url": "https://github.com/myselfshravan/hdfc-statement-explorer",
         "blog_url": "https://blog.shravanrevanna.me/hdfc-statement-analyse-like-a-pro",
         "linkText": "Try It Out",
-        "description": "AI-powered bank statement analyzer with MCP-driven smart auto-tagging and intelligent reconciliation for effortless financial insights",
+        "description": "AI-powered HDFC bank statement explorer with MCP-driven smart tagging and auto reconciliation for effortless financial insights",
         "tech": "React, PostgreSQL, AI Integration",
-        "metrics": "B-tree optimized queries, community tagging"
+        "metrics": "B-tree optimized queries, auto tagging of Tnx, Smart Reconciliation"
       },
       {
-        "name": "AI Meal Planner",
+        "name": "Forkcast - plans your meals",
         "image": "project_ai_meal_planner.png",
         "website_url": "https://ai-meal-planner.streamlit.app",
         "github_url": "https://github.com/myselfshravan/AI-Meal-Planner",
         "blog_url": "https://blog.shravanrevanna.me/ai-meal-planner-using-llama-70b-and-knapsack-algorithm",
         "linkText": "Try Web App",
         "description": "Personalized BMI-based meal generator using Llama 70B to craft perfect calorie-matched nutrition plans tailored to your body's needs",
-        "tech": "Python, Streamlit, Llama 70B",
-        "metrics": "37 GitHub stars, dynamic programming optimization"
+        "tech": "Python, Streamlit, Llama 70B LLM",
+        "metrics": "38 GitHub stars, 33 Forks, dynamic programming optimization"
       },
       {
         "name": "VigilAI - IoT Health Monitor",
@@ -119,8 +119,8 @@
         "blog_url": "https://blog.shravanrevanna.me/vigilai-iot-health-monitoring-system-with-ai-and-esp32",
         "linkText": "View Website",
         "description": "Affordable elderly healthcare system with ESP32 sensors featuring AI-powered voice and chat interfaces for direct interaction with real-time vital monitoring",
-        "tech": "ESP32, Python, Firebase Realtime DB, LLM Integration",
-        "metrics": "Real-time vitals tracking, anomaly detections with SMS and Call alert system"
+        "tech": "ESP32, Python, Firebase RealtimeDB, LLMs",
+        "metrics": "Real-time vitals tracking, anomaly detections with call alert system"
       },
       {
         "name": "Enigma Escape",
@@ -136,9 +136,10 @@
     ],
     "automation": [
       {
-        "name": "Restaurant Booking Bot",
+        "name": "Clicks before Chopsticks",
         "blog_url": "https://blog.shravanrevanna.me/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
         "demo_url": "https://drive.google.com/file/d/1hqv6UWN_l7O6izAR9qSxotSxC-vwrF8R/view",
+        "github_url": "https://github.com/myselfshravan/aimenusBookingAutomation",
         "linkText": "Read Article",
         "description": "Python bot that secures Naru Noodle reservations in seconds, beating the 2-minute sellout window every Monday at 8 PM",
         "tech": "Python, Selenium",
@@ -156,8 +157,8 @@
         "name": "GetPlaced Email Organizer",
         "website_url": "https://getplaced.vercel.app/",
         "linkText": "Private Tool",
-        "description": "Automated placement email organizer that prevents missing job opportunities",
-        "tech": "Python, Email APIs",
+        "description": "Automated and AI-powered placement email organizer with LLM-driven JD summarization and keyword extraction that prevents missing job opportunities",
+        "tech": "Python, Email APIs, LLMs",
         "metrics": "Zero missed opportunities"
       }
     ],
@@ -178,7 +179,7 @@
         "website_url": "https://fastiq.vercel.app",
         "linkText": "View Project",
         "description": "Multi-API LLM playground with community-driven prompt templates showcasing the art of prompt engineering",
-        "tech": "React, Multiple LLM APIs",
+        "tech": "React, Firebase, Multiple LLM APIs",
         "metrics": "Community prompt sharing"
       }
     ]

@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { ExternalLink, FileText, Play, Code } from "lucide-react";
+import { ExternalLink, FileText, Play } from "lucide-react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ interface Project {
   github_url?: string;
   blog_url?: string;
   demo_url?: string;
-  url?: string; // fallback for old structure
+  url?: string;
   linkText?: string;
   description?: string;
   tech?: string;
@@ -60,8 +60,6 @@ export function Projects() {
       { type: "url", url: project.url, icon: ExternalLink, label: "View" }, // fallback for old structure
     ].filter((link) => link.url);
 
-    const hasImage = project.image;
-
     return (
       <motion.div
         className="project-card group"
@@ -70,34 +68,10 @@ export function Projects() {
         transition={{ duration: 0.5, delay: index * 0.1 }}
         whileHover={{ y: -4, scale: 1.01 }}
       >
-        <Card className="h-full overflow-hidden bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group-hover:border-primary/30">
-          {hasImage ? (
-            <div className="relative overflow-hidden">
-              <div className="relative bg-gradient-to-br from-primary/5 to-secondary/5 min-h-[200px] max-h-[280px] flex items-center justify-center">
-                <Image
-                  src={`/assets/img/${project.image}`}
-                  alt={project.name}
-                  width={400}
-                  height={250}
-                  className="object-contain max-w-full max-h-full transition-transform duration-300 group-hover:scale-[1.02]"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-            </div>
-          ) : (
-            <div className="relative bg-gradient-to-br from-primary/10 to-secondary/10 min-h-[200px] max-h-[280px] flex items-center justify-center">
-              <div className="text-center space-y-3">
-                <Code className="h-16 w-16 text-primary/40 mx-auto" />
-                <div className="text-xs text-muted-foreground font-mono">
-                  {project.tech ? project.tech.split(',')[0].trim() : 'Code'}
-                </div>
-              </div>
-            </div>
-          )}
-
+        <Card className="h-full overflow-hidden bg-card/70 backdrop-blur-sm border border-primary/10 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover:border-primary/30 shadow-lg hover:bg-card/80">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg font-semibold">
+            <CardTitle className="text-lg font-semibold font-mono">
+              <span className="text-primary mr-2">{">"}</span>
               {project.name}
             </CardTitle>
           </CardHeader>

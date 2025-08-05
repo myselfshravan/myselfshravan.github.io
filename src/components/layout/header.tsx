@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, ExternalLink, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -93,10 +94,17 @@ export function Header() {
           >
             <button
               onClick={() => scrollToSection("#top")}
-              className="flex items-center space-x-2 text-xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent hover:scale-105 transition-all duration-300 hover:from-primary/80 hover:to-primary/40 cursor-pointer"
+              className="flex items-center hover:scale-105 transition-all duration-300 cursor-pointer"
               aria-label="Scroll to top"
             >
-              SHRAVAN
+              <Image
+                src="/logo.png"
+                alt="Shravan Logo"
+                width={100}
+                height={30}
+                className="dark:invert-0 invert transition-all duration-300"
+                priority
+              />
             </button>
           </motion.div>
 

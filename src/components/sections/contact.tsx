@@ -193,8 +193,8 @@ export function Contact() {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               {/* Social Media */}
-              <Card className="p-6 bg-card/50 backdrop-blur-sm border-muted/20">
-                <CardHeader className="pb-4">
+              <Card className="p-2 bg-card/50 backdrop-blur-sm border border-green-500/20">
+                <CardHeader className="py-3">
                   <CardTitle className="flex items-center space-x-2">
                     <div className="p-2 bg-primary/10 rounded-lg">
                       <MessageCircle className="h-5 w-5 text-primary" />
