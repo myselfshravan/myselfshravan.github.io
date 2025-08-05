@@ -16,10 +16,11 @@ import {
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
+  { name: "Home", href: "#top" },
   { name: "Projects", href: "#projects" },
-  { name: "Education", href: "#education" },
+  { name: "Writing", href: "#writing" },
+  { name: "Work", href: "#work" },
+  { name: "Skills", href: "#skills" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -75,7 +76,7 @@ export function Header() {
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-background/10"
+          ? "bg-background/50 backdrop-blur-sm border-b border-border/50 shadow-lg shadow-background/10"
           : "bg-background/5 backdrop-blur-sm"
       }`}
       initial={{ y: -100 }}
