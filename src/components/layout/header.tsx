@@ -13,10 +13,10 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { name: "Home", href: "#top" },
   { name: "Projects", href: "#projects" },
   { name: "Writing", href: "#writing" },
   { name: "Work", href: "#work" },
@@ -76,7 +76,7 @@ export function Header() {
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-background/50 backdrop-blur-sm border-b border-border/50 shadow-lg shadow-background/10"
+          ? "bg-background/40 backdrop-blur-sm border-b border-border/50 shadow-lg shadow-background/10"
           : "bg-background/5 backdrop-blur-sm"
       }`}
       initial={{ y: -100 }}
@@ -183,19 +183,8 @@ export function Header() {
                 side="right"
                 className="w-[300px] sm:w-[400px] bg-background/95 backdrop-blur-xl border-l border-border/50"
               >
-                <div className="flex items-center justify-between mb-8">
-                  <span className="text-lg font-semibold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                    Navigation
-                  </span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="hover:bg-accent/50"
-                    aria-label="Close navigation menu"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                <div className="flex items-center justify-end mb-8">
                 </div>
                 <nav
                   className="flex flex-col space-y-2"

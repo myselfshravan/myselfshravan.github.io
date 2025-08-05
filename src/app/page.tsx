@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { HeaderV2 } from "@/components/layout/headerv2";
+import { Header } from "@/components/layout/header";
 import { Hero } from "@/components/sections/hero";
 import { Skills } from "@/components/sections/skills";
 import { Projects } from "@/components/sections/projects";
@@ -76,7 +76,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      <HeaderV2 />
+      <Header />
       <main className="pt-16">
         <Hero />
         <Projects />
