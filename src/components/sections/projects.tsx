@@ -8,6 +8,20 @@ import { Button } from "@/components/ui/button";
 import portfolioData from "@/lib/portfolio-data.json";
 import Image from "next/image";
 
+interface Project {
+  name: string;
+  image?: string;
+  website_url?: string;
+  github_url?: string;
+  blog_url?: string;
+  demo_url?: string;
+  url?: string; // fallback for old structure
+  linkText?: string;
+  description?: string;
+  tech?: string;
+  metrics?: string;
+}
+
 export function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
@@ -19,7 +33,7 @@ export function Projects() {
     ...portfolioData.projects.tools,
   ];
 
-  const ProjectCard = ({ project, index }: { project: any; index: number }) => {
+  const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
     // Get all available URLs
     const urls = [
       {

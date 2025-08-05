@@ -1,20 +1,19 @@
-"use client"
+"use client";
 
-import React, { useEffect } from "react"
-import { Header } from "@/components/layout/header"
-import { Hero } from "@/components/sections/hero"
-import { About } from "@/components/sections/about"
-import { Skills } from "@/components/sections/skills"
-import { Projects } from "@/components/sections/projects"
-import { Writing } from "@/components/sections/writing"
-import { Contact } from "@/components/sections/contact"
-import { Footer } from "@/components/layout/footer"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
+import React, { useEffect } from "react";
+import { Header } from "@/components/layout/header";
+import { Hero } from "@/components/sections/hero";
+import { Skills } from "@/components/sections/skills";
+import { Projects } from "@/components/sections/projects";
+import { Writing } from "@/components/sections/writing";
+import { Contact } from "@/components/sections/contact";
+import { Footer } from "@/components/layout/footer";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger)
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 export default function Home() {
@@ -22,8 +21,8 @@ export default function Home() {
     // Initialize smooth scrolling and scroll-triggered animations
     if (typeof window !== "undefined") {
       // Set up scroll-triggered animations (exclude hero section)
-      const sections = document.querySelectorAll("section:not(.hero-section)")
-      
+      const sections = document.querySelectorAll("section:not(.hero-section)");
+
       sections.forEach((section) => {
         gsap.fromTo(
           section,
@@ -38,8 +37,8 @@ export default function Home() {
               toggleActions: "play none none reverse",
             },
           }
-        )
-      })
+        );
+      });
 
       // Parallax effect for hero background elements
       gsap.to(".hero-bg-1", {
@@ -51,7 +50,7 @@ export default function Home() {
           end: "bottom top",
           scrub: true,
         },
-      })
+      });
 
       gsap.to(".hero-bg-2", {
         yPercent: -30,
@@ -62,17 +61,17 @@ export default function Home() {
           end: "bottom top",
           scrub: true,
         },
-      })
+      });
 
       // Refresh ScrollTrigger on window resize
       const handleResize = () => {
-        ScrollTrigger.refresh()
-      }
+        ScrollTrigger.refresh();
+      };
 
-      window.addEventListener("resize", handleResize)
-      return () => window.removeEventListener("resize", handleResize)
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
     }
-  }, [])
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -86,5 +85,5 @@ export default function Home() {
       </main>
       <Footer />
     </div>
-  )
+  );
 }

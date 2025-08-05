@@ -266,7 +266,6 @@ export function About() {
               </CardContent>
             </Card>
           </motion.div>
-
         </motion.div>
 
         {/* Desktop Layout - Professional Experience left, others right */}

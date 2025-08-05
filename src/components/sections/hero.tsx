@@ -1,63 +1,64 @@
-"use client"
+"use client";
 
-import React, { useEffect, useRef, useState } from "react"
-import { motion } from "framer-motion"
-import { Terminal, Github, ExternalLink, FileText, ArrowDown } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import portfolioData from "@/lib/portfolio-data.json"
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { Terminal, Github, FileText, ArrowDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import portfolioData from "@/lib/portfolio-data.json";
 
 export function Hero() {
-  const [text, setText] = useState("")
-  const [showCursor, setShowCursor] = useState(true)
-  const fullText = `${portfolioData.personal.name.toLowerCase().replace(" ", "_")}@portfolio:~$ whoami`
+  const [text, setText] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
+  const fullText = `${portfolioData.personal.name
+    .toLowerCase()
+    .replace(" ", "_")}@portfolio:~$ whoami`;
 
   useEffect(() => {
-    let index = 0
+    let index = 0;
     const timer = setInterval(() => {
       if (index < fullText.length) {
-        setText(fullText.slice(0, index + 1))
-        index++
+        setText(fullText.slice(0, index + 1));
+        index++;
       } else {
-        clearInterval(timer)
+        clearInterval(timer);
       }
-    }, 100)
+    }, 100);
 
     const cursorTimer = setInterval(() => {
-      setShowCursor(prev => !prev)
-    }, 500)
+      setShowCursor((prev) => !prev);
+    }, 500);
 
     return () => {
-      clearInterval(timer)
-      clearInterval(cursorTimer)
-    }
-  }, [fullText])
+      clearInterval(timer);
+      clearInterval(cursorTimer);
+    };
+  }, [fullText]);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.querySelector(sectionId)
+    const element = document.querySelector(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      element.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   return (
     <section className="hero-section min-h-screen flex items-center justify-center relative overflow-hidden bg-background">
       {/* Terminal-style background grid */}
       <div className="absolute inset-0 opacity-[0.02]">
-        <div 
-          className="w-full h-full" 
+        <div
+          className="w-full h-full"
           style={{
             backgroundImage: `
               linear-gradient(rgba(0,255,0,0.1) 1px, transparent 1px),
               linear-gradient(90deg, rgba(0,255,0,0.1) 1px, transparent 1px)
             `,
-            backgroundSize: '20px 20px'
+            backgroundSize: "20px 20px",
           }}
         />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-4xl">
         <div className="text-center space-y-8">
-          
           {/* Terminal Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -69,15 +70,23 @@ export function Hero() {
               <div className="w-3 h-3 rounded-full bg-red-500"></div>
               <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
               <div className="w-3 h-3 rounded-full bg-green-500"></div>
-              <span className="ml-2 text-xs text-muted-foreground">terminal</span>
+              <span className="ml-2 text-xs text-muted-foreground">
+                terminal
+              </span>
             </div>
-            
+
             <div className="space-y-2 text-sm">
               <div className="text-green-400">
                 {text}
-                <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}>|</span>
+                <span
+                  className={`${
+                    showCursor ? "opacity-100" : "opacity-0"
+                  } transition-opacity`}
+                >
+                  |
+                </span>
               </div>
-              
+
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -86,14 +95,15 @@ export function Hero() {
               >
                 {portfolioData.personal.description}
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 2.5, duration: 0.5 }}
                 className="text-muted-foreground pt-2"
               >
-                Currently @ <span className="text-primary">udaanCapital</span> | 150+ projects shipped
+                Currently @ <span className="text-primary">udaanCapital</span> |
+                150+ projects shipped
               </motion.div>
             </div>
           </motion.div>
@@ -146,21 +156,23 @@ export function Hero() {
               <Terminal className="mr-2 h-4 w-4" />
               view projects
             </Button>
-            
+
             <Button
               variant="outline"
               size="lg"
-              onClick={() => window.open(portfolioData.writing.blog_url, '_blank')}
+              onClick={() =>
+                window.open(portfolioData.writing.blog_url, "_blank")
+              }
               className="px-6 py-3 border-primary/20 hover:bg-primary/5"
             >
               <FileText className="mr-2 h-4 w-4" />
               read blog
             </Button>
-            
+
             <Button
               variant="outline"
               size="lg"
-              onClick={() => window.open(portfolioData.social.github, '_blank')}
+              onClick={() => window.open(portfolioData.social.github, "_blank")}
               className="px-6 py-3 border-primary/20 hover:bg-primary/5"
             >
               <Github className="mr-2 h-4 w-4" />
@@ -175,19 +187,19 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.9 }}
             className="flex justify-center gap-6 text-sm text-muted-foreground"
           >
-            <button 
+            <button
               onClick={() => scrollToSection("#projects")}
               className="hover:text-primary transition-colors underline underline-offset-4"
             >
               projects
             </button>
-            <button 
+            <button
               onClick={() => scrollToSection("#work")}
               className="hover:text-primary transition-colors underline underline-offset-4"
             >
               work
             </button>
-            <button 
+            <button
               onClick={() => scrollToSection("#contact")}
               className="hover:text-primary transition-colors underline underline-offset-4"
             >
@@ -213,5 +225,5 @@ export function Hero() {
         </Button>
       </motion.div>
     </section>
-  )
+  );
 }

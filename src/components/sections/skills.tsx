@@ -1,48 +1,44 @@
-"use client"
+"use client";
 
-import React from "react"
-import { motion, useInView } from "framer-motion"
-import { Terminal, Database, Cloud } from "lucide-react"
-import portfolioData from "@/lib/portfolio-data.json"
+import React from "react";
+import { motion, useInView } from "framer-motion";
+import { Terminal } from "lucide-react";
+import portfolioData from "@/lib/portfolio-data.json";
 
 export function Skills() {
-  const sectionRef = React.useRef<HTMLElement>(null)
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" })
+  const sectionRef = React.useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   const skillCategories = [
     {
       title: "Languages",
       icon: "🔧",
-      skills: portfolioData.skills.core.map(s => s.name),
+      skills: portfolioData.skills.core.map((s) => s.name),
     },
     {
-      title: "Frameworks", 
+      title: "Frameworks",
       icon: "⚡",
-      skills: portfolioData.skills.frameworks.map(s => s.name),
+      skills: portfolioData.skills.frameworks.map((s) => s.name),
     },
     {
       title: "AI/ML",
-      icon: "🤖", 
-      skills: portfolioData.skills.ai_ml.map(s => s.name),
+      icon: "🤖",
+      skills: portfolioData.skills.ai_ml.map((s) => s.name),
     },
     {
       title: "Databases",
       icon: "💾",
-      skills: portfolioData.skills.databases.map(s => s.name),
+      skills: portfolioData.skills.databases.map((s) => s.name),
     },
     {
       title: "DevOps",
       icon: "☁️",
-      skills: portfolioData.skills.devops.map(s => s.name),
+      skills: portfolioData.skills.devops.map((s) => s.name),
     },
-  ]
+  ];
 
   return (
-    <section
-      id="skills"
-      ref={sectionRef}
-      className="py-16 bg-muted/10"
-    >
+    <section id="skills" ref={sectionRef} className="py-16 bg-muted/10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         <motion.div
           className="text-center mb-12"
@@ -105,5 +101,5 @@ export function Skills() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
