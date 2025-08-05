@@ -2,11 +2,18 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Menu, ExternalLink } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, ExternalLink, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
 
 const navItems = [
   { name: "About", href: "#about" },
@@ -18,28 +25,58 @@ const navItems = [
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
+      // Active section detection
+      const sections = navItems.map((item) => item.href.substring(1));
+      const scrollPosition = window.scrollY + 100; // Offset for fixed header
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element && element instanceof HTMLElement) {
+          const { offsetTop, offsetHeight } = element;
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
+
     window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Call once to set initial state
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    if (href === "#top") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
     }
+
+    const element = document.querySelector(href);
+    if (element && element instanceof HTMLElement) {
+      const headerHeight = 80; // Account for fixed header
+      const elementPosition = element.offsetTop - headerHeight;
+      window.scrollTo({ top: elementPosition, behavior: "smooth" });
+    }
+    setIsMobileMenuOpen(false);
   };
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b"
-          : "bg-transparent"
+          ? "bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-background/10"
+          : "bg-background/5 backdrop-blur-sm"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -53,77 +90,167 @@ export function Header() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <Link
-              href="https://linktr.ee/shravan_revanna"
-              target="_blank"
-              className="flex items-center space-x-2 text-xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent hover:scale-105 transition-transform"
+            <button
+              onClick={() => scrollToSection("#top")}
+              className="flex items-center space-x-2 text-xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent hover:scale-105 transition-all duration-300 hover:from-primary/80 hover:to-primary/40 cursor-pointer"
+              aria-label="Scroll to top"
             >
               SHRAVAN
-            </Link>
+            </button>
           </motion.div>
 
           {/* Desktop Navigation */}
-          <motion.nav
-            className="hidden md:flex items-center space-x-8"
+          <motion.div
+            className="hidden md:flex items-center"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            {navItems.map((item, index) => (
-              <motion.button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
-              >
-                {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
-              </motion.button>
-            ))}
-            <Link
-              href="https://blog.shravanrevanna.me/"
-              target="_blank"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center space-x-1"
-            >
-              <span>Blog</span>
-              <ExternalLink className="h-3 w-3" />
-            </Link>
-          </motion.nav>
+            <NavigationMenu>
+              <NavigationMenuList className="gap-1">
+                {navItems.map((item, index) => {
+                  const sectionId = item.href.substring(1);
+                  const isActive = activeSection === sectionId;
+
+                  return (
+                    <NavigationMenuItem key={item.name}>
+                      <motion.button
+                        onClick={() => scrollToSection(item.href)}
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          "relative group px-4 py-2 text-sm font-medium transition-all duration-300 hover:bg-accent/50 focus:bg-accent/50",
+                          isActive
+                            ? "text-primary bg-accent/30 shadow-sm"
+                            : "text-muted-foreground hover:text-foreground"
+                        )}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
+                        aria-label={`Navigate to ${item.name} section`}
+                      >
+                        {item.name}
+                        <motion.span
+                          className="absolute -bottom-1 left-1/2 h-0.5 bg-primary rounded-full"
+                          initial={{ width: 0, x: "-50%" }}
+                          animate={{
+                            width: isActive ? "80%" : "0%",
+                            x: "-50%",
+                          }}
+                          transition={{ duration: 0.3 }}
+                        />
+                      </motion.button>
+                    </NavigationMenuItem>
+                  );
+                })}
+                <NavigationMenuItem>
+                  <Link
+                    href="https://blog.shravanrevanna.me/"
+                    target="_blank"
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-300 flex items-center space-x-1 px-4 py-2"
+                    )}
+                    aria-label="Visit blog (opens in new tab)"
+                  >
+                    <span>Blog</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </Link>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </motion.div>
 
           {/* Theme Toggle & Mobile Menu */}
           <div className="flex items-center space-x-4">
             <ThemeToggle />
 
             {/* Mobile Menu */}
-            <Sheet>
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="md:hidden hover:bg-accent/50 transition-colors"
+                  aria-label="Open navigation menu"
+                >
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-                <nav className="flex flex-col space-y-4 mt-8">
-                  {navItems.map((item) => (
-                    <button
-                      key={item.name}
-                      onClick={() => scrollToSection(item.href)}
-                      className="text-left text-lg font-medium hover:text-primary transition-colors py-2"
-                    >
-                      {item.name}
-                    </button>
-                  ))}
-                  <Link
-                    href="https://blog.shravanrevanna.me/"
-                    target="_blank"
-                    className="text-left text-lg font-medium hover:text-primary transition-colors py-2 flex items-center space-x-2"
+              <SheetContent
+                side="right"
+                className="w-[300px] sm:w-[400px] bg-background/95 backdrop-blur-xl border-l border-border/50"
+              >
+                <div className="flex items-center justify-between mb-8">
+                  <span className="text-lg font-semibold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                    Navigation
+                  </span>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="hover:bg-accent/50"
+                    aria-label="Close navigation menu"
                   >
-                    <span>Blog</span>
-                    <ExternalLink className="h-4 w-4" />
-                  </Link>
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+                <nav
+                  className="flex flex-col space-y-2"
+                  role="navigation"
+                  aria-label="Mobile navigation"
+                >
+                  <AnimatePresence>
+                    {navItems.map((item, index) => {
+                      const sectionId = item.href.substring(1);
+                      const isActive = activeSection === sectionId;
+
+                      return (
+                        <motion.button
+                          key={item.name}
+                          onClick={() => scrollToSection(item.href)}
+                          className={cn(
+                            "text-left text-lg font-medium transition-all duration-300 py-3 px-4 rounded-lg relative group",
+                            isActive
+                              ? "text-primary bg-accent/30 shadow-sm"
+                              : "text-muted-foreground hover:text-foreground hover:bg-accent/20"
+                          )}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.1 }}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          aria-label={`Navigate to ${item.name} section`}
+                        >
+                          {item.name}
+                          {isActive && (
+                            <motion.div
+                              className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-r"
+                              layoutId="activeMobileIndicator"
+                              transition={{ duration: 0.3 }}
+                            />
+                          )}
+                        </motion.button>
+                      );
+                    })}
+                  </AnimatePresence>
+                  <motion.div
+                    className="pt-4 border-t border-border/50 mt-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: navItems.length * 0.1 }}
+                  >
+                    <Link
+                      href="https://blog.shravanrevanna.me/"
+                      target="_blank"
+                      className="text-left text-lg font-medium hover:text-primary transition-all duration-300 py-3 px-4 rounded-lg flex items-center space-x-2 hover:bg-accent/20"
+                      aria-label="Visit blog (opens in new tab)"
+                    >
+                      <span>Blog</span>
+                      <ExternalLink className="h-4 w-4" />
+                    </Link>
+                  </motion.div>
                 </nav>
               </SheetContent>
             </Sheet>
