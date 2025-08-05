@@ -1,192 +1,132 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import {
   ExternalLink,
   Github,
-  Star,
-  Users,
-  Clock,
-  Sparkles,
+  FileText,
+  Play,
+  Code,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import portfolioData from "@/lib/portfolio-data.json";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 export function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
-  const projectsRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-  const [activeTab, setActiveTab] = useState("personal");
 
-  useEffect(() => {
-    if (typeof window !== "undefined" && projectsRef.current) {
-      const projectCards =
-        projectsRef.current.querySelectorAll(".project-card");
-
-      gsap.fromTo(
-        projectCards,
-        { y: 100, opacity: 0, rotationX: 15 },
-        {
-          y: 0,
-          opacity: 1,
-          rotationX: 0,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: projectsRef.current,
-            start: "top 80%",
-          },
-        }
-      );
-    }
-  }, [activeTab]);
-
-  const projectTabs = [
-    {
-      id: "personal",
-      label: "AI & Full-Stack",
-      icon: Star,
-      projects: portfolioData.projects.personal,
-      description: "Production applications serving thousands of users",
-    },
-    {
-      id: "automation",
-      label: "Automation",
-      icon: Users,
-      projects: portfolioData.projects.automation,
-      description: "Scripts and bots that eliminate manual processes",
-    },
-    {
-      id: "tools",
-      label: "Tools",
-      icon: Clock,
-      projects: portfolioData.projects.tools,
-      description: "Developer tools and utilities I've built",
-    },
+  // Flatten all projects into a single array
+  const allProjects = [
+    ...portfolioData.projects.personal,
+    ...portfolioData.projects.automation,
+    ...portfolioData.projects.tools,
   ];
 
   const ProjectCard = ({
     project,
     index,
   }: {
-    project: {
-      name: string;
-      image: string;
-      url: string;
-      linkText: string;
-      description?: string;
-      tech?: string;
-      metrics?: string;
-    };
+    project: any;
     index: number;
-  }) => (
-    <motion.div
-      className="project-card group"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -8, scale: 1.02 }}
-    >
-      <Card className="h-full overflow-hidden bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 group-hover:border-primary/30">
-        <div className="relative overflow-hidden">
-          <div className="aspect-video relative bg-gradient-to-br from-primary/5 to-secondary/5">
-            <Image
-              src={`/assets/img/${project.image}`}
-              alt={project.name}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </div>
+  }) => {
+    // Get all available URLs
+    const urls = [
+      { type: 'website', url: project.website_url, icon: ExternalLink, label: 'Live Site' },
+      { type: 'github', url: project.github_url, icon: Github, label: 'GitHub' },
+      { type: 'blog', url: project.blog_url, icon: FileText, label: 'Blog' },
+      { type: 'demo', url: project.demo_url, icon: Play, label: 'Demo' },
+      { type: 'url', url: project.url, icon: ExternalLink, label: 'View' }, // fallback for old structure
+    ].filter(link => link.url);
 
-          {/* Floating Action Button */}
-          <motion.div
-            className="absolute top-4 right-4 opacity-0 group-hover:opacity-100"
-            initial={{ scale: 0, rotate: 180 }}
-            whileHover={{ scale: 1.1 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Button
-              size="icon"
-              className="h-10 w-10 rounded-full bg-primary/90 hover:bg-primary text-primary-foreground shadow-lg"
-              onClick={() => window.open(project.url, "_blank")}
-            >
-              <ExternalLink className="h-4 w-4" />
-            </Button>
-          </motion.div>
-        </div>
+    const hasImage = project.image;
 
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center justify-between">
-            <span className="bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
+    return (
+      <motion.div
+        className="project-card group"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+        whileHover={{ y: -4, scale: 1.01 }}
+      >
+        <Card className="h-full overflow-hidden bg-card/50 backdrop-blur-sm border-muted/20 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group-hover:border-primary/30">
+          {hasImage ? (
+            <div className="relative overflow-hidden">
+              <div className="aspect-video relative bg-gradient-to-br from-primary/5 to-secondary/5">
+                <Image
+                  src={`/assets/img/${project.image}`}
+                  alt={project.name}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
+            </div>
+          ) : (
+            <div className="aspect-video relative bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+              <Code className="h-12 w-12 text-primary/40" />
+            </div>
+          )}
+
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg font-semibold">
               {project.name}
-            </span>
-            <Badge variant="outline" className="ml-2 text-xs">
-              <Sparkles className="h-3 w-3 mr-1" />
-              Featured
-            </Badge>
-          </CardTitle>
-        </CardHeader>
+            </CardTitle>
+          </CardHeader>
 
-        <CardContent className="pt-0 space-y-4">
-          {project.description && (
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              {project.description}
-            </p>
-          )}
+          <CardContent className="pt-0 space-y-4">
+            {project.description && (
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                {project.description}
+              </p>
+            )}
 
-          {project.tech && (
-            <div className="space-y-2">
-              <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide">Tech Stack</div>
-              <div className="text-xs text-primary font-mono bg-primary/5 px-2 py-1 rounded">
-                {project.tech}
+            {project.tech && (
+              <div className="space-y-2">
+                <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide">Tech Stack</div>
+                <div className="text-xs text-primary font-mono bg-primary/5 px-2 py-1 rounded border border-primary/20">
+                  {project.tech}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {project.metrics && (
-            <div className="space-y-2">
-              <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide">Impact</div>
-              <div className="text-xs text-green-400 font-mono bg-green-400/5 px-2 py-1 rounded">
-                {project.metrics}
+            {project.metrics && (
+              <div className="space-y-2">
+                <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide">Impact</div>
+                <div className="text-xs text-green-400 font-mono bg-green-400/5 px-2 py-1 rounded border border-green-400/20">
+                  {project.metrics}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          <div className="flex items-center justify-between pt-2">
-            <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <span className="font-mono">live</span>
-            </div>
-
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => window.open(project.url, "_blank")}
-              className="group-hover:bg-primary/10 transition-colors font-mono text-xs"
-            >
-              {project.linkText}
-              <ExternalLink className="ml-2 h-3 w-3" />
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    </motion.div>
-  );
+            {/* Multiple URL Buttons */}
+            {urls.length > 0 && (
+              <div className="flex flex-wrap gap-2 pt-2">
+                {urls.map((link, idx) => {
+                  const Icon = link.icon;
+                  return (
+                    <Button
+                      key={idx}
+                      variant="outline"
+                      size="sm"
+                      onClick={() => window.open(link.url, "_blank")}
+                      className="font-mono text-xs border-primary/20 hover:bg-primary/5 hover:border-primary/40 transition-colors"
+                    >
+                      <Icon className="mr-1 h-3 w-3" />
+                      {link.label}
+                    </Button>
+                  );
+                })}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </motion.div>
+    );
+  };
 
   return (
     <section
@@ -209,61 +149,20 @@ export function Projects() {
           </p>
         </motion.div>
 
+        {/* All Projects Grid */}
         <motion.div
+          className="grid md:grid-cols-2 xl:grid-cols-3 gap-8"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <Tabs
-            value={activeTab}
-            onValueChange={setActiveTab}
-            className="w-full"
-          >
-            <TabsList className="grid w-full grid-cols-3 mb-12 bg-muted/50 backdrop-blur-sm">
-              {projectTabs.map((tab) => {
-                const Icon = tab.icon;
-                return (
-                  <TabsTrigger
-                    key={tab.id}
-                    value={tab.id}
-                    className="flex items-center space-x-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-                  >
-                    <Icon className="h-4 w-4" />
-                    <span className="hidden sm:inline">{tab.label}</span>
-                    <span className="sm:hidden">{tab.label.split(" ")[0]}</span>
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
-
-            {projectTabs.map((tab) => (
-              <TabsContent key={tab.id} value={tab.id} className="space-y-8">
-                <motion.div
-                  className="text-center mb-8"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <p className="text-muted-foreground">{tab.description}</p>
-                </motion.div>
-
-                <div
-                  ref={projectsRef}
-                  className="grid md:grid-cols-2 xl:grid-cols-3 gap-8"
-                >
-                  <AnimatePresence mode="wait">
-                    {tab.projects.map((project, index) => (
-                      <ProjectCard
-                        key={`${tab.id}-${index}`}
-                        project={project}
-                        index={index}
-                      />
-                    ))}
-                  </AnimatePresence>
-                </div>
-              </TabsContent>
-            ))}
-          </Tabs>
+          {allProjects.map((project, index) => (
+            <ProjectCard
+              key={`project-${index}`}
+              project={project}
+              index={index}
+            />
+          ))}
         </motion.div>
 
         {/* GitHub Stats Section */}
@@ -274,11 +173,8 @@ export function Projects() {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <div className="text-center mb-12">
-            <h3 className="text-2xl sm:text-3xl font-bold mb-4">
-              GitHub{" "}
-              <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                Analytics
-              </span>
+            <h3 className="text-2xl sm:text-3xl font-bold mb-4 font-mono">
+              <span className="text-primary">$</span> git --stats
             </h3>
             <p className="text-muted-foreground">
               My coding journey visualized through GitHub statistics
@@ -289,12 +185,11 @@ export function Projects() {
             {/* Main Account Stats */}
             <Card className="p-4 bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border-muted/20">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center space-x-2">
+                <CardTitle className="flex items-center space-x-2 font-mono text-sm">
                   <Github className="h-5 w-5" />
                   <span>Primary Account</span>
-                  <Badge
-                    variant="secondary"
-                    className="cursor-pointer hover:bg-secondary/80 transition-colors"
+                  <button
+                    className="text-primary hover:text-primary/80 transition-colors font-mono text-xs underline underline-offset-2"
                     onClick={() =>
                       window.open(
                         "https://github.com/myselfshravan?tab=repositories",
@@ -303,26 +198,26 @@ export function Projects() {
                     }
                   >
                     @myselfshravan
-                  </Badge>
+                  </button>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 px-2">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
-                    <div className="text-2xl font-bold text-primary">100+</div>
-                    <div className="text-xs text-muted-foreground">
-                      Repositories
+                    <div className="text-2xl font-bold text-primary font-mono">100+</div>
+                    <div className="text-xs text-muted-foreground font-mono">
+                      repositories
                     </div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-primary">3+</div>
-                    <div className="text-xs text-muted-foreground">
-                      Years Active
+                    <div className="text-2xl font-bold text-primary font-mono">3+</div>
+                    <div className="text-xs text-muted-foreground font-mono">
+                      years_active
                     </div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-primary">∞</div>
-                    <div className="text-xs text-muted-foreground">Commits</div>
+                    <div className="text-2xl font-bold text-primary font-mono">∞</div>
+                    <div className="text-xs text-muted-foreground font-mono">commits</div>
                   </div>
                 </div>
                 <div className="aspect-video relative bg-muted/20 rounded-lg overflow-hidden">
@@ -339,12 +234,11 @@ export function Projects() {
             {/* Second Account Stats */}
             <Card className="p-4 bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border-muted/20">
               <CardHeader className="pb-4">
-                <CardTitle className="flex items-center space-x-2">
+                <CardTitle className="flex items-center space-x-2 font-mono text-sm">
                   <Github className="h-5 w-5" />
                   <span>Secondary Account</span>
-                  <Badge
-                    variant="secondary"
-                    className="cursor-pointer hover:bg-secondary/80 transition-colors"
+                  <button
+                    className="text-primary hover:text-primary/80 transition-colors font-mono text-xs underline underline-offset-2"
                     onClick={() =>
                       window.open(
                         "https://github.com/githubhosting?tab=repositories",
@@ -353,26 +247,26 @@ export function Projects() {
                     }
                   >
                     @githubhosting
-                  </Badge>
+                  </button>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 px-2">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
-                    <div className="text-2xl font-bold text-primary">50+</div>
-                    <div className="text-xs text-muted-foreground">
-                      Repositories
+                    <div className="text-2xl font-bold text-primary font-mono">50+</div>
+                    <div className="text-xs text-muted-foreground font-mono">
+                      repositories
                     </div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-primary">2+</div>
-                    <div className="text-xs text-muted-foreground">
-                      Years Active
+                    <div className="text-2xl font-bold text-primary font-mono">2+</div>
+                    <div className="text-xs text-muted-foreground font-mono">
+                      years_active
                     </div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-primary">∞</div>
-                    <div className="text-xs text-muted-foreground">Commits</div>
+                    <div className="text-2xl font-bold text-primary font-mono">∞</div>
+                    <div className="text-xs text-muted-foreground font-mono">commits</div>
                   </div>
                 </div>
                 <div className="aspect-video relative bg-muted/20 rounded-lg overflow-hidden">
