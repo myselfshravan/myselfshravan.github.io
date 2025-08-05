@@ -2,24 +2,20 @@
   "personal": {
     "name": "Shravan Revanna",
     "title": "AI Full-Stack Developer",
-    "subtitle": "Full-stack ML Developer",
-    "description": "Passionate about Generative AI",
+    "subtitle": "Building AI-powered applications and automation solutions",
+    "description": "I build AI-powered applications and full-stack solutions that solve real problems",
     "email": "shravanrevanna@gmail.com",
     "phone": "+91 9945332995",
-    "location": "India",
-    "bio": "Hi! I'm Shravan, a AI full stack developer. Explore my expertise in AI and ML, see examples of my work, and learn more about my skills and experience.",
+    "location": "Bengaluru, India",
+    "bio": "AI full-stack developer with 150+ projects in production. I specialize in building automation tools, GenAI applications, and scalable web solutions that save time and solve real problems.",
     "intro": [
-      "🌝 You already know my name, it's like right there",
-      "🎓 I graduated with a B.E. in CSE (AI & ML) from Ramaiah Institute of Technology",
-      "💼 Currently working at Udaan as Software Development Engineer Intern.",
-      "",
-      "🤔 What have I created? Let me tell you, I've built a lots of websites, dashboards, and a bunch of GenAI Solutions that will blow your mind.",
-      "😎 I have also developed a study material website called NoteRep that everyone uses to prepare just days before exams.",
-      "🧑‍💻 I have developed more than 180 full stack project which includes multiple SaaS products and automation tools and scripts. I love to explore new tech and build cool stuff.",
-      "💡 Other than this, I've also worked with tons of other technologies mentioned below",
-      "😁 Y'all can find few projects but trust me some of the best projects are private (just like you, you sneaky sneaky)"
+      "AI full-stack developer currently working at udaanCapital, building risk assessment systems.",
+      "Built 150+ projects including production applications with thousands of active users.",
+      "Specialized in automation, GenAI solutions, and full-stack development with modern frameworks.",
+      "Creator of NoteRep - a study platform serving 200+ active users with 85K+ views.",
+      "I write about tech, build tools that save time, and contribute to meaningful projects."
     ],
-    "goal": "My Goal is to Contribute to as many open source project as possible and also create something that can save time of people. PERIOD.",
+    "goal": "I build automation tools and AI-powered solutions that eliminate manual processes and save people time.",
     "profileImages": [
       "profile_0.jpg",
       "profile_1.jpg",
@@ -41,46 +37,40 @@
     "twitter": "https://twitter.com/myselfshravan",
     "linktr": "https://linktr.ee/shravan_revanna",
     "blog": "https://shravanrevanna.hashnode.dev/",
+    "blog_redirect": "https://blog.shravanrevanna.me",
     "youtube": "https://www.youtube.com/channel/UC5NNBFQqhbuU2f5wprDVaVg",
     "telegram": "https://telegram.me/siddharth_channel",
     "stackoverflow": "https://stackoverflow.com/users/17003616/shravan"
   },
   "skills": {
-    "languages": [
-      { "name": "NextJS", "icon": "devicon-nextjs-original" },
-      { "name": "React", "icon": "devicon-react-original" },
-      { "name": "Node.js", "icon": "devicon-nodejs-plain" },
+    "core": [
       { "name": "Python", "icon": "devicon-python-plain" },
       { "name": "JavaScript", "icon": "devicon-javascript-plain" },
-      { "name": "Firebase", "icon": "devicon-firebase-plain" },
       { "name": "TypeScript", "icon": "devicon-typescript-plain" },
-      { "name": "HTML5", "icon": "devicon-html5-plain" },
-      { "name": "CSS3", "icon": "devicon-css3-plain" },
-      { "name": "Tailwind CSS", "icon": "devicon-tailwindcss-plain" }
+      { "name": "Kotlin", "icon": "devicon-kotlin-plain" }
     ],
-    "tools": [
-      { "name": "GitHub", "icon": "devicon-github-original" },
-      { "name": "Git", "icon": "devicon-git-plain" },
-      { "name": "VS Code", "icon": "devicon-vscode-plain" },
-      { "name": "IntelliJ IDEA", "icon": "devicon-intellij-plain" },
-      { "name": "Postman", "icon": "devicon-postman-plain" },
+    "frameworks": [
+      { "name": "Next.js", "icon": "devicon-nextjs-original" },
+      { "name": "React", "icon": "devicon-react-original" },
+      { "name": "Node.js", "icon": "devicon-nodejs-plain" }
+    ],
+    "ai_ml": [
+      { "name": "TensorFlow", "icon": "devicon-tensorflow-original" },
+      { "name": "PyTorch", "icon": "devicon-pytorch-original" },
+      { "name": "Llama", "icon": "devicon-python-plain" },
+      { "name": "ChromaDB", "icon": "devicon-python-plain" }
+    ],
+    "databases": [
+      { "name": "MongoDB", "icon": "devicon-mongodb-plain" },
+      { "name": "PostgreSQL", "icon": "devicon-postgresql-plain" },
+      { "name": "Firebase", "icon": "devicon-firebase-plain" }
+    ],
+    "devops": [
       { "name": "Docker", "icon": "devicon-docker-plain" },
       { "name": "Kubernetes", "icon": "devicon-kubernetes-plain" },
-      { "name": "Linux", "icon": "devicon-linux-plain" },
-      { "name": "Figma", "icon": "devicon-figma-plain" },
-      { "name": "Canva", "icon": "devicon-canva-original" }
+      { "name": "AWS S3", "icon": "devicon-amazonwebservices-original" }
     ]
   },
-  "hobbies": [
-    { "icon": "Headphones", "text": "Listening to Podcasts and Music" },
-    { "icon": "Laptop", "text": "Building Websites and Apps" },
-    { "icon": "BookOpen", "text": "Writing Blogs & Reading Books" },
-    { "icon": "Gamepad2", "text": "Playing Video Games" },
-    { "icon": "Palette", "text": "UX & UI Designing" },
-    { "icon": "Route", "text": "Travelling & Exploring Nature" },
-    { "icon": "CookingPot", "text": "Cooking & Trying New Recipes" },
-    { "icon": "Camera", "text": "Photography & Videography" }
-  ],
   "projects": {
     "personal": [
       {
@@ -88,59 +78,112 @@
         "image": "project_noterep.png",
         "url": "https://noterep.vercel.app",
         "linkText": "Visit Website",
-        "description": "Study material website that everyone uses to prepare just days before exams"
+        "description": "Study platform serving 200+ students with AI chatbot, CGPA predictor, and community-driven content",
+        "tech": "Next.js, TypeScript, MongoDB, AI Integration",
+        "metrics": "200+ active users, 85K+ views"
+      },
+      {
+        "name": "F&B QR Ordering System",
+        "image": "project_fnb_system.png",
+        "url": "https://fnb-client-website.vercel.app",
+        "linkText": "Live Demo",
+        "description": "QR-based restaurant ordering system with real-time kitchen updates and digital billing",
+        "tech": "React, TypeScript, Node.js, AWS S3",
+        "metrics": "2000+ monthly users, 100+ daily orders"
+      },
+      {
+        "name": "HDFC Account Explorer",
+        "image": "project_hdfc_explorer.png",
+        "url": "https://hdfc-account-explorer.vercel.app",
+        "linkText": "Try It Out",
+        "description": "AI-powered bank statement analyzer with spending insights and community transaction tagging",
+        "tech": "React, PostgreSQL, AI Integration",
+        "metrics": "B-tree optimized queries, community tagging"
       },
       {
         "name": "AI Meal Planner",
         "image": "project_ai_meal_planner.png",
         "url": "https://ai-meal-planner.streamlit.app",
-        "linkText": "Try Web App"
+        "linkText": "Try Web App",
+        "description": "Personalized meal planning using Llama 70B and knapsack algorithm for optimal nutrition",
+        "tech": "Python, Streamlit, Llama 70B",
+        "metrics": "37 GitHub stars, dynamic programming optimization"
+      },
+      {
+        "name": "VigilAI - IoT Health Monitor",
+        "image": "project_vigilai.png",
+        "url": "https://vigilai-iot-health-monitor.vercel.app",
+        "linkText": "View Project",
+        "description": "Affordable elderly care system with ESP32 sensors, fall detection, and AI health monitoring",
+        "tech": "ESP32, Python, Firebase, TensorFlow Lite",
+        "metrics": "Real-time vitals tracking, anomaly detection"
       },
       {
         "name": "Enigma Escape",
         "image": "project_enigma_escape.png",
         "url": "https://enigma-escape-bot.streamlit.app",
-        "linkText": "Play Game"
+        "linkText": "Play Game",
+        "description": "AI manipulation game where players make LLMs say specific phrases without direct prompting",
+        "tech": "Streamlit, Llama-2-70b, Firebase",
+        "metrics": "Social engineering for AI systems"
       },
       {
         "name": "Idea Repository System",
         "image": "project_idea_repository_system.png",
         "url": "https://idearepo.vercel.app",
-        "linkText": "Visit Website"
+        "linkText": "Visit Website",
+        "description": "Collaborative platform for storing, sharing, and developing project ideas",
+        "tech": "Next.js, Database Integration",
+        "metrics": "Community idea sharing"
       }
     ],
-    "team": [
+    "automation": [
       {
-        "name": "KeyGainer",
-        "image": "project_keygainer.png",
-        "url": "https://myselfshravan.github.io/keygainer",
-        "linkText": "Discover"
+        "name": "Restaurant Booking Bot",
+        "image": "project_restaurant_bot.png",
+        "url": "https://shravanrevanna.hashnode.dev/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
+        "linkText": "Read Article",
+        "description": "Python automation bot that books restaurant reservations faster than manual booking",
+        "tech": "Python, Selenium",
+        "metrics": "Never missed a reservation"
       },
       {
-        "name": "Calculla",
+        "name": "IPL Ticket Automation",
+        "image": "project_ipl_tickets.png",
+        "url": "https://shravanrevanna.hashnode.dev/automating-the-ipl-ticket-booking-for-rcb-match",
+        "linkText": "Read Article",
+        "description": "Automated ticket booking system for high-demand IPL matches",
+        "tech": "Python, Web Automation",
+        "metrics": "Successful ticket acquisition"
+      },
+      {
+        "name": "GetPlaced Email Organizer",
+        "image": "project_getplaced.png",
+        "url": "#",
+        "linkText": "Private Tool",
+        "description": "Automated placement email organizer that prevents missing job opportunities",
+        "tech": "Python, Email APIs",
+        "metrics": "Zero missed opportunities"
+      }
+    ],
+    "tools": [
+      {
+        "name": "Calculla GPA Calculator",
         "image": "project_calculla.png",
         "url": "https://gpaestimator.streamlit.app",
-        "linkText": "Check it out"
-      }
-    ],
-    "pending": [
-      {
-        "name": "Secure Choice",
-        "image": "project_secure_choice.png",
-        "url": "https://securechoice.github.io/securechoice",
-        "linkText": "Visit Website"
+        "linkText": "Try Calculator",
+        "description": "Precise GPA calculator that shows exactly what scores you need for target grades",
+        "tech": "Streamlit, Python",
+        "metrics": "Student productivity tool"
       },
       {
-        "name": "Assist Ideas",
-        "image": "project_assist_ideas.png",
-        "url": "https://www.youtube.com/channel/UCyT4D-vxOvv7OIsVXv-V8kQ",
-        "linkText": "View details"
-      },
-      {
-        "name": "Better Facts",
-        "image": "project_better_facts.png",
-        "url": "404.html",
-        "linkText": "Still Working"
+        "name": "FastIQ LLM Playground",
+        "image": "project_fastiq.png",
+        "url": "#",
+        "linkText": "View Project",
+        "description": "Multi-API LLM playground with community prompt templates and model comparison",
+        "tech": "React, Multiple LLM APIs",
+        "metrics": "Community prompt sharing"
       }
     ]
   },
@@ -175,26 +218,26 @@
       "company": "udaanCapital",
       "position": "Software Engineer Intern",
       "status": "Current",
-      "startDate": "Jul-2025",
+      "startDate": "Jul-2024",
       "endDate": "Present",
       "website": "https://udaancapital.com",
       "description": [
-        "Working on onboarding team to build risk asisessment BRE system.",
-        "Optimizing application performance and ensuring scalability in onboarding."
+        "Building risk assessment BRE systems for onboarding workflows, ensuring accurate application conversion.",
+        "Optimizing performance and scalability of onboarding systems handling high-volume financial applications."
       ]
     },
     {
       "company": "Udaan",
       "position": "Software Engineer Intern",
       "status": "previous",
-      "startDate": "Jun-2025",
+      "startDate": "Jun-2024",
       "endDate": "May-2025",
       "website": "https://udaan.com",
       "description": [
-        "Built full-stack features in Kotlin & TypeScript for multiple consoles.",
-        "Automated competitor-account APIs, cutting setup errors by 70%.",
-        "Enhanced data workflows & improved MM and Pricing console efficiency.",
-        "Engineered resilient pricing pipelines with 99% uptime & live insights."
+        "Built production features in Kotlin & TypeScript across multiple business consoles.",
+        "Automated competitor APIs integration, reducing manual setup errors by 70%.",
+        "Enhanced data workflows for Market Making and Pricing consoles, improving operational efficiency.",
+        "Engineered resilient pricing pipelines achieving 99% uptime with real-time insights."
       ]
     },
     {
@@ -205,21 +248,21 @@
       "endDate": "Apr-2024",
       "website": "https://cadreodr.com",
       "description": [
-        "Built a real-time grievance redressal app using ChromaDB + Mistral 7B/LLaMA 2 for interaction & info extraction.",
-        "Fine-tuned BART for zero-shot hierarchical classification of government departments, integrated into chatbot workflows."
+        "Built real-time grievance system using ChromaDB + Mistral 7B for government department navigation.",
+        "Fine-tuned BART model for zero-shot classification of government departments with chatbot integration."
       ]
     },
     {
       "company": "NextWealth",
-      "position": "Gen-AI Intern",
+      "position": "GenAI Intern",
       "status": "Previous",
       "startDate": "Oct-2023",
       "endDate": "Jan-2024",
       "website": "https://nextwealth.com",
       "description": [
-        "Developed a GenAI-based solution for automating data extraction from unstructured documents, cutting handling time by 5 mins/task.",
-        "Built AI workflows removing a QC layer, streamlining operations.",
-        "Led AI prototype development, solving complex client challenges & reducing costs."
+        "Automated document processing with GenAI, reducing task handling time by 5 minutes per document.",
+        "Eliminated entire QC layer through AI workflows, streamlining client operations.",
+        "Developed AI prototypes solving complex financial document challenges, reducing operational costs."
       ]
     },
     {
@@ -230,15 +273,30 @@
       "endDate": "Aug-2023",
       "website": "#",
       "description": [
-        "Collaboratively designed and developed the backend architecture.",
-        "Built a dynamic landing page and admin panel web app with role-based access controls."
+        "Architected and developed scalable backend systems for food delivery platform.",
+        "Built admin panel with role-based access controls and dynamic user management features."
       ]
     }
   ],
+  "writing": {
+    "blog_url": "https://shravanrevanna.hashnode.dev/",
+    "featured_posts": [
+      {
+        "title": "Automating Restaurant Reservations with Python",
+        "url": "https://shravanrevanna.hashnode.dev/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
+        "description": "How I built a Python bot to secure restaurant reservations faster than manual booking"
+      },
+      {
+        "title": "IPL Ticket Booking Automation",
+        "url": "https://shravanrevanna.hashnode.dev/automating-the-ipl-ticket-booking-for-rcb-match",
+        "description": "Automated solution for high-demand sports ticket acquisition"
+      }
+    ]
+  },
   "meta": {
-    "title": "Shravan Revanna | AI Full-Stack Developer | ReactJS | Python",
-    "description": "Hi! I'm Shravan, a AI full stack developer. Explore my expertise in AI and ML, see examples of my work, and learn more about my skills and experience.",
-    "keywords": "shravan, myselfshravan, shravanrevanna, revanna, shravangithubio, shravan portfolio, shravan revanna, shravan github",
+    "title": "Shravan Revanna | AI Full-Stack Developer | Automation & GenAI Solutions",
+    "description": "AI full-stack developer with 150+ projects. I build automation tools, GenAI applications, and scalable solutions that solve real problems. Currently at udaanCapital.",
+    "keywords": "shravan revanna, AI developer, full-stack developer, automation, GenAI, machine learning, python developer, next.js developer",
     "googleSiteVerification": "gbboCIIlLPMipBxgBvVtFTKE40RWFYONeLI6IDmHJ40",
     "domain": "shravanrevanna.me"
   }
