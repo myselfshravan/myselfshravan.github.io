@@ -38,13 +38,13 @@ export function GitHubStatsCard({ account, statsUrl }: GitHubStatsCardProps) {
   }, [account.username]);
 
   return (
-    <Card className="p-4 bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border border-primary/20 shadow-lg">
+    <Card className="px-2 pt-10 bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border border-primary/20 shadow-lg">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center space-x-1 font-mono text-sm">
           <GitHubLogoIcon className="h-5 w-5" />
           <span>{account.type}</span>
           <button
-            className="text-primary hover:text-primary/80 transition-colors font-mono text-xs underline underline-offset-2"
+            className="text-primary hover:text-primary/80 transition-colors font-mono text-sm underline underline-offset-4"
             onClick={() =>
               window.open(
                 `https://github.com/${account.username}?tab=repositories`,

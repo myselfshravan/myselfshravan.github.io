@@ -27,6 +27,17 @@ export function GitHubSection() {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             A snapshot of my coding journey visualized through GitHub statistics
           </p>
+          <p className="mt-4 text-xs text-muted-foreground">
+            Stats update live via a self-hosted API.
+            <a
+              href="https://github.com/myselfshravan/git-stats-api"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-1 underline underline-offset-4 text-primary hover:text-primary/80 transition-colors"
+            >
+              $ cat api-source
+            </a>
+          </p>
         </motion.div>
 
         <GitHubStats />

@@ -77,6 +77,7 @@ export const statsConfig = {
   title_color: "00af44",
   icon_color: "00af44",
   text_color: "9f9f9f",
+  hide: "commits"
 } as const;
 
 export const getStatsUrl = (username: string) => {
