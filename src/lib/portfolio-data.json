@@ -7,7 +7,7 @@
     "email": "shravanrevanna@gmail.com",
     "phone": "+91 9945332995",
     "location": "Bengaluru, India",
-    "bio": "AI full-stack developer with 150+ projects in production. I specialize in building automation tools, GenAI applications, and scalable web solutions that save time and solve real problems.",
+    "bio": "AI full-stack developer with 150+ projects in production. I specialize in building automation tools, GenAI applications, and scalable web tech solutions that save time and solve real problems.",
     "intro": [
       "AI full-stack developer currently working at udaanCapital, building risk assessment systems.",
       "Built 150+ projects including production applications with thousands of active users.",
@@ -32,14 +32,14 @@
     "linkedin": "https://www.linkedin.com/in/shravanrevanna",
     "github": "https://github.com/myselfshravan",
     "github2": "https://github.com/githubhosting",
-    "instagram": "https://www.instagram.com/Shravan_revanna",
+    "instagram": "https://www.instagram.com/shravan_revanna",
     "facebook": "https://facebook.com/Shravan.3.07",
     "twitter": "https://twitter.com/myselfshravan",
     "linktr": "https://linktr.ee/shravan_revanna",
     "blog": "https://blog.shravanrevanna.me/",
     "blog_redirect": "https://blog.shravanrevanna.me",
     "youtube": "https://www.youtube.com/channel/UC5NNBFQqhbuU2f5wprDVaVg",
-    "telegram": "https://telegram.me/siddharth_channel",
+    "telegram": "https://telegram.me/shravan_mr",
     "stackoverflow": "https://stackoverflow.com/users/17003616/shravan"
   },
   "skills": {
@@ -79,17 +79,6 @@
         "metrics": "200+ active users, 85K+ views till date"
       },
       {
-        "name": "F&B QR Ordering System",
-        "image": "project_fnb_qr_ordering_system.png",
-        "website_url": "https://fnb-client-website.vercel.app",
-        "github_url": "https://github.com/myselfshravan/fandb-client-website",
-        "demo_url": "https://drive.google.com/file/d/1WgFVc09hAKIXi08Q4JZq9eqSP_mLNs2z/view",
-        "linkText": "Live Demo",
-        "description": "QR-based table food ordering system with real-time kitchen updates and seamless digital billing and built-in NGO contribution feature for socially conscious dining",
-        "tech": "React, TypeScript, Node.js, AWS S3",
-        "metrics": "2000+ monthly users, 100+ daily orders"
-      },
-      {
         "name": "ParseFi - Statement Analyzer",
         "image": "project_hdfc_statement_analyser.png",
         "website_url": "https://hdfc-account-explorer.vercel.app",
@@ -103,7 +92,8 @@
         "name": "Forkcast - plans your meals",
         "image": "project_ai_meal_planner.png",
         "website_url": "https://ai-meal-planner.streamlit.app",
-        "github_url": "https://github.com/myselfshravan/AI-Meal-Planner",        "linkText": "Try Web App",
+        "github_url": "https://github.com/myselfshravan/AI-Meal-Planner",
+        "linkText": "Try Web App",
         "description": "Personalized BMI-based meal generator using Llama 70B to craft perfect calorie-matched nutrition plans tailored to your body's needs",
         "tech": "Python, Streamlit, Llama 70B LLM",
         "metrics": "38 GitHub stars, 33 Forks, dynamic programming optimization"
@@ -127,6 +117,17 @@
         "description": "AI manipulation game where players master social engineering to make LLMs reveal secret phrases without direct prompting",
         "tech": "Streamlit, Llama-2-70b, Firebase",
         "metrics": "Social engineering for AI systems"
+      },
+      {
+        "name": "F&B QR Ordering System",
+        "image": "project_fnb_qr_ordering_system.png",
+        "website_url": "https://fnb-client-website.vercel.app",
+        "github_url": "https://github.com/myselfshravan/fandb-client-website",
+        "demo_url": "https://drive.google.com/file/d/1WgFVc09hAKIXi08Q4JZq9eqSP_mLNs2z/view",
+        "linkText": "Live Demo",
+        "description": "QR-based table food ordering system with real-time kitchen updates and seamless digital billing and built-in NGO contribution feature for socially conscious dining",
+        "tech": "React, TypeScript, Node.js, AWS S3",
+        "metrics": "2000+ monthly users, 100+ daily orders"
       }
     ],
     "automation": [
@@ -134,9 +135,8 @@
         "name": "Clicks before Chopsticks",
         "blog_url": "https://blog.shravanrevanna.me/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
         "demo_url": "https://drive.google.com/file/d/1hqv6UWN_l7O6izAR9qSxotSxC-vwrF8R/view",
-        "github_url": "https://github.com/myselfshravan/aimenusBookingAutomation",
         "linkText": "Read Article",
-        "description": "Python bot that secures Naru Noodle reservations in seconds, beating the 2-minute sellout window every Monday at 8 PM",
+        "description": "Python script that secures Naru Noodle Bar reservations in seconds, beating the 2-minute sellout window every Monday at 8 PM",
         "tech": "Python, Selenium",
         "metrics": "Never missed a reservation"
       },
@@ -274,24 +274,19 @@
     "blog_url": "https://blog.shravanrevanna.me",
     "featured_posts": [
       {
-        "title": "Fast, Smart & Subtly Selling: Inside NoteRep's AI Chatbot with Ad-Integrated",
+        "title": "Inside NoteRep's AI Chatbot - Subtly Ad Integrated in responses",
         "url": "https://blog.shravanrevanna.me/a-brief-look-at-how-the-noterep-ai-chatbot-works",
         "description": "How I built a Groq-powered chatbot for NoteRep that delivers lightning-fast responses, remembers conversations, and seamlessly integrates ads making chat sessions smarter and monetization invisible."
       },
       {
-        "title": "Building a Real-Time Betting Odds Monitor with Arbitrage Detection",
+        "title": "Building a Real-Time Betting Odds Monitor with guaranteed profits on every single bet made",
         "url": "https://blog.shravanrevanna.me/building-a-real-time-betting-odds-monitor-with-arbitrage-detection",
-        "description": "A deep dive into building a Flask + Streamlit system that scrapes live betting odds, calculates bookmaker margins, and detects arbitrage opportunities in real time."
+        "description": "A deep dive into building a Flask + Websocket scraping system that extracts live betting odds, calculates bookmaker margins, and detects arbitrage opportunities in real time."
       },
       {
-        "title": "Automating Table Reservations with Script",
+        "title": "Automating High Demand Table Reservations with Script - Clicks before Chopsticks",
         "url": "https://blog.shravanrevanna.me/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
-        "description": "How I built a Python bot to secure restaurant reservations faster than manual booking (Naru Noodels Bar, Bangalore)"
-      },
-      {
-        "title": "IPL Ticket Booking Automation",
-        "url": "https://blog.shravanrevanna.me/automating-the-ipl-ticket-booking-for-rcb-match",
-        "description": "Automated solution for high-demand sports ticket acquisition"
+        "description": "How I built a Python script to secure restaurant reservations faster than manual booking (Naru Noodels Bar, Bangalore)"
       }
     ]
   },

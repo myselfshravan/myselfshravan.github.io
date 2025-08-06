@@ -25,11 +25,11 @@ export function Writing() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 font-mono">
-            <span className="text-primary">#</span> writings
+            <span className="text-primary">#</span> writings.md
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            I write about automation, AI projects, and the tools I build. Real
-            stories from the trenches.
+            I write code. Sometimes I write about it too - automation, AI
+            projects, and the tools I build. Real stories from the trenches.
           </p>
         </motion.div>
 
