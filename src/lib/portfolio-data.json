@@ -76,7 +76,7 @@
         "linkText": "Visit Website",
         "description": "The go-to platform for 2000+ students who ace their exams with last-minute prep, featuring 20+ features/tools including live timetables, real-time calendars, AI Chatbot, Mini SIS and open-source community content",
         "tech": "Next.js, TypeScript, Firebase, Vercel",
-        "metrics": "200+ active users, 85K+ views till date"
+        "metrics": "200+ active users, 95K+ views till date and #1 in Google search index"
       },
       {
         "name": "ParseFi - Statement Analyzer",
@@ -84,8 +84,8 @@
         "website_url": "https://hdfc-account-explorer.vercel.app",
         "github_url": "https://github.com/myselfshravan/hdfc-statement-explorer",
         "linkText": "Try It Out",
-        "description": "AI-powered HDFC bank statement explorer with MCP-driven smart tagging and auto reconciliation for effortless financial insights",
-        "tech": "React, PostgreSQL, AI Integration",
+        "description": "AI-powered HDFC bank statement explorer with MCP-driven financial insights (chat) and smart tagging with auto reconciliation of Statements and Transactions",
+        "tech": "React, AI Integration (text2sql), Supabase - PostgreSQL",
         "metrics": "B-tree optimized queries, auto tagging of Tnx, Smart Reconciliation"
       },
       {
@@ -214,8 +214,8 @@
       "endDate": "Present",
       "website": "https://udaancapital.com",
       "description": [
-        "Building risk assessment BRE systems for onboarding workflows, ensuring accurate application conversion.",
-        "Optimizing performance and scalability of onboarding systems handling high-volume financial applications."
+        "Working on onboarding systems to improve application conversion flow.",
+        "Contributing to internal tools that support operations and credit evaluation."
       ]
     },
     {
@@ -226,10 +226,9 @@
       "endDate": "May-2025",
       "website": "https://udaan.com",
       "description": [
-        "Built production features in Kotlin & TypeScript across multiple business consoles.",
-        "Automated competitor APIs integration, reducing manual setup errors by 70%.",
-        "Enhanced data workflows for Market Making and Pricing consoles, improving operational efficiency.",
-        "Engineered resilient pricing pipelines achieving 99% uptime with real-time insights."
+        "Shipped production features in Kotlin and TypeScript across multiple internal business consoles.",
+        "Automated competitor API integration, cutting manual setup and removing hours of manual work.",
+        "Engineered resilient pricing pipelines with 99% uptime and real-time visibility."
       ]
     },
     {
@@ -241,7 +240,8 @@
       "website": "https://cadreodr.com",
       "description": [
         "Built real-time grievance system using ChromaDB + Mistral 7B for government department navigation.",
-        "Fine-tuned BART model for zero-shot classification of government departments with chatbot integration."
+        "Fine-tuned BART model for zero-shot classification of government departments with AI chatbot integration.",
+        "Developed completely automated classification system for efficient grievance routing."
       ]
     },
     {
@@ -252,7 +252,7 @@
       "endDate": "Jan-2024",
       "website": "https://nextwealth.com",
       "description": [
-        "Automated document processing with GenAI, reducing task handling time by 5 minutes per document.",
+        "Automated document processing with GenAI, reducing task handling time by 5 minutes per task.",
         "Eliminated entire QC layer through AI workflows, streamlining client operations.",
         "Developed AI prototypes solving complex financial document challenges, reducing operational costs."
       ]
@@ -265,7 +265,7 @@
       "endDate": "Aug-2023",
       "website": "#",
       "description": [
-        "Architected and developed scalable backend systems for food delivery platform.",
+        "Architected and developed scalable backend systems for a subscription-based food delivery platform.",
         "Built admin panel with role-based access controls and dynamic user management features."
       ]
     }
@@ -274,19 +274,19 @@
     "blog_url": "https://blog.shravanrevanna.me",
     "featured_posts": [
       {
-        "title": "Inside NoteRep's AI Chatbot - Subtly Ad Integrated in responses",
+        "title": "Inside NoteRep's AI Chatbot - Subtle Ads in responses",
         "url": "https://blog.shravanrevanna.me/a-brief-look-at-how-the-noterep-ai-chatbot-works",
-        "description": "How I built a Groq-powered chatbot for NoteRep that delivers lightning-fast responses, remembers conversations, and seamlessly integrates ads making chat sessions smarter and monetization invisible."
+        "description": "How I Built a Groq-powered chatbot for NoteRep that delivers blazing-fast responses, remembers context, and sneakily integrates ads into conversations without breaking flow which can be tracked and monetized."
       },
       {
         "title": "Building a Real-Time Betting Odds Monitor with guaranteed profits on every single bet made",
         "url": "https://blog.shravanrevanna.me/building-a-real-time-betting-odds-monitor-with-arbitrage-detection",
-        "description": "A deep dive into building a Flask + Websocket scraping system that extracts live betting odds, calculates bookmaker margins, and detects arbitrage opportunities in real time."
+        "description": "Built a Flask + WebSocket system to scrape live betting odds, calculates bookmaker margins, and detects arbitrage opportunities at two diffrent instances in real time."
       },
       {
-        "title": "Automating High Demand Table Reservations with Script - Clicks before Chopsticks",
+        "title": "Automating Table Reservations with Script - Clicks before Chopsticks",
         "url": "https://blog.shravanrevanna.me/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
-        "description": "How I built a Python script to secure restaurant reservations faster than manual booking (Naru Noodels Bar, Bangalore)"
+        "description": "Wrote a Python script to secure restaurant reservations faster than manual booking for high-demand restaurant (like Naru Noodels Bar) out of frustration."
       }
     ]
   },

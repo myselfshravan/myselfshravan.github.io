@@ -84,8 +84,8 @@ export function Projects() {
 
             {project.tech && (
               <div className="space-y-2">
-                <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide">
-                  Tech Stack
+                <div className="text-xs font-mono text-muted-foreground tracking-tight">
+                  Built With →
                 </div>
                 <div className="text-xs text-primary font-mono bg-primary/5 px-2 py-1 rounded border border-primary/20">
                   {project.tech}
@@ -95,8 +95,8 @@ export function Projects() {
 
             {project.metrics && (
               <div className="space-y-2">
-                <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide">
-                  Fun Fact
+                <div className="text-xs font-mono text-muted-foreground tracking-tight">
+                  stdout →
                 </div>
                 <div className="text-xs text-green-400 font-mono bg-green-400/5 px-2 py-1 rounded border border-green-400/20">
                   {project.metrics}
@@ -149,6 +149,9 @@ export function Projects() {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Production applications, automation scripts, and tools that solve
             real problems
+          </p>
+          <p className="mt-2 text-sm text-muted-foreground font-mono">
+            built. deployed. maintained.
           </p>
         </motion.div>
 
