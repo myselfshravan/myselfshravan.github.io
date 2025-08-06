@@ -96,7 +96,7 @@ export function Projects() {
             {project.metrics && (
               <div className="space-y-2">
                 <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide">
-                  Impact
+                  Fun Fact
                 </div>
                 <div className="text-xs text-green-400 font-mono bg-green-400/5 px-2 py-1 rounded border border-green-400/20">
                   {project.metrics}
