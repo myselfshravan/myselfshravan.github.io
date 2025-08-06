@@ -18,10 +18,10 @@ import { SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { name: "Projects", href: "#projects" },
   { name: "Writing", href: "#writing" },
-  { name: "Work", href: "#work" },
+  { name: "Projects", href: "#projects" },
   { name: "Skills", href: "#skills" },
+  { name: "Work", href: "#work" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -192,8 +192,7 @@ export function Header() {
                 className="w-[300px] sm:w-[400px] bg-background/95 backdrop-blur-xl border-l border-border/50"
               >
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                <div className="flex items-center justify-end mb-8">
-                </div>
+                <div className="flex items-center justify-end mb-8"></div>
                 <nav
                   className="flex flex-col space-y-2"
                   role="navigation"

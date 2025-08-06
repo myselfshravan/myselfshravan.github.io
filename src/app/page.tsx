@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/header";
 import { Hero } from "@/components/sections/hero";
 import { Skills } from "@/components/sections/skills";
 import { Projects } from "@/components/sections/projects";
+import { GitHubSection } from "@/components/sections/github";
 import { Writing } from "@/components/sections/writing";
 import { Work } from "@/components/sections/work";
 import { Contact } from "@/components/sections/contact";
@@ -79,10 +80,11 @@ export default function Home() {
       <Header />
       <main className="pt-16">
         <Hero />
-        <Projects />
         <Writing />
-        <Work />
+        <Projects />
+        <GitHubSection />
         <Skills />
+        <Work />
         <Contact />
       </main>
       <Footer />
