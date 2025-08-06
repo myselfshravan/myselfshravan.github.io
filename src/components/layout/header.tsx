@@ -37,7 +37,9 @@ export function Header() {
 
       // Active section detection
       const sections = navItems.map((item) => item.href.substring(1));
-      const scrollPosition = window.scrollY + 100; // Offset for fixed header
+      const headerHeight = 80; // Fixed header height
+      const buffer = 10; // Small buffer for reliable detection
+      const scrollPosition = window.scrollY + headerHeight + buffer;
 
       for (const section of sections) {
         const element = document.getElementById(section);

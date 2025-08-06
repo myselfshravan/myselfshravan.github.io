@@ -38,7 +38,7 @@ export function GitHubStatsCard({ account, statsUrl }: GitHubStatsCardProps) {
   }, [account.username]);
 
   return (
-    <Card className="p-4 bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border border-primary/10 hover:border-primary/30 shadow-lg">
+    <Card className="p-4 bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border border-primary/20 shadow-lg">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center space-x-1 font-mono text-sm">
           <GitHubLogoIcon className="h-5 w-5" />
