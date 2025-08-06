@@ -1,10 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { GitHubAccount } from "@/lib/github-config";
+import {
+  GitHubAccount,
+  fetchGitHubStats,
+  formatNumber,
+} from "@/lib/github-config";
 
 interface GitHubStatsCardProps {
   account: GitHubAccount;
@@ -12,10 +16,31 @@ interface GitHubStatsCardProps {
 }
 
 export function GitHubStatsCard({ account, statsUrl }: GitHubStatsCardProps) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [metrics, setMetrics] = useState(account.metrics);
+
+  useEffect(() => {
+    const loadStats = async () => {
+      setIsLoading(true);
+      const stats = await fetchGitHubStats(account.username);
+      if (stats) {
+        setMetrics({
+          ...account.metrics,
+          repositories: formatNumber(stats.total_repos),
+          ownedRepos: formatNumber(stats.repos_count.owned),
+          commits: formatNumber(stats.commits),
+        });
+      }
+      setIsLoading(false);
+    };
+
+    loadStats();
+  }, [account.username]);
+
   return (
     <Card className="p-4 bg-gradient-to-br from-card/50 to-muted/20 backdrop-blur-sm border border-primary/10 hover:border-primary/30 shadow-lg">
       <CardHeader className="pb-4">
-        <CardTitle className="flex items-center space-x-2 font-mono text-sm">
+        <CardTitle className="flex items-center space-x-1 font-mono text-sm">
           <GitHubLogoIcon className="h-5 w-5" />
           <span>{account.type}</span>
           <button
@@ -35,7 +60,11 @@ export function GitHubStatsCard({ account, statsUrl }: GitHubStatsCardProps) {
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
             <div className="text-2xl font-bold text-primary font-mono">
-              {account.metrics.repositories}
+              {isLoading ? (
+                <span className="animate-pulse">...</span>
+              ) : (
+                metrics.repositories
+              )}
             </div>
             <div className="text-xs text-muted-foreground font-mono">
               repositories
@@ -43,15 +72,23 @@ export function GitHubStatsCard({ account, statsUrl }: GitHubStatsCardProps) {
           </div>
           <div>
             <div className="text-2xl font-bold text-primary font-mono">
-              {account.metrics.yearsActive}
+              {isLoading ? (
+                <span className="animate-pulse">...</span>
+              ) : (
+                metrics.ownedRepos
+              )}
             </div>
             <div className="text-xs text-muted-foreground font-mono">
-              years_active
+              owned_repos
             </div>
           </div>
           <div>
             <div className="text-2xl font-bold text-primary font-mono">
-              {account.metrics.commits}
+              {isLoading ? (
+                <span className="animate-pulse">...</span>
+              ) : (
+                metrics.commits
+              )}
             </div>
             <div className="text-xs text-muted-foreground font-mono">
               commits

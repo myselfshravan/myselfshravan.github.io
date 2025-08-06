@@ -1,12 +1,23 @@
-"use client"
+"use client";
 
-import React, { useEffect, useRef } from "react"
-import { motion, useInView } from "framer-motion"
-import { Mail, Phone, Send, MessageCircle, Github, Linkedin, Instagram, Facebook, Twitter, Youtube } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import portfolioData from "@/lib/portfolio-data.json"
-import { gsap } from "gsap"
+import React, { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import {
+  Mail,
+  Phone,
+  Send,
+  MessageCircle,
+  Github,
+  Linkedin,
+  Instagram,
+  Facebook,
+  Twitter,
+  Youtube,
+} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import portfolioData from "@/lib/portfolio-data.json";
+import { gsap } from "gsap";
 
 const socialIcons = {
   github: Github,
@@ -15,17 +26,17 @@ const socialIcons = {
   facebook: Facebook,
   twitter: Twitter,
   youtube: Youtube,
-}
+};
 
 export function Contact() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const cardsRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" })
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   useEffect(() => {
     if (typeof window !== "undefined" && cardsRef.current) {
-      const contactCards = cardsRef.current.querySelectorAll(".contact-card")
-      
+      const contactCards = cardsRef.current.querySelectorAll(".contact-card");
+
       gsap.fromTo(
         contactCards,
         { y: 50, opacity: 0, rotationY: 15 },
@@ -41,9 +52,9 @@ export function Contact() {
             start: "top 80%",
           },
         }
-      )
+      );
     }
-  }, [])
+  }, []);
 
   const contactMethods = [
     {
@@ -68,12 +79,12 @@ export function Contact() {
       icon: MessageCircle,
       title: "WhatsApp",
       value: "Let's Chat",
-      href: `https://wa.me/${portfolioData.personal.phone.replace(/\D/g, '')}`,
+      href: `https://wa.me/${portfolioData.personal.phone.replace(/\D/g, "")}`,
       description: "Message on WhatsApp",
       gradient: "from-emerald-500/10 to-emerald-600/10",
       iconColor: "text-emerald-500",
     },
-  ]
+  ];
 
   return (
     <section
@@ -95,7 +106,8 @@ export function Contact() {
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ready to collaborate? Let&apos;s discuss your next project or just have a friendly chat about technology.
+            Ready to collaborate? Let&apos;s discuss your next project or just
+            have a friendly chat about technology.
           </p>
         </motion.div>
 
@@ -111,16 +123,17 @@ export function Contact() {
               <div>
                 <h3 className="text-2xl font-bold mb-6">Let&apos;s Connect</h3>
                 <p className="text-muted-foreground leading-relaxed mb-8">
-                  I&apos;m always excited to work on new projects and collaborate with passionate individuals. 
-                  Whether you have a project in mind, want to discuss opportunities, or just want to say hello, 
-                  I&apos;d love to hear from you!
+                  I&apos;m always excited to work on new projects and
+                  collaborate with passionate individuals. Whether you have a
+                  project in mind, want to discuss opportunities, or just want
+                  to say hello, I&apos;d love to hear from you!
                 </p>
               </div>
 
               {/* Contact Methods */}
               <div ref={cardsRef} className="space-y-3 sm:space-y-4">
                 {contactMethods.map((method) => {
-                  const Icon = method.icon
+                  const Icon = method.icon;
                   return (
                     <motion.div
                       key={method.title}
@@ -128,20 +141,36 @@ export function Contact() {
                       whileHover={{ scale: 1.02, x: 5 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <Card className={`bg-gradient-to-r ${method.gradient} border-muted/20 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 cursor-pointer hover:border-primary/30 w-full`}>
+                      <Card
+                        className={`bg-gradient-to-r ${method.gradient} border-muted/20 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 cursor-pointer hover:border-primary/30 w-full`}
+                      >
                         <CardContent className="p-4 sm:p-6">
                           <div className="flex items-center space-x-3 sm:space-x-4">
                             <div className="p-2 sm:p-3 bg-background/50 rounded-lg flex-shrink-0">
-                              <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${method.iconColor}`} />
+                              <Icon
+                                className={`h-5 w-5 sm:h-6 sm:w-6 ${method.iconColor}`}
+                              />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h4 className="font-semibold text-foreground truncate">{method.title}</h4>
-                              <p className="text-xs sm:text-sm text-muted-foreground mb-1 truncate">{method.description}</p>
+                              <h4 className="font-semibold text-foreground truncate">
+                                {method.title}
+                              </h4>
+                              <p className="text-xs sm:text-sm text-muted-foreground mb-1 truncate">
+                                {method.description}
+                              </p>
                               <a
                                 href={method.href}
                                 className="text-primary hover:underline font-medium text-sm sm:text-base truncate block"
-                                target={method.href.startsWith('http') ? '_blank' : undefined}
-                                rel={method.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                target={
+                                  method.href.startsWith("http")
+                                    ? "_blank"
+                                    : undefined
+                                }
+                                rel={
+                                  method.href.startsWith("http")
+                                    ? "noopener noreferrer"
+                                    : undefined
+                                }
                               >
                                 {method.value}
                               </a>
@@ -149,7 +178,14 @@ export function Contact() {
                             <Button
                               variant="ghost"
                               size="icon"
-                              onClick={() => window.open(method.href, method.href.startsWith('http') ? '_blank' : '_self')}
+                              onClick={() =>
+                                window.open(
+                                  method.href,
+                                  method.href.startsWith("http")
+                                    ? "_blank"
+                                    : "_self"
+                                )
+                              }
                               className="opacity-0 group-hover:opacity-100 transition-opacity hidden sm:flex flex-shrink-0"
                             >
                               <Send className="h-4 w-4" />
@@ -158,7 +194,7 @@ export function Contact() {
                         </CardContent>
                       </Card>
                     </motion.div>
-                  )
+                  );
                 })}
               </div>
 
@@ -166,17 +202,24 @@ export function Contact() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   size="lg"
-                  onClick={() => window.open(`mailto:${portfolioData.personal.email}`, '_self')}
+                  onClick={() =>
+                    window.open(
+                      `mailto:${portfolioData.personal.email}`,
+                      "_self"
+                    )
+                  }
                   className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >
                   <Mail className="mr-2 h-5 w-5" />
                   Send Email
                 </Button>
-                
+
                 <Button
                   variant="outline"
                   size="lg"
-                  onClick={() => window.open(portfolioData.social.linkedin, '_blank')}
+                  onClick={() =>
+                    window.open(portfolioData.social.linkedin, "_blank")
+                  }
                   className="font-semibold px-8 py-3 rounded-lg border-2 hover:bg-primary/5 transition-all duration-300"
                 >
                   <Linkedin className="mr-2 h-5 w-5" />
@@ -204,29 +247,34 @@ export function Contact() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground mb-6">
-                    Connect with me on social media for updates, insights, and behind-the-scenes content.
+                    Connect with me on social media for updates, insights, and
+                    behind-the-scenes content.
                   </p>
-                  
+
                   <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
-                    {Object.entries(portfolioData.social).slice(0, 8).map(([platform, url]) => {
-                      const Icon = socialIcons[platform as keyof typeof socialIcons] || MessageCircle
-                      return (
-                        <motion.a
-                          key={platform}
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex flex-col items-center p-4 bg-muted/20 hover:bg-primary/10 rounded-lg text-center transition-all duration-300 group"
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <Icon className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors mb-2" />
-                          <span className="text-xs font-medium capitalize">
-                            {platform === 'github2' ? 'GitHub' : platform}
-                          </span>
-                        </motion.a>
-                      )
-                    })}
+                    {Object.entries(portfolioData.social)
+                      .slice(0, 8)
+                      .map(([platform, url]) => {
+                        const Icon =
+                          socialIcons[platform as keyof typeof socialIcons] ||
+                          MessageCircle;
+                        return (
+                          <motion.a
+                            key={platform}
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex flex-col items-center p-4 bg-muted/20 hover:bg-primary/10 rounded-lg text-center transition-all duration-300 group"
+                            whileHover={{ scale: 1.05, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            <Icon className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors mb-2" />
+                            <span className="text-xs font-medium capitalize">
+                              {platform === "github2" ? "GitHub" : platform}
+                            </span>
+                          </motion.a>
+                        );
+                      })}
                   </div>
                 </CardContent>
               </Card>
@@ -239,11 +287,13 @@ export function Contact() {
                       <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse" />
                       <div className="absolute inset-0 w-4 h-4 bg-green-500 rounded-full animate-ping opacity-20" />
                     </div>
-                    <h4 className="text-lg font-semibold">Available for Work</h4>
+                    <h4 className="text-lg font-semibold">
+                      Available for Work
+                    </h4>
                   </div>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    I&apos;m currently open to new opportunities and exciting projects. 
-                    Let&apos;s create something amazing together!
+                    I&apos;m currently open to new opportunities and exciting
+                    projects. Let&apos;s create something amazing together!
                   </p>
                 </CardContent>
               </Card>
@@ -256,8 +306,8 @@ export function Contact() {
                     <h4 className="text-lg font-semibold">Quick Response</h4>
                   </div>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    I typically respond to emails within 24 hours. For urgent matters, 
-                    WhatsApp is the fastest way to reach me!
+                    I typically respond to emails within 24 hours. For urgent
+                    matters, WhatsApp is the fastest way to reach me!
                   </p>
                 </CardContent>
               </Card>
@@ -274,13 +324,21 @@ export function Contact() {
         >
           <Card className="max-w-2xl mx-auto p-8 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 border-primary/20">
             <CardContent className="p-0 text-center">
-              <h3 className="text-xl font-bold mb-4">Ready to Start a Project?</h3>
+              <h3 className="text-xl font-bold mb-4">
+                Ready to Start a Project?
+              </h3>
               <p className="text-muted-foreground mb-6">
-                Let&apos;s discuss how we can bring your ideas to life with cutting-edge technology and creative solutions.
+                Let&apos;s discuss how we can bring your ideas to life with
+                cutting-edge technology and creative solutions.
               </p>
               <Button
                 size="lg"
-                onClick={() => window.open(`mailto:${portfolioData.personal.email}?subject=Project Collaboration`, '_self')}
+                onClick={() =>
+                  window.open(
+                    `mailto:${portfolioData.personal.email}?subject=Project Collaboration`,
+                    "_self"
+                  )
+                }
                 className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
                 <Send className="mr-2 h-5 w-5" />
@@ -291,5 +349,5 @@ export function Contact() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

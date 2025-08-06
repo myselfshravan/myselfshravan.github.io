@@ -89,8 +89,8 @@ export function Footer() {
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              Soon other projects will be listed. It&apos;s a work in progress so
-              check back often!
+              Soon other projects will be listed. It&apos;s a work in progress
+              so check back often!
             </motion.p>
           </div>
 

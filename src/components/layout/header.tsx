@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { name: "Writing", href: "#writing" },
   { name: "Projects", href: "#projects" },
+  { name: "GitHub", href: "#github" },
   { name: "Skills", href: "#skills" },
   { name: "Work", href: "#work" },
   { name: "Contact", href: "#contact" },

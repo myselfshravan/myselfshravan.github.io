@@ -28,7 +28,8 @@ export function Work() {
             <span className="text-primary">{">"}</span> experience
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Building production systems and solving real problems in the industry
+            Building production systems and solving real problems in the
+            industry
           </p>
         </motion.div>
 
@@ -80,7 +81,9 @@ export function Work() {
                         key={idx}
                         className="text-muted-foreground text-sm leading-relaxed flex items-start gap-2"
                       >
-                        <span className="text-primary font-mono text-xs mt-1">{">"}</span>
+                        <span className="text-primary font-mono text-xs mt-1">
+                          {">"}
+                        </span>
                         <span>{item}</span>
                       </li>
                     ))}
