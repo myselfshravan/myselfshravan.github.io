@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
-import { motion } from "framer-motion";
+import React from 'react';
+import { motion } from 'framer-motion';
 import {
   Heart,
   ExternalLink,
@@ -11,10 +11,10 @@ import {
   Instagram,
   Facebook,
   Mail,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import portfolioData from "@/lib/portfolio-data.json";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import portfolioData from '@/lib/portfolio-data.json';
 
 const socialIcons = {
   github: Github,
@@ -25,22 +25,22 @@ const socialIcons = {
 
 export function Footer() {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const scrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   const navLinks = [
-    { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
-    { name: "Projects", href: "#projects" },
-    { name: "Education", href: "#education" },
-    { name: "Contact", href: "#contact" },
+    { name: 'About', href: '#about' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Education', href: '#education' },
+    { name: 'Contact', href: '#contact' },
   ];
 
   return (
@@ -59,20 +59,19 @@ export function Footer() {
                 SHRAVAN
               </h3>
               <p className="text-muted-foreground leading-relaxed max-w-md mt-3">
-                Thanks for checking out my portfolio website. Connect with me
-                over socials. Feel free to drop a message. I will be glad to
-                help.
+                Thanks for checking out my portfolio website. Connect with me over socials. Feel
+                free to drop a message. I will be glad to help.
               </p>
               <p className="text-sm text-muted-foreground mt-2">
-                Hit me up on{" "}
+                Hit me up on{' '}
                 <a
                   href={portfolioData.social.instagram}
                   target="_blank"
                   className="text-primary hover:underline font-medium"
                 >
                   Instagram
-                </a>{" "}
-                or if you&apos;re the classic type, mail me at{" "}
+                </a>{' '}
+                or if you&apos;re the classic type, mail me at{' '}
                 <a
                   href={`mailto:${portfolioData.personal.email}`}
                   className="text-primary hover:underline font-medium"
@@ -89,8 +88,7 @@ export function Footer() {
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              Soon other projects will be listed. It&apos;s a work in progress
-              so check back often!
+              Soon other projects will be listed. It&apos;s a work in progress so check back often!
             </motion.p>
           </div>
 
@@ -128,7 +126,7 @@ export function Footer() {
                 <button
                   onClick={() =>
                     navigator.share?.({
-                      title: "Shravan Revanna - Portfolio",
+                      title: 'Shravan Revanna - Portfolio',
                       url: window.location.href,
                     })
                   }
@@ -152,8 +150,7 @@ export function Footer() {
               {Object.entries(portfolioData.social)
                 .slice(0, 6)
                 .map(([platform, url]) => {
-                  const Icon =
-                    socialIcons[platform as keyof typeof socialIcons] || Mail;
+                  const Icon = socialIcons[platform as keyof typeof socialIcons] || Mail;
                   return (
                     <motion.a
                       key={platform}
@@ -197,11 +194,8 @@ export function Footer() {
             viewport={{ once: true }}
           >
             <p className="flex items-center">
-              Made with{" "}
-              <Heart className="h-4 w-4 text-red-500 mx-1 animate-pulse" /> by{" "}
-              <span className="font-semibold text-primary ml-1">
-                Shravan Revanna
-              </span>
+              Made with <Heart className="h-4 w-4 text-red-500 mx-1 animate-pulse" /> by{' '}
+              <span className="font-semibold text-primary ml-1">Shravan Revanna</span>
             </p>
           </motion.div>
 
@@ -213,11 +207,11 @@ export function Footer() {
             viewport={{ once: true }}
           >
             <p className="text-xs text-muted-foreground">
-              Last Updated:{" "}
-              {new Date().toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
+              Last Updated:{' '}
+              {new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
               })}
             </p>
 
@@ -241,8 +235,8 @@ export function Footer() {
           viewport={{ once: true }}
         >
           <p className="text-xs text-muted-foreground">
-            Built with Next.js, TypeScript, Tailwind CSS, Framer Motion, and
-            shadcn/ui. Revamped by Claude Code.
+            Built with Next.js, TypeScript, Tailwind CSS, Framer Motion, and shadcn/ui. Revamped by
+            Claude Code.
           </p>
         </motion.div>
       </div>

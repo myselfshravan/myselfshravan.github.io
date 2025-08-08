@@ -16,6 +16,7 @@ A cutting-edge portfolio website built with the latest web technologies, showcas
 ## ✨ Features
 
 ### Modern Design
+
 - **Responsive Design**: Optimized for all devices from mobile to desktop
 - **Dark/Light Theme**: Seamless theme switching with system preference detection
 - **Glass Morphism**: Modern glass-blur effects and gradient backgrounds
@@ -23,6 +24,7 @@ A cutting-edge portfolio website built with the latest web technologies, showcas
 - **Smooth Scrolling**: Elegant section transitions with scroll-triggered animations
 
 ### Performance
+
 - **Static Site Generation**: Optimized build for fast loading
 - **Image Optimization**: Next.js Image component with lazy loading
 - **Code Splitting**: Automatic code splitting for optimal performance
@@ -31,6 +33,7 @@ A cutting-edge portfolio website built with the latest web technologies, showcas
 ## 🛠️ Development
 
 ### Prerequisites
+
 - Node.js 18 or higher
 - npm or yarn
 
@@ -67,20 +70,25 @@ npm run lint         # Run ESLint
 ## 🚀 Deployment
 
 ### GitHub Pages (Recommended)
+
 1. Push code to your GitHub repository
 2. GitHub Actions will automatically build and deploy
 3. Site will be available at `https://yourusername.github.io`
 
 ### Manual Deployment
+
 ```bash
 npm run build    # Build the project
 ```
+
 Upload the `/out` directory to your hosting provider.
 
 ## 🔧 Customization
 
 ### Content Updates
+
 All content is centralized in `src/lib/portfolio-data.json`:
+
 - Personal information and bio
 - Skills and technologies
 - Project details and links
@@ -90,6 +98,7 @@ All content is centralized in `src/lib/portfolio-data.json`:
 ## 📞 Contact
 
 **Shravan Revanna**
+
 - Website: [shravanrevanna.me](https://shravanrevanna.me)
 - Email: [shravanrevanna@gmail.com](mailto:shravanrevanna@gmail.com)
 - LinkedIn: [@shravanrevanna](https://linkedin.com/in/shravanrevanna)

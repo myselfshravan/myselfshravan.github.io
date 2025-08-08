@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import React, { useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import {
   Mail,
   Phone,
@@ -13,11 +13,11 @@ import {
   Facebook,
   Twitter,
   Youtube,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import portfolioData from "@/lib/portfolio-data.json";
-import { gsap } from "gsap";
+} from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import portfolioData from '@/lib/portfolio-data.json';
+import { gsap } from 'gsap';
 
 const socialIcons = {
   github: Github,
@@ -31,11 +31,11 @@ const socialIcons = {
 export function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   useEffect(() => {
-    if (typeof window !== "undefined" && cardsRef.current) {
-      const contactCards = cardsRef.current.querySelectorAll(".contact-card");
+    if (typeof window !== 'undefined' && cardsRef.current) {
+      const contactCards = cardsRef.current.querySelectorAll('.contact-card');
 
       gsap.fromTo(
         contactCards,
@@ -46,12 +46,12 @@ export function Contact() {
           rotationY: 0,
           duration: 0.8,
           stagger: 0.2,
-          ease: "power3.out",
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: cardsRef.current,
-            start: "top 80%",
+            start: 'top 80%',
           },
-        }
+        },
       );
     }
   }, []);
@@ -59,30 +59,30 @@ export function Contact() {
   const contactMethods = [
     {
       icon: Mail,
-      title: "Email",
+      title: 'Email',
       value: portfolioData.personal.email,
       href: `mailto:${portfolioData.personal.email}`,
-      description: "Send me an email",
-      gradient: "from-blue-500/10 to-blue-600/10",
-      iconColor: "text-blue-500",
+      description: 'Send me an email',
+      gradient: 'from-blue-500/10 to-blue-600/10',
+      iconColor: 'text-blue-500',
     },
     {
       icon: Phone,
-      title: "Phone",
+      title: 'Phone',
       value: portfolioData.personal.phone,
       href: `tel:${portfolioData.personal.phone}`,
-      description: "Give me a call",
-      gradient: "from-green-500/10 to-green-600/10",
-      iconColor: "text-green-500",
+      description: 'Give me a call',
+      gradient: 'from-green-500/10 to-green-600/10',
+      iconColor: 'text-green-500',
     },
     {
       icon: MessageCircle,
-      title: "WhatsApp",
+      title: 'WhatsApp',
       value: "Let's Chat",
-      href: `https://wa.me/${portfolioData.personal.phone.replace(/\D/g, "")}`,
-      description: "Message on WhatsApp",
-      gradient: "from-emerald-500/10 to-emerald-600/10",
-      iconColor: "text-emerald-500",
+      href: `https://wa.me/${portfolioData.personal.phone.replace(/\D/g, '')}`,
+      description: 'Message on WhatsApp',
+      gradient: 'from-emerald-500/10 to-emerald-600/10',
+      iconColor: 'text-emerald-500',
     },
   ];
 
@@ -100,14 +100,14 @@ export function Contact() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Get In{" "}
+            Get In{' '}
             <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
               Touch
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ready to collaborate? Let&apos;s discuss your next project or just
-            have a friendly chat about technology.
+            Ready to collaborate? Let&apos;s discuss your next project or just have a friendly chat
+            about technology.
           </p>
         </motion.div>
 
@@ -123,10 +123,9 @@ export function Contact() {
               <div>
                 <h3 className="text-2xl font-bold mb-6">Let&apos;s Connect</h3>
                 <p className="text-muted-foreground leading-relaxed mb-8">
-                  I&apos;m always excited to work on new projects and
-                  collaborate with passionate individuals. Whether you have a
-                  project in mind, want to discuss opportunities, or just want
-                  to say hello, I&apos;d love to hear from you!
+                  I&apos;m always excited to work on new projects and collaborate with passionate
+                  individuals. Whether you have a project in mind, want to discuss opportunities, or
+                  just want to say hello, I&apos;d love to hear from you!
                 </p>
               </div>
 
@@ -147,9 +146,7 @@ export function Contact() {
                         <CardContent className="p-4 sm:p-6">
                           <div className="flex items-center space-x-3 sm:space-x-4">
                             <div className="p-2 sm:p-3 bg-background/50 rounded-lg flex-shrink-0">
-                              <Icon
-                                className={`h-5 w-5 sm:h-6 sm:w-6 ${method.iconColor}`}
-                              />
+                              <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${method.iconColor}`} />
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="font-semibold text-foreground truncate">
@@ -161,15 +158,9 @@ export function Contact() {
                               <a
                                 href={method.href}
                                 className="text-primary hover:underline font-medium text-sm sm:text-base truncate block"
-                                target={
-                                  method.href.startsWith("http")
-                                    ? "_blank"
-                                    : undefined
-                                }
+                                target={method.href.startsWith('http') ? '_blank' : undefined}
                                 rel={
-                                  method.href.startsWith("http")
-                                    ? "noopener noreferrer"
-                                    : undefined
+                                  method.href.startsWith('http') ? 'noopener noreferrer' : undefined
                                 }
                               >
                                 {method.value}
@@ -181,9 +172,7 @@ export function Contact() {
                               onClick={() =>
                                 window.open(
                                   method.href,
-                                  method.href.startsWith("http")
-                                    ? "_blank"
-                                    : "_self"
+                                  method.href.startsWith('http') ? '_blank' : '_self',
                                 )
                               }
                               className="opacity-0 group-hover:opacity-100 transition-opacity hidden sm:flex flex-shrink-0"
@@ -202,12 +191,7 @@ export function Contact() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   size="lg"
-                  onClick={() =>
-                    window.open(
-                      `mailto:${portfolioData.personal.email}`,
-                      "_self"
-                    )
-                  }
+                  onClick={() => window.open(`mailto:${portfolioData.personal.email}`, '_self')}
                   className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >
                   <Mail className="mr-2 h-5 w-5" />
@@ -217,9 +201,7 @@ export function Contact() {
                 <Button
                   variant="outline"
                   size="lg"
-                  onClick={() =>
-                    window.open(portfolioData.social.linkedin, "_blank")
-                  }
+                  onClick={() => window.open(portfolioData.social.linkedin, '_blank')}
                   className="font-semibold px-8 py-3 rounded-lg border-2 hover:bg-primary/5 transition-all duration-300"
                 >
                   <Linkedin className="mr-2 h-5 w-5" />
@@ -247,8 +229,8 @@ export function Contact() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground mb-6">
-                    Connect with me on social media for updates, insights, and
-                    behind-the-scenes content.
+                    Connect with me on social media for updates, insights, and behind-the-scenes
+                    content.
                   </p>
 
                   <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
@@ -256,8 +238,7 @@ export function Contact() {
                       .slice(0, 8)
                       .map(([platform, url]) => {
                         const Icon =
-                          socialIcons[platform as keyof typeof socialIcons] ||
-                          MessageCircle;
+                          socialIcons[platform as keyof typeof socialIcons] || MessageCircle;
                         return (
                           <motion.a
                             key={platform}
@@ -270,7 +251,7 @@ export function Contact() {
                           >
                             <Icon className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors mb-2" />
                             <span className="text-xs font-medium capitalize">
-                              {platform === "github2" ? "GitHub" : platform}
+                              {platform === 'github2' ? 'GitHub' : platform}
                             </span>
                           </motion.a>
                         );
@@ -287,13 +268,11 @@ export function Contact() {
                       <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse" />
                       <div className="absolute inset-0 w-4 h-4 bg-green-500 rounded-full animate-ping opacity-20" />
                     </div>
-                    <h4 className="text-lg font-semibold">
-                      Available for Work
-                    </h4>
+                    <h4 className="text-lg font-semibold">Available for Work</h4>
                   </div>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    I&apos;m currently open to new opportunities and exciting
-                    projects. Let&apos;s create something amazing together!
+                    I&apos;m currently open to new opportunities and exciting projects. Let&apos;s
+                    create something amazing together!
                   </p>
                 </CardContent>
               </Card>
@@ -306,8 +285,8 @@ export function Contact() {
                     <h4 className="text-lg font-semibold">Quick Response</h4>
                   </div>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    I typically respond to emails within 24 hours. For urgent
-                    matters, WhatsApp is the fastest way to reach me!
+                    I typically respond to emails within 24 hours. For urgent matters, WhatsApp is
+                    the fastest way to reach me!
                   </p>
                 </CardContent>
               </Card>
@@ -324,19 +303,17 @@ export function Contact() {
         >
           <Card className="max-w-2xl mx-auto p-8 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 border-primary/20">
             <CardContent className="p-0 text-center">
-              <h3 className="text-xl font-bold mb-4">
-                Ready to Start a Project?
-              </h3>
+              <h3 className="text-xl font-bold mb-4">Ready to Start a Project?</h3>
               <p className="text-muted-foreground mb-6">
-                Let&apos;s discuss how we can bring your ideas to life with
-                cutting-edge technology and creative solutions.
+                Let&apos;s discuss how we can bring your ideas to life with cutting-edge technology
+                and creative solutions.
               </p>
               <Button
                 size="lg"
                 onClick={() =>
                   window.open(
                     `mailto:${portfolioData.personal.email}?subject=Project Collaboration`,
-                    "_self"
+                    '_self',
                   )
                 }
                 className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Dosis:300,400,700,800");
+@import url('https://fonts.googleapis.com/css?family=Dosis:300,400,700,800');
 
 /** Styles for the 403 Page **/
 
@@ -36,7 +36,7 @@
 .permission_denied h1 {
   text-align: center;
   color: #fff;
-  font-family: "Dosis", sans-serif;
+  font-family: 'Dosis', sans-serif;
   font-size: 100px;
   margin-bottom: 0px;
   font-weight: 800;
@@ -49,7 +49,7 @@
   line-height: 23px;
   max-width: 330px;
   margin: 0px auto 30px auto;
-  font-family: "Dosis", sans-serif;
+  font-family: 'Dosis', sans-serif;
   font-weight: 400;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .permission_denied h3 span:after {
-  content: "";
+  content: '';
   border-bottom: 3px solid #ffbb39;
   position: absolute;
   left: 0;
@@ -79,11 +79,11 @@
   font-size: 15px;
   text-align: center;
   margin: 0 auto;
-  
+
   display: block;
   margin-bottom: 40px;
   margin-top: 25px;
-  font-family: "Dosis", sans-serif;
+  font-family: 'Dosis', sans-serif;
   font-weight: 400;
 }
 

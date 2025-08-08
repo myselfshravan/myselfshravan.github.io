@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { GitHubStats } from "@/components/github/github-stats";
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { GitHubStats } from '@/components/github/github-stats';
 
 export function GitHubSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   return (
     <section
@@ -22,7 +22,7 @@ export function GitHubSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 font-mono">
-            <span className="text-primary">{">"}</span> github --stats
+            <span className="text-primary">{'>'}</span> github --stats
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             A snapshot of my coding journey visualized through GitHub statistics

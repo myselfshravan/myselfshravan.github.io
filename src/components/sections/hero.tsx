@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { Terminal, FileText, ArrowDown } from "lucide-react";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
-import portfolioData from "@/lib/portfolio-data.json";
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { Terminal, FileText, ArrowDown } from 'lucide-react';
+import { GitHubLogoIcon } from '@radix-ui/react-icons';
+import { Button } from '@/components/ui/button';
+import portfolioData from '@/lib/portfolio-data.json';
 
 export function Hero() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const fullText = `${portfolioData.personal.name
     .toLowerCase()
-    .replace(" ", "_")}@portfolio:~$ whoami`;
+    .replace(' ', '_')}@portfolio:~$ whoami`;
 
   useEffect(() => {
     let index = 0;
@@ -38,7 +38,7 @@ export function Hero() {
   const scrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -53,7 +53,7 @@ export function Hero() {
               linear-gradient(rgba(0,255,0,0.1) 1px, transparent 1px),
               linear-gradient(90deg, rgba(0,255,0,0.1) 1px, transparent 1px)
             `,
-            backgroundSize: "20px 20px",
+            backgroundSize: '20px 20px',
           }}
         />
       </div>
@@ -77,11 +77,7 @@ export function Hero() {
             <div className="space-y-2 text-sm">
               <div className="text-green-400">
                 {text}
-                <span
-                  className={`${
-                    showCursor ? "opacity-100" : "opacity-0"
-                  } transition-opacity`}
-                >
+                <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
                   |
                 </span>
               </div>
@@ -101,7 +97,7 @@ export function Hero() {
                 transition={{ delay: 2.5, duration: 0.5 }}
                 className="text-muted-foreground pt-2"
               >
-                Currently SE Intern @{" "}
+                Currently SE Intern @{' '}
                 <a
                   href="https://udaancapital.com"
                   target="_blank"
@@ -109,7 +105,7 @@ export function Hero() {
                   className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
                 >
                   udaanCapital
-                </a>{" "}
+                </a>{' '}
                 | 150+ projects shipped
               </motion.div>
             </div>
@@ -157,7 +153,7 @@ export function Hero() {
           >
             <Button
               size="lg"
-              onClick={() => scrollToSection("#projects")}
+              onClick={() => scrollToSection('#projects')}
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3"
             >
               <Terminal className="mr-2 h-4 w-4" />
@@ -167,9 +163,7 @@ export function Hero() {
             <Button
               variant="outline"
               size="lg"
-              onClick={() =>
-                window.open(portfolioData.writing.blog_url, "_blank")
-              }
+              onClick={() => window.open(portfolioData.writing.blog_url, '_blank')}
               className="px-6 py-3 border-primary/20 hover:bg-primary/5"
             >
               <FileText className="mr-2 h-4 w-4" />
@@ -179,7 +173,7 @@ export function Hero() {
             <Button
               variant="outline"
               size="lg"
-              onClick={() => window.open(portfolioData.social.github, "_blank")}
+              onClick={() => window.open(portfolioData.social.github, '_blank')}
               className="px-6 py-3 border-primary/20 hover:bg-primary/5"
             >
               <GitHubLogoIcon className="mr-2 h-4 w-4" />
@@ -195,27 +189,25 @@ export function Hero() {
             className="flex justify-center gap-6 text-sm text-muted-foreground"
           >
             <button
-              onClick={() => scrollToSection("#projects")}
+              onClick={() => scrollToSection('#projects')}
               className="hover:text-primary transition-colors underline underline-offset-4"
             >
               projects
             </button>
             <button
-              onClick={() => scrollToSection("#work")}
+              onClick={() => scrollToSection('#work')}
               className="hover:text-primary transition-colors underline underline-offset-4"
             >
               work
             </button>
             <button
-              onClick={() =>
-                window.open(`/${portfolioData.personal.resumeFile}`, "_blank")
-              }
+              onClick={() => window.open(`/${portfolioData.personal.resumeFile}`, '_blank')}
               className="hover:text-primary transition-colors underline underline-offset-4"
             >
               resume
             </button>
             <button
-              onClick={() => scrollToSection("#contact")}
+              onClick={() => scrollToSection('#contact')}
               className="hover:text-primary transition-colors underline underline-offset-4"
             >
               contact
@@ -233,7 +225,7 @@ export function Hero() {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => scrollToSection("#projects")}
+          onClick={() => scrollToSection('#projects')}
           className="rounded-full hover:bg-primary/10"
         >
           <ArrowDown className="h-6 w-6 text-muted-foreground" />

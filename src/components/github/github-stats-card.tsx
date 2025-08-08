@@ -1,14 +1,10 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import {
-  GitHubAccount,
-  fetchGitHubStats,
-  formatNumber,
-} from "@/lib/github-config";
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { GitHubLogoIcon } from '@radix-ui/react-icons';
+import { GitHubAccount, fetchGitHubStats, formatNumber } from '@/lib/github-config';
 
 interface GitHubStatsCardProps {
   account: GitHubAccount;
@@ -46,10 +42,7 @@ export function GitHubStatsCard({ account, statsUrl }: GitHubStatsCardProps) {
           <button
             className="text-primary hover:text-primary/80 transition-colors font-mono text-sm underline underline-offset-4"
             onClick={() =>
-              window.open(
-                `https://github.com/${account.username}?tab=repositories`,
-                "_blank"
-              )
+              window.open(`https://github.com/${account.username}?tab=repositories`, '_blank')
             }
           >
             @{account.username}
@@ -60,39 +53,21 @@ export function GitHubStatsCard({ account, statsUrl }: GitHubStatsCardProps) {
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
             <div className="text-2xl font-bold text-primary font-mono">
-              {isLoading ? (
-                <span className="animate-pulse">...</span>
-              ) : (
-                metrics.repositories
-              )}
+              {isLoading ? <span className="animate-pulse">...</span> : metrics.repositories}
             </div>
-            <div className="text-xs text-muted-foreground font-mono">
-              repositories
-            </div>
+            <div className="text-xs text-muted-foreground font-mono">repositories</div>
           </div>
           <div>
             <div className="text-2xl font-bold text-primary font-mono">
-              {isLoading ? (
-                <span className="animate-pulse">...</span>
-              ) : (
-                metrics.ownedRepos
-              )}
+              {isLoading ? <span className="animate-pulse">...</span> : metrics.ownedRepos}
             </div>
-            <div className="text-xs text-muted-foreground font-mono">
-              owned_repos
-            </div>
+            <div className="text-xs text-muted-foreground font-mono">owned_repos</div>
           </div>
           <div>
             <div className="text-2xl font-bold text-primary font-mono">
-              {isLoading ? (
-                <span className="animate-pulse">...</span>
-              ) : (
-                metrics.commits
-              )}
+              {isLoading ? <span className="animate-pulse">...</span> : metrics.commits}
             </div>
-            <div className="text-xs text-muted-foreground font-mono">
-              commits
-            </div>
+            <div className="text-xs text-muted-foreground font-mono">commits</div>
           </div>
         </div>
         <div className="aspect-video relative bg-muted/20 rounded-lg overflow-hidden">

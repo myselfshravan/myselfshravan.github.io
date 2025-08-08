@@ -21,8 +21,14 @@
     ],
     "goal": "My Goal is to Contribute to as many open source project as possible and also create something that can save time of people. PERIOD.",
     "profileImages": [
-      "profile_0.jpg", "profile_1.jpg", "profile_2.jpg", "profile_3.jpg", 
-      "profile_4.jpg", "profile_5.jpg", "profile_6.png", "profile_7.png"
+      "profile_0.jpg",
+      "profile_1.jpg",
+      "profile_2.jpg",
+      "profile_3.jpg",
+      "profile_4.jpg",
+      "profile_5.jpg",
+      "profile_6.png",
+      "profile_7.png"
     ],
     "resumeFile": "Shravan_Resume_v9.pdf"
   },
@@ -41,30 +47,30 @@
   },
   "skills": {
     "languages": [
-      {"name": "NextJS", "icon": "nextjs"},
-      {"name": "React", "icon": "react"},
-      {"name": "Node.js", "icon": "nodejs"},
-      {"name": "Python", "icon": "python"},
-      {"name": "JavaScript", "icon": "javascript"},
-      {"name": "Firebase", "icon": "firebase"},
-      {"name": "Tailwind", "icon": "tailwindcss"}
+      { "name": "NextJS", "icon": "nextjs" },
+      { "name": "React", "icon": "react" },
+      { "name": "Node.js", "icon": "nodejs" },
+      { "name": "Python", "icon": "python" },
+      { "name": "JavaScript", "icon": "javascript" },
+      { "name": "Firebase", "icon": "firebase" },
+      { "name": "Tailwind", "icon": "tailwindcss" }
     ],
     "tools": [
-      {"name": "GitHub", "icon": "github"},
-      {"name": "Git", "icon": "git"},
-      {"name": "VS Code", "icon": "visualstudio"},
-      {"name": "Figma", "icon": "figma"},
-      {"name": "Canva", "icon": "canva"}
+      { "name": "GitHub", "icon": "github" },
+      { "name": "Git", "icon": "git" },
+      { "name": "VS Code", "icon": "visualstudio" },
+      { "name": "Figma", "icon": "figma" },
+      { "name": "Canva", "icon": "canva" }
     ]
   },
   "hobbies": [
-    {"icon": "fas fa-headphones", "text": "Listening to Podcasts and Music"},
-    {"icon": "fas fa-laptop-code", "text": "Building Websites and Apps"},
-    {"icon": "fas fa-book-open", "text": "Writing Blogs & Reading Books"},
-    {"icon": "fas fa-gamepad", "text": "Playing Video Games"},
-    {"icon": "fas fa-palette", "text": "UX & UI Designing"},
-    {"icon": "fas fa-route", "text": "Travelling & Exploring Nature"},
-    {"icon": "devicon-canva-original", "text": "Designing Templates, Logos & Posts"}
+    { "icon": "fas fa-headphones", "text": "Listening to Podcasts and Music" },
+    { "icon": "fas fa-laptop-code", "text": "Building Websites and Apps" },
+    { "icon": "fas fa-book-open", "text": "Writing Blogs & Reading Books" },
+    { "icon": "fas fa-gamepad", "text": "Playing Video Games" },
+    { "icon": "fas fa-palette", "text": "UX & UI Designing" },
+    { "icon": "fas fa-route", "text": "Travelling & Exploring Nature" },
+    { "icon": "devicon-canva-original", "text": "Designing Templates, Logos & Posts" }
   ],
   "projects": {
     "personal": [

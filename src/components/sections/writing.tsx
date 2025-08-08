@@ -1,17 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import { motion } from "framer-motion";
-import { ExternalLink, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import portfolioData from "@/lib/portfolio-data.json";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ExternalLink, FileText } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import portfolioData from '@/lib/portfolio-data.json';
 
 export function Writing() {
   return (
@@ -28,8 +22,8 @@ export function Writing() {
             <span className="text-primary">#</span> writings.md
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            I write code. Sometimes I write about it too - automation, AI
-            projects, and the tools I build. Real stories from the trenches.
+            I write code. Sometimes I write about it too - automation, AI projects, and the tools I
+            build. Real stories from the trenches.
           </p>
         </motion.div>
 
@@ -49,7 +43,7 @@ export function Writing() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => window.open(post.url, "_blank")}
+                      onClick={() => window.open(post.url, '_blank')}
                       className="p-1 h-auto"
                     >
                       <ExternalLink className="h-4 w-4" />
@@ -65,7 +59,7 @@ export function Writing() {
                 <CardContent>
                   <Button
                     variant="outline"
-                    onClick={() => window.open(post.url, "_blank")}
+                    onClick={() => window.open(post.url, '_blank')}
                     className="w-full text-sm border-primary/20 hover:bg-primary/5"
                   >
                     read article
@@ -86,9 +80,7 @@ export function Writing() {
         >
           <Button
             size="lg"
-            onClick={() =>
-              window.open(portfolioData.writing.blog_url, "_blank")
-            }
+            onClick={() => window.open(portfolioData.writing.blog_url, '_blank')}
             className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
           >
             <FileText className="mr-2 h-4 w-4" />

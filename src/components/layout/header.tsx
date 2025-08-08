@@ -1,34 +1,34 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, ExternalLink, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, ExternalLink, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { SheetTitle } from "@/components/ui/sheet";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/navigation-menu';
+import { SheetTitle } from '@/components/ui/sheet';
+import { cn } from '@/lib/utils';
 
 const navItems = [
-  { name: "Writing", href: "#writing" },
-  { name: "Projects", href: "#projects" },
-  { name: "GitHub", href: "#github" },
-  { name: "Skills", href: "#skills" },
-  { name: "Work", href: "#work" },
-  { name: "Contact", href: "#contact" },
+  { name: 'Writing', href: '#writing' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'GitHub', href: '#github' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Work', href: '#work' },
+  { name: 'Contact', href: '#contact' },
 ];
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -45,10 +45,7 @@ export function Header() {
         const element = document.getElementById(section);
         if (element && element instanceof HTMLElement) {
           const { offsetTop, offsetHeight } = element;
-          if (
-            scrollPosition >= offsetTop &&
-            scrollPosition < offsetTop + offsetHeight
-          ) {
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             setActiveSection(section);
             break;
           }
@@ -56,14 +53,14 @@ export function Header() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     handleScroll(); // Call once to set initial state
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToSection = (href: string) => {
-    if (href === "#top") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    if (href === '#top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
@@ -71,7 +68,7 @@ export function Header() {
     if (element && element instanceof HTMLElement) {
       const headerHeight = 80; // Account for fixed header
       const elementPosition = element.offsetTop - headerHeight;
-      window.scrollTo({ top: elementPosition, behavior: "smooth" });
+      window.scrollTo({ top: elementPosition, behavior: 'smooth' });
     }
     setIsMobileMenuOpen(false);
   };
@@ -80,8 +77,8 @@ export function Header() {
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-background/40 backdrop-blur-sm border-b border-border/50 shadow-lg shadow-background/10"
-          : "bg-background/5 backdrop-blur-sm"
+          ? 'bg-background/40 backdrop-blur-sm border-b border-border/50 shadow-lg shadow-background/10'
+          : 'bg-background/5 backdrop-blur-sm'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -96,7 +93,7 @@ export function Header() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <button
-              onClick={() => scrollToSection("#top")}
+              onClick={() => scrollToSection('#top')}
               className="flex items-center hover:scale-105 transition-all duration-300 cursor-pointer"
               aria-label="Scroll to top"
             >
@@ -130,10 +127,10 @@ export function Header() {
                         onClick={() => scrollToSection(item.href)}
                         className={cn(
                           navigationMenuTriggerStyle(),
-                          "relative group px-4 py-2 text-sm font-medium transition-all duration-300 hover:bg-accent/50 focus:bg-accent/50",
+                          'relative group px-4 py-2 text-sm font-medium transition-all duration-300 hover:bg-accent/50 focus:bg-accent/50',
                           isActive
-                            ? "text-primary bg-accent/30 shadow-sm"
-                            : "text-muted-foreground hover:text-foreground"
+                            ? 'text-primary bg-accent/30 shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground',
                         )}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
@@ -145,10 +142,10 @@ export function Header() {
                         {item.name}
                         <motion.span
                           className="absolute -bottom-1 left-1/2 h-0.5 bg-primary rounded-full"
-                          initial={{ width: 0, x: "-50%" }}
+                          initial={{ width: 0, x: '-50%' }}
                           animate={{
-                            width: isActive ? "80%" : "0%",
-                            x: "-50%",
+                            width: isActive ? '80%' : '0%',
+                            x: '-50%',
                           }}
                           transition={{ duration: 0.3 }}
                         />
@@ -162,7 +159,7 @@ export function Header() {
                     target="_blank"
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      "text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-300 flex items-center space-x-1 px-4 py-2"
+                      'text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-300 flex items-center space-x-1 px-4 py-2',
                     )}
                     aria-label="Visit blog (opens in new tab)"
                   >
@@ -211,10 +208,10 @@ export function Header() {
                           key={item.name}
                           onClick={() => scrollToSection(item.href)}
                           className={cn(
-                            "text-left text-lg font-medium transition-all duration-300 py-3 px-4 rounded-lg relative group",
+                            'text-left text-lg font-medium transition-all duration-300 py-3 px-4 rounded-lg relative group',
                             isActive
-                              ? "text-primary bg-accent/30 shadow-sm"
-                              : "text-muted-foreground hover:text-foreground hover:bg-accent/20"
+                              ? 'text-primary bg-accent/30 shadow-sm'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/20',
                           )}
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}

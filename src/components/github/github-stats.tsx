@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { GitHubStatsCard } from "./github-stats-card";
-import { githubAccounts, getStatsUrl } from "@/lib/github-config";
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { GitHubStatsCard } from './github-stats-card';
+import { githubAccounts, getStatsUrl } from '@/lib/github-config';
 
 export function GitHubStats() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   return (
     <motion.div

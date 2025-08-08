@@ -1,33 +1,33 @@
-"use client";
+'use client';
 
-import React from "react";
-import { motion, useInView } from "framer-motion";
-import { Terminal } from "lucide-react";
-import portfolioData from "@/lib/portfolio-data.json";
+import React from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Terminal } from 'lucide-react';
+import portfolioData from '@/lib/portfolio-data.json';
 
 export function Skills() {
   const sectionRef = React.useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   const skillCategories = [
     {
-      title: "Languages",
-      icon: "🔧",
+      title: 'Languages',
+      icon: '🔧',
       skills: portfolioData.skills.core.map((s) => s.name),
     },
     {
-      title: "Frameworks",
-      icon: "⚡",
+      title: 'Frameworks',
+      icon: '⚡',
       skills: portfolioData.skills.frameworks.map((s) => s.name),
     },
     {
-      title: "Databases",
-      icon: "💾",
+      title: 'Databases',
+      icon: '💾',
       skills: portfolioData.skills.databases.map((s) => s.name),
     },
     {
-      title: "DevOps",
-      icon: "☁️",
+      title: 'DevOps',
+      icon: '☁️',
       skills: portfolioData.skills.devops.map((s) => s.name),
     },
   ];
