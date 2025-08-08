@@ -20,12 +20,12 @@ export function GitHubStatsCard({ account, statsUrl }: GitHubStatsCardProps) {
       setIsLoading(true);
       const stats = await fetchGitHubStats(account.username);
       if (stats) {
-        setMetrics({
-          ...account.metrics,
+        setMetrics((prev) => ({
+          ...prev, // use previous state, not account.metrics
           repositories: formatNumber(stats.total_repos),
           ownedRepos: formatNumber(stats.repos_count.owned),
           commits: formatNumber(stats.commits),
-        });
+        }));
       }
       setIsLoading(false);
     };

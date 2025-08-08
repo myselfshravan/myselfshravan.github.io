@@ -1,0 +1,8 @@
+{
+  "extends": ["next/core-web-vitals", "prettier"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-unused-expressions": "off",
+    "react-hooks/exhaustive-deps": "warn"
+  }
+}
