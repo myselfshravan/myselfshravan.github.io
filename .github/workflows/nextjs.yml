@@ -52,7 +52,7 @@ jobs:
         run: npm ci
 
       - name: Build and Export with Next.js
-        run: npm run build && npm run export
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
