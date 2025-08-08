@@ -79,17 +79,17 @@
         "metrics": "200+ active users, 95K+ views till date and #1 in Google search index"
       },
       {
-        "name": "ParseFi - Statement Analyzer",
+        "name": "ParseFi - AI Statement Analyzer",
         "image": "project_hdfc_statement_analyser.png",
         "website_url": "https://hdfc-account-explorer.vercel.app",
         "github_url": "https://github.com/myselfshravan/hdfc-statement-explorer",
         "linkText": "Try It Out",
-        "description": "AI-powered HDFC bank statement explorer with MCP-driven financial insights (chat) and smart tagging with auto reconciliation of Statements and Transactions",
-        "tech": "React, AI Integration (text2sql), Supabase - PostgreSQL",
+        "description": "AI-powered HDFC bank statement explorer with MCP-driven financial insights (Chatbot) and smart tagging with auto reconciliation of Statements and Transactions",
+        "tech": "React, LLM Integration (text2sql), Supabase - PostgreSQL",
         "metrics": "B-tree optimized queries, auto tagging of Tnx, Smart Reconciliation"
       },
       {
-        "name": "Forkcast - plans your meals",
+        "name": "Forkcast - Plan your meals",
         "image": "project_ai_meal_planner.png",
         "website_url": "https://ai-meal-planner.streamlit.app",
         "github_url": "https://github.com/myselfshravan/AI-Meal-Planner",
@@ -227,7 +227,7 @@
       "website": "https://udaan.com",
       "description": [
         "Shipped production features in Kotlin and TypeScript across multiple internal business consoles.",
-        "Automated competitor API integration, cutting manual setup and removing hours of manual work.",
+        "Reverse engineered and completely automated competitor API integrations, removing hours of manual work.",
         "Engineered resilient pricing pipelines with 99% uptime and real-time visibility."
       ]
     },
@@ -240,7 +240,7 @@
       "website": "https://cadreodr.com",
       "description": [
         "Built real-time grievance system using ChromaDB + Mistral 7B for government department navigation.",
-        "Fine-tuned BART model for zero-shot classification of government departments with AI chatbot integration.",
+        "Fine-tuned BART model for zero-shot classification of government departments and AI chatbot to help users navigate accurately.",
         "Developed completely automated classification system for efficient grievance routing."
       ]
     },

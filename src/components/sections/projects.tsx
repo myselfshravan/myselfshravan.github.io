@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { ExternalLink, FileText, Play } from "lucide-react";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import portfolioData from "@/lib/portfolio-data.json";
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { ExternalLink, FileText, Play } from 'lucide-react';
+import { GitHubLogoIcon } from '@radix-ui/react-icons';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import portfolioData from '@/lib/portfolio-data.json';
 
 interface Project {
   name: string;
@@ -24,7 +24,7 @@ interface Project {
 
 export function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   // Flatten all projects into a single array
   const allProjects = [
@@ -33,30 +33,24 @@ export function Projects() {
     ...portfolioData.projects.tools,
   ];
 
-  const ProjectCard = ({
-    project,
-    index,
-  }: {
-    project: Project;
-    index: number;
-  }) => {
+  const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
     // Get all available URLs
     const urls = [
       {
-        type: "website",
+        type: 'website',
         url: project.website_url,
         icon: ExternalLink,
-        label: "Live Site",
+        label: 'Live Site',
       },
       {
-        type: "github",
+        type: 'github',
         url: project.github_url,
         icon: GitHubLogoIcon,
-        label: "GitHub",
+        label: 'GitHub',
       },
-      { type: "blog", url: project.blog_url, icon: FileText, label: "Blog" },
-      { type: "demo", url: project.demo_url, icon: Play, label: "Demo" },
-      { type: "url", url: project.url, icon: ExternalLink, label: "View" }, // fallback for old structure
+      { type: 'blog', url: project.blog_url, icon: FileText, label: 'Blog' },
+      { type: 'demo', url: project.demo_url, icon: Play, label: 'Demo' },
+      { type: 'url', url: project.url, icon: ExternalLink, label: 'View' }, // fallback for old structure
     ].filter((link) => link.url);
 
     return (
@@ -70,16 +64,14 @@ export function Projects() {
         <Card className="h-full overflow-hidden bg-card/70 backdrop-blur-sm border border-primary/10 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover:border-primary/30 shadow-lg hover:bg-card/80">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg font-semibold font-mono">
-              <span className="text-primary mr-2">{">"}</span>
+              <span className="text-primary mr-2">{'>'}</span>
               {project.name}
             </CardTitle>
           </CardHeader>
 
           <CardContent className="pt-0 space-y-4">
             {project.description && (
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {project.description}
-              </p>
+              <p className="text-muted-foreground text-sm leading-relaxed">{project.description}</p>
             )}
 
             {project.tech && (
@@ -114,7 +106,7 @@ export function Projects() {
                       key={idx}
                       variant="outline"
                       size="sm"
-                      onClick={() => window.open(link.url, "_blank")}
+                      onClick={() => window.open(link.url, '_blank')}
                       className="font-mono text-xs border-primary/20 hover:bg-primary/5 hover:border-primary/40 transition-colors"
                     >
                       <Icon className="mr-1 h-3 w-3" />
@@ -147,8 +139,7 @@ export function Projects() {
             <span className="text-primary">$</span> ls projects/
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Production applications, automation scripts, and tools that solve
-            real problems
+            Production applications, automation scripts, and tools that solve real problems
           </p>
           <p className="mt-2 text-sm text-muted-foreground font-mono">
             built. deployed. maintained.
@@ -163,11 +154,7 @@ export function Projects() {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           {allProjects.map((project, index) => (
-            <ProjectCard
-              key={`project-${index}`}
-              project={project}
-              index={index}
-            />
+            <ProjectCard key={`project-${index}`} project={project} index={index} />
           ))}
         </motion.div>
       </div>
