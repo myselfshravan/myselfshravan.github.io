@@ -15,23 +15,55 @@ export function Hero() {
     .replace(' ', '_')}@portfolio:~$ whoami`;
 
   useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      if (index < fullText.length) {
-        setText(fullText.slice(0, index + 1));
-        index++;
-      } else {
-        clearInterval(timer);
-      }
-    }, 100);
+    const mediaQuery = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    );
 
-    const cursorTimer = setInterval(() => {
-      setShowCursor((prev) => !prev);
-    }, 500);
+    if (mediaQuery.matches) {
+      setText(fullText);
+      setShowCursor(false);
+      return;
+    }
+
+    let frameId: number;
+    let cursorFrameId: number;
+    let startTime: number | null = null;
+    const typingSpeed = 100; // ms per character
+
+    const type = (timestamp: number) => {
+      if (startTime === null) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const index = Math.min(
+        Math.floor(elapsed / typingSpeed),
+        fullText.length
+      );
+
+      setText(fullText.slice(0, index));
+
+      if (index < fullText.length) {
+        frameId = requestAnimationFrame(type);
+      }
+    };
+
+    frameId = requestAnimationFrame(type);
+
+    let lastCursorToggle = 0;
+    const cursorSpeed = 500;
+
+    const blink = (timestamp: number) => {
+      if (timestamp - lastCursorToggle >= cursorSpeed) {
+        setShowCursor((prev) => !prev);
+        lastCursorToggle = timestamp;
+      }
+
+      cursorFrameId = requestAnimationFrame(blink);
+    };
+
+    cursorFrameId = requestAnimationFrame(blink);
 
     return () => {
-      clearInterval(timer);
-      clearInterval(cursorTimer);
+      cancelAnimationFrame(frameId);
+      cancelAnimationFrame(cursorFrameId);
     };
   }, [fullText]);
 
