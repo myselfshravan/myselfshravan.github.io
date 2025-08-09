@@ -36,22 +36,24 @@ export function Header() {
       setIsScrolled(window.scrollY > 50);
 
       // Active section detection
-      const sections = navItems.map((item) => item.href.substring(1));
-      const headerHeight = 80; // Fixed header height
-      const buffer = 10; // Small buffer for reliable detection
-      const scrollPosition = window.scrollY + headerHeight + buffer;
+        const sections = navItems.map((item) => item.href.substring(1));
+        const headerHeight = 80; // Fixed header height
+        const buffer = 10; // Small buffer for reliable detection
+        const scrollPosition = window.scrollY + headerHeight + buffer;
 
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element && element instanceof HTMLElement) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-            break;
+        let currentSection = '';
+        for (const section of sections) {
+          const element = document.getElementById(section);
+          if (element && element instanceof HTMLElement) {
+            const { offsetTop, offsetHeight } = element;
+            if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+              currentSection = section;
+              break;
+            }
           }
         }
-      }
-    };
+        setActiveSection(currentSection);
+      };
 
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Call once to set initial state
