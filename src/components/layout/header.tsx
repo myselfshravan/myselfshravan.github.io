@@ -32,32 +32,46 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false;
+
+    const updateScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      ticking = false;
+    };
 
-      // Active section detection
-        const sections = navItems.map((item) => item.href.substring(1));
-        const headerHeight = 80; // Fixed header height
-        const buffer = 10; // Small buffer for reliable detection
-        const scrollPosition = window.scrollY + headerHeight + buffer;
-
-        let currentSection = '';
-        for (const section of sections) {
-          const element = document.getElementById(section);
-          if (element && element instanceof HTMLElement) {
-            const { offsetTop, offsetHeight } = element;
-            if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-              currentSection = section;
-              break;
-            }
-          }
-        }
-        setActiveSection(currentSection);
-      };
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
+    };
 
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Call once to set initial state
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = navItems
+      .map((item) => document.getElementById(item.href.substring(1)))
+      .filter((el): el is HTMLElement => !!el);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        threshold: 0.6,
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
   }, []);
 
   const scrollToSection = (href: string) => {
