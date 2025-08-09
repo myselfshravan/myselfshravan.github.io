@@ -10,14 +10,10 @@ import portfolioData from '@/lib/portfolio-data.json';
 export function Hero() {
   const [text, setText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
-  const fullText = `${portfolioData.personal.name
-    .toLowerCase()
-    .replace(' ', '_')}@portfolio:~$ whoami`;
+  const fullText = `shravan_revanna@portfolio:~$ whoami`;
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    );
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     if (mediaQuery.matches) {
       setText(fullText);
@@ -33,10 +29,7 @@ export function Hero() {
     const type = (timestamp: number) => {
       if (startTime === null) startTime = timestamp;
       const elapsed = timestamp - startTime;
-      const index = Math.min(
-        Math.floor(elapsed / typingSpeed),
-        fullText.length
-      );
+      const index = Math.min(Math.floor(elapsed / typingSpeed), fullText.length);
 
       setText(fullText.slice(0, index));
 
