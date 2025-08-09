@@ -155,27 +155,6 @@ export function Hero() {
             </p>
           </motion.div>
 
-          {/* Key Stats */}
-          {/* <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="grid grid-cols-3 gap-6 max-w-md mx-auto"
-          >
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">150+</div>
-              <div className="text-sm text-muted-foreground">Projects</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">2K+</div>
-              <div className="text-sm text-muted-foreground">Users</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">4+</div>
-              <div className="text-sm text-muted-foreground">Years</div>
-            </div>
-          </motion.div> */}
-
           {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
