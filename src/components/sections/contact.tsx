@@ -13,6 +13,7 @@ import {
   Facebook,
   Twitter,
   Youtube,
+  Rss
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,12 +21,14 @@ import portfolioData from '@/lib/portfolio-data.json';
 import { gsap } from 'gsap';
 
 const socialIcons = {
-  github: Github,
+  github1: Github,
+  github2: Github,
   linkedin: Linkedin,
   instagram: Instagram,
   facebook: Facebook,
   twitter: Twitter,
   youtube: Youtube,
+  blog: Rss,
 };
 
 export function Contact() {
@@ -143,7 +146,7 @@ export function Contact() {
                       <Card
                         className={`bg-gradient-to-r ${method.gradient} border-muted/20 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 cursor-pointer hover:border-primary/30 w-full`}
                       >
-                        <CardContent className="p-4 sm:p-6">
+                        <CardContent className="p-4 sm:p-5">
                           <div className="flex items-center space-x-3 sm:space-x-4">
                             <div className="p-2 sm:p-3 bg-background/50 rounded-lg flex-shrink-0">
                               <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${method.iconColor}`} />
@@ -185,28 +188,6 @@ export function Contact() {
                     </motion.div>
                   );
                 })}
-              </div>
-
-              {/* Quick Actions */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  size="lg"
-                  onClick={() => window.open(`mailto:${portfolioData.personal.email}`, '_self')}
-                  className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                >
-                  <Mail className="mr-2 h-5 w-5" />
-                  Send Email
-                </Button>
-
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={() => window.open(portfolioData.social.linkedin, '_blank')}
-                  className="font-semibold px-8 py-3 rounded-lg border-2 hover:bg-primary/5 transition-all duration-300"
-                >
-                  <Linkedin className="mr-2 h-5 w-5" />
-                  LinkedIn
-                </Button>
               </div>
             </motion.div>
 
@@ -250,9 +231,7 @@ export function Contact() {
                             whileTap={{ scale: 0.95 }}
                           >
                             <Icon className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors mb-2" />
-                            <span className="text-xs font-medium capitalize">
-                              {platform === 'github2' ? 'GitHub' : platform}
-                            </span>
+                            <span className="text-xs font-medium capitalize">{platform}</span>
                           </motion.a>
                         );
                       })}
@@ -285,8 +264,8 @@ export function Contact() {
                     <h4 className="text-lg font-semibold">Quick Response</h4>
                   </div>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    I typically respond to emails within 24 hours. For urgent matters, WhatsApp is
-                    the fastest way to reach me!
+                    I check my emails sometimes. For urgent matters, WhatsApp is the fastest way to
+                    reach me!
                   </p>
                 </CardContent>
               </Card>
