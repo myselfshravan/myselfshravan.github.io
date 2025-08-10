@@ -35,7 +35,7 @@ function TerminalInterface({
   useEffect(() => {
     let cursorFrameId: number;
     let lastCursorToggle = 0;
-    const cursorSpeed = 500;
+    const cursorSpeed = 530; // Slightly slower for better visibility
 
     const blink = (timestamp: number) => {
       if (timestamp - lastCursorToggle >= cursorSpeed) {
@@ -87,9 +87,6 @@ function TerminalInterface({
           placeholder="Type 'help' for commands..."
           autoFocus
         />
-        <span className={`${terminalCursor ? 'opacity-100' : 'opacity-0'} transition-opacity ml-1`}>
-          |
-        </span>
       </div>
     </div>
   );
@@ -120,7 +117,7 @@ export function Hero() {
     let frameId: number;
     let cursorFrameId: number;
     let startTime: number | null = null;
-    const typingSpeed = 100; // ms per character
+    const typingSpeed = 60; // ms per character - improved for smoother typing
 
     const type = (timestamp: number) => {
       if (startTime === null) startTime = timestamp;
@@ -137,7 +134,7 @@ export function Hero() {
     frameId = requestAnimationFrame(type);
 
     let lastCursorToggle = 0;
-    const cursorSpeed = 500;
+    const cursorSpeed = 530; // Slightly slower for better visibility
 
     const blink = (timestamp: number) => {
       if (timestamp - lastCursorToggle >= cursorSpeed) {
@@ -520,18 +517,18 @@ export function Hero() {
                   </div>
 
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2, duration: 0.5 }}
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 2, duration: 0.3 }}
                     className="text-muted-foreground"
                   >
                     {portfolioData.personal.description}
                   </motion.div>
 
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2.5, duration: 0.5 }}
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 2.5, duration: 0.3 }}
                     className="text-muted-foreground pt-2"
                   >
                     Currently SDE Intern @{' '}
