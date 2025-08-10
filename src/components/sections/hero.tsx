@@ -481,14 +481,14 @@ export function Hero() {
         />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-4xl">
+      <div className="container mx-auto px-2 sm:px-6 lg:px-8 relative z-10 max-w-4xl">
         <div className="text-center space-y-8">
           {/* Terminal Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-card/70 backdrop-blur-sm border border-primary/20 rounded-lg p-6 font-mono text-left max-w-2xl mx-auto shadow-xl hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:border-primary/40 hover:bg-card/80"
+            className="bg-card/70 backdrop-blur-sm border border-primary/20 rounded-lg p-3 sm:p-6 font-mono text-left max-w-2xl mx-auto shadow-xl hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:border-primary/40 hover:bg-card/80"
           >
             <div className="flex items-center gap-2 mb-4 pb-2 border-b border-primary/30">
               {/* Red Dot - Close/Activate */}
