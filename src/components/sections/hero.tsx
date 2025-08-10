@@ -15,15 +15,16 @@ function TerminalInterface({
   setCurrentInput,
   handleTerminalKeyDown,
   isExpanded = false,
+  placeholderText = "Type 'help' or '?' for commands...",
 }: {
   terminalOutput: string[];
   currentInput: string;
   setCurrentInput: (value: string) => void;
   handleTerminalKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   isExpanded?: boolean;
+  placeholderText?: string;
 }) {
   const terminalOutputRef = useRef<HTMLDivElement>(null);
-  const [terminalCursor, setTerminalCursor] = useState(true);
 
   useEffect(() => {
     if (terminalOutputRef.current) {
@@ -31,47 +32,41 @@ function TerminalInterface({
     }
   }, [terminalOutput]);
 
-  // Separate cursor blinking for terminal interface
-  useEffect(() => {
-    let cursorFrameId: number;
-    let lastCursorToggle = 0;
-    const cursorSpeed = 530; // Slightly slower for better visibility
-
-    const blink = (timestamp: number) => {
-      if (timestamp - lastCursorToggle >= cursorSpeed) {
-        setTerminalCursor((prev) => !prev);
-        lastCursorToggle = timestamp;
-      }
-      cursorFrameId = requestAnimationFrame(blink);
-    };
-
-    cursorFrameId = requestAnimationFrame(blink);
-
-    return () => {
-      cancelAnimationFrame(cursorFrameId);
-    };
-  }, []);
-
   return (
-    <div className="h-full">
+    <div className="h-full flex flex-col">
       {/* Terminal output */}
       <div
         ref={terminalOutputRef}
-        className={`space-y-1 overflow-y-auto mb-2 scroll-smooth ${
-          isExpanded ? 'max-h-96' : 'max-h-32'
+        className={`space-y-1 overflow-y-auto mb-2 scroll-smooth flex-1 ${
+          isExpanded ? '' : 'max-h-56'
         }`}
       >
         {terminalOutput.map((line, index) => (
-          <div
+          <motion.div
             key={index}
+            initial={{ opacity: 0, y: -2 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.15,
+              delay: index * 0.02,
+              ease: 'easeOut',
+            }}
             className={`whitespace-pre-wrap ${
               line.startsWith('shravan_revanna@portfolio:~$')
                 ? 'text-green-400'
+                : line.startsWith('✔') || line.includes('✔')
+                ? 'text-green-500'
+                : line.startsWith('ℹ') || line.includes('ℹ')
+                ? 'text-blue-400'
+                : line.startsWith('⚠') || line.includes('⚠')
+                ? 'text-yellow-400'
+                : line.startsWith('Command not found') || line.includes('not found')
+                ? 'text-red-400'
                 : 'text-muted-foreground'
             }`}
           >
             {line}
-          </div>
+          </motion.div>
         ))}
       </div>
 
@@ -84,7 +79,7 @@ function TerminalInterface({
           onChange={(e) => setCurrentInput(e.target.value)}
           onKeyDown={handleTerminalKeyDown}
           className="flex-1 bg-transparent outline-none text-green-400 font-mono"
-          placeholder="Type 'help' for commands..."
+          placeholder={placeholderText}
           autoFocus
         />
       </div>
@@ -103,7 +98,19 @@ export function Hero() {
   const [currentInput, setCurrentInput] = useState('');
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
+  const [isMobile, setIsMobile] = useState(false);
   const fullText = `shravan_revanna@portfolio:~$ whoami`;
+
+  // Mobile detection for responsive placeholder text
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 640); // sm breakpoint
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -175,7 +182,7 @@ export function Hero() {
     if (redClickCount === 2) {
       // Third click (0-indexed)
       setIsInteractive(true);
-      setTerminalOutput(['Terminal activated! Type "help" for available commands.', '']);
+      setTerminalOutput(['ℹ Terminal activated!', '']);
     }
   };
 
@@ -190,8 +197,8 @@ export function Hero() {
       if (!isInteractive) {
         setIsInteractive(true);
         setTerminalOutput([
-          'Terminal expanded! Welcome to fullscreen mode.',
-          'Type "help" for available commands.',
+          '✔ Terminal expanded! Welcome to fullscreen mode.',
+          'ℹ Type "help" for available commands.',
           '',
         ]);
       }
@@ -213,9 +220,10 @@ export function Hero() {
 
     switch (cmd) {
       case 'help':
+      case '?':
         setTerminalOutput((prev) => [
           ...prev,
-          'Available commands:',
+          '✔ Available commands:',
           '  help      - Show this help message',
           '  clear     - Clear terminal screen',
           '  whoami    - Display user info',
@@ -229,7 +237,7 @@ export function Hero() {
           '  exit      - Exit interactive mode',
           '  expand    - Expand terminal to fullscreen',
           // '',
-          // 'Pro tips:',
+          // 'ℹ Pro tips:',
           // '  • Use Tab for command completion',
           // '  • Use ↑/↓ arrows for command history',
           // '  • Try some classic Unix commands for fun!',
@@ -256,13 +264,15 @@ export function Hero() {
         break;
 
       case 'projects':
+      case 'cd projects':
+      case 'cd projects/':
         const recentProjects = portfolioData.projects.personal.slice(0, 3);
         setTerminalOutput((prev) => [
           ...prev,
-          'Recent Projects:',
+          '✔ Recent Projects:',
           ...recentProjects.map((p) => `  • ${p.name} - ${p.description}`),
           '',
-          'Type "visit projects" to see all projects.',
+          'ℹ Type "visit projects" to see all projects.',
           '',
         ]);
         break;
@@ -270,23 +280,25 @@ export function Hero() {
       case 'contact':
         setTerminalOutput((prev) => [
           ...prev,
-          'Contact Information:',
-          `  Email: ${portfolioData.personal.email}`,
-          `  Phone: ${portfolioData.personal.phone}`,
-          `  GitHub: ${portfolioData.social.github}`,
-          `  LinkedIn: ${portfolioData.social.linkedin}`,
+          '✔ Contact Information:',
+          `  📧 ${portfolioData.personal.email}`,
+          `  📱 ${portfolioData.personal.phone}`,
+          `  🐙 ${portfolioData.social.github}`,
+          `  💼 ${portfolioData.social.linkedin}`,
           '',
         ]);
         break;
 
       case 'skills':
+      case 'cd skills':
+      case 'cd skills/':
         setTerminalOutput((prev) => [
           ...prev,
-          'Technical Skills:',
-          `  Core: ${portfolioData.skills.core.map((s) => s.name).join(', ')}`,
-          `  Frameworks: ${portfolioData.skills.frameworks.map((s) => s.name).join(', ')}`,
-          `  Databases: ${portfolioData.skills.databases.map((s) => s.name).join(', ')}`,
-          `  DevOps: ${portfolioData.skills.devops.map((s) => s.name).join(', ')}`,
+          '✔ Technical Skills:',
+          `  💻 Core: ${portfolioData.skills.core.map((s) => s.name).join(', ')}`,
+          `  ⚛️ Frameworks: ${portfolioData.skills.frameworks.map((s) => s.name).join(', ')}`,
+          `  🗄️ Databases: ${portfolioData.skills.databases.map((s) => s.name).join(', ')}`,
+          `  🚀 DevOps: ${portfolioData.skills.devops.map((s) => s.name).join(', ')}`,
           '',
         ]);
         break;
@@ -360,12 +372,18 @@ export function Hero() {
           '',
         ]);
         break;
+
       case 'expand':
         if (!isInteractive) {
           setIsInteractive(true);
-          setTerminalOutput(['Terminal activated! Type "help" for available commands.', '']);
+          setTerminalOutput(['✔ Terminal activated! Type "help" for available commands.', '']);
         }
         setIsDialogOpen(true);
+        break;
+
+      case 'visit projects':
+        setTerminalOutput((prev) => [...prev, '✔ Scroling to projects page...', '']);
+        scrollToSection('#projects');
         break;
 
       default:
@@ -550,6 +568,7 @@ export function Hero() {
                   currentInput={currentInput}
                   setCurrentInput={setCurrentInput}
                   handleTerminalKeyDown={handleTerminalKeyDown}
+                  placeholderText={isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."}
                 />
               )}
             </div>
@@ -557,9 +576,9 @@ export function Hero() {
 
           {/* Expanded Terminal Dialog */}
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogContent className="max-w-4xl w-full max-h-[80vh] bg-card/95 backdrop-blur-md border-primary/20 p-0 overflow-hidden">
+            <DialogContent className="max-w-none w-[90vw] h-[60vh] max-h-[60vh] bg-card/95 backdrop-blur-md border border-primary/20 p-0 overflow-hidden rounded-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 fixed">
               <DialogTitle className="sr-only">Interactive Terminal - Expanded View</DialogTitle>
-              <div className="bg-card/70 backdrop-blur-sm border-b border-primary/20 rounded-t-lg p-4 font-mono">
+              <div className="bg-card/70 backdrop-blur-sm border-b border-primary/20 rounded-t-lg p-4 font-mono h-full flex flex-col">
                 <div className="flex items-center gap-2 mb-2">
                   {/* Dialog Terminal Header */}
                   <div
@@ -581,13 +600,14 @@ export function Hero() {
                 </div>
 
                 {/* Expanded Terminal Interface */}
-                <div className="text-sm min-h-[400px]">
+                <div className="text-sm flex-1 overflow-hidden">
                   <TerminalInterface
                     terminalOutput={terminalOutput}
                     currentInput={currentInput}
                     setCurrentInput={setCurrentInput}
                     handleTerminalKeyDown={handleTerminalKeyDown}
                     isExpanded={true}
+                    placeholderText={isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."}
                   />
                 </div>
               </div>
