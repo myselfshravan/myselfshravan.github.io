@@ -14,23 +14,43 @@ function TerminalInterface({
   currentInput, 
   setCurrentInput, 
   handleTerminalKeyDown, 
-  showCursor, 
   isExpanded = false 
 }: {
   terminalOutput: string[];
   currentInput: string;
   setCurrentInput: (value: string) => void;
   handleTerminalKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  showCursor: boolean;
   isExpanded?: boolean;
 }) {
   const terminalOutputRef = useRef<HTMLDivElement>(null);
+  const [terminalCursor, setTerminalCursor] = useState(true);
 
   useEffect(() => {
     if (terminalOutputRef.current) {
       terminalOutputRef.current.scrollTop = terminalOutputRef.current.scrollHeight;
     }
   }, [terminalOutput]);
+
+  // Separate cursor blinking for terminal interface
+  useEffect(() => {
+    let cursorFrameId: number;
+    let lastCursorToggle = 0;
+    const cursorSpeed = 500;
+
+    const blink = (timestamp: number) => {
+      if (timestamp - lastCursorToggle >= cursorSpeed) {
+        setTerminalCursor(prev => !prev);
+        lastCursorToggle = timestamp;
+      }
+      cursorFrameId = requestAnimationFrame(blink);
+    };
+
+    cursorFrameId = requestAnimationFrame(blink);
+
+    return () => {
+      cancelAnimationFrame(cursorFrameId);
+    };
+  }, []);
 
   return (
     <div className="h-full">
@@ -64,7 +84,7 @@ function TerminalInterface({
           placeholder="Type 'help' for commands..."
           autoFocus
         />
-        <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity ml-1`}>
+        <span className={`${terminalCursor ? 'opacity-100' : 'opacity-0'} transition-opacity ml-1`}>
           |
         </span>
       </div>
@@ -133,6 +153,13 @@ export function Hero() {
     };
   }, [fullText]);
 
+  // Stop main cursor blinking when interactive mode is active
+  useEffect(() => {
+    if (isInteractive) {
+      setShowCursor(false);
+    }
+  }, [isInteractive]);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
     if (element) {
@@ -200,6 +227,7 @@ export function Hero() {
           '  pwd       - Print working directory',
           '  cat       - Display file contents',
           '  exit      - Exit interactive mode',
+          '  expand    - Expand terminal to fullscreen',
           // '',
           // 'Pro tips:',
           // '  • Use Tab for command completion',
@@ -327,6 +355,16 @@ export function Hero() {
           'But I appreciate the classic hacker humor!',
           ''
         ]);
+        break;
+      case 'expand':
+        if (!isInteractive) {
+          setIsInteractive(true);
+          setTerminalOutput([
+            'Terminal activated! Type "help" for available commands.',
+            ''
+          ]);
+        }
+        setIsDialogOpen(true);
         break;
       
       default:
@@ -491,7 +529,6 @@ export function Hero() {
                   currentInput={currentInput}
                   setCurrentInput={setCurrentInput}
                   handleTerminalKeyDown={handleTerminalKeyDown}
-                  showCursor={showCursor}
                 />
               )}
             </div>
@@ -531,7 +568,6 @@ export function Hero() {
                     currentInput={currentInput}
                     setCurrentInput={setCurrentInput}
                     handleTerminalKeyDown={handleTerminalKeyDown}
-                    showCursor={showCursor}
                     isExpanded={true}
                   />
                 </div>
