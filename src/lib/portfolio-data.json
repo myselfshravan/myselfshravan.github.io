@@ -3,11 +3,11 @@
     "name": "Shravan Revanna",
     "title": "AI Full-Stack Developer",
     "subtitle": "Building AI-powered applications and automation solutions",
-    "description": "I build AI-powered applications and full-stack solutions that solve real problems",
+    "description": "I see problems, I build solutions. AI-first full-stack developer who tries to automate everything.",
     "email": "shravanrevanna@gmail.com",
     "phone": "+91 9945332995",
     "location": "Bengaluru, India",
-    "bio": "AI full-stack developer with 150+ projects in production. I specialize in building automation tools, GenAI applications, and scalable web tech solutions that save time and solve real problems.",
+    "bio": "Full-stack developer (with 150+ production projects) obsessed with shipping fast and automating everything. I dive into fundamentals, over-engineer when needed, and turn every friction point into a solved problem. Specializing in GenAI applications, and production-ready systems that save time and eliminate manual work.",
     "intro": [
       "AI full-stack developer currently working at udaanCapital, building risk assessment systems.",
       "Built 150+ projects including production applications with thousands of active users.",
@@ -52,17 +52,20 @@
     "frameworks": [
       { "name": "Next.js", "icon": "devicon-nextjs-original" },
       { "name": "React", "icon": "devicon-react-original" },
-      { "name": "Node.js", "icon": "devicon-nodejs-plain" }
+      { "name": "Node.js", "icon": "devicon-nodejs-plain" },
+      { "name": "Flask", "icon": "devicon-flask-plain" }
     ],
     "databases": [
+      { "name": "Firebase", "icon": "devicon-firebase-plain" },
       { "name": "MongoDB", "icon": "devicon-mongodb-plain" },
       { "name": "PostgreSQL", "icon": "devicon-postgresql-plain" },
-      { "name": "Firebase", "icon": "devicon-firebase-plain" }
+      { "name": "Supabase", "icon": "devicon-supabase-original" }
     ],
     "devops": [
       { "name": "Docker", "icon": "devicon-docker-plain" },
       { "name": "Kubernetes", "icon": "devicon-kubernetes-plain" },
-      { "name": "AWS S3", "icon": "devicon-amazonwebservices-original" }
+      { "name": "AWS S3", "icon": "devicon-amazonwebservices-original" },
+      { "name": "Vercel", "icon": "devicon-vercel-original" }
     ]
   },
   "projects": {
@@ -74,7 +77,7 @@
         "github_url": "https://github.com/myselfshravan/noterep",
         "blog_url": "https://blog.shravanrevanna.me/story-behind-noterep-the-popular-site-of-college",
         "linkText": "Visit Website",
-        "description": "The go-to platform for 2000+ students who ace their exams with last-minute prep, featuring 20+ features/tools including live timetables, real-time calendars, AI Chatbot, Mini SIS and open-source community content",
+        "description": "The go-to platform for 2000+ students who ace their exams with last-minute prep, featuring 10+ features/tools including live timetables, real-time calendars, AI Chatbot, Mini SIS and open-source community content",
         "tech": "Next.js, TypeScript, Firebase, Vercel",
         "metrics": "200+ active users, 95K+ views till date and #1 in Google search index"
       },
@@ -96,7 +99,7 @@
         "linkText": "Try Web App",
         "description": "Personalized BMI-based meal generator using Llama 70B to craft perfect calorie-matched nutrition plans tailored to your body's needs",
         "tech": "Python, Streamlit, Llama 70B LLM",
-        "metrics": "38 GitHub stars, 33 Forks, dynamic programming optimization"
+        "metrics": "39 GitHub stars and 34 Forks"
       },
       {
         "name": "VigilAI - IoT Health Monitor",
@@ -114,7 +117,7 @@
         "website_url": "https://enigma-escape-bot.streamlit.app",
         "github_url": "https://github.com/myselfshravan/EnigmaEscape",
         "linkText": "Play Game",
-        "description": "AI manipulation game where players master social engineering to make LLMs reveal secret phrases without direct prompting",
+        "description": "AI manipulation game where players must prompt to make LLMs respond with the specified phrases without directly asking.",
         "tech": "Streamlit, Llama-2-70b, Firebase",
         "metrics": "Social engineering for AI systems"
       },
@@ -144,17 +147,17 @@
         "name": "IPL Ticket Automation",
         "url": "https://blog.shravanrevanna.me/automating-the-ipl-ticket-booking-for-rcb-match",
         "linkText": "Read Article",
-        "description": "Automated ticket booking system for high-demand IPL matches",
+        "description": "Automated ticket booking system for high-demand IPL matches, and ticket release notifier",
         "tech": "Python, Web Automation",
-        "metrics": "Successful ticket acquisition"
+        "metrics": "Successfully booked tickets"
       },
       {
         "name": "GetPlaced Email Organizer",
         "website_url": "https://getplaced.vercel.app/",
         "linkText": "Private Tool",
-        "description": "Automated and AI-powered placement email organizer with LLM-driven JD summarization and keyword extraction that prevents missing job opportunities",
+        "description": "Automated and AI-powered college placement email organizer with LLM-driven JD summarization and keyword extraction that prevents missing job opportunities",
         "tech": "Python, Email APIs, LLMs",
-        "metrics": "Zero missed opportunities"
+        "metrics": "No more missed opportunities"
       }
     ],
     "tools": [
@@ -166,7 +169,7 @@
         "linkText": "Try It Out",
         "description": "Advanced GPA calculator and predictor using class averages, weights, and exponential factors to precisely forecast your academic trajectory",
         "tech": "Streamlit, Python",
-        "metrics": "Student productivity tool"
+        "metrics": "Student productivity tool with 800+ logins"
       },
       {
         "name": "FastIQ LLM Playground",

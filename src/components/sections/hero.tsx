@@ -9,12 +9,12 @@ import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import portfolioData from '@/lib/portfolio-data.json';
 
 // Terminal Component for reuse
-function TerminalInterface({ 
-  terminalOutput, 
-  currentInput, 
-  setCurrentInput, 
-  handleTerminalKeyDown, 
-  isExpanded = false 
+function TerminalInterface({
+  terminalOutput,
+  currentInput,
+  setCurrentInput,
+  handleTerminalKeyDown,
+  isExpanded = false,
 }: {
   terminalOutput: string[];
   currentInput: string;
@@ -39,7 +39,7 @@ function TerminalInterface({
 
     const blink = (timestamp: number) => {
       if (timestamp - lastCursorToggle >= cursorSpeed) {
-        setTerminalCursor(prev => !prev);
+        setTerminalCursor((prev) => !prev);
         lastCursorToggle = timestamp;
       }
       cursorFrameId = requestAnimationFrame(blink);
@@ -55,23 +55,26 @@ function TerminalInterface({
   return (
     <div className="h-full">
       {/* Terminal output */}
-      <div 
+      <div
         ref={terminalOutputRef}
         className={`space-y-1 overflow-y-auto mb-2 scroll-smooth ${
           isExpanded ? 'max-h-96' : 'max-h-32'
         }`}
       >
         {terminalOutput.map((line, index) => (
-          <div key={index} className={`whitespace-pre-wrap ${
-            line.startsWith('shravan_revanna@portfolio:~$') 
-              ? 'text-green-400' 
-              : 'text-muted-foreground'
-          }`}>
+          <div
+            key={index}
+            className={`whitespace-pre-wrap ${
+              line.startsWith('shravan_revanna@portfolio:~$')
+                ? 'text-green-400'
+                : 'text-muted-foreground'
+            }`}
+          >
             {line}
           </div>
         ))}
       </div>
-      
+
       {/* Command input */}
       <div className="flex items-center text-green-400">
         <span className="mr-2">shravan_revanna@portfolio:~$</span>
@@ -97,7 +100,7 @@ export function Hero() {
   const [showCursor, setShowCursor] = useState(true);
   const [isInteractive, setIsInteractive] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [clickCount, setClickCount] = useState(0);
+  const [redClickCount, setRedClickCount] = useState(0);
   const [greenClickCount, setGreenClickCount] = useState(0);
   const [terminalOutput, setTerminalOutput] = useState<string[]>([]);
   const [currentInput, setCurrentInput] = useState('');
@@ -169,31 +172,30 @@ export function Hero() {
 
   // Triple-click detection for red dot
   const handleRedDotClick = () => {
-    setClickCount(prev => prev + 1);
-    setTimeout(() => setClickCount(0), 500); // Reset after 500ms
-    
-    if (clickCount === 2) { // Third click (0-indexed)
+    setRedClickCount((prev) => prev + 1);
+    setTimeout(() => setRedClickCount(0), 500); // Reset after 500ms
+
+    if (redClickCount === 2) {
+      // Third click (0-indexed)
       setIsInteractive(true);
-      setTerminalOutput([
-        'Terminal activated! Type "help" for available commands.',
-        ''
-      ]);
+      setTerminalOutput(['Terminal activated! Type "help" for available commands.', '']);
     }
   };
 
   // Triple-click detection for green dot (expand to dialog)
   const handleGreenDotClick = () => {
-    setGreenClickCount(prev => prev + 1);
+    setGreenClickCount((prev) => prev + 1);
     setTimeout(() => setGreenClickCount(0), 500); // Reset after 500ms
-    
-    if (greenClickCount === 2) { // Third click (0-indexed)
+
+    if (greenClickCount === 2) {
+      // Third click (0-indexed)
       setIsDialogOpen(true);
       if (!isInteractive) {
         setIsInteractive(true);
         setTerminalOutput([
           'Terminal expanded! Welcome to fullscreen mode.',
           'Type "help" for available commands.',
-          ''
+          '',
         ]);
       }
     }
@@ -203,18 +205,19 @@ export function Hero() {
   const executeCommand = (command: string) => {
     const cmd = command.toLowerCase().trim();
     const prompt = 'shravan_revanna@portfolio:~$';
-    
+
     // Add command to history
     if (cmd && !commandHistory.includes(cmd)) {
-      setCommandHistory(prev => [...prev, cmd]);
+      setCommandHistory((prev) => [...prev, cmd]);
     }
-    
+
     // Add command to output
-    setTerminalOutput(prev => [...prev, `${prompt} ${command}`]);
-    
+    setTerminalOutput((prev) => [...prev, `${prompt} ${command}`]);
+
     switch (cmd) {
       case 'help':
-        setTerminalOutput(prev => [...prev, 
+        setTerminalOutput((prev) => [
+          ...prev,
           'Available commands:',
           '  help      - Show this help message',
           '  clear     - Clear terminal screen',
@@ -233,158 +236,174 @@ export function Hero() {
           // '  • Use Tab for command completion',
           // '  • Use ↑/↓ arrows for command history',
           // '  • Try some classic Unix commands for fun!',
-          ''
+          '',
         ]);
         break;
-      
+
       case 'clear':
         setTerminalOutput([]);
         break;
-      
+
       case 'whoami':
-        setTerminalOutput(prev => [...prev,
-          portfolioData.personal.description,
-          ''
-        ]);
+        setTerminalOutput((prev) => [...prev, portfolioData.personal.description, '']);
         break;
-      
+
       case 'about':
-        setTerminalOutput(prev => [...prev,
+        setTerminalOutput((prev) => [
+          ...prev,
           portfolioData.personal.bio,
           `Location: ${portfolioData.personal.location}`,
           `Email: ${portfolioData.personal.email}`,
-          ''
+          '',
         ]);
         break;
-      
+
       case 'projects':
         const recentProjects = portfolioData.projects.personal.slice(0, 3);
-        setTerminalOutput(prev => [...prev,
+        setTerminalOutput((prev) => [
+          ...prev,
           'Recent Projects:',
-          ...recentProjects.map(p => `  • ${p.name} - ${p.description}`),
+          ...recentProjects.map((p) => `  • ${p.name} - ${p.description}`),
           '',
           'Type "visit projects" to see all projects.',
-          ''
+          '',
         ]);
         break;
-      
+
       case 'contact':
-        setTerminalOutput(prev => [...prev,
+        setTerminalOutput((prev) => [
+          ...prev,
           'Contact Information:',
           `  Email: ${portfolioData.personal.email}`,
           `  Phone: ${portfolioData.personal.phone}`,
           `  GitHub: ${portfolioData.social.github}`,
           `  LinkedIn: ${portfolioData.social.linkedin}`,
-          ''
+          '',
         ]);
         break;
-      
+
       case 'skills':
-        setTerminalOutput(prev => [...prev,
+        setTerminalOutput((prev) => [
+          ...prev,
           'Technical Skills:',
-          `  Core: ${portfolioData.skills.core.map(s => s.name).join(', ')}`,
-          `  Frameworks: ${portfolioData.skills.frameworks.map(s => s.name).join(', ')}`,
-          `  Databases: ${portfolioData.skills.databases.map(s => s.name).join(', ')}`,
-          `  DevOps: ${portfolioData.skills.devops.map(s => s.name).join(', ')}`,
-          ''
+          `  Core: ${portfolioData.skills.core.map((s) => s.name).join(', ')}`,
+          `  Frameworks: ${portfolioData.skills.frameworks.map((s) => s.name).join(', ')}`,
+          `  Databases: ${portfolioData.skills.databases.map((s) => s.name).join(', ')}`,
+          `  DevOps: ${portfolioData.skills.devops.map((s) => s.name).join(', ')}`,
+          '',
         ]);
         break;
-      
+
       case 'exit':
         setIsInteractive(false);
         setTerminalOutput([]);
         setCurrentInput('');
         break;
-      
+
       case 'ls':
-        setTerminalOutput(prev => [...prev,
+        setTerminalOutput((prev) => [
+          ...prev,
           'portfolio/     projects/     skills/     experience/',
           'about.txt      contact.info  resume.pdf  blog/',
-          ''
+          '',
         ]);
         break;
-      
+
       case 'pwd':
-        setTerminalOutput(prev => [...prev,
-          '/home/shravan_revanna/portfolio',
-          ''
-        ]);
+        setTerminalOutput((prev) => [...prev, '/home/shravan_revanna/portfolio', '']);
         break;
-      
+
       case 'cat':
-        setTerminalOutput(prev => [...prev,
+        setTerminalOutput((prev) => [
+          ...prev,
           'Usage: cat [filename]',
           'Available files: about.txt, contact.info, resume.pdf',
-          ''
+          '',
         ]);
         break;
-      
+
       case 'cat about.txt':
-        setTerminalOutput(prev => [...prev,
+        setTerminalOutput((prev) => [
+          ...prev,
           portfolioData.personal.bio,
           `Current Role: SE Intern at udaanCapital`,
           `Projects Shipped: 150+`,
           `Passionate about: AI, Full-Stack Development, Automation`,
-          ''
+          '',
         ]);
         break;
-      
+
       case 'cat contact.info':
-        setTerminalOutput(prev => [...prev,
+        setTerminalOutput((prev) => [
+          ...prev,
           `📧 ${portfolioData.personal.email}`,
           `📱 ${portfolioData.personal.phone}`,
           `📍 ${portfolioData.personal.location}`,
           `💼 ${portfolioData.social.linkedin}`,
           `🐙 ${portfolioData.social.github}`,
-          ''
+          '',
         ]);
         break;
-      
+
       case 'sudo':
-        setTerminalOutput(prev => [...prev,
+        setTerminalOutput((prev) => [
+          ...prev,
           'Nice try! 😄',
           'shravan_revanna is not in the sudoers file. This incident will be reported.',
-          ''
+          '',
         ]);
         break;
-      
+
       case 'sudo rm -rf /':
-        setTerminalOutput(prev => [...prev,
+        setTerminalOutput((prev) => [
+          ...prev,
           '🚨 SYSTEM BREACH DETECTED! 🚨',
           'Just kidding! This is a portfolio, not a real terminal 😉',
           'But I appreciate the classic hacker humor!',
-          ''
+          '',
         ]);
         break;
       case 'expand':
         if (!isInteractive) {
           setIsInteractive(true);
-          setTerminalOutput([
-            'Terminal activated! Type "help" for available commands.',
-            ''
-          ]);
+          setTerminalOutput(['Terminal activated! Type "help" for available commands.', '']);
         }
         setIsDialogOpen(true);
         break;
-      
+
       default:
         if (cmd.includes('sudo')) {
-          setTerminalOutput(prev => [...prev,
-            'sudo: command not found (and you probably shouldn\'t try that here! 😅)',
-            ''
+          setTerminalOutput((prev) => [
+            ...prev,
+            "sudo: command not found (and you probably shouldn't try that here! 😅)",
+            '',
           ]);
         } else {
-          setTerminalOutput(prev => [...prev,
+          setTerminalOutput((prev) => [
+            ...prev,
             `Command not found: ${cmd}`,
             'Type "help" for available commands.',
-            ''
+            '',
           ]);
         }
     }
   };
 
   // Available commands for tab completion
-  const availableCommands = ['help', 'clear', 'whoami', 'about', 'projects', 'contact', 'skills', 'exit', 'ls', 'pwd', 'cat', 'sudo'];
+  const availableCommands = [
+    'help',
+    'clear',
+    'whoami',
+    'about',
+    'projects',
+    'contact',
+    'skills',
+    'exit',
+    'ls',
+    'pwd',
+    'cat',
+    'sudo',
+  ];
 
   // Handle keyboard input for terminal
   const handleTerminalKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -395,16 +414,17 @@ export function Hero() {
     } else if (e.key === 'Tab') {
       e.preventDefault();
       const input = currentInput.toLowerCase();
-      const matches = availableCommands.filter(cmd => cmd.startsWith(input));
-      
+      const matches = availableCommands.filter((cmd) => cmd.startsWith(input));
+
       if (matches.length === 1) {
         setCurrentInput(matches[0]);
       } else if (matches.length > 1) {
         // Show available options
-        setTerminalOutput(prev => [...prev, 
+        setTerminalOutput((prev) => [
+          ...prev,
           `shravan_revanna@portfolio:~$ ${currentInput}`,
           matches.join('  '),
-          ''
+          '',
         ]);
       }
     } else if (e.key === 'ArrowUp') {
@@ -457,28 +477,30 @@ export function Hero() {
           >
             <div className="flex items-center gap-2 mb-4 pb-2 border-b border-primary/30">
               {/* Red Dot - Close/Activate */}
-              <div 
-                className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-all cursor-pointer group relative flex items-center justify-center" 
+              <div
+                className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-all cursor-pointer group relative flex items-center justify-center"
                 onClick={handleRedDotClick}
-                title={isInteractive ? "Interactive mode active" : "Triple-click to activate terminal"}
+                title={
+                  isInteractive ? 'Interactive mode active' : 'Triple-click to activate terminal'
+                }
               >
                 <X className="w-2 h-2 opacity-0 group-hover:opacity-100 transition-opacity text-red-900" />
               </div>
-              
+
               {/* Yellow Dot - Minimize */}
               <div className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-all cursor-pointer group relative flex items-center justify-center">
                 <Minus className="w-2 h-2 opacity-0 group-hover:opacity-100 transition-opacity text-yellow-900" />
               </div>
-              
+
               {/* Green Dot - Expand */}
-              <div 
-                className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-all cursor-pointer group relative flex items-center justify-center" 
+              <div
+                className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-all cursor-pointer group relative flex items-center justify-center"
                 onClick={handleGreenDotClick}
                 title="Triple-click to expand terminal"
               >
                 <Square className="w-2 h-2 opacity-0 group-hover:opacity-100 transition-opacity text-green-900" />
               </div>
-              
+
               <span className="ml-2 text-xs text-primary">
                 terminal {isInteractive && <span className="text-green-400">• interactive</span>}
               </span>
@@ -490,7 +512,9 @@ export function Hero() {
                 <>
                   <div className="text-green-400">
                     {text}
-                    <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
+                    <span
+                      className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}
+                    >
                       |
                     </span>
                   </div>
@@ -510,7 +534,7 @@ export function Hero() {
                     transition={{ delay: 2.5, duration: 0.5 }}
                     className="text-muted-foreground pt-2"
                   >
-                    Currently SE Intern @{' '}
+                    Currently SDE Intern @{' '}
                     <a
                       href="https://udaancapital.com"
                       target="_blank"
@@ -519,7 +543,7 @@ export function Hero() {
                     >
                       udaanCapital
                     </a>{' '}
-                    | 150+ projects shipped
+                    | Deep-tech automation specialist
                   </motion.div>
                 </>
               ) : (
@@ -537,13 +561,11 @@ export function Hero() {
           {/* Expanded Terminal Dialog */}
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogContent className="max-w-4xl w-full max-h-[80vh] bg-card/95 backdrop-blur-md border-primary/20 p-0 overflow-hidden">
-              <DialogTitle className="sr-only">
-                Interactive Terminal - Expanded View
-              </DialogTitle>
+              <DialogTitle className="sr-only">Interactive Terminal - Expanded View</DialogTitle>
               <div className="bg-card/70 backdrop-blur-sm border-b border-primary/20 rounded-t-lg p-4 font-mono">
                 <div className="flex items-center gap-2 mb-2">
                   {/* Dialog Terminal Header */}
-                  <div 
+                  <div
                     className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-all cursor-pointer group relative flex items-center justify-center"
                     onClick={() => setIsDialogOpen(false)}
                     title="Close expanded terminal"
@@ -560,7 +582,7 @@ export function Hero() {
                     terminal • expanded <span className="text-green-400">• interactive</span>
                   </span>
                 </div>
-                
+
                 {/* Expanded Terminal Interface */}
                 <div className="text-sm min-h-[400px]">
                   <TerminalInterface
