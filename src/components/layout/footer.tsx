@@ -11,6 +11,7 @@ import {
   Instagram,
   Facebook,
   Mail,
+  Twitter,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -22,7 +23,10 @@ const socialIcons = {
   linkedin: Linkedin,
   instagram: Instagram,
   facebook: Facebook,
+  twitter: Twitter,
 };
+type SocialKey = keyof typeof portfolioData.social;
+const order: SocialKey[] = ['github', 'linkedin', 'instagram', 'facebook', 'twitter'];
 
 export function Footer() {
   const scrollToTop = () => {
@@ -151,24 +155,24 @@ export function Footer() {
           >
             <h4 className="text-lg font-semibold mb-4">Follow Me</h4>
             <div className="flex flex-wrap gap-3">
-              {Object.entries(portfolioData.social)
-                .slice(0, 6)
-                .map(([platform, url]) => {
-                  const Icon = socialIcons[platform as keyof typeof socialIcons] || Mail;
-                  return (
-                    <motion.a
-                      key={platform}
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 bg-muted/20 hover:bg-primary/10 rounded-lg text-muted-foreground hover:text-primary transition-all duration-300"
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Icon className="h-5 w-5" />
-                    </motion.a>
-                  );
-                })}
+              {order.map((platform) => {
+                const url = portfolioData.social[platform];
+                if (!url) return null;
+                const Icon = socialIcons[platform as keyof typeof socialIcons] || Mail;
+                return (
+                  <motion.a
+                    key={platform}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 bg-muted/20 hover:bg-primary/10 rounded-lg text-muted-foreground hover:text-primary transition-all duration-300"
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </motion.a>
+                );
+              })}
             </div>
 
             {/* Additional Links */}
