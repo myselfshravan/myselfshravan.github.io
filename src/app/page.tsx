@@ -42,29 +42,6 @@ export default function Home() {
         );
       });
 
-      // Parallax effect for hero background elements
-      gsap.to('.hero-bg-1', {
-        yPercent: -50,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero-bg-1',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
-
-      gsap.to('.hero-bg-2', {
-        yPercent: -30,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero-bg-2',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
-
       // Refresh ScrollTrigger on window resize
       const handleResize = () => {
         ScrollTrigger.refresh();

@@ -1,5 +1,13 @@
 import { db } from './firebase';
-import { doc, getDoc, setDoc, updateDoc, arrayUnion, serverTimestamp, Timestamp } from 'firebase/firestore';
+import {
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  arrayUnion,
+  serverTimestamp,
+  Timestamp,
+} from 'firebase/firestore';
 import { Command, UserData } from './types';
 
 const USER_ID_KEY = 'portfolio_user_id';
