@@ -51,6 +51,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Verify environment variables
+        run: |
+          if [ -z "${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}" ] || [ -z "${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}" ]; then
+            echo "Error: Required Firebase environment variables are missing"
+            echo "Checking presence of required secrets:"
+            echo "NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY != '' }}"
+            echo "NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID != '' }}"
+            exit 1
+          else
+            echo "Firebase environment variables are properly set"
+          fi
+
       - name: Run tests
         run: npm test
 

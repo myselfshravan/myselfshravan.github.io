@@ -14,14 +14,42 @@ const firebaseConfig: FirebaseConfig = {
 
 let db: ReturnType<typeof getFirestore>;
 
+// Log config values (without exposing sensitive data)
+const logConfigStatus = () => {
+  const configStatus = {
+    apiKeyPresent: !!firebaseConfig.apiKey,
+    authDomainPresent: !!firebaseConfig.authDomain,
+    projectIdPresent: !!firebaseConfig.projectId,
+    storageBucketPresent: !!firebaseConfig.storageBucket,
+    messagingSenderIdPresent: !!firebaseConfig.messagingSenderId,
+    appIdPresent: !!firebaseConfig.appId,
+    measurementIdPresent: !!firebaseConfig.measurementId
+  };
+  console.log('Firebase config status:', configStatus);
+};
+
 // Initialize Firebase
 try {
-  const app = initializeApp(firebaseConfig);
-  db = getFirestore(app);
+  if (typeof window !== 'undefined') {
+    logConfigStatus();
+    if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
+      throw new Error('Required Firebase configuration is missing');
+    }
+    const app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+  }
 } catch (error) {
   const firebaseError = error as { code?: string; message?: string };
-  console.error('Firebase initialization error:', firebaseError.message || 'Unknown error');
-  throw error;
+  console.error('Firebase initialization error:', {
+    message: firebaseError.message || 'Unknown error',
+    code: firebaseError.code,
+    env: process.env.NODE_ENV,
+    windowDefined: typeof window !== 'undefined'
+  });
+  // Don't throw in production to prevent app crashes
+  if (process.env.NODE_ENV === 'development') {
+    throw error;
+  }
 }
 
 export { db };

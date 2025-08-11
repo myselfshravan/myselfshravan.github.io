@@ -34,6 +34,12 @@ export const trackVisit = async () => {
   const userId = getUserId();
   if (!userId) return;
 
+  // Early return if Firebase isn't initialized
+  if (!db) {
+    console.error('Firebase is not initialized');
+    return;
+  }
+
   const userRef = doc(db, USERS_COLLECTION, userId);
 
   try {
@@ -66,6 +72,12 @@ export const trackVisit = async () => {
 export const trackCommand = async (command: string) => {
   const userId = getUserId();
   if (!userId) return;
+
+  // Early return if Firebase isn't initialized
+  if (!db) {
+    console.error('Firebase is not initialized');
+    return;
+  }
 
   const userRef = doc(db, USERS_COLLECTION, userId);
 
