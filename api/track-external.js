@@ -37,7 +37,12 @@ export default async function handler(req, res) {
 
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    return res
+      .status(204)
+      .setHeader('Access-Control-Allow-Origin', '*')
+      .setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+      .setHeader('Access-Control-Allow-Headers', 'Content-Type')
+      .end();
   }
 
   if (req.method !== 'POST') {
@@ -45,8 +50,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { userId, url, title, timestamp } = req.body;
-    
+    const rawBody = await new Promise((resolve, reject) => {
+      let data = '';
+      req.on('data', (chunk) => (data += chunk));
+      req.on('end', () => resolve(data));
+      req.on('error', reject);
+    });
+    const { userId, url, title, timestamp } = JSON.parse(rawBody);
+
     if (!userId || !url || !title) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
@@ -81,7 +92,7 @@ export default async function handler(req, res) {
         ...currentInteractions[urlHash],
         count: currentInteractions[urlHash].count + 1,
         lastClick: now,
-        title
+        title,
       };
     } else {
       updatedInteraction = {
@@ -89,12 +100,12 @@ export default async function handler(req, res) {
         title,
         count: 1,
         firstClick: now,
-        lastClick: now
+        lastClick: now,
       };
     }
 
     await userRef.update({
-      [`interactionv2.${urlHash}`]: updatedInteraction
+      [`interactionv2.${urlHash}`]: updatedInteraction,
     });
 
     res.status(200).json({ success: true });
