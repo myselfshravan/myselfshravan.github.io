@@ -21,12 +21,12 @@ export const generateUserId = () => {
 // Get or create user ID from localStorage
 export const getUserId = () => {
   if (typeof window === 'undefined') return null;
-
   let userId = localStorage.getItem(USER_ID_KEY);
   if (!userId) {
     userId = generateUserId();
     localStorage.setItem(USER_ID_KEY, userId);
   }
+  console.log('User ID:', userId); // Debugging line
   return userId;
 };
 

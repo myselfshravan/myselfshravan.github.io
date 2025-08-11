@@ -23,7 +23,7 @@ const logConfigStatus = () => {
     storageBucketPresent: !!firebaseConfig.storageBucket,
     messagingSenderIdPresent: !!firebaseConfig.messagingSenderId,
     appIdPresent: !!firebaseConfig.appId,
-    measurementIdPresent: !!firebaseConfig.measurementId
+    measurementIdPresent: !!firebaseConfig.measurementId,
   };
   console.log('Firebase config status:', configStatus);
 };
@@ -44,7 +44,7 @@ try {
     message: firebaseError.message || 'Unknown error',
     code: firebaseError.code,
     env: process.env.NODE_ENV,
-    windowDefined: typeof window !== 'undefined'
+    windowDefined: typeof window !== 'undefined',
   });
   // Don't throw in production to prevent app crashes
   if (process.env.NODE_ENV === 'development') {
