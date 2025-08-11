@@ -16,8 +16,14 @@ interface QueuedEvent extends TrackingData {
   timestamp: string;
 }
 
+interface QueuedCommand {
+  type: 'command';
+  command: string;
+  timestamp: string;
+}
+
 class ClickTracker {
-  private queue: QueuedEvent[] = [];
+  private queue: (QueuedEvent | QueuedCommand)[] = [];
   private isOnline = typeof navigator !== 'undefined' ? navigator.onLine : true;
   private syncInterval: NodeJS.Timeout | null = null;
   private isInitialized = false;
@@ -65,18 +71,8 @@ class ClickTracker {
       // Always use non-blocking tracking
       this.track(trackingData);
       
-      // Debug log for testing
-      console.log('🔍 Tracked click:', {
-        category: trackingData.category,
-        id: trackingData.identifier,
-        action: trackingData.action,
-        isExternal: trackingData.context?.url ? this.isExternalLink(trackingData.context.url) : false,
-        queueSize: this.queue.length
-      });
-      
       // For external links, sync immediately to minimize data loss on page unload
       if (trackingData.context?.url && this.isExternalLink(trackingData.context.url)) {
-        console.log('🌐 External link detected, syncing immediately');
         // Use a small delay to allow current navigation to proceed, then sync
         setTimeout(() => this.syncToFirebase(), 0);
       }
@@ -109,6 +105,21 @@ class ClickTracker {
     }
   }
 
+  trackCommand(command: string) {
+    const queuedCommand: QueuedCommand = {
+      type: 'command',
+      command,
+      timestamp: new Date().toISOString()
+    };
+    
+    this.queue.push(queuedCommand);
+    
+    // Sync more frequently for commands to ensure they're saved
+    if (this.isOnline && this.queue.length >= 3) {
+      this.syncToFirebase();
+    }
+  }
+
   private handleOnline = () => {
     this.isOnline = true;
     // Sync queued events when coming back online
@@ -134,29 +145,46 @@ class ClickTracker {
     if (this.queue.length === 0) return;
     
     // Take current queue and clear it
-    const eventsToSync = [...this.queue];
+    const itemsToSync = [...this.queue];
     this.queue = [];
     
     try {
-      // Process events in batches to avoid overwhelming Firebase
-      for (const event of eventsToSync) {
-        await trackButtonClick(
-          event.category,
-          event.identifier,
-          event.action,
-          event.context
-        );
+      // Process items in batches to avoid overwhelming Firebase
+      for (const item of itemsToSync) {
+        if ('type' in item && item.type === 'command') {
+          // Handle command tracking
+          await this.syncCommand(item);
+        } else {
+          // Handle button click tracking
+          const event = item as QueuedEvent;
+          await trackButtonClick(
+            event.category,
+            event.identifier,
+            event.action,
+            event.context
+          );
+        }
       }
     } catch (error) {
       console.error('Firebase sync error:', error);
       
-      // Return failed events to queue for retry (at the beginning)
-      this.queue.unshift(...eventsToSync);
+      // Return failed items to queue for retry (at the beginning)
+      this.queue.unshift(...itemsToSync);
       
       // Limit queue size to prevent memory issues
       if (this.queue.length > 100) {
         this.queue = this.queue.slice(0, 100);
       }
+    }
+  }
+
+  private async syncCommand(commandItem: QueuedCommand) {
+    try {
+      const { trackCommand } = await import('./analytics');
+      await trackCommand(commandItem.command);
+    } catch (error) {
+      console.error('Failed to sync command:', commandItem.command, error);
+      throw error; // Re-throw to trigger retry logic
     }
   }
 
@@ -171,10 +199,17 @@ class ClickTracker {
 // Singleton instance
 export const clickTracker = new ClickTracker();
 
+// Non-blocking command tracking function
+export function trackCommandNonBlocking(command: string) {
+  clickTracker.trackCommand(command);
+}
+
+
 // Hook for React components
 export function useClickTracking() {
   return {
     track: (data: TrackingData) => clickTracker.track(data),
+    trackCommand: (command: string) => clickTracker.trackCommand(command),
     flush: () => clickTracker.flush()
   };
 }

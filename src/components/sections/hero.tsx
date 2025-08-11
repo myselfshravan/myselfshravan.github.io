@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { trackVisit, trackCommand } from '@/lib/analytics';
+import { trackVisit } from '@/lib/analytics';
+import { trackCommandNonBlocking } from '@/lib/click-tracker';
 import { Terminal, FileText, ArrowDown, X, Minus, Square } from 'lucide-react';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
@@ -217,10 +218,10 @@ export function Hero() {
     const cmd = command.toLowerCase().trim();
     const prompt = 'shravan_revanna@portfolio:~$';
 
-    // Add command to history and track it
+    // Add command to history and track it (non-blocking)
     if (cmd && !commandHistory.includes(cmd)) {
       setCommandHistory((prev) => [...prev, cmd]);
-      await trackCommand(command);
+      trackCommandNonBlocking(command); // Now non-blocking!
     }
 
     // Add command to output
