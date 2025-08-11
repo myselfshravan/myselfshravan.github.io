@@ -14,24 +14,9 @@ const firebaseConfig: FirebaseConfig = {
 
 let db: ReturnType<typeof getFirestore>;
 
-// Log config values (without exposing sensitive data)
-const logConfigStatus = () => {
-  const configStatus = {
-    apiKeyPresent: !!firebaseConfig.apiKey,
-    authDomainPresent: !!firebaseConfig.authDomain,
-    projectIdPresent: !!firebaseConfig.projectId,
-    storageBucketPresent: !!firebaseConfig.storageBucket,
-    messagingSenderIdPresent: !!firebaseConfig.messagingSenderId,
-    appIdPresent: !!firebaseConfig.appId,
-    measurementIdPresent: !!firebaseConfig.measurementId,
-  };
-  console.log('Firebase config status:', configStatus);
-};
-
 // Initialize Firebase
 try {
   if (typeof window !== 'undefined') {
-    logConfigStatus();
     if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
       throw new Error('Required Firebase configuration is missing');
     }

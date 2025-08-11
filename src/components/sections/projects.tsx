@@ -108,6 +108,15 @@ export function Projects() {
                       size="sm"
                       onClick={() => window.open(link.url, '_blank')}
                       className="font-mono text-xs border-primary/20 hover:bg-primary/5 hover:border-primary/40 transition-colors"
+                      trackingCategory="project"
+                      trackingId={project.name}
+                      trackingAction={`click_${link.type}`}
+                      trackingContext={{
+                        section: 'projects',
+                        position: index,
+                        url: link.url,
+                        metadata: { linkType: link.type, linkLabel: link.label }
+                      }}
                     >
                       <Icon className="mr-1 h-3 w-3" />
                       {link.label}

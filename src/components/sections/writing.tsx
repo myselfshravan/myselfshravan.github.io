@@ -45,6 +45,15 @@ export function Writing() {
                       size="sm"
                       onClick={() => window.open(post.url, '_blank')}
                       className="p-1 h-auto"
+                      trackingCategory="blog"
+                      trackingId={post.title}
+                      trackingAction="click_external_link"
+                      trackingContext={{
+                        section: 'writing',
+                        position: index,
+                        url: post.url,
+                        metadata: { source: 'header_icon' },
+                      }}
                     >
                       <ExternalLink className="h-4 w-4" />
                     </Button>
@@ -61,6 +70,15 @@ export function Writing() {
                     variant="outline"
                     onClick={() => window.open(post.url, '_blank')}
                     className="w-full text-sm border-primary/20 hover:bg-primary/5"
+                    trackingCategory="blog"
+                    trackingId={post.title}
+                    trackingAction="read_article"
+                    trackingContext={{
+                      section: 'writing',
+                      position: index,
+                      url: post.url,
+                      metadata: { source: 'cta_button' },
+                    }}
                   >
                     read article
                     <ExternalLink className="ml-2 h-3 w-3" />
@@ -82,6 +100,14 @@ export function Writing() {
             size="lg"
             onClick={() => window.open(portfolioData.writing.blog_url, '_blank')}
             className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
+            trackingCategory="navigation"
+            trackingId="view_all_posts"
+            trackingAction="click_blog_cta"
+            trackingContext={{
+              section: 'writing',
+              url: portfolioData.writing.blog_url,
+              metadata: { source: 'bottom_cta' },
+            }}
           >
             <FileText className="mr-2 h-4 w-4" />
             view all posts

@@ -15,6 +15,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import portfolioData from '@/lib/portfolio-data.json';
+import { getUserId } from '@/lib/analytics';
 
 const socialIcons = {
   github: Github,
@@ -27,6 +28,8 @@ export function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  const userId = getUserId();
+  const trimUserId = userId ? userId.slice(5) : 'unknown';
 
   const scrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
@@ -89,6 +92,7 @@ export function Footer() {
               viewport={{ once: true }}
             >
               Soon other projects will be listed. It&apos;s a work in progress so check back often!
+              Tracking @{trimUserId} for analytics.
             </motion.p>
           </div>
 

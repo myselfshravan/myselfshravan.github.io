@@ -5,12 +5,33 @@ export interface Command {
   timestamp: string;
 }
 
+export interface ButtonInteraction {
+  category: string; // "project", "blog", "contact", "navigation", "social"
+  identifier: string; // "NoteRep", "AI-Blog-Post", "email", "github"
+  action: string; // "view_github", "visit_site", "read_post", "contact_click"
+  context?: {
+    section: string; // "hero", "projects", "writing", "contact"
+    position?: number; // index in list (for projects/blogs)
+    url?: string; // destination URL for external links
+    metadata?: Record<string, unknown>; // additional context data
+  };
+  timestamp: string;
+}
+
 export interface UserData {
   userId: string;
   firstVisit: Timestamp;
   lastVisit: Timestamp;
   totalVisits: number;
+  totalInteractions: number;
   commands: Command[];
+  sessions: unknown[]; // Keep for backwards compatibility, but not used
+  interactions?: ButtonInteraction[]; // Simple array of all interactions
+
+  // Pre-aggregated data for quick queries
+  topCategories: { [category: string]: number };
+  topActions: { [action: string]: number };
+  favoriteContent: { [identifier: string]: number };
 }
 
 export interface FirebaseConfig {
