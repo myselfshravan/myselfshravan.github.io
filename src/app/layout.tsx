@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
+import { ClickTrackingProvider } from '@/components/click-tracking-provider';
 import portfolioData from '@/lib/portfolio-data.json';
 
 const inter = Inter({
@@ -113,7 +114,9 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} ${jetbrainsMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          {children}
+          <ClickTrackingProvider>
+            {children}
+          </ClickTrackingProvider>
         </ThemeProvider>
       </body>
     </html>

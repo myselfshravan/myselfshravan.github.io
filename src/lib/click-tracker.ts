@@ -1,0 +1,200 @@
+import { trackButtonClick } from './analytics';
+
+interface TrackingData {
+  category: string;
+  identifier: string;
+  action: string;
+  context?: {
+    section: string;
+    position?: number;
+    url?: string;
+    metadata?: Record<string, unknown>;
+  };
+}
+
+interface QueuedEvent extends TrackingData {
+  timestamp: string;
+}
+
+class ClickTracker {
+  private queue: QueuedEvent[] = [];
+  private isOnline = typeof navigator !== 'undefined' ? navigator.onLine : true;
+  private syncInterval: NodeJS.Timeout | null = null;
+  private isInitialized = false;
+
+  init() {
+    if (this.isInitialized || typeof window === 'undefined') return;
+    
+    // Add global click listener with event delegation
+    document.addEventListener('click', this.handleClick);
+    
+    // Monitor online/offline status
+    window.addEventListener('online', this.handleOnline);
+    window.addEventListener('offline', this.handleOffline);
+    
+    // Start periodic sync
+    this.startPeriodicSync();
+    
+    this.isInitialized = true;
+  }
+
+  destroy() {
+    if (typeof window === 'undefined') return;
+    
+    document.removeEventListener('click', this.handleClick);
+    window.removeEventListener('online', this.handleOnline);
+    window.removeEventListener('offline', this.handleOffline);
+    
+    if (this.syncInterval) {
+      clearInterval(this.syncInterval);
+      this.syncInterval = null;
+    }
+    
+    this.isInitialized = false;
+  }
+
+  private handleClick = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    const trackingElement = target.closest('[data-track]') as HTMLElement;
+    
+    if (!trackingElement) return;
+    
+    try {
+      const trackingData = JSON.parse(trackingElement.getAttribute('data-track') || '{}');
+      
+      // Always use non-blocking tracking
+      this.track(trackingData);
+      
+      // Debug log for testing
+      console.log('🔍 Tracked click:', {
+        category: trackingData.category,
+        id: trackingData.identifier,
+        action: trackingData.action,
+        isExternal: trackingData.context?.url ? this.isExternalLink(trackingData.context.url) : false,
+        queueSize: this.queue.length
+      });
+      
+      // For external links, sync immediately to minimize data loss on page unload
+      if (trackingData.context?.url && this.isExternalLink(trackingData.context.url)) {
+        console.log('🌐 External link detected, syncing immediately');
+        // Use a small delay to allow current navigation to proceed, then sync
+        setTimeout(() => this.syncToFirebase(), 0);
+      }
+    } catch (error) {
+      console.error('Click tracking error:', error);
+    }
+  };
+
+  private isExternalLink(url: string): boolean {
+    try {
+      const link = new URL(url);
+      return link.hostname !== window.location.hostname;
+    } catch {
+      return false;
+    }
+  }
+
+
+  track(data: TrackingData) {
+    const queuedEvent: QueuedEvent = {
+      ...data,
+      timestamp: new Date().toISOString()
+    };
+    
+    this.queue.push(queuedEvent);
+    
+    // If online and queue is getting large, sync immediately
+    if (this.isOnline && this.queue.length >= 10) {
+      this.syncToFirebase();
+    }
+  }
+
+  private handleOnline = () => {
+    this.isOnline = true;
+    // Sync queued events when coming back online
+    if (this.queue.length > 0) {
+      this.syncToFirebase();
+    }
+  };
+
+  private handleOffline = () => {
+    this.isOnline = false;
+  };
+
+  private startPeriodicSync() {
+    // Sync every 30 seconds if there are queued events
+    this.syncInterval = setInterval(() => {
+      if (this.isOnline && this.queue.length > 0) {
+        this.syncToFirebase();
+      }
+    }, 30000);
+  }
+
+  private async syncToFirebase() {
+    if (this.queue.length === 0) return;
+    
+    // Take current queue and clear it
+    const eventsToSync = [...this.queue];
+    this.queue = [];
+    
+    try {
+      // Process events in batches to avoid overwhelming Firebase
+      for (const event of eventsToSync) {
+        await trackButtonClick(
+          event.category,
+          event.identifier,
+          event.action,
+          event.context
+        );
+      }
+    } catch (error) {
+      console.error('Firebase sync error:', error);
+      
+      // Return failed events to queue for retry (at the beginning)
+      this.queue.unshift(...eventsToSync);
+      
+      // Limit queue size to prevent memory issues
+      if (this.queue.length > 100) {
+        this.queue = this.queue.slice(0, 100);
+      }
+    }
+  }
+
+  // Public method to manually sync (useful for page unload)
+  async flush() {
+    if (this.queue.length > 0) {
+      await this.syncToFirebase();
+    }
+  }
+}
+
+// Singleton instance
+export const clickTracker = new ClickTracker();
+
+// Hook for React components
+export function useClickTracking() {
+  return {
+    track: (data: TrackingData) => clickTracker.track(data),
+    flush: () => clickTracker.flush()
+  };
+}
+
+// Helper to create data-track attributes
+export function createTrackingData(
+  category: string,
+  identifier: string,
+  action: string,
+  context?: {
+    section: string;
+    position?: number;
+    url?: string;
+    metadata?: Record<string, unknown>;
+  }
+): string {
+  return JSON.stringify({
+    category,
+    identifier,
+    action,
+    context
+  });
+}

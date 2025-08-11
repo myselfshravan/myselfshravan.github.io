@@ -7,6 +7,7 @@ import { Terminal, FileText, ArrowDown, X, Minus, Square } from 'lucide-react';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { createTrackingData } from '@/lib/click-tracker';
 import portfolioData from '@/lib/portfolio-data.json';
 
 // Terminal Component for reuse
@@ -648,13 +649,15 @@ export function Hero() {
               size="lg"
               onClick={() => scrollToSection('#projects')}
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3"
-              trackingCategory="navigation"
-              trackingId="view_projects"
-              trackingAction="click_hero_cta"
-              trackingContext={{
-                section: 'hero',
-                metadata: { ctaType: 'primary', destination: 'projects' }
-              }}
+              data-track={createTrackingData(
+                'navigation',
+                'view_projects',
+                'click_hero_cta',
+                {
+                  section: 'hero',
+                  metadata: { ctaType: 'primary', destination: 'projects' }
+                }
+              )}
             >
               <Terminal className="mr-2 h-4 w-4" />
               view projects
@@ -665,14 +668,16 @@ export function Hero() {
               size="lg"
               onClick={() => window.open(portfolioData.writing.blog_url, '_blank')}
               className="px-6 py-3 border-primary/20 hover:bg-primary/5"
-              trackingCategory="navigation"
-              trackingId="read_blog"
-              trackingAction="click_hero_cta"
-              trackingContext={{
-                section: 'hero',
-                url: portfolioData.writing.blog_url,
-                metadata: { ctaType: 'secondary', destination: 'blog' }
-              }}
+              data-track={createTrackingData(
+                'navigation',
+                'read_blog',
+                'click_hero_cta',
+                {
+                  section: 'hero',
+                  url: portfolioData.writing.blog_url,
+                  metadata: { ctaType: 'secondary', destination: 'blog' }
+                }
+              )}
             >
               <FileText className="mr-2 h-4 w-4" />
               read blog
@@ -683,14 +688,16 @@ export function Hero() {
               size="lg"
               onClick={() => window.open(portfolioData.social.github, '_blank')}
               className="px-6 py-3 border-primary/20 hover:bg-primary/5"
-              trackingCategory="social"
-              trackingId="github"
-              trackingAction="click_hero_cta"
-              trackingContext={{
-                section: 'hero',
-                url: portfolioData.social.github,
-                metadata: { ctaType: 'secondary', destination: 'github' }
-              }}
+              data-track={createTrackingData(
+                'social',
+                'github',
+                'click_hero_cta',
+                {
+                  section: 'hero',
+                  url: portfolioData.social.github,
+                  metadata: { ctaType: 'secondary', destination: 'github' }
+                }
+              )}
             >
               <GitHubLogoIcon className="mr-2 h-4 w-4" />
               source code
@@ -743,13 +750,15 @@ export function Hero() {
           size="icon"
           onClick={() => scrollToSection('#projects')}
           className="rounded-full hover:bg-primary/10"
-          trackingCategory="navigation"
-          trackingId="scroll_indicator"
-          trackingAction="click_scroll_down"
-          trackingContext={{
-            section: 'hero',
-            metadata: { source: 'scroll_indicator', destination: 'projects' }
-          }}
+          data-track={createTrackingData(
+            'navigation',
+            'scroll_indicator',
+            'click_scroll_down',
+            {
+              section: 'hero',
+              metadata: { source: 'scroll_indicator', destination: 'projects' }
+            }
+          )}
         >
           <ArrowDown className="h-6 w-6 text-muted-foreground" />
         </Button>
