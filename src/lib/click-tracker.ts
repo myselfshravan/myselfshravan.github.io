@@ -234,14 +234,60 @@ export function createTrackingData(
   });
 }
 
-// External link tracking - immediate Firebase call for reliability
+// External link tracking with sendBeacon for in-app browser reliability
 export function trackExternalLink(url: string, title: string) {
   if (typeof window === 'undefined') return;
 
-  // Direct Firebase tracking for immediate dispatch
-  // This ensures tracking happens before potential page navigation
+  const userId = typeof localStorage !== 'undefined' ? localStorage.getItem('portfolio_user_id') : null;
+  if (!userId) {
+    console.warn('No user ID found for external link tracking');
+    return;
+  }
+
+  const payload = {
+    userId,
+    url,
+    title,
+    timestamp: Date.now()
+  };
+
+  // 1. Primary: Use sendBeacon with serverless function (most reliable)
+  if (navigator.sendBeacon) {
+    try {
+      const blob = new Blob([JSON.stringify(payload)], {
+        type: 'application/json'
+      });
+      
+      // Use the serverless function endpoint
+      const success = navigator.sendBeacon('/api/track-external', blob);
+      
+      if (success) {
+        // sendBeacon succeeded, data is queued for reliable delivery
+        return;
+      }
+    } catch (error) {
+      console.warn('sendBeacon failed:', error);
+    }
+  }
+
+  // 2. Fallback: Direct Firebase call (may not complete in in-app browsers)
   try {
-    trackExternalLinkClick(url, title).catch(console.error);
+    trackExternalLinkClick(url, title).catch(() => {
+      // If Firebase also fails, add to queue system as last resort
+      clickTracker.track({
+        category: 'external_link',
+        identifier: url,
+        action: 'click',
+        context: {
+          section: 'external_navigation',
+          url: url,
+          metadata: { 
+            title,
+            trackingType: 'interactionv2_fallback'
+          }
+        }
+      });
+    });
   } catch (error) {
     console.error('External link tracking failed:', error);
   }
