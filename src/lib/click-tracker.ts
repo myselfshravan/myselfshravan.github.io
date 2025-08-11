@@ -1,5 +1,10 @@
 import { trackButtonClick, trackExternalLinkClick } from './analytics';
 
+// Configuration for external API endpoints
+const API_CONFIG = {
+  VERCEL_API_BASE: 'https://myselfshravan-github-io.vercel.app/api',
+};
+
 interface TrackingData {
   category: string;
   identifier: string;
@@ -251,15 +256,15 @@ export function trackExternalLink(url: string, title: string) {
     timestamp: Date.now()
   };
 
-  // 1. Primary: Use sendBeacon with serverless function (most reliable)
+  // 1. Primary: Use sendBeacon with Vercel serverless function (most reliable)
   if (navigator.sendBeacon) {
     try {
       const blob = new Blob([JSON.stringify(payload)], {
         type: 'application/json'
       });
       
-      // Use the serverless function endpoint
-      const success = navigator.sendBeacon('/api/track-external', blob);
+      // Use the Vercel API endpoint since GitHub Pages can't host serverless functions
+      const success = navigator.sendBeacon(`${API_CONFIG.VERCEL_API_BASE}/track-external`, blob);
       
       if (success) {
         // sendBeacon succeeded, data is queued for reliable delivery
