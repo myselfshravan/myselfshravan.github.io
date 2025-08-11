@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { trackVisit, trackCommand } from '@/lib/analytics';
 import { Terminal, FileText, ArrowDown, X, Minus, Square } from 'lucide-react';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
@@ -101,12 +102,17 @@ export function Hero() {
   const [isMobile, setIsMobile] = useState(false);
   const fullText = `shravan_revanna@portfolio:~$ whoami`;
 
+  // Track visits
+  useEffect(() => {
+    trackVisit().catch(console.error);
+  }, []);
+
   // Mobile detection for responsive placeholder text
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 640); // sm breakpoint
     };
-    
+
     checkIsMobile();
     window.addEventListener('resize', checkIsMobile);
     return () => window.removeEventListener('resize', checkIsMobile);
@@ -206,13 +212,14 @@ export function Hero() {
   };
 
   // Command parsing and execution
-  const executeCommand = (command: string) => {
+  const executeCommand = async (command: string) => {
     const cmd = command.toLowerCase().trim();
     const prompt = 'shravan_revanna@portfolio:~$';
 
-    // Add command to history
+    // Add command to history and track it
     if (cmd && !commandHistory.includes(cmd)) {
       setCommandHistory((prev) => [...prev, cmd]);
+      await trackCommand(command);
     }
 
     // Add command to output
@@ -568,7 +575,9 @@ export function Hero() {
                   currentInput={currentInput}
                   setCurrentInput={setCurrentInput}
                   handleTerminalKeyDown={handleTerminalKeyDown}
-                  placeholderText={isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."}
+                  placeholderText={
+                    isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."
+                  }
                 />
               )}
             </div>
@@ -607,7 +616,9 @@ export function Hero() {
                     setCurrentInput={setCurrentInput}
                     handleTerminalKeyDown={handleTerminalKeyDown}
                     isExpanded={true}
-                    placeholderText={isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."}
+                    placeholderText={
+                      isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."
+                    }
                   />
                 </div>
               </div>
