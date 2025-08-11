@@ -49,7 +49,7 @@ export function GitHubStatsCard({ account, statsUrl }: GitHubStatsCardProps) {
           </button>
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 px-2">
+      <CardContent className="space-y-2 px-2">
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
             <div className="text-2xl font-bold text-primary font-mono">
@@ -77,6 +77,19 @@ export function GitHubStatsCard({ account, statsUrl }: GitHubStatsCardProps) {
             fill
             className="object-contain"
           />
+        </div>
+        <div className="text-xs text-muted-foreground font-mono text-center">
+          <p className="">
+            Real-time stats pulled via my own API:
+            <a
+              href="https://github.com/myselfshravan/git-stats-api"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-1 text-primary hover:text-primary/80 transition-colors"
+            >
+              [source code?]
+            </a>
+          </p>
         </div>
       </CardContent>
     </Card>

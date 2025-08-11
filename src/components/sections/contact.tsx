@@ -7,13 +7,12 @@ import {
   Phone,
   Send,
   MessageCircle,
-  Github,
   Linkedin,
   Instagram,
   Facebook,
   Twitter,
   Youtube,
-  Rss
+  Rss,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,8 +21,6 @@ import portfolioData from '@/lib/portfolio-data.json';
 import { gsap } from 'gsap';
 
 const socialIcons = {
-  github1: Github,
-  github2: Github,
   linkedin: Linkedin,
   instagram: Instagram,
   facebook: Facebook,
@@ -31,6 +28,8 @@ const socialIcons = {
   youtube: Youtube,
   blog: Rss,
 };
+type SocialKey = keyof typeof portfolioData.social;
+const order: SocialKey[] = ['linkedin', 'instagram', 'facebook', 'twitter', 'youtube', 'blog'];
 
 export function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -187,8 +186,8 @@ export function Contact() {
                                 {
                                   section: 'contact',
                                   url: method.href,
-                                  metadata: { contactType: method.title, source: 'hover_icon' }
-                                }
+                                  metadata: { contactType: method.title, source: 'hover_icon' },
+                                },
                               )}
                             >
                               <Send className="h-4 w-4" />
@@ -226,26 +225,26 @@ export function Contact() {
                   </p>
 
                   <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
-                    {Object.entries(portfolioData.social)
-                      .slice(0, 8)
-                      .map(([platform, url]) => {
-                        const Icon =
-                          socialIcons[platform as keyof typeof socialIcons] || MessageCircle;
-                        return (
-                          <motion.a
-                            key={platform}
-                            href={url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex flex-col items-center p-4 bg-muted/20 hover:bg-primary/10 rounded-lg text-center transition-all duration-300 group"
-                            whileHover={{ scale: 1.05, y: -2 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <Icon className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors mb-2" />
-                            <span className="text-xs font-medium capitalize">{platform}</span>
-                          </motion.a>
-                        );
-                      })}
+                    {order.map((platform) => {
+                      const url = portfolioData.social[platform];
+                      if (!url) return null;
+                      const Icon =
+                        socialIcons[platform as keyof typeof socialIcons] || MessageCircle;
+                      return (
+                        <motion.a
+                          key={platform}
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex flex-col items-center p-4 bg-muted/20 hover:bg-primary/10 rounded-lg text-center transition-all duration-300 group"
+                          whileHover={{ scale: 1.05, y: -2 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <Icon className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors mb-2" />
+                          <span className="text-xs font-medium capitalize">{platform}</span>
+                        </motion.a>
+                      );
+                    })}
                   </div>
                 </CardContent>
               </Card>
@@ -307,16 +306,11 @@ export function Contact() {
                   )
                 }
                 className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                data-track={createTrackingData(
-                  'contact',
-                  'start_conversation',
-                  'click_email_cta',
-                  {
-                    section: 'contact',
-                    url: `mailto:${portfolioData.personal.email}?subject=Project Collaboration`,
-                    metadata: { source: 'bottom_cta', subject: 'Project Collaboration' }
-                  }
-                )}
+                data-track={createTrackingData('contact', 'start_conversation', 'click_email_cta', {
+                  section: 'contact',
+                  url: `mailto:${portfolioData.personal.email}?subject=Project Collaboration`,
+                  metadata: { source: 'bottom_cta', subject: 'Project Collaboration' },
+                })}
               >
                 <Send className="mr-2 h-5 w-5" />
                 Start a Conversation
