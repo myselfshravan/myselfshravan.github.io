@@ -1,5 +1,6 @@
 import { db } from './firebase';
-import { doc, getDoc, setDoc, updateDoc, arrayUnion, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc, arrayUnion, serverTimestamp, Timestamp } from 'firebase/firestore';
+import { Command, UserData } from './types';
 
 const USER_ID_KEY = 'portfolio_user_id';
 const USERS_COLLECTION = 'portfolio_users';
@@ -33,13 +34,14 @@ export const trackVisit = async () => {
 
     if (!userDoc.exists()) {
       // First visit
-      await setDoc(userRef, {
+      const newUserData: UserData = {
         userId,
-        firstVisit: now,
-        lastVisit: now,
+        firstVisit: now as Timestamp,
+        lastVisit: now as Timestamp,
         totalVisits: 1,
         commands: [],
-      });
+      };
+      await setDoc(userRef, newUserData);
     } else {
       // Subsequent visit
       await updateDoc(userRef, {
@@ -64,20 +66,23 @@ export const trackCommand = async (command: string) => {
     const userDoc = await getDoc(userRef);
     if (!userDoc.exists()) {
       const now = serverTimestamp();
-      await setDoc(userRef, {
+      const newUserData: UserData = {
         userId,
-        firstVisit: now,
-        lastVisit: now,
+        firstVisit: now as Timestamp,
+        lastVisit: now as Timestamp,
         totalVisits: 1,
         commands: [],
-      });
+      };
+      await setDoc(userRef, newUserData);
     }
 
+    const newCommand: Command = {
+      command,
+      timestamp: new Date().toISOString(),
+    };
+
     await updateDoc(userRef, {
-      commands: arrayUnion({
-        command,
-        timestamp: serverTimestamp(),
-      }),
+      commands: arrayUnion(newCommand),
     });
   } catch (error) {
     const firestoreError = error as { code?: string; message?: string };
