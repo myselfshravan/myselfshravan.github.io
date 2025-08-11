@@ -18,6 +18,14 @@ export interface ButtonInteraction {
   timestamp: string;
 }
 
+export interface ExternalLinkClick {
+  url: string;
+  title: string;
+  count: number;
+  firstClick: string;
+  lastClick: string;
+}
+
 export interface UserData {
   userId: string;
   firstVisit: Timestamp;
@@ -27,6 +35,9 @@ export interface UserData {
   commands: Command[];
   sessions: unknown[]; // Keep for backwards compatibility, but not used
   interactions?: ButtonInteraction[]; // Simple array of all interactions
+
+  // External link tracking - simplified approach
+  interactionv2?: { [urlHash: string]: ExternalLinkClick };
 
   // Pre-aggregated data for quick queries
   topCategories: { [category: string]: number };

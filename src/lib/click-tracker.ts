@@ -234,23 +234,12 @@ export function createTrackingData(
   });
 }
 
-// External link tracking with sendBeacon for immediate dispatch
+// External link tracking - immediate Firebase call for reliability
 export function trackExternalLink(url: string, title: string) {
   if (typeof window === 'undefined') return;
 
-  // Try sendBeacon first for immediate tracking
-  if (typeof navigator !== 'undefined' && 'sendBeacon' in navigator) {
-    try {
-      // For sendBeacon, we need to track directly to Firebase
-      // Since we can't send to an API endpoint with static export
-      trackExternalLinkClick(url, title).catch(console.error);
-      return;
-    } catch (error) {
-      console.error('SendBeacon failed:', error);
-    }
-  }
-
-  // Fallback to regular tracking if sendBeacon unavailable
+  // Direct Firebase tracking for immediate dispatch
+  // This ensures tracking happens before potential page navigation
   try {
     trackExternalLinkClick(url, title).catch(console.error);
   } catch (error) {

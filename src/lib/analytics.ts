@@ -8,20 +8,10 @@ import {
   serverTimestamp,
   Timestamp,
 } from 'firebase/firestore';
-import { Command, UserData, ButtonInteraction } from './types';
+import { Command, UserData, ButtonInteraction, ExternalLinkClick } from './types';
 
 const USER_ID_KEY = 'portfolio_user_id';
 const USERS_COLLECTION = 'portfolio_users';
-const EXTERNAL_LINKS_COLLECTION = 'interactionv2';
-
-interface ExternalLinkInteraction {
-  userId: string;
-  url: string;
-  title: string;
-  count: number;
-  firstClick: Timestamp;
-  lastClick: Timestamp;
-}
 
 // Generate unique IDs
 export const generateUserId = () => {
@@ -145,38 +135,71 @@ export const trackButtonClick = async (
   }
 };
 
-// External link tracking for interactionv2
+// Create a unique hash for URL that avoids collisions
+function createUrlHash(url: string): string {
+  // Simple hash function to create a unique identifier
+  let hash = 0;
+  for (let i = 0; i < url.length; i++) {
+    const char = url.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  
+  // Convert to positive number and then to base36 for shorter string
+  const hashStr = Math.abs(hash).toString(36);
+  
+  // Fallback: if hash collision is still possible, append URL length
+  return `url_${hashStr}_${url.length}`;
+}
+
+// External link tracking for interactionv2 - stored within user document
 export const trackExternalLinkClick = async (url: string, title: string) => {
   const userId = getUserId();
   if (!userId || !db) return;
 
-  // Create a hash of the URL for the document ID to handle URL length limits
-  const urlHash = btoa(url).replace(/[^a-zA-Z0-9]/g, '').substring(0, 20);
-  const docId = `${userId}_${urlHash}`;
-  const linkRef = doc(db, EXTERNAL_LINKS_COLLECTION, docId);
+  const userRef = doc(db, USERS_COLLECTION, userId);
 
   try {
-    const linkDoc = await getDoc(linkRef);
-    const now = serverTimestamp() as Timestamp;
+    // Create a unique hash of the URL for use as field key
+    // Using a simple hash function to avoid collisions from truncation
+    const urlHash = createUrlHash(url);
+    const now = new Date().toISOString();
 
-    if (!linkDoc.exists()) {
-      // First time clicking this URL
-      const newInteraction: ExternalLinkInteraction = {
-        userId,
+    // Get current user document
+    const userDoc = await getDoc(userRef);
+    
+    if (!userDoc.exists()) {
+      console.error('User document not found for external link tracking');
+      return;
+    }
+
+    const userData = userDoc.data() as UserData;
+    const currentInteractions = userData.interactionv2 || {};
+
+    if (currentInteractions[urlHash]) {
+      // Existing URL - increment count
+      const updatedInteraction: ExternalLinkClick = {
+        ...currentInteractions[urlHash],
+        count: currentInteractions[urlHash].count + 1,
+        lastClick: now,
+        title, // Update title in case it changed
+      };
+
+      await updateDoc(userRef, {
+        [`interactionv2.${urlHash}`]: updatedInteraction,
+      });
+    } else {
+      // New URL - create first entry
+      const newInteraction: ExternalLinkClick = {
         url,
         title,
         count: 1,
         firstClick: now,
         lastClick: now,
       };
-      await setDoc(linkRef, newInteraction);
-    } else {
-      // Increment existing count
-      await updateDoc(linkRef, {
-        count: (linkDoc.data().count || 0) + 1,
-        lastClick: now,
-        // Update title in case it changed
-        title,
+
+      await updateDoc(userRef, {
+        [`interactionv2.${urlHash}`]: newInteraction,
       });
     }
   } catch (error) {
