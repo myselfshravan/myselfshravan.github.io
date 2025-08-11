@@ -14,12 +14,12 @@ const USER_ID_KEY = 'portfolio_user_id';
 const USERS_COLLECTION = 'portfolio_users';
 
 // Generate a unique ID for new users
-const generateUserId = () => {
+export const generateUserId = () => {
   return 'user_' + Math.random().toString(36).substr(2, 9);
 };
 
 // Get or create user ID from localStorage
-const getUserId = () => {
+export const getUserId = () => {
   if (typeof window === 'undefined') return null;
 
   let userId = localStorage.getItem(USER_ID_KEY);

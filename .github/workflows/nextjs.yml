@@ -51,7 +51,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build and Export with Next.js
+      - name: Run tests
+        run: npm test
+
+      - name: Build with Next.js
         run: npm run build
         env:
           NEXT_PUBLIC_GROQ_API_KEY: ${{ secrets.NEXT_PUBLIC_GROQ_API_KEY }}
