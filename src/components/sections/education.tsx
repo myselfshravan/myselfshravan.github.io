@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import portfolioData from '@/lib/portfolio-data.json';
+import { trackExternalLink } from '@/lib/click-tracker';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
@@ -165,7 +166,10 @@ export function Education() {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  onClick={() => window.open(edu.website, '_blank')}
+                                  onClick={() => {
+                                    trackExternalLink(edu.website, `Institution: ${edu.institution}`);
+                                    window.open(edu.website, '_blank');
+                                  }}
                                   className="hover:bg-primary/10 transition-colors"
                                 >
                                   Visit Website
@@ -250,7 +254,10 @@ export function Education() {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  onClick={() => window.open(edu.website, '_blank')}
+                                  onClick={() => {
+                                    trackExternalLink(edu.website, `Institution: ${edu.institution}`);
+                                    window.open(edu.website, '_blank');
+                                  }}
                                   className="hover:bg-primary/10 transition-colors"
                                 >
                                   Visit Website

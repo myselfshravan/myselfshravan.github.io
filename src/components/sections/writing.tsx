@@ -6,7 +6,7 @@ import { ExternalLink, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import portfolioData from '@/lib/portfolio-data.json';
-import { createTrackingData } from '@/lib/click-tracker';
+import { createTrackingData, trackExternalLink } from '@/lib/click-tracker';
 
 export function Writing() {
   return (
@@ -44,7 +44,10 @@ export function Writing() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => window.open(post.url, '_blank')}
+                      onClick={() => {
+                        trackExternalLink(post.url, `Blog Post: ${post.title}`);
+                        window.open(post.url, '_blank');
+                      }}
                       className="p-1 h-auto"
                       data-track={createTrackingData(
                         'blog',
@@ -71,7 +74,10 @@ export function Writing() {
                 <CardContent>
                   <Button
                     variant="outline"
-                    onClick={() => window.open(post.url, '_blank')}
+                    onClick={() => {
+                      trackExternalLink(post.url, `Blog Post: ${post.title}`);
+                      window.open(post.url, '_blank');
+                    }}
                     className="w-full text-sm border-primary/20 hover:bg-primary/5"
                     data-track={createTrackingData(
                       'blog',
@@ -103,7 +109,10 @@ export function Writing() {
         >
           <Button
             size="lg"
-            onClick={() => window.open(portfolioData.writing.blog_url, '_blank')}
+            onClick={() => {
+              trackExternalLink(portfolioData.writing.blog_url, 'Blog: All Posts');
+              window.open(portfolioData.writing.blog_url, '_blank');
+            }}
             className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
             data-track={createTrackingData(
               'navigation',

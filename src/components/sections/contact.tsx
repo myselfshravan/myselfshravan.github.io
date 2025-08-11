@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { createTrackingData } from '@/lib/click-tracker';
+import { createTrackingData, trackExternalLink } from '@/lib/click-tracker';
 import portfolioData from '@/lib/portfolio-data.json';
 import { gsap } from 'gsap';
 
@@ -172,12 +172,15 @@ export function Contact() {
                             <Button
                               variant="ghost"
                               size="icon"
-                              onClick={() =>
+                              onClick={() => {
+                                if (method.href.startsWith('http')) {
+                                  trackExternalLink(method.href, `Contact: ${method.title}`);
+                                }
                                 window.open(
                                   method.href,
                                   method.href.startsWith('http') ? '_blank' : '_self',
-                                )
-                              }
+                                );
+                              }}
                               className="opacity-0 group-hover:opacity-100 transition-opacity hidden sm:flex flex-shrink-0"
                               data-track={createTrackingData(
                                 'contact',
@@ -231,18 +234,19 @@ export function Contact() {
                       const Icon =
                         socialIcons[platform as keyof typeof socialIcons] || MessageCircle;
                       return (
-                        <motion.a
+                        <motion.div
                           key={platform}
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex flex-col items-center p-4 bg-muted/20 hover:bg-primary/10 rounded-lg text-center transition-all duration-300 group"
+                          onClick={() => {
+                            trackExternalLink(url, `Social: ${platform.charAt(0).toUpperCase() + platform.slice(1)}`);
+                            window.open(url, '_blank');
+                          }}
+                          className="flex flex-col items-center p-4 bg-muted/20 hover:bg-primary/10 rounded-lg text-center transition-all duration-300 group cursor-pointer"
                           whileHover={{ scale: 1.05, y: -2 }}
                           whileTap={{ scale: 0.95 }}
                         >
                           <Icon className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors mb-2" />
                           <span className="text-xs font-medium capitalize">{platform}</span>
-                        </motion.a>
+                        </motion.div>
                       );
                     })}
                   </div>
@@ -299,12 +303,11 @@ export function Contact() {
               </p>
               <Button
                 size="lg"
-                onClick={() =>
-                  window.open(
-                    `mailto:${portfolioData.personal.email}?subject=Project Collaboration`,
-                    '_self',
-                  )
-                }
+                onClick={() => {
+                  const emailUrl = `mailto:${portfolioData.personal.email}?subject=Project Collaboration`;
+                  trackExternalLink(emailUrl, 'Email: Project Collaboration');
+                  window.open(emailUrl, '_self');
+                }}
                 className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 data-track={createTrackingData('contact', 'start_conversation', 'click_email_cta', {
                   section: 'contact',

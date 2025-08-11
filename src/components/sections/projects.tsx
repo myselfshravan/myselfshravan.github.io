@@ -6,7 +6,7 @@ import { ExternalLink, FileText, Play } from 'lucide-react';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { createTrackingData } from '@/lib/click-tracker';
+import { createTrackingData, trackExternalLink } from '@/lib/click-tracker';
 import portfolioData from '@/lib/portfolio-data.json';
 
 interface Project {
@@ -107,7 +107,12 @@ export function Projects() {
                       key={idx}
                       variant="outline"
                       size="sm"
-                      onClick={() => window.open(link.url, '_blank')}
+                      onClick={() => {
+                        if (link.url) {
+                          trackExternalLink(link.url, `Project: ${project.name} - ${link.label}`);
+                          window.open(link.url, '_blank');
+                        }
+                      }}
                       className="font-mono text-xs border-primary/20 hover:bg-primary/5 hover:border-primary/40 transition-colors"
                       data-track={createTrackingData(
                         'project',

@@ -12,6 +12,16 @@ import { Command, UserData, ButtonInteraction } from './types';
 
 const USER_ID_KEY = 'portfolio_user_id';
 const USERS_COLLECTION = 'portfolio_users';
+const EXTERNAL_LINKS_COLLECTION = 'interactionv2';
+
+interface ExternalLinkInteraction {
+  userId: string;
+  url: string;
+  title: string;
+  count: number;
+  firstClick: Timestamp;
+  lastClick: Timestamp;
+}
 
 // Generate unique IDs
 export const generateUserId = () => {
@@ -132,6 +142,45 @@ export const trackButtonClick = async (
     });
   } catch (error) {
     console.error('Button tracking error:', error);
+  }
+};
+
+// External link tracking for interactionv2
+export const trackExternalLinkClick = async (url: string, title: string) => {
+  const userId = getUserId();
+  if (!userId || !db) return;
+
+  // Create a hash of the URL for the document ID to handle URL length limits
+  const urlHash = btoa(url).replace(/[^a-zA-Z0-9]/g, '').substring(0, 20);
+  const docId = `${userId}_${urlHash}`;
+  const linkRef = doc(db, EXTERNAL_LINKS_COLLECTION, docId);
+
+  try {
+    const linkDoc = await getDoc(linkRef);
+    const now = serverTimestamp() as Timestamp;
+
+    if (!linkDoc.exists()) {
+      // First time clicking this URL
+      const newInteraction: ExternalLinkInteraction = {
+        userId,
+        url,
+        title,
+        count: 1,
+        firstClick: now,
+        lastClick: now,
+      };
+      await setDoc(linkRef, newInteraction);
+    } else {
+      // Increment existing count
+      await updateDoc(linkRef, {
+        count: (linkDoc.data().count || 0) + 1,
+        lastClick: now,
+        // Update title in case it changed
+        title,
+      });
+    }
+  } catch (error) {
+    console.error('External link tracking error:', error);
   }
 };
 

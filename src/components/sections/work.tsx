@@ -6,6 +6,7 @@ import { ExternalLink, Calendar } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import portfolioData from '@/lib/portfolio-data.json';
+import { trackExternalLink } from '@/lib/click-tracker';
 
 export function Work() {
   const sectionRef = React.useRef<HTMLElement>(null);
@@ -54,7 +55,10 @@ export function Work() {
                         )}
                         {job.website !== '#' && (
                           <button
-                            onClick={() => window.open(job.website, '_blank')}
+                            onClick={() => {
+                              trackExternalLink(job.website, `Company: ${job.company}`);
+                              window.open(job.website, '_blank');
+                            }}
                             className="text-primary hover:text-primary/80 transition-colors"
                           >
                             <ExternalLink className="h-4 w-4" />

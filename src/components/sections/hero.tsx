@@ -8,7 +8,7 @@ import { Terminal, FileText, ArrowDown, X, Minus, Square } from 'lucide-react';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { createTrackingData } from '@/lib/click-tracker';
+import { createTrackingData, trackExternalLink } from '@/lib/click-tracker';
 import portfolioData from '@/lib/portfolio-data.json';
 
 // Terminal Component for reuse
@@ -667,7 +667,10 @@ export function Hero() {
             <Button
               variant="outline"
               size="lg"
-              onClick={() => window.open(portfolioData.writing.blog_url, '_blank')}
+              onClick={() => {
+                trackExternalLink(portfolioData.writing.blog_url, 'Personal Blog');
+                window.open(portfolioData.writing.blog_url, '_blank');
+              }}
               className="px-6 py-3 border-primary/20 hover:bg-primary/5"
               data-track={createTrackingData(
                 'navigation',
@@ -687,7 +690,10 @@ export function Hero() {
             <Button
               variant="outline"
               size="lg"
-              onClick={() => window.open(portfolioData.social.github, '_blank')}
+              onClick={() => {
+                trackExternalLink(portfolioData.social.github, 'GitHub Profile');
+                window.open(portfolioData.social.github, '_blank');
+              }}
               className="px-6 py-3 border-primary/20 hover:bg-primary/5"
               data-track={createTrackingData(
                 'social',
@@ -725,7 +731,10 @@ export function Hero() {
               work
             </button>
             <button
-              onClick={() => window.open(`/${portfolioData.personal.resumeFile}`, '_blank')}
+              onClick={() => {
+                trackExternalLink(`/${portfolioData.personal.resumeFile}`, 'Resume PDF');
+                window.open(`/${portfolioData.personal.resumeFile}`, '_blank');
+              }}
               className="hover:text-primary transition-colors underline underline-offset-4"
             >
               resume
