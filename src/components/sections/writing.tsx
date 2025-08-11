@@ -6,7 +6,7 @@ import { ExternalLink, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import portfolioData from '@/lib/portfolio-data.json';
-import { createTrackingData, trackExternalLink } from '@/lib/click-tracker';
+import { trackExternalLink } from '@/lib/click-tracker';
 
 export function Writing() {
   return (
@@ -49,17 +49,6 @@ export function Writing() {
                         window.open(post.url, '_blank');
                       }}
                       className="p-1 h-auto"
-                      data-track={createTrackingData(
-                        'blog',
-                        post.title,
-                        'click_external_link',
-                        {
-                          section: 'writing',
-                          position: index,
-                          url: post.url,
-                          metadata: { source: 'header_icon' },
-                        }
-                      )}
                     >
                       <ExternalLink className="h-4 w-4" />
                     </Button>
@@ -79,17 +68,6 @@ export function Writing() {
                       window.open(post.url, '_blank');
                     }}
                     className="w-full text-sm border-primary/20 hover:bg-primary/5"
-                    data-track={createTrackingData(
-                      'blog',
-                      post.title,
-                      'read_article',
-                      {
-                        section: 'writing',
-                        position: index,
-                        url: post.url,
-                        metadata: { source: 'cta_button' },
-                      }
-                    )}
                   >
                     read article
                     <ExternalLink className="ml-2 h-3 w-3" />
@@ -114,16 +92,6 @@ export function Writing() {
               window.open(portfolioData.writing.blog_url, '_blank');
             }}
             className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
-            data-track={createTrackingData(
-              'navigation',
-              'view_all_posts',
-              'click_blog_cta',
-              {
-                section: 'writing',
-                url: portfolioData.writing.blog_url,
-                metadata: { source: 'bottom_cta' },
-              }
-            )}
           >
             <FileText className="mr-2 h-4 w-4" />
             view all posts

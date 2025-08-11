@@ -11,7 +11,7 @@ import {
 import { Command, UserData, ButtonInteraction, ExternalLinkClick } from './types';
 
 const USER_ID_KEY = 'portfolio_user_id';
-const USERS_COLLECTION = 'portfolio_users';
+const USERS_COLLECTION = 'portfolio_users_prod';
 
 // Generate unique IDs
 export const generateUserId = () => {
@@ -141,13 +141,13 @@ function createUrlHash(url: string): string {
   let hash = 0;
   for (let i = 0; i < url.length; i++) {
     const char = url.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     hash = hash & hash; // Convert to 32-bit integer
   }
-  
+
   // Convert to positive number and then to base36 for shorter string
   const hashStr = Math.abs(hash).toString(36);
-  
+
   // Fallback: if hash collision is still possible, append URL length
   return `url_${hashStr}_${url.length}`;
 }
@@ -167,7 +167,7 @@ export const trackExternalLinkClick = async (url: string, title: string) => {
 
     // Get current user document
     const userDoc = await getDoc(userRef);
-    
+
     if (!userDoc.exists()) {
       console.error('User document not found for external link tracking');
       return;

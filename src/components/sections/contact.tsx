@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { createTrackingData, trackExternalLink } from '@/lib/click-tracker';
+import { trackExternalLink } from '@/lib/click-tracker';
 import portfolioData from '@/lib/portfolio-data.json';
 import { gsap } from 'gsap';
 
@@ -182,16 +182,6 @@ export function Contact() {
                                 );
                               }}
                               className="opacity-0 group-hover:opacity-100 transition-opacity hidden sm:flex flex-shrink-0"
-                              data-track={createTrackingData(
-                                'contact',
-                                method.title.toLowerCase(),
-                                'click_contact_method',
-                                {
-                                  section: 'contact',
-                                  url: method.href,
-                                  metadata: { contactType: method.title, source: 'hover_icon' },
-                                },
-                              )}
                             >
                               <Send className="h-4 w-4" />
                             </Button>
@@ -309,11 +299,6 @@ export function Contact() {
                   window.open(emailUrl, '_self');
                 }}
                 className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                data-track={createTrackingData('contact', 'start_conversation', 'click_email_cta', {
-                  section: 'contact',
-                  url: `mailto:${portfolioData.personal.email}?subject=Project Collaboration`,
-                  metadata: { source: 'bottom_cta', subject: 'Project Collaboration' },
-                })}
               >
                 <Send className="mr-2 h-5 w-5" />
                 Start a Conversation
