@@ -277,6 +277,11 @@
     "blog_url": "https://blog.shravanrevanna.me",
     "featured_posts": [
       {
+        "title": "Migrating the old portfolio website to Next.js 15",
+        "url": "https://blog.shravanrevanna.me/how-i-transformed-static-html-portfolio-site-to-a-nextjs-page",
+        "description": "Rebuilt my old static HTML portfolio site to Next.js 15 with Turbopack, improving performance and developer experience."
+      },
+      {
         "title": "Inside NoteRep's AI Chatbot - Subtle Ads in responses",
         "url": "https://blog.shravanrevanna.me/a-brief-look-at-how-the-noterep-ai-chatbot-works",
         "description": "How I Built a Groq-powered chatbot for NoteRep that delivers blazing-fast responses, remembers context, and sneakily integrates ads into conversations without breaking flow which can be tracked and monetized."
