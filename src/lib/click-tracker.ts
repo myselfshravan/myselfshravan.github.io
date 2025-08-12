@@ -3,6 +3,7 @@ import { trackButtonClick, trackExternalLinkClick } from './analytics';
 // Configuration for external API endpoints
 const API_CONFIG = {
   VERCEL_API_BASE: 'https://myselfshravan-github-io.vercel.app/api',
+  PDF_TRACK_ENDPOINT: '/track-pdf',
 };
 
 interface TrackingData {
@@ -230,6 +231,49 @@ export function createTrackingData(
     action,
     context,
   });
+}
+
+// PDF view tracking with reliable delivery
+export function trackPdfView(fileName: string) {
+  if (typeof window === 'undefined') return;
+
+  const userId = typeof localStorage !== 'undefined' ? localStorage.getItem('portfolio_user_id') : null;
+  if (!userId) {
+    console.warn('No user ID found for PDF tracking');
+    return;
+  }
+
+  const payload = {
+    userId,
+    fileName,
+    timestamp: Date.now(),
+  };
+
+  // Primary: Use sendBeacon (most reliable)
+  if (navigator.sendBeacon) {
+    try {
+      const blob = new Blob([JSON.stringify(payload)], {
+        type: 'text/plain',
+      });
+
+      const success = navigator.sendBeacon(`${API_CONFIG.VERCEL_API_BASE}${API_CONFIG.PDF_TRACK_ENDPOINT}`, blob);
+
+      if (success) {
+        return; // sendBeacon succeeded
+      }
+    } catch (error) {
+      console.warn('sendBeacon failed:', error);
+    }
+  }
+
+  // Fallback: Use regular fetch
+  fetch(`${API_CONFIG.VERCEL_API_BASE}${API_CONFIG.PDF_TRACK_ENDPOINT}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  }).catch(error => console.error('PDF tracking failed:', error));
 }
 
 // External link tracking with sendBeacon for in-app browser reliability

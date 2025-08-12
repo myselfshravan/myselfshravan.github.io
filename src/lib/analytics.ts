@@ -8,7 +8,7 @@ import {
   serverTimestamp,
   Timestamp,
 } from 'firebase/firestore';
-import { Command, UserData, ButtonInteraction, ExternalLinkClick } from './types';
+import { Command, UserData, ButtonInteraction, ExternalLinkClick, PDFView } from './types';
 
 const USER_ID_KEY = 'portfolio_user_id';
 const USERS_COLLECTION = 'portfolio_users_prod';
@@ -58,6 +58,62 @@ export const trackVisit = async () => {
     }
   } catch (error) {
     console.error('Visit tracking error:', error);
+  }
+};
+
+// Track PDF views similar to visit tracking
+export const trackPdfView = async (fileName: string) => {
+  const userId = getUserId();
+  if (!userId || !db) return;
+
+  const userRef = doc(db, USERS_COLLECTION, userId);
+
+  try {
+    const userDoc = await getDoc(userRef);
+    const now = serverTimestamp();
+    
+    if (!userDoc.exists()) {
+      // First view - create new user with PDF view
+      const newUserData: UserData = {
+        userId,
+        firstVisit: now as Timestamp,
+        lastVisit: now as Timestamp,
+        totalVisits: 1,
+        pdfViews: {
+          [fileName]: {
+            fileName,
+            count: 1,
+            firstView: now as Timestamp,
+            lastView: now as Timestamp,
+          },
+        },
+      };
+      await setDoc(userRef, newUserData);
+    } else {
+      const userData = userDoc.data();
+      const currentPdfViews = userData.pdfViews || {};
+      const existingView = currentPdfViews[fileName];
+
+      if (existingView) {
+        // Subsequent view of this PDF
+        await updateDoc(userRef, {
+          [`pdfViews.${fileName}.count`]: (existingView.count || 0) + 1,
+          [`pdfViews.${fileName}.lastView`]: now,
+        });
+      } else {
+        // First view of this PDF
+        await updateDoc(userRef, {
+          [`pdfViews.${fileName}`]: {
+            fileName,
+            count: 1,
+            firstView: now,
+            lastView: now,
+          },
+        });
+      }
+    }
+  } catch (error) {
+    console.error('PDF view tracking error:', error);
   }
 };
 

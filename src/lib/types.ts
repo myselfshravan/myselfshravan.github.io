@@ -26,6 +26,13 @@ export interface ExternalLinkClick {
   lastClick: string;
 }
 
+export interface PDFView {
+  fileName: string;
+  count: number;
+  firstView: Timestamp;
+  lastView: Timestamp;
+}
+
 export interface UserData {
   userId: string;
   firstVisit: Timestamp;
@@ -33,6 +40,8 @@ export interface UserData {
   totalVisits: number;
   // External link tracking
   interactionv2?: { [urlHash: string]: ExternalLinkClick };
+  // PDF view tracking
+  pdfViews?: { [fileName: string]: PDFView };
 }
 
 export interface FirebaseConfig {

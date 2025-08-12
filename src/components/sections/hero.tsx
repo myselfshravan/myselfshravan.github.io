@@ -2,13 +2,12 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { trackVisit } from '@/lib/analytics';
-import { trackCommandNonBlocking } from '@/lib/click-tracker';
+import { trackVisit, trackPdfView } from '@/lib/analytics';
+import { trackCommandNonBlocking, trackExternalLink } from '@/lib/click-tracker';
 import { Terminal, FileText, ArrowDown, X, Minus, Square } from 'lucide-react';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { trackExternalLink } from '@/lib/click-tracker';
 import portfolioData from '@/lib/portfolio-data.json';
 
 // Terminal Component for reuse
@@ -703,8 +702,10 @@ export function Hero() {
             </button>
             <button
               onClick={() => {
-                trackExternalLink(`/${portfolioData.personal.resumeFile}`, 'Resume PDF');
-                window.open(`/${portfolioData.personal.resumeFile}`, '_blank');
+                const fileName = portfolioData.personal.resumeFile;
+                // Track the PDF view with Firebase
+                trackPdfView(fileName);
+                window.open(`/${fileName}`, '_blank');
               }}
               className="hover:text-primary transition-colors underline underline-offset-4"
             >
