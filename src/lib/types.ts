@@ -31,18 +31,8 @@ export interface UserData {
   firstVisit: Timestamp;
   lastVisit: Timestamp;
   totalVisits: number;
-  totalInteractions: number;
-  commands: Command[];
-  sessions: unknown[]; // Keep for backwards compatibility, but not used
-  interactions?: ButtonInteraction[]; // Simple array of all interactions
-
-  // External link tracking - simplified approach
+  // External link tracking
   interactionv2?: { [urlHash: string]: ExternalLinkClick };
-
-  // Pre-aggregated data for quick queries
-  topCategories: { [category: string]: number };
-  topActions: { [action: string]: number };
-  favoriteContent: { [identifier: string]: number };
 }
 
 export interface FirebaseConfig {

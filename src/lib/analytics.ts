@@ -47,12 +47,6 @@ export const trackVisit = async () => {
         firstVisit: now as Timestamp,
         lastVisit: now as Timestamp,
         totalVisits: 1,
-        totalInteractions: 0,
-        commands: [],
-        sessions: [],
-        topCategories: {},
-        topActions: {},
-        favoriteContent: {},
       };
       await setDoc(userRef, newUserData);
     } else {

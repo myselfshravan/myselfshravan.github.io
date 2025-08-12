@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Heart,
@@ -32,8 +32,14 @@ export function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  const userId = getUserId();
-  const trimUserId = userId ? userId.slice(5) : 'unknown';
+  const [trimUserId, setTrimUserId] = useState<string>('unknown');
+
+  useEffect(() => {
+    const userId = getUserId();
+    if (userId) {
+      setTrimUserId(userId.slice(5));
+    }
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
