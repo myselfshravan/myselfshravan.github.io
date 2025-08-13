@@ -1,13 +1,15 @@
 // Vercel serverless function for external link tracking
 import admin from 'firebase-admin';
 
+// Simple in-memory cache for user documents
+const userCache = new Map();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
 // Initialize Firebase Admin SDK
 if (!admin.apps.length) {
-  // Check if all required environment variables are present
   const projectId = process.env.FIREBASE_PROJECT_ID;
   const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n');
   const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-
   if (!projectId || !privateKey || !clientEmail) {
     console.error('Missing Firebase environment variables:', {
       hasProjectId: !!projectId,
@@ -16,7 +18,6 @@ if (!admin.apps.length) {
     });
     throw new Error('Firebase environment variables not configured');
   }
-
   admin.initializeApp({
     credential: admin.credential.cert({
       projectId,
@@ -50,19 +51,24 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Start timing
+    const startTime = performance.now();
+    let userFetchTime = 0;
+    let batchPrepTime = 0;
+    let batchCommitTime = 0;
     const rawBody = await new Promise((resolve, reject) => {
       let data = '';
       req.on('data', (chunk) => (data += chunk));
       req.on('end', () => resolve(data));
       req.on('error', reject);
     });
-    const { userId, url, title, timestamp } = JSON.parse(rawBody);
+    const { userId, url, title } = JSON.parse(rawBody);
 
     if (!userId || !url || !title) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Create URL hash (same logic as client)
+    // Create URL hash
     const createUrlHash = (url) => {
       let hash = 0;
       for (let i = 0; i < url.length; i++) {
@@ -75,8 +81,23 @@ export default async function handler(req, res) {
     };
 
     const urlHash = createUrlHash(url);
+    // Check [userDoc] cache first
+    const userFetchStart = performance.now();
     const userRef = db.collection('portfolio_users_prod').doc(userId);
-    const userDoc = await userRef.get();
+    let userDoc;
+    const cacheKey = userId;
+    const cachedUser = userCache.get(cacheKey);
+    if (cachedUser && Date.now() - cachedUser.timestamp < CACHE_TTL) {
+      console.log('Using cached user document');
+      userDoc = cachedUser.doc;
+    } else {
+      userDoc = await userRef.get();
+      userCache.set(cacheKey, {
+        doc: userDoc,
+        timestamp: Date.now(),
+      });
+    }
+    userFetchTime = performance.now() - userFetchStart;
 
     if (!userDoc.exists) {
       return res.status(404).json({ error: 'User not found' });
@@ -84,7 +105,7 @@ export default async function handler(req, res) {
 
     const userData = userDoc.data();
     const currentInteractions = userData.interactionv2 || {};
-    const now = new Date(timestamp).toISOString();
+    const serverTimestamp = admin.firestore.FieldValue.serverTimestamp();
 
     // Check if this is a new user for this URL (for unique user count)
     const isNewUser = !currentInteractions[urlHash];
@@ -95,81 +116,92 @@ export default async function handler(req, res) {
       updatedInteraction = {
         ...currentInteractions[urlHash],
         count: currentInteractions[urlHash].count + 1,
-        lastClick: now,
-        title, // Update title in case it changed
+        lastClick: serverTimestamp,
+        title,
       };
     } else {
       updatedInteraction = {
         url,
         title,
         count: 1,
-        firstClick: now,
-        lastClick: now,
+        firstClick: serverTimestamp,
+        lastClick: serverTimestamp,
       };
     }
 
-    // Use fast batch write instead of slow transaction
+    const batchPrepStart = performance.now();
     const batch = db.batch();
-
-    // 1. Update user document (same as before)
+    // 1. Update user document
     batch.update(userRef, {
       [`interactionv2.${urlHash}`]: updatedInteraction,
     });
 
-    // 2. Update or create url_insights with simple increments
+    // 2. Update url_insights using merge write (no need to fetch first)
     const urlInsightRef = db.collection('url_insights').doc(urlHash);
-    const urlInsightDoc = await urlInsightRef.get();
+    const updates = {
+      urlHash,
+      url,
+      title,
+      totalClicks: admin.firestore.FieldValue.increment(1),
+      lastClick: serverTimestamp,
+      updatedAt: serverTimestamp,
+    };
 
-    if (urlInsightDoc.exists) {
-      // Existing URL - simple increments
-      const updates = {
-        totalClicks: admin.firestore.FieldValue.increment(1),
-        lastClick: now,
-        updatedAt: now,
-        title, // Update title in case it changed
-      };
+    // Set these fields only on first creation
+    const createOnlyFields = {
+      firstClick: serverTimestamp,
+      createdAt: serverTimestamp,
+    };
 
-      // Only increment unique users if this is a new user for this URL
-      if (isNewUser) {
-        updates.uniqueUsers = admin.firestore.FieldValue.increment(1);
-        updates.userIds = admin.firestore.FieldValue.arrayUnion(userId);
-      }
-
-      batch.update(urlInsightRef, updates);
-    } else {
-      // New URL - create record
-      batch.set(urlInsightRef, {
-        urlHash,
-        url,
-        title,
-        totalClicks: 1,
-        uniqueUsers: 1,
-        avgClicksPerUser: 1,
-        firstClick: now,
-        lastClick: now,
-        createdAt: now,
-        updatedAt: now,
-        userIds: [userId],
-      });
+    // Only increment unique users if this is a new user for this URL
+    if (isNewUser) {
+      updates.uniqueUsers = admin.firestore.FieldValue.increment(1);
+      updates.userIds = admin.firestore.FieldValue.arrayUnion(userId);
     }
 
-    // Execute fast batch write
+    // Use set with merge to handle both create and update cases
+    batch.set(
+      urlInsightRef,
+      {
+        ...updates,
+        ...createOnlyFields,
+      },
+      { merge: true },
+    );
+
+    batchPrepTime = performance.now() - batchPrepStart;
+
+    const batchCommitStart = performance.now();
     await batch.commit();
+    batchCommitTime = performance.now() - batchCommitStart;
+    const totalTime = performance.now() - startTime;
 
-    // Update avgClicksPerUser periodically (not in real-time for performance)
-    // This could be moved to a background Cloud Function for even better performance
-    if (Math.random() < 0.1) {
-      // Update 10% of the time to reduce overhead
-      const updatedDoc = await urlInsightRef.get();
-      const data = updatedDoc.data();
-      if (data && data.uniqueUsers > 0) {
-        await urlInsightRef.update({
-          avgClicksPerUser: parseFloat((data.totalClicks / data.uniqueUsers).toFixed(2)),
-        });
-      }
-    }
-
-    console.log(`✅ Successfully tracked URL interaction: ${urlHash} for user: ${userId}`);
+    // Log metrics in a single JSON line for easy parsing
+    console.log(
+      JSON.stringify({
+        type: 'track_metrics',
+        urlHash,
+        userId,
+        isNewUser,
+        isCacheHit: !!(cachedUser && Date.now() - cachedUser.timestamp < CACHE_TTL),
+        connectionInfo: {
+          isInitialized: !!admin.apps.length,
+          project: process.env.FIREBASE_PROJECT_ID,
+          hasCachedEntries: userCache.size,
+        },
+        timing: {
+          userFetch: userFetchTime.toFixed(2),
+          batchPrep: batchPrepTime.toFixed(2),
+          batchCommit: batchCommitTime.toFixed(2),
+          total: totalTime.toFixed(2),
+        },
+        operations: {
+          updatedExisting: !!currentInteractions[urlHash],
+          uniqueUser: isNewUser,
+          totalInteractions: Object.keys(currentInteractions).length,
+        },
+      }),
+    );
     res.status(200).json({ success: true });
   } catch (error) {
     console.error('Tracking error:', error);

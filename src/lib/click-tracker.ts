@@ -1,4 +1,4 @@
-import { trackButtonClick, trackExternalLinkClick } from './analytics';
+import { trackButtonClick } from './analytics';
 
 // Configuration for external API endpoints
 const API_CONFIG = {
@@ -247,7 +247,6 @@ export function trackExternalLink(url: string, title: string) {
     userId,
     url,
     title,
-    timestamp: Date.now(),
   };
 
   // 1. Primary: Use sendBeacon with Vercel serverless function (most reliable)
@@ -269,24 +268,18 @@ export function trackExternalLink(url: string, title: string) {
     }
   }
 
-  // 2. Fallback: Direct Firebase call (may not complete in in-app browsers)
+  // 2. Fallback that still works during page unloads
   try {
-    trackExternalLinkClick(url, title).catch(() => {
-      // If Firebase also fails, add to queue system as last resort
-      clickTracker.track({
-        category: 'external_link',
-        identifier: url,
-        action: 'click',
-        context: {
-          section: 'external_navigation',
-          url: url,
-          metadata: {
-            title,
-            trackingType: 'interactionv2_fallback',
-          },
-        },
-      });
+    fetch(`${API_CONFIG.VERCEL_API_BASE}/track-external`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      keepalive: true, // Ensure it works during page unloads
+      mode: 'cors', // Use CORS to allow cross-origin requests
     });
+    console.log('External link tracked via fetch:', url);
   } catch (error) {
     console.error('External link tracking failed:', error);
   }
