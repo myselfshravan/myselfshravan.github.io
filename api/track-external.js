@@ -40,9 +40,30 @@ export default async function handler(req, res) {
     return res
       .status(204)
       .setHeader('Access-Control-Allow-Origin', '*')
-      .setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+      .setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
       .setHeader('Access-Control-Allow-Headers', 'Content-Type')
       .end();
+  }
+
+  // Handle GET request to test Firebase connection
+  if (req.method === 'GET') {
+    try {
+      // Try to get a document from Firestore to test connection
+      const testDoc = await db.collection('url_insights').doc('url_ags5vy_19').get();
+      return res.status(200).json({
+        status: 'success',
+        message: 'Firebase connection successful',
+        dbInitialized: !!admin.apps.length,
+        firestoreAccess: !!testDoc,
+      });
+    } catch (error) {
+      console.error('Firebase connection test error:', error);
+      return res.status(500).json({
+        status: 'error',
+        message: 'Firebase connection failed',
+        error: error.message,
+      });
+    }
   }
 
   if (req.method !== 'POST') {
@@ -75,39 +96,88 @@ export default async function handler(req, res) {
     };
 
     const urlHash = createUrlHash(url);
-    const userRef = db.collection('portfolio_users_prod').doc(userId);
-    const userDoc = await userRef.get();
-
-    if (!userDoc.exists) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    const userData = userDoc.data();
-    const currentInteractions = userData.interactionv2 || {};
     const now = new Date(timestamp).toISOString();
 
-    let updatedInteraction;
-    if (currentInteractions[urlHash]) {
-      updatedInteraction = {
-        ...currentInteractions[urlHash],
-        count: currentInteractions[urlHash].count + 1,
-        lastClick: now,
-        title,
-      };
-    } else {
-      updatedInteraction = {
-        url,
-        title,
-        count: 1,
-        firstClick: now,
-        lastClick: now,
-      };
-    }
+    // Use Firestore transaction for atomic updates across collections
+    await db.runTransaction(async (transaction) => {
+      const urlInsightRef = db.collection('url_insights').doc(urlHash);
+      const interactionRef = db.collection('url_user_interactions').doc(`${urlHash}_${userId}`);
 
-    await userRef.update({
-      [`interactionv2.${urlHash}`]: updatedInteraction,
+      // Get current documents
+      const [urlInsightDoc, interactionDoc] = await Promise.all([
+        transaction.get(urlInsightRef),
+        transaction.get(interactionRef),
+      ]);
+
+      // Update or create url_insights (aggregated data)
+      if (urlInsightDoc.exists) {
+        const urlData = urlInsightDoc.data();
+        const newTotalClicks = urlData.totalClicks + 1;
+        const avgClicksPerUser = parseFloat((newTotalClicks / urlData.uniqueUsers).toFixed(2));
+
+        transaction.update(urlInsightRef, {
+          totalClicks: newTotalClicks,
+          lastClick: now,
+          updatedAt: now,
+          avgClicksPerUser,
+          title, // Update title in case it changed
+        });
+      } else {
+        // New URL - create aggregated record
+        transaction.set(urlInsightRef, {
+          urlHash,
+          url,
+          title,
+          totalClicks: 1,
+          uniqueUsers: 1,
+          avgClicksPerUser: 1,
+          firstClick: now,
+          lastClick: now,
+          createdAt: now,
+          updatedAt: now,
+        });
+      }
+
+      // Update or create url_user_interactions (detailed tracking)
+      if (interactionDoc.exists) {
+        // Existing user interaction - increment count
+        const interactionData = interactionDoc.data();
+        transaction.update(interactionRef, {
+          clickCount: interactionData.clickCount + 1,
+          lastClick: now,
+          updatedAt: now,
+          title, // Update denormalized title
+        });
+      } else {
+        // New user interaction - create record
+        transaction.set(interactionRef, {
+          urlHash,
+          userId,
+          url,
+          title,
+          clickCount: 1,
+          firstClick: now,
+          lastClick: now,
+          createdAt: now,
+          updatedAt: now,
+        });
+
+        // Increment unique users count in url_insights if this is a new user for this URL
+        if (urlInsightDoc.exists) {
+          const urlData = urlInsightDoc.data();
+          const newUniqueUsers = urlData.uniqueUsers + 1;
+          const newTotalClicks = urlData.totalClicks + 1;
+          const avgClicksPerUser = parseFloat((newTotalClicks / newUniqueUsers).toFixed(2));
+
+          transaction.update(urlInsightRef, {
+            uniqueUsers: newUniqueUsers,
+            avgClicksPerUser,
+          });
+        }
+      }
     });
 
+    console.log(`✅ Successfully tracked URL interaction: ${urlHash} for user: ${userId}`);
     res.status(200).json({ success: true });
   } catch (error) {
     console.error('Tracking error:', error);
