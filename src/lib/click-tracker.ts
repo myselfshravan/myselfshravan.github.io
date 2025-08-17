@@ -255,12 +255,8 @@ export function trackExternalLink(url: string, title: string) {
       const blob = new Blob([JSON.stringify(payload)], {
         type: 'text/plain',
       });
-
-      // Use the Vercel API endpoint since GitHub Pages can't host serverless functions
       const success = navigator.sendBeacon(`${API_CONFIG.VERCEL_API_BASE}/track-external`, blob);
-
       if (success) {
-        // sendBeacon succeeded, data is queued for reliable delivery
         return;
       }
     } catch (error) {

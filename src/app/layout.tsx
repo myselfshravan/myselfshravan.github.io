@@ -114,9 +114,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} ${jetbrainsMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <ClickTrackingProvider>
-            {children}
-          </ClickTrackingProvider>
+          <ClickTrackingProvider>{children}</ClickTrackingProvider>
         </ThemeProvider>
       </body>
     </html>
