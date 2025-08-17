@@ -21,6 +21,7 @@ function TerminalInterface({
   handleTerminalKeyDown,
   isExpanded = false,
   placeholderText = "Type 'help' or '?' for commands...",
+  isAIMode = false,
 }: {
   terminalOutput: string[];
   currentInput: string;
@@ -28,6 +29,7 @@ function TerminalInterface({
   handleTerminalKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   isExpanded?: boolean;
   placeholderText?: string;
+  isAIMode?: boolean;
 }) {
   const terminalOutputRef = useRef<HTMLDivElement>(null);
 
@@ -77,14 +79,14 @@ function TerminalInterface({
 
       {/* Command input */}
       <div className="flex items-center text-green-400">
-        <span className="mr-2">shravan_revanna@portfolio:~$</span>
+        <span className="mr-2">{isAIMode ? '🤖 ai>' : 'shravan_revanna@portfolio:~$'}</span>
         <input
           type="text"
           value={currentInput}
           onChange={(e) => setCurrentInput(e.target.value)}
           onKeyDown={handleTerminalKeyDown}
           className="flex-1 bg-transparent outline-none text-green-400 font-mono"
-          placeholder={placeholderText}
+          placeholder={isAIMode ? "Ask me anything... (type 'exit' to return)" : placeholderText}
           autoFocus
         />
       </div>
@@ -108,7 +110,7 @@ export function Hero() {
   const fullText = `shravan_revanna@portfolio:~$ whoami`;
 
   // AI Chat functionality
-  const { messages, isLoading, error, sendMessage, streamMessage, clearMessages } = useLLMChat({
+  const { isLoading, sendMessage, clearMessages } = useLLMChat({
     systemPrompt: DEFAULT_SYSTEM_PROMPTS.terminal,
   });
 
@@ -221,15 +223,65 @@ export function Hero() {
     }
   };
 
+  // Handle AI mode input separately
+  const handleAIInput = async (input: string) => {
+    const cmd = input.toLowerCase().trim();
+
+    // Check for exit commands in AI mode
+    if (cmd === 'exit' || cmd === 'exit ai' || cmd === 'quit') {
+      setIsAIMode(false);
+      setTerminalOutput((prev) => [...prev, '🤖 ai> ' + input, '👋 Exiting AI mode...', '']);
+      return;
+    }
+
+    if (cmd === 'clear' || cmd === 'clear ai') {
+      clearMessages();
+      setTerminalOutput((prev) => [...prev, '🤖 ai> ' + input, '🧹 AI chat history cleared.', '']);
+      return;
+    }
+
+    // Add user input to terminal output
+    setTerminalOutput((prev) => [...prev, '🤖 ai> ' + input]);
+
+    // Show loading indicator
+    if (isLoading) {
+      setTerminalOutput((prev) => [...prev, '⏳ AI is thinking...']);
+    }
+
+    try {
+      // Use sendMessage and get the response directly
+      const response = await sendMessage(input);
+
+      if (response?.content) {
+        setTerminalOutput((prev) => [...prev, '🤖 ' + response.content, '']);
+
+        // Track AI conversation to Firebase
+        trackCommandNonBlocking(input, response.content, 'ai');
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      setTerminalOutput((prev) => [...prev, `❌ AI Error: ${errorMessage}`, '']);
+
+      // Track failed AI conversation  
+      trackCommandNonBlocking(input, `Error: ${errorMessage}`, 'ai');
+    }
+  };
+
   // Command parsing and execution
   const executeCommand = async (command: string) => {
+    // If in AI mode, handle input differently
+    if (isAIMode) {
+      await handleAIInput(command);
+      return;
+    }
+
     const cmd = command.toLowerCase().trim();
     const prompt = 'shravan_revanna@portfolio:~$';
 
     // Add command to history and track it (non-blocking)
     if (cmd && !commandHistory.includes(cmd)) {
       setCommandHistory((prev) => [...prev, cmd]);
-      trackCommandNonBlocking(command); // Now non-blocking!
+      trackCommandNonBlocking(command, undefined, 'terminal'); // Now non-blocking!
     }
 
     // Add command to output
@@ -251,13 +303,13 @@ export function Hero() {
           '  ls        - List directory contents',
           '  pwd       - Print working directory',
           '  cat       - Display file contents',
+          '  ai mode   - Activate AI assistant mode',
           '  exit      - Exit interactive mode',
           '  expand    - Expand terminal to fullscreen',
-          // '',
-          // 'ℹ Pro tips:',
-          // '  • Use Tab for command completion',
-          // '  • Use ↑/↓ arrows for command history',
-          // '  • Try some classic Unix commands for fun!',
+          '',
+          '🤖 AI Mode:',
+          '  "ai mode" or "activate ai" - Start AI conversation',
+          '  In AI mode: "exit" to return, "clear" to reset chat',
           '',
         ]);
         break;
@@ -398,6 +450,19 @@ export function Hero() {
         setIsDialogOpen(true);
         break;
 
+      case 'ai mode':
+      case 'activate ai':
+      case 'ai':
+        setIsAIMode(true);
+        setTerminalOutput((prev) => [
+          ...prev,
+          "🤖 AI Mode activated! I'm ready to assist you.",
+          'Type your questions or commands. Use "exit" to return to terminal.',
+          'Type "clear" to clear AI chat history.',
+          '',
+        ]);
+        break;
+
       case 'visit projects':
         setTerminalOutput((prev) => [...prev, '✔ Scroling to projects page...', '']);
         scrollToSection('#projects');
@@ -434,6 +499,9 @@ export function Hero() {
     'ls',
     'pwd',
     'cat',
+    'ai mode',
+    'activate ai',
+    'ai',
     'sudo',
   ];
 
@@ -535,6 +603,7 @@ export function Hero() {
 
               <span className="ml-2 text-xs text-primary">
                 terminal {isInteractive && <span className="text-green-400">• interactive</span>}
+                {isAIMode && <span className="text-blue-400"> • ai mode</span>}
               </span>
             </div>
 
@@ -585,6 +654,7 @@ export function Hero() {
                   currentInput={currentInput}
                   setCurrentInput={setCurrentInput}
                   handleTerminalKeyDown={handleTerminalKeyDown}
+                  isAIMode={isAIMode}
                   placeholderText={
                     isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."
                   }
@@ -615,6 +685,7 @@ export function Hero() {
                   </div>
                   <span className="ml-2 text-xs text-primary">
                     terminal • expanded <span className="text-green-400">• interactive</span>
+                    {isAIMode && <span className="text-blue-400"> • ai mode</span>}
                   </span>
                 </div>
 
@@ -626,6 +697,7 @@ export function Hero() {
                     setCurrentInput={setCurrentInput}
                     handleTerminalKeyDown={handleTerminalKeyDown}
                     isExpanded={true}
+                    isAIMode={isAIMode}
                     placeholderText={
                       isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."
                     }

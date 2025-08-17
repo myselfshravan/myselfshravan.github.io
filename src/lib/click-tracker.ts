@@ -1,4 +1,5 @@
 import { trackButtonClick } from './analytics';
+import { Timestamp } from 'firebase/firestore';
 
 // Configuration for external API endpoints
 const API_CONFIG = {
@@ -24,7 +25,9 @@ interface QueuedEvent extends TrackingData {
 interface QueuedCommand {
   type: 'command';
   command: string;
-  timestamp: string;
+  response?: string;
+  commandType: 'terminal' | 'ai';
+  timestamp: Timestamp;
 }
 
 class ClickTracker {
@@ -109,11 +112,16 @@ class ClickTracker {
     }
   }
 
-  trackCommand(command: string) {
+  trackCommand(command: string, response?: string, commandType: 'terminal' | 'ai' = 'terminal') {
+    // Only add to queue if command exists and response is not undefined for AI commands
+    if (!command || (commandType === 'ai' && response === undefined)) return;
+
     const queuedCommand: QueuedCommand = {
       type: 'command',
       command,
-      timestamp: new Date().toISOString(),
+      response,
+      commandType,
+      timestamp: Timestamp.now(),
     };
 
     this.queue.push(queuedCommand);
@@ -180,7 +188,7 @@ class ClickTracker {
   private async syncCommand(commandItem: QueuedCommand) {
     try {
       const { trackCommand } = await import('./analytics');
-      await trackCommand(commandItem.command);
+      await trackCommand(commandItem.command, commandItem.response, commandItem.commandType);
     } catch (error) {
       console.error('Failed to sync command:', commandItem.command, error);
       throw error; // Re-throw to trigger retry logic
@@ -199,15 +207,15 @@ class ClickTracker {
 export const clickTracker = new ClickTracker();
 
 // Non-blocking command tracking function
-export function trackCommandNonBlocking(command: string) {
-  clickTracker.trackCommand(command);
+export function trackCommandNonBlocking(command: string, response?: string, commandType: 'terminal' | 'ai' = 'terminal') {
+  clickTracker.trackCommand(command, response, commandType);
 }
 
 // Hook for React components
 export function useClickTracking() {
   return {
     track: (data: TrackingData) => clickTracker.track(data),
-    trackCommand: (command: string) => clickTracker.trackCommand(command),
+    trackCommand: (command: string, response?: string, commandType: 'terminal' | 'ai' = 'terminal') => clickTracker.trackCommand(command, response, commandType),
     flush: () => clickTracker.flush(),
   };
 }

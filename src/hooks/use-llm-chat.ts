@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useRef } from 'react';
 import { createGroqChatService, DEFAULT_SYSTEM_PROMPTS } from '@/lib/llm';
-import type { ChatMessage, LLMConfig } from '@/lib/llm/types';
+import type { ChatMessage, LLMConfig, LLMResponse } from '@/lib/llm/types';
 
 interface UseLLMChatOptions {
   systemPrompt?: string;
@@ -14,7 +14,7 @@ interface UseLLMChatReturn {
   messages: ChatMessage[];
   isLoading: boolean;
   error: string | null;
-  sendMessage: (content: string) => Promise<void>;
+  sendMessage: (content: string) => Promise<LLMResponse | null>;
   streamMessage: (content: string) => Promise<void>;
   clearMessages: () => void;
   setSystemPrompt: (prompt: string) => void;
@@ -34,16 +34,18 @@ export function useLLMChat({
 
   const sendMessage = useCallback(
     async (content: string) => {
-      if (isLoading) return;
+      if (isLoading) return null;
 
       setIsLoading(true);
       setError(null);
 
       try {
-        await chatServiceRef.current.sendMessage(content);
+        const response = await chatServiceRef.current.sendMessage(content);
         setMessages(chatServiceRef.current.getMessages());
+        return response;
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
+        return null;
       } finally {
         setIsLoading(false);
       }

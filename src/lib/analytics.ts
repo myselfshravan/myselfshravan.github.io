@@ -61,16 +61,23 @@ export const trackVisit = async () => {
   }
 };
 
-export const trackCommand = async (command: string) => {
+export const trackCommand = async (
+  command: string,
+  response?: string,
+  type: 'terminal' | 'ai' = 'terminal',
+) => {
   const userId = getUserId();
   if (!userId || !db) return;
 
   const userRef = doc(db, USERS_COLLECTION, userId);
 
   try {
+    // Create command object without undefined values
     const newCommand: Command = {
       command,
-      timestamp: new Date().toISOString(),
+      type,
+      timestamp: Timestamp.now(),
+      ...(response && { response }), // Only include response if it exists
     };
 
     await updateDoc(userRef, {

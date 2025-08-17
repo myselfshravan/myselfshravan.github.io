@@ -31,6 +31,21 @@ export class ChatService {
 
   addMessage(message: ChatMessage): void {
     this.messages.push(message);
+    this.trimMessages();
+  }
+
+  private trimMessages(): void {
+    // Keep only the last 3 user-assistant pairs (6 messages total)
+    // Always preserve system message if it exists
+    const systemMessages = this.messages.filter(msg => msg.role === 'system');
+    const conversationMessages = this.messages.filter(msg => msg.role !== 'system');
+    
+    // Keep only last 6 conversation messages (3 user-assistant pairs)
+    const maxConversationMessages = 6;
+    if (conversationMessages.length > maxConversationMessages) {
+      const trimmedConversation = conversationMessages.slice(-maxConversationMessages);
+      this.messages = [...systemMessages, ...trimmedConversation];
+    }
   }
 
   addUserMessage(content: string): void {

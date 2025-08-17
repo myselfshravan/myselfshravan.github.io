@@ -2,7 +2,9 @@ import { Timestamp } from 'firebase/firestore';
 
 export interface Command {
   command: string;
-  timestamp: string;
+  response?: string; // AI response (for ai type commands)
+  type: 'terminal' | 'ai';
+  timestamp: Timestamp;
 }
 
 export interface ButtonInteraction {
