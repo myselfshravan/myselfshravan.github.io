@@ -79,17 +79,25 @@ export function GitHubStatsCard({ account, statsUrl }: GitHubStatsCardProps) {
           />
         </div>
         <div className="text-xs text-muted-foreground font-mono text-center">
-          <p className="">
-            Real-time stats pulled via my own API:
-            <a
-              href="https://github.com/myselfshravan/git-stats-api"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-1 text-primary hover:text-primary/80 transition-colors"
-            >
-              [source code?]
-            </a>
-          </p>
+          <div className="inline-flex items-center gap-2 justify-center align-middle">
+            {/* Dot with ping effect */}
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75 animate-ping"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500 animate-pulse"></span>
+            </span>
+            {/* Text inline with dot */}
+            <span>
+              Real-time stats pulled via my own
+              <a
+                href="https://github.com/myselfshravan/git-stats-api"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-1 text-primary hover:text-primary/80 transition-colors"
+              >
+                [API]
+              </a>
+            </span>
+          </div>
         </div>
       </CardContent>
     </Card>
