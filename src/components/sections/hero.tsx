@@ -9,6 +9,8 @@ import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { trackExternalLink } from '@/lib/click-tracker';
+import { useLLMChat } from '@/hooks/use-llm-chat';
+import { DEFAULT_SYSTEM_PROMPTS } from '@/lib/llm';
 import portfolioData from '@/lib/portfolio-data.json';
 
 // Terminal Component for reuse
@@ -102,7 +104,13 @@ export function Hero() {
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [isMobile, setIsMobile] = useState(false);
+  const [isAIMode, setIsAIMode] = useState(false);
   const fullText = `shravan_revanna@portfolio:~$ whoami`;
+
+  // AI Chat functionality
+  const { messages, isLoading, error, sendMessage, streamMessage, clearMessages } = useLLMChat({
+    systemPrompt: DEFAULT_SYSTEM_PROMPTS.terminal,
+  });
 
   // Track visits
   useEffect(() => {
