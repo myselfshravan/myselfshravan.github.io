@@ -40,7 +40,7 @@ export interface UserData {
 
 export interface DeviceInfo {
   deviceType: string;
-  appName: string; // Browser or App name
+  appName: string;
   metadata?: {
     browserName: string | null;
     browserVersion: string | null;
@@ -51,7 +51,7 @@ export interface DeviceInfo {
     deviceModel: string | null;
     deviceType: string | null;
     userAgent: string | null;
-  }; // Firestore-compatible metadata
+  };
 }
 
 export interface FirebaseConfig {
