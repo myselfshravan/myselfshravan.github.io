@@ -1,21 +1,26 @@
-import DeviceDetector from 'device-detector-js';
+import { UAParser } from 'ua-parser-js';
 import { DeviceInfo } from './types';
 
 export const detectDeviceInfo = (): DeviceInfo => {
-  const userAgent = navigator.userAgent;
+  const parser = new UAParser();
+  const result = parser.getResult();
 
-  const deviceDetector = new DeviceDetector();
+  // Determine device type based on device type and model
+  let deviceType = 'unknown';
+  if (result.device.type) {
+    deviceType = result.device.type;
+  } else if (result.device.model) {
+    deviceType = 'mobile';
+  } else {
+    deviceType = 'desktop';
+  }
 
-  // Parse the user agent string using device-detector-js
-  const parsedDevice = deviceDetector.parse(userAgent);
-
-  // Extract device and app (browser) information
-  const deviceType = parsedDevice.device?.type || 'unknown';
-  const appName = parsedDevice.client?.name || 'unknown';
+  // Get browser name as app name
+  const appName = result.browser.name || 'unknown';
 
   return {
     deviceType,
     appName,
-    metadata: parsedDevice,
+    metadata: result,
   };
 };
