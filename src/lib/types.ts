@@ -35,6 +35,12 @@ export interface UserData {
   totalVisits: number;
   // External link tracking
   interactionv2?: { [urlHash: string]: ExternalLinkClick };
+  device?: DeviceInfo;
+}
+
+export interface DeviceInfo {
+  deviceType: 'desktop' | 'mobile' | 'tablet' | 'tv' | 'console';
+  appName: string; // Browser or App name
 }
 
 export interface FirebaseConfig {

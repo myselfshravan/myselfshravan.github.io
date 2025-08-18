@@ -207,17 +207,3 @@ export const trackExternalLinkClick = async (url: string, title: string) => {
     console.error('External link tracking error:', error);
   }
 };
-
-// Admin analytics functions
-export const getAnalyticsData = async () => {
-  const userId = getUserId();
-  if (!userId || !db) return null;
-  const userRef = doc(db, USERS_COLLECTION, userId);
-  try {
-    const userDoc = await getDoc(userRef);
-    return userDoc.exists() ? userDoc.data() : null;
-  } catch (error) {
-    console.error('Error fetching analytics:', error);
-    return null;
-  }
-};
