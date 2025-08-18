@@ -42,14 +42,14 @@ export interface DeviceInfo {
   deviceType: string;
   appName: string; // Browser or App name
   metadata?: {
-    browserName?: string;
-    browserVersion?: string;
-    osName?: string;
-    osVersion?: string;
-    deviceVendor?: string;
-    deviceModel?: string;
-    deviceType?: string;
-    userAgent?: string;
+    browserName: string | null;
+    browserVersion: string | null;
+    osName: string | null;
+    osVersion: string | null;
+    deviceVendor: string | null;
+    deviceModel: string | null;
+    deviceType: string | null;
+    userAgent: string | null;
   }; // Firestore-compatible metadata
 }
 

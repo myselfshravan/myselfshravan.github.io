@@ -22,14 +22,14 @@ export const detectDeviceInfo = (): DeviceInfo => {
     deviceType,
     appName,
     metadata: {
-      browserName: result.browser.name,
-      browserVersion: result.browser.version,
-      osName: result.os.name,
-      osVersion: result.os.version,
-      deviceVendor: result.device.vendor,
-      deviceModel: result.device.model,
-      deviceType: result.device.type,
-      userAgent: result.ua
+      browserName: result.browser.name || null,
+      browserVersion: result.browser.version || null,
+      osName: result.os.name || null,
+      osVersion: result.os.version || null,
+      deviceVendor: result.device.vendor || null,
+      deviceModel: result.device.model || null,
+      deviceType: result.device.type || null,
+      userAgent: result.ua || null
     },
   };
 };
