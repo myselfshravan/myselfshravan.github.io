@@ -1,5 +1,4 @@
 import { Timestamp } from 'firebase/firestore';
-import { IResult } from 'ua-parser-js';
 
 export interface Command {
   command: string;
@@ -42,7 +41,16 @@ export interface UserData {
 export interface DeviceInfo {
   deviceType: string;
   appName: string; // Browser or App name
-  metadata?: IResult; // Additional metadata from ua-parser-js
+  metadata?: {
+    browserName?: string;
+    browserVersion?: string;
+    osName?: string;
+    osVersion?: string;
+    deviceVendor?: string;
+    deviceModel?: string;
+    deviceType?: string;
+    userAgent?: string;
+  }; // Firestore-compatible metadata
 }
 
 export interface FirebaseConfig {

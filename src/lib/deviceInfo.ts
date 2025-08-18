@@ -21,6 +21,15 @@ export const detectDeviceInfo = (): DeviceInfo => {
   return {
     deviceType,
     appName,
-    metadata: result,
+    metadata: {
+      browserName: result.browser.name,
+      browserVersion: result.browser.version,
+      osName: result.os.name,
+      osVersion: result.os.version,
+      deviceVendor: result.device.vendor,
+      deviceModel: result.device.model,
+      deviceType: result.device.type,
+      userAgent: result.ua
+    },
   };
 };
