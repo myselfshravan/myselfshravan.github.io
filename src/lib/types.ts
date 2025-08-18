@@ -44,6 +44,7 @@ export interface DeviceInfo {
   metadata?: {
     browserName: string | null;
     browserVersion: string | null;
+    browserType: string | null;
     osName: string | null;
     osVersion: string | null;
     deviceVendor: string | null;

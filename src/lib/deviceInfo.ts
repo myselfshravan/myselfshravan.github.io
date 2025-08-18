@@ -24,6 +24,7 @@ export const detectDeviceInfo = (): DeviceInfo => {
     metadata: {
       browserName: result.browser.name || null,
       browserVersion: result.browser.version || null,
+      browserType: result.browser.type || null,
       osName: result.os.name || null,
       osVersion: result.os.version || null,
       deviceVendor: result.device.vendor || null,
