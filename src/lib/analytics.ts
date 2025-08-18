@@ -53,12 +53,22 @@ export const trackVisit = async () => {
       };
       await setDoc(userRef, newUserData);
     } else {
-      // Subsequent visit
-      await updateDoc(userRef, {
-        lastVisit: now,
-        totalVisits: (userDoc.data().totalVisits || 0) + 1,
-      });
+      // Update existing user data
+      const userData = userDoc.data();
+      if (!userData.device) {
+        await updateDoc(userRef, {
+          device: deviceInfo,
+          lastVisit: now,
+          totalVisits: (userData.totalVisits || 0) + 1,
+        });
+      } else {
+        await updateDoc(userRef, {
+          lastVisit: now,
+          totalVisits: (userData.totalVisits || 0) + 1,
+        });
+      }
     }
+    console.log('Visit tracked for user:', userId);
   } catch (error) {
     console.error('Visit tracking error:', error);
   }

@@ -51,11 +51,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Start timing
-    const startTime = performance.now();
-    let userFetchTime = 0;
-    let batchPrepTime = 0;
-    let batchCommitTime = 0;
     const rawBody = await new Promise((resolve, reject) => {
       let data = '';
       req.on('data', (chunk) => (data += chunk));
@@ -128,14 +123,11 @@ export default async function handler(req, res) {
         lastClick: serverTimestamp,
       };
     }
-
-    const batchPrepStart = performance.now();
     const batch = db.batch();
     // 1. Update user document
     batch.update(userRef, {
       [`interactionv2.${urlHash}`]: updatedInteraction,
     });
-
     // 2. Update url_insights using merge write (no need to fetch first)
     const urlInsightRef = db.collection('url_insights').doc(urlHash);
     const updates = {
@@ -146,19 +138,16 @@ export default async function handler(req, res) {
       lastClick: serverTimestamp,
       updatedAt: serverTimestamp,
     };
-
     // Set these fields only on first creation
     const createOnlyFields = {
       firstClick: serverTimestamp,
       createdAt: serverTimestamp,
     };
-
     // Only increment unique users if this is a new user for this URL
     if (isNewUser) {
       updates.uniqueUsers = admin.firestore.FieldValue.increment(1);
       updates.userIds = admin.firestore.FieldValue.arrayUnion(userId);
     }
-
     // Use set with merge to handle both create and update cases
     batch.set(
       urlInsightRef,
@@ -168,15 +157,9 @@ export default async function handler(req, res) {
       },
       { merge: true },
     );
-
-    batchPrepTime = performance.now() - batchPrepStart;
-
-    const batchCommitStart = performance.now();
     await batch.commit();
-    batchCommitTime = performance.now() - batchCommitStart;
-    const totalTime = performance.now() - startTime;
 
-    // Log metrics in a single JSON line for easy parsing
+    // Log metrics
     console.log(
       JSON.stringify({
         type: 'track_metrics',
@@ -184,22 +167,8 @@ export default async function handler(req, res) {
         userId,
         isNewUser,
         isCacheHit: !!(cachedUser && Date.now() - cachedUser.timestamp < CACHE_TTL),
-        connectionInfo: {
-          isInitialized: !!admin.apps.length,
-          project: process.env.FIREBASE_PROJECT_ID,
-          hasCachedEntries: userCache.size,
-        },
-        timing: {
-          userFetch: userFetchTime.toFixed(2),
-          batchPrep: batchPrepTime.toFixed(2),
-          batchCommit: batchCommitTime.toFixed(2),
-          total: totalTime.toFixed(2),
-        },
-        operations: {
-          updatedExisting: !!currentInteractions[urlHash],
-          uniqueUser: isNewUser,
-          totalInteractions: Object.keys(currentInteractions).length,
-        },
+        interaction: updatedInteraction,
+        timestamp: new Date().toISOString(),
       }),
     );
     res.status(200).json({ success: true });
