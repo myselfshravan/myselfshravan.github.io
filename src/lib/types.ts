@@ -1,4 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
+import { DeviceDetectorResult } from 'device-detector-js';
 
 export interface Command {
   command: string;
@@ -41,6 +42,7 @@ export interface UserData {
 export interface DeviceInfo {
   deviceType: string;
   appName: string; // Browser or App name
+  metadata?: DeviceDetectorResult; // Additional metadata if needed
 }
 
 export interface FirebaseConfig {

@@ -16,5 +16,6 @@ export const detectDeviceInfo = (): DeviceInfo => {
   return {
     deviceType,
     appName,
+    metadata: parsedDevice,
   };
 };

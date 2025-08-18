@@ -36,7 +36,7 @@ export const trackVisit = async () => {
   if (!userId || !db) return;
 
   const userRef = doc(db, USERS_COLLECTION, userId);
-  const device = detectDeviceInfo(); 
+  const deviceInfo = detectDeviceInfo(); 
 
   try {
     const userDoc = await getDoc(userRef);
@@ -49,7 +49,7 @@ export const trackVisit = async () => {
         firstVisit: now as Timestamp,
         lastVisit: now as Timestamp,
         totalVisits: 1,
-        device: device,
+        device: deviceInfo,
       };
       await setDoc(userRef, newUserData);
     } else {
