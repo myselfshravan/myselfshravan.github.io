@@ -39,7 +39,7 @@ export interface UserData {
 }
 
 export interface DeviceInfo {
-  deviceType: 'desktop' | 'mobile' | 'tablet' | 'tv' | 'console';
+  deviceType: string;
   appName: string; // Browser or App name
 }
 

@@ -9,6 +9,7 @@ import {
   Timestamp,
 } from 'firebase/firestore';
 import { Command, UserData, ButtonInteraction, ExternalLinkClick } from './types';
+import { detectDeviceInfo } from './deviceInfo';
 
 const USER_ID_KEY = 'portfolio_user_id';
 const USERS_COLLECTION = 'portfolio_users_prod';
@@ -35,6 +36,7 @@ export const trackVisit = async () => {
   if (!userId || !db) return;
 
   const userRef = doc(db, USERS_COLLECTION, userId);
+  const device = detectDeviceInfo(); 
 
   try {
     const userDoc = await getDoc(userRef);
@@ -47,6 +49,7 @@ export const trackVisit = async () => {
         firstVisit: now as Timestamp,
         lastVisit: now as Timestamp,
         totalVisits: 1,
+        device: device,
       };
       await setDoc(userRef, newUserData);
     } else {
