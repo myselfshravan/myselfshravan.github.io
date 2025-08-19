@@ -77,7 +77,6 @@ export default async function handler(req, res) {
 
     const urlHash = createUrlHash(url);
     // Check [userDoc] cache first
-    const userFetchStart = performance.now();
     const userRef = db.collection('portfolio_users_prod').doc(userId);
     let userDoc;
     const cacheKey = userId;
@@ -92,7 +91,6 @@ export default async function handler(req, res) {
         timestamp: Date.now(),
       });
     }
-    userFetchTime = performance.now() - userFetchStart;
 
     if (!userDoc.exists) {
       return res.status(404).json({ error: 'User not found' });
