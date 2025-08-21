@@ -7,9 +7,11 @@ import {
   arrayUnion,
   serverTimestamp,
   Timestamp,
+  UpdateData,
 } from 'firebase/firestore';
 import { Command, UserData, ButtonInteraction, ExternalLinkClick } from './types';
 import { detectDeviceInfo } from './deviceInfo';
+import { lookupHashMapping, validateHash } from './hash-utils';
 
 const USER_ID_KEY = 'portfolio_user_id';
 const USERS_COLLECTION = 'portfolio_users_prod';
@@ -31,7 +33,7 @@ export const getUserId = () => {
   return userId;
 };
 
-export const trackVisit = async () => {
+export const trackVisit = async (hash?: string) => {
   const userId = getUserId();
   if (!userId || !db) return;
 
@@ -42,6 +44,12 @@ export const trackVisit = async () => {
     const userDoc = await getDoc(userRef);
     const now = serverTimestamp();
 
+    // Look up hash mapping if hash is provided
+    let hashMapping = null;
+    if (hash && validateHash(hash)) {
+      hashMapping = await lookupHashMapping(hash, userId);
+    }
+
     if (!userDoc.exists()) {
       // First visit - create new user
       const newUserData: UserData = {
@@ -50,25 +58,38 @@ export const trackVisit = async () => {
         lastVisit: now as Timestamp,
         totalVisits: 1,
         device: deviceInfo,
+        ...(hashMapping && {
+          mappingHash: hashMapping.hash,
+          mappedName: hashMapping.name,
+        }),
       };
       await setDoc(userRef, newUserData);
     } else {
       // Update existing user data
       const userData = userDoc.data();
+      const updateData: UpdateData<UserData> = {
+        lastVisit: now,
+        totalVisits: (userData.totalVisits || 0) + 1,
+      };
+
+      // Add device info if missing
       if (!userData.device) {
-        await updateDoc(userRef, {
-          device: deviceInfo,
-          lastVisit: now,
-          totalVisits: (userData.totalVisits || 0) + 1,
-        });
-      } else {
-        await updateDoc(userRef, {
-          lastVisit: now,
-          totalVisits: (userData.totalVisits || 0) + 1,
-        });
+        updateData.device = deviceInfo;
       }
+
+      // Add hash mapping if provided and not already set
+      if (hashMapping && !userData.mappingHash) {
+        updateData.mappingHash = hashMapping.hash;
+        updateData.mappedName = hashMapping.name;
+      }
+
+      await updateDoc(userRef, updateData);
     }
-    console.log('Visit tracked for user:', userId);
+    console.log(
+      'Visit tracked for user:',
+      userId,
+      hashMapping ? `with hash mapping: ${hashMapping.hash}` : '',
+    );
   } catch (error) {
     console.error('Visit tracking error:', error);
   }

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import { trackVisit } from '@/lib/analytics';
 import { Header } from '@/components/layout/header';
 import { Hero } from '@/components/sections/hero';
 import { Skills } from '@/components/sections/skills';
@@ -19,6 +20,21 @@ if (typeof window !== 'undefined') {
 }
 
 export default function Home() {
+  useEffect(() => {
+    // Check for hash in search params
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const hash = params.get('h');
+      
+      if (hash) {
+        // Track the visit with hash
+        trackVisit(hash);
+        // Remove hash from URL without page reload
+        window.history.replaceState({}, '', '/');
+      }
+    }
+  }, []); // Run once on mount
+
   useEffect(() => {
     // Initialize smooth scrolling and scroll-triggered animations
     if (typeof window !== 'undefined') {
