@@ -25,25 +25,25 @@ export const lookupHashMapping = async (
     }
 
     const data = mappingDoc.data();
-    
+
     // Ensure visits array exists
     if (!data.visits) {
       console.log('Initializing visits array for hash:', hash);
       await updateDoc(mappingRef, {
-        visits: []
+        visits: [],
       });
     }
-    
+
     // Record this visit
     const visit = {
       userId,
-      timestamp: Timestamp.now()
+      timestamp: Timestamp.now(),
     };
-    
+
     try {
       console.log('Recording visit for hash:', hash, 'user:', userId);
       await updateDoc(mappingRef, {
-        visits: arrayUnion(visit)
+        visits: arrayUnion(visit),
       });
       console.log('Successfully recorded visit');
     } catch (error) {
@@ -51,7 +51,7 @@ export const lookupHashMapping = async (
       // Try to initialize and retry if array might not exist
       try {
         await updateDoc(mappingRef, {
-          visits: [visit]
+          visits: [visit],
         });
         console.log('Successfully recorded visit after initialization');
       } catch (retryError) {
@@ -59,9 +59,6 @@ export const lookupHashMapping = async (
       }
     }
 
-    // Re-fetch to ensure we have latest data
-    const updatedDoc = await getDoc(mappingRef);
-    const updatedData = updatedDoc.data();
     return {
       hash,
       name: data.name,
