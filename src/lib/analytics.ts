@@ -44,10 +44,16 @@ export const trackVisit = async (hash?: string) => {
     const userDoc = await getDoc(userRef);
     const now = serverTimestamp();
 
-    // Look up hash mapping if hash is provided
-    let hashMapping = null;
+    // Get hash mapping or create organic entry
+    let hashMapping = {
+      hash: 'XXX',
+      name: 'organic',
+    };
     if (hash && validateHash(hash)) {
-      hashMapping = await lookupHashMapping(hash, userId);
+      const lookup = await lookupHashMapping(hash, userId);
+      if (lookup) {
+        hashMapping = lookup;
+      }
     }
 
     if (!userDoc.exists()) {
@@ -58,10 +64,13 @@ export const trackVisit = async (hash?: string) => {
         lastVisit: now as Timestamp,
         totalVisits: 1,
         device: deviceInfo,
-        ...(hashMapping && {
-          mappingHash: hashMapping.hash,
-          mappedName: hashMapping.name,
-        }),
+        hashMappings: [
+          {
+            hash: hashMapping.hash,
+            name: hashMapping.name,
+            timestamp: now as Timestamp,
+          },
+        ],
       };
       await setDoc(userRef, newUserData);
     } else {
@@ -77,11 +86,13 @@ export const trackVisit = async (hash?: string) => {
         updateData.device = deviceInfo;
       }
 
-      // Add hash mapping if provided and not already set
-      if (hashMapping && !userData.mappingHash) {
-        updateData.mappingHash = hashMapping.hash;
-        updateData.mappedName = hashMapping.name;
-      }
+      // Always add hash mapping (organic or from hash)
+      const newMapping = {
+        hash: hashMapping.hash,
+        name: hashMapping.name,
+        timestamp: now as Timestamp,
+      };
+      updateData.hashMappings = arrayUnion(newMapping);
 
       await updateDoc(userRef, updateData);
     }

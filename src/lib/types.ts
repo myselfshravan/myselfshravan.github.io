@@ -36,9 +36,12 @@ export interface UserData {
   // External link tracking
   interactionv2?: { [urlHash: string]: ExternalLinkClick };
   device?: DeviceInfo;
-  // Hash mapping data
-  mappingHash?: string;
-  mappedName?: string;
+  // Hash mapping data - tracks all visits (hash or organic) with timestamps
+  hashMappings?: Array<{
+    hash: string;
+    name: string;
+    timestamp: Timestamp;
+  }>;
 }
 
 export interface DeviceInfo {
