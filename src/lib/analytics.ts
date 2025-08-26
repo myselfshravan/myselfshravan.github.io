@@ -45,16 +45,12 @@ export const trackVisit = async (hash?: string) => {
     const serverTime = serverTimestamp();
     const timestamp = Timestamp.now();
 
-    // Get hash mapping or create organic entry
-    let hashMapping = {
-      hash: 'XXX',
-      name: 'organic',
-    };
-    if (hash && validateHash(hash)) {
-      const lookup = await lookupHashMapping(hash, userId);
-      if (lookup) {
-        hashMapping = lookup;
-      }
+    // Get hash mapping (using XXX for organic visits)
+    const hashToLookup = hash && validateHash(hash) ? hash : 'organic';
+    const hashMapping = await lookupHashMapping(hashToLookup, userId);
+
+    if (!hashMapping) {
+      throw new Error(`Hash mapping not found for hash: ${hashToLookup}`);
     }
 
     if (!userDoc.exists()) {

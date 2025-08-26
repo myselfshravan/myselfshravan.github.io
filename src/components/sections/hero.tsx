@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { trackVisit } from '@/lib/analytics';
 import { trackCommandNonBlocking } from '@/lib/click-tracker';
 import { Terminal, FileText, ArrowDown, X, Minus, Square } from 'lucide-react';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
@@ -115,9 +114,6 @@ export function Hero() {
   });
 
   // Track visits
-  useEffect(() => {
-    trackVisit().catch(console.error);
-  }, []);
 
   // Mobile detection for responsive placeholder text
   useEffect(() => {

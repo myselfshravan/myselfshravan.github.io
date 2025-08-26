@@ -25,11 +25,11 @@ export default function Home() {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const hash = params.get('h');
-      
+
+      // Track visit (with hash if present, or as organic)
+      trackVisit(hash || undefined);
+      // If hash is present, remove it from URL without page reload
       if (hash) {
-        // Track the visit with hash
-        trackVisit(hash);
-        // Remove hash from URL without page reload
         window.history.replaceState({}, '', '/');
       }
     }
