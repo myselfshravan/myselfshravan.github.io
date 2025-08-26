@@ -42,7 +42,8 @@ export const trackVisit = async (hash?: string) => {
 
   try {
     const userDoc = await getDoc(userRef);
-    const now = serverTimestamp();
+    const serverTime = serverTimestamp();
+    const timestamp = Timestamp.now();
 
     // Get hash mapping or create organic entry
     let hashMapping = {
@@ -60,15 +61,15 @@ export const trackVisit = async (hash?: string) => {
       // First visit - create new user
       const newUserData: UserData = {
         userId,
-        firstVisit: now as Timestamp,
-        lastVisit: now as Timestamp,
+        firstVisit: serverTime as Timestamp,
+        lastVisit: serverTime as Timestamp,
         totalVisits: 1,
         device: deviceInfo,
         hashMappings: [
           {
             hash: hashMapping.hash,
             name: hashMapping.name,
-            timestamp: now as Timestamp,
+            timestamp: timestamp,
           },
         ],
       };
@@ -77,7 +78,7 @@ export const trackVisit = async (hash?: string) => {
       // Update existing user data
       const userData = userDoc.data();
       const updateData: UpdateData<UserData> = {
-        lastVisit: now,
+        lastVisit: serverTime,
         totalVisits: (userData.totalVisits || 0) + 1,
       };
 
@@ -90,7 +91,7 @@ export const trackVisit = async (hash?: string) => {
       const newMapping = {
         hash: hashMapping.hash,
         name: hashMapping.name,
-        timestamp: now as Timestamp,
+        timestamp: timestamp,
       };
       updateData.hashMappings = arrayUnion(newMapping);
 
