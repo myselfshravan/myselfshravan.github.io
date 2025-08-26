@@ -24,7 +24,7 @@ export default function Home() {
     // Check for hash in search params
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
-      const hash = params.get('h');
+      const hash = params.get('s');
 
       // Track visit (with hash if present, or as organic)
       trackVisit(hash || undefined);
