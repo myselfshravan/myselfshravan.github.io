@@ -7,8 +7,7 @@
 .next
 node_modules
 .vscode
-MY_CONTEXT.md
 out/
 coverage/
-BLOG.md
 .vercel
+claude/*
