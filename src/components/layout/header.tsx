@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import portfolioData from '@/lib/portfolio-data.json';
+import { trackExternalLink } from '@/lib/click-tracker';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
@@ -66,7 +67,7 @@ export function Header() {
       },
       {
         threshold: 0.6,
-      }
+      },
     );
 
     sections.forEach((section) => observer.observe(section));
@@ -170,9 +171,11 @@ export function Header() {
                   );
                 })}
                 <NavigationMenuItem>
-                  <Link
-                    href="https://blog.shravanrevanna.me/"
-                    target="_blank"
+                  <button
+                    onClick={() => {
+                      trackExternalLink(portfolioData.writing.blog_url, 'Personal Blog');
+                      window.open(portfolioData.writing.blog_url, '_blank');
+                    }}
                     className={cn(
                       navigationMenuTriggerStyle(),
                       'text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-300 flex items-center space-x-1 px-4 py-2',
@@ -181,7 +184,7 @@ export function Header() {
                   >
                     <span>Blog</span>
                     <ExternalLink className="h-3 w-3" />
-                  </Link>
+                  </button>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
@@ -254,15 +257,17 @@ export function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: navItems.length * 0.1 }}
                   >
-                    <Link
-                      href="https://blog.shravanrevanna.me/"
-                      target="_blank"
-                      className="text-left text-lg font-medium hover:text-primary transition-all duration-300 py-3 px-4 rounded-lg flex items-center space-x-2 hover:bg-accent/20"
+                    <button
+                      onClick={() => {
+                        trackExternalLink(portfolioData.writing.blog_url, 'Personal Blog');
+                        window.open(portfolioData.writing.blog_url, '_blank');
+                      }}
+                      className="text-left text-lg font-medium hover:text-primary transition-all duration-300 py-3 px-4 rounded-lg flex items-center space-x-2 hover:bg-accent/20 w-full"
                       aria-label="Visit blog (opens in new tab)"
                     >
                       <span>Blog</span>
                       <ExternalLink className="h-4 w-4" />
-                    </Link>
+                    </button>
                   </motion.div>
                 </nav>
               </SheetContent>
