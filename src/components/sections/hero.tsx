@@ -98,8 +98,6 @@ export function Hero() {
   const [showCursor, setShowCursor] = useState(true);
   const [isInteractive, setIsInteractive] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [redClickCount, setRedClickCount] = useState(0);
-  const [greenClickCount, setGreenClickCount] = useState(0);
   const [terminalOutput, setTerminalOutput] = useState<string[]>([]);
   const [currentInput, setCurrentInput] = useState('');
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
@@ -188,34 +186,29 @@ export function Hero() {
     }
   };
 
-  // Triple-click detection for red dot
+  // Single-click activation for red dot
   const handleRedDotClick = () => {
-    setRedClickCount((prev) => prev + 1);
-    setTimeout(() => setRedClickCount(0), 500); // Reset after 500ms
-
-    if (redClickCount === 2) {
-      // Third click (0-indexed)
+    if (!isInteractive) {
       setIsInteractive(true);
-      setTerminalOutput(['ℹ Terminal activated!', '']);
+      setTerminalOutput(['ℹ Terminal activated! Type "help" for commands.', '']);
+    } else {
+      // If already interactive, clicking red dot exits interactive mode
+      setIsInteractive(false);
+      setTerminalOutput([]);
+      setCurrentInput('');
     }
   };
 
-  // Triple-click detection for green dot (expand to dialog)
+  // Single-click activation for green dot (expand to dialog)
   const handleGreenDotClick = () => {
-    setGreenClickCount((prev) => prev + 1);
-    setTimeout(() => setGreenClickCount(0), 500); // Reset after 500ms
-
-    if (greenClickCount === 2) {
-      // Third click (0-indexed)
-      setIsDialogOpen(true);
-      if (!isInteractive) {
-        setIsInteractive(true);
-        setTerminalOutput([
-          '✔ Terminal expanded! Welcome to fullscreen mode.',
-          'ℹ Type "help" for available commands.',
-          '',
-        ]);
-      }
+    setIsDialogOpen(true);
+    if (!isInteractive) {
+      setIsInteractive(true);
+      setTerminalOutput([
+        '✔ Terminal expanded! Welcome to fullscreen mode.',
+        'ℹ Type "help" for available commands.',
+        '',
+      ]);
     }
   };
 
@@ -258,7 +251,7 @@ export function Hero() {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
       setTerminalOutput((prev) => [...prev, `❌ AI Error: ${errorMessage}`, '']);
 
-      // Track failed AI conversation  
+      // Track failed AI conversation
       trackCommandNonBlocking(input, `Error: ${errorMessage}`, 'ai');
     }
   };
@@ -290,6 +283,7 @@ export function Hero() {
           ...prev,
           '✔ Available commands:',
           '  help      - Show this help message',
+          '  ai        - Enter AI assistant mode',
           '  clear     - Clear terminal screen',
           '  whoami    - Display user info',
           '  about     - About this portfolio',
@@ -304,7 +298,7 @@ export function Hero() {
           '  expand    - Expand terminal to fullscreen',
           '',
           '🤖 AI Mode:',
-          '  "ai mode" or "activate ai" - Start AI conversation',
+          '  "ai mode" or "activate ai" - Start LLM interaction',
           '  In AI mode: "exit" to return, "clear" to reset chat',
           '',
         ]);
@@ -397,6 +391,7 @@ export function Hero() {
         break;
 
       case 'cat about.txt':
+      case 'cd about.txt':
         setTerminalOutput((prev) => [
           ...prev,
           portfolioData.personal.bio,
@@ -408,6 +403,7 @@ export function Hero() {
         break;
 
       case 'cat contact.info':
+      case 'cd contact.info':
         setTerminalOutput((prev) => [
           ...prev,
           `📧 ${portfolioData.personal.email}`,
@@ -452,14 +448,15 @@ export function Hero() {
         setIsAIMode(true);
         setTerminalOutput((prev) => [
           ...prev,
-          "🤖 AI Mode activated! I'm ready to assist you.",
-          'Type your questions or commands. Use "exit" to return to terminal.',
-          'Type "clear" to clear AI chat history.',
+          '🤖 AI Mode activated! Now you can ask anything related to Shravan.',
+          "Type your questions. Yeah! its kinda like shravan's clone 😅.",
+          'Type "clear" to clear the chat history and "exit" to return to terminal.',
           '',
         ]);
         break;
 
       case 'visit projects':
+      case 'cd projects':
         setTerminalOutput((prev) => [...prev, '✔ Scroling to projects page...', '']);
         scrollToSection('#projects');
         break;
@@ -574,11 +571,9 @@ export function Hero() {
             <div className="flex items-center gap-2 mb-4 pb-2 border-b border-primary/30">
               {/* Red Dot - Close/Activate */}
               <div
-                className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-all cursor-pointer group relative flex items-center justify-center"
+                className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-all cursor-pointer group relative flex items-center justify-center hover:scale-110"
                 onClick={handleRedDotClick}
-                title={
-                  isInteractive ? 'Interactive mode active' : 'Triple-click to activate terminal'
-                }
+                title={isInteractive ? 'Click to close terminal' : 'Click to activate terminal'}
               >
                 <X className="w-2 h-2 opacity-0 group-hover:opacity-100 transition-opacity text-red-900" />
               </div>
@@ -590,9 +585,9 @@ export function Hero() {
 
               {/* Green Dot - Expand */}
               <div
-                className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-all cursor-pointer group relative flex items-center justify-center"
+                className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-all cursor-pointer group relative flex items-center justify-center hover:scale-110"
                 onClick={handleGreenDotClick}
-                title="Triple-click to expand terminal"
+                title="Click to expand terminal to fullscreen"
               >
                 <Square className="w-2 h-2 opacity-0 group-hover:opacity-100 transition-opacity text-green-900" />
               </div>
