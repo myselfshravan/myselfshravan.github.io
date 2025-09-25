@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { trackCommandNonBlocking } from '@/lib/click-tracker';
 import { Terminal, FileText, ArrowDown, X, Minus, Square } from 'lucide-react';
-import { GitHubLogoIcon } from '@radix-ui/react-icons';
+import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { trackExternalLink } from '@/lib/click-tracker';
@@ -31,12 +31,24 @@ function TerminalInterface({
   isAIMode?: boolean;
 }) {
   const terminalOutputRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     if (terminalOutputRef.current) {
       terminalOutputRef.current.scrollTop = terminalOutputRef.current.scrollHeight;
     }
   }, [terminalOutput]);
+
+  // Mobile detection for responsive placeholder text
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 640); // sm breakpoint
+    };
+
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
 
   return (
     <div className="h-full flex flex-col">
@@ -78,14 +90,30 @@ function TerminalInterface({
 
       {/* Command input */}
       <div className="flex items-center text-green-400">
-        <span className="mr-2">{isAIMode ? '🤖 ai>' : 'shravan_revanna@portfolio:~$'}</span>
+        <span className="mr-2 truncate min-w-0">
+          {isAIMode
+            ? isMobile
+              ? '🤖 ai>'
+              : '🤖 ai mode>'
+            : isMobile
+            ? '~$'
+            : 'shravan_revanna@portfolio:~$'}
+        </span>
         <input
           type="text"
           value={currentInput}
           onChange={(e) => setCurrentInput(e.target.value)}
           onKeyDown={handleTerminalKeyDown}
           className="flex-1 bg-transparent outline-none text-green-400 font-mono"
-          placeholder={isAIMode ? "Ask me anything... (type 'exit' to return)" : placeholderText}
+          placeholder={
+            isAIMode
+              ? isMobile
+                ? "Ask me anything... or type 'exit'" // short mobile placeholder
+                : "Ask me anything... (type 'exit' to return)" // desktop placeholder
+              : isMobile
+              ? "Type 'help'..." // short mobile placeholder
+              : placeholderText // normal desktop one
+          }
           autoFocus
         />
       </div>
@@ -559,14 +587,14 @@ export function Hero() {
         />
       </div>
 
-      <div className="container mx-auto px-2 sm:px-6 lg:px-8 relative z-10 max-w-4xl">
+      <div className="container mx-auto w-full px-2 sm:px-6 lg:px-8 relative z-10 max-w-4xl">
         <div className="text-center space-y-8">
           {/* Terminal Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-card/70 backdrop-blur-sm border border-primary/20 rounded-lg p-3 sm:p-6 font-mono text-left max-w-2xl mx-auto shadow-xl hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:border-primary/40 hover:bg-card/80"
+            className="bg-card/70 backdrop-blur-sm border border-primary/20 rounded-lg p-3 sm:p-6 font-mono text-left max-w-2xl mx-auto shadow-xl hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:border-primary/40 hover:bg-card/80 overflow-auto"
           >
             <div className="flex items-center gap-2 mb-4 pb-2 border-b border-primary/30">
               {/* Red Dot - Close/Activate */}
@@ -717,13 +745,26 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.7 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button
+            {/* <Button
               size="lg"
               onClick={() => scrollToSection('#projects')}
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3"
             >
               <Terminal className="mr-2 h-4 w-4" />
               view projects
+            </Button> */}
+
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => {
+                trackExternalLink(portfolioData.social.linkedin, 'LinkedIn Profile');
+                window.open(portfolioData.social.linkedin, '_blank');
+              }}
+              className="px-6 py-3 border-primary/20 hover:bg-primary/5"
+            >
+              <LinkedInLogoIcon className="mr-2 h-4 w-4" />
+              connect
             </Button>
 
             <Button
