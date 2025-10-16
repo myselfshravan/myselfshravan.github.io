@@ -661,7 +661,7 @@ export function Hero() {
                       rel="noopener noreferrer"
                       className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
                     >
-                      Graphene
+                      GrapheneAI
                     </a>{' '}
                     | Deep-tech automation specialist and AI Agentic Workflows | Ex-SDE Intern @<a
                       href="https://udaan.com/"
@@ -670,7 +670,7 @@ export function Hero() {
                       className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
                     >
                       udaan
-                    </a>{" "}+{" "}
+                    </a>{" "}+{" "}@
                     <a
                       href="https://udaancapital.com/"
                       target="_blank"
