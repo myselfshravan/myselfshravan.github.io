@@ -210,11 +210,23 @@
   ],
   "work": [
     {
+      "company": "Graphene AI",
+      "position": "Machine Learning Engineering",
+      "status": "Current",
+      "startDate": "Oct-2025",
+      "endDate": "Present",
+      "website": "https://grapheneai.com",
+      "description": [
+        "Architecting and restructuring microservices to power critical operational workflows.",
+        "Building in-house AI systems that enhance decision-making, automate processes, and improve team efficiency."
+      ]
+    },
+    {
       "company": "Udaan Capital",
       "position": "Software Engineer Intern",
-      "status": "Current",
-      "startDate": "Jul-2024",
-      "endDate": "Present",
+      "status": "Previous",
+      "startDate": "Jun-2025",
+      "endDate": "Sep-2025",
       "website": "https://udaancapital.com",
       "description": [
         "Working on onboarding systems to improve application conversion flow.",
@@ -226,7 +238,7 @@
       "company": "Udaan",
       "position": "SDE Intern",
       "status": "previous",
-      "startDate": "Jun-2024",
+      "startDate": "Jan-2025",
       "endDate": "May-2025",
       "website": "https://udaan.com",
       "description": [
