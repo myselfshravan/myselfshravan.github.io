@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { trackCommandNonBlocking } from '@/lib/click-tracker';
-import { Terminal, FileText, ArrowDown, X, Minus, Square } from 'lucide-react';
+import { FileText, ArrowDown, X, Minus, Square } from 'lucide-react';
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
