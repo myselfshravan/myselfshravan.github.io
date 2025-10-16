@@ -423,7 +423,7 @@ export function Hero() {
         setTerminalOutput((prev) => [
           ...prev,
           portfolioData.personal.bio,
-          `Current Role: SE Intern at udaanCapital`,
+          `Current Role: MLE at Graphene`,
           `Projects Shipped: 150+`,
           `Passionate about: AI, Full-Stack Development, Automation`,
           '',
@@ -654,16 +654,31 @@ export function Hero() {
                     transition={{ delay: 2.5, duration: 0.3 }}
                     className="text-muted-foreground pt-2"
                   >
-                    Currently SDE Intern @{' '}
+                    Currently Machine Learning Engineer @{''}
                     <a
-                      href="https://udaancapital.com"
+                      href="https://grapheneai.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
+                    >
+                      Graphene
+                    </a>{' '}
+                    | Deep-tech automation specialist and AI Agentic Workflows | Ex-SDE Intern @<a
+                      href="https://udaan.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
+                    >
+                      udaan
+                    </a>{" "}+{" "}
+                    <a
+                      href="https://udaancapital.com/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
                     >
                       udaanCapital
-                    </a>{' '}
-                    | Deep-tech automation specialist
+                    </a>
                   </motion.div>
                 </>
               ) : (

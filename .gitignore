@@ -11,3 +11,4 @@ out/
 coverage/
 .vercel
 claude/*
+.claude
