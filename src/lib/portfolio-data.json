@@ -290,7 +290,12 @@
     "blog_url": "https://blog.shravanrevanna.me",
     "featured_posts": [
       {
-        "title": "Migrating the old portfolio website to Next.js 15",
+        "title": "How I Hacked My Smart Lights and Things Got Way Out of Hand",
+        "url": "https://blog.shravanrevanna.me/i-hacked-my-smart-lights-and-things-got-way-out-of-hand",
+        "description": "A fun deep-dive into how I hacked my smart lights, leading to an unexpected chain of events that spiraled out of control."
+      },
+      {
+        "title": "Migrating the old portfolio website to Next.js 15 with fingerprint tracking and AI chatbot integrated inside terminal.",
         "url": "https://blog.shravanrevanna.me/how-i-transformed-static-html-portfolio-site-to-a-nextjs-page",
         "description": "Rebuilt my old static HTML portfolio site to Next.js 15 with Turbopack, improving performance and developer experience."
       },
@@ -308,6 +313,11 @@
         "title": "Automating Table Reservations with Script - Clicks before Chopsticks",
         "url": "https://blog.shravanrevanna.me/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
         "description": "Wrote a Python script to secure restaurant reservations faster than manual booking for high-demand restaurant (like Naru Noodels Bar) out of frustration."
+      },
+      {
+        "title": "How I can access any students data in our college",
+        "url": "https://blog.shravanrevanna.me/how-i-can-access-any-students-data-in-our-college",
+        "description": "Discovered a vulnerability in our college's student information system that allowed me to access any student's data, highlighting the importance of robust security measures."
       }
     ]
   },
