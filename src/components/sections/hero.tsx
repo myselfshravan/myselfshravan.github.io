@@ -654,7 +654,17 @@ export function Hero() {
                     transition={{ delay: 2.5, duration: 0.3 }}
                     className="text-muted-foreground pt-2"
                   >
-                    Currently Machine Learning Engineer @{''}
+                    Currently building @{''}
+                    <a
+                      href="https://klydo.in"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
+                    >
+                     Klydo
+                    </a>{' '}
+                    | AI-first products to automate R&D workflows | Ex Machine Learning Engineer @
+                    {''}
                     <a
                       href="https://grapheneai.com/"
                       target="_blank"
@@ -663,14 +673,16 @@ export function Hero() {
                     >
                       GrapheneAI
                     </a>{' '}
-                    | Deep-tech automation specialist and AI Agentic Workflows | Ex-SDE Intern @<a
+                    | Deep-tech automation specialist and AI Agentic Workflows | Ex-SDE Intern @
+                    <a
                       href="https://udaan.com/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
                     >
                       udaan
-                    </a>{" "}+{" "}@
+                    </a>{' '}
+                    + @
                     <a
                       href="https://udaancapital.com/"
                       target="_blank"

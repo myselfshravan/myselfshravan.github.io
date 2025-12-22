@@ -3,7 +3,7 @@
     "name": "Shravan Revanna",
     "title": "AI Full-Stack Developer",
     "subtitle": "Building AI-powered applications and automation solutions",
-    "description": "I see problems, I build solutions. AI-first full-stack developer who tries to automate everything.",
+    "description": "I see problems, I build solutions. AI-first full-stack developer who tries to build & automate everything.",
     "email": "shravanrevanna@gmail.com",
     "phone": "+91 9945332995",
     "location": "Bengaluru, India",
@@ -44,28 +44,76 @@
   },
   "skills": {
     "core": [
-      { "name": "Python", "icon": "devicon-python-plain" },
-      { "name": "JavaScript", "icon": "devicon-javascript-plain" },
-      { "name": "TypeScript", "icon": "devicon-typescript-plain" },
-      { "name": "Kotlin", "icon": "devicon-kotlin-plain" }
+      {
+        "name": "Python",
+        "icon": "devicon-python-plain"
+      },
+      {
+        "name": "JavaScript",
+        "icon": "devicon-javascript-plain"
+      },
+      {
+        "name": "TypeScript",
+        "icon": "devicon-typescript-plain"
+      },
+      {
+        "name": "Kotlin",
+        "icon": "devicon-kotlin-plain"
+      }
     ],
     "frameworks": [
-      { "name": "Next.js", "icon": "devicon-nextjs-original" },
-      { "name": "React", "icon": "devicon-react-original" },
-      { "name": "Node.js", "icon": "devicon-nodejs-plain" },
-      { "name": "Flask", "icon": "devicon-flask-plain" }
+      {
+        "name": "Next.js",
+        "icon": "devicon-nextjs-original"
+      },
+      {
+        "name": "React",
+        "icon": "devicon-react-original"
+      },
+      {
+        "name": "Node.js",
+        "icon": "devicon-nodejs-plain"
+      },
+      {
+        "name": "Flask",
+        "icon": "devicon-flask-plain"
+      }
     ],
     "databases": [
-      { "name": "Firebase", "icon": "devicon-firebase-plain" },
-      { "name": "MongoDB", "icon": "devicon-mongodb-plain" },
-      { "name": "PostgreSQL", "icon": "devicon-postgresql-plain" },
-      { "name": "Supabase", "icon": "devicon-supabase-original" }
+      {
+        "name": "Firebase",
+        "icon": "devicon-firebase-plain"
+      },
+      {
+        "name": "MongoDB",
+        "icon": "devicon-mongodb-plain"
+      },
+      {
+        "name": "PostgreSQL",
+        "icon": "devicon-postgresql-plain"
+      },
+      {
+        "name": "Supabase",
+        "icon": "devicon-supabase-original"
+      }
     ],
     "devops": [
-      { "name": "Docker", "icon": "devicon-docker-plain" },
-      { "name": "Kubernetes", "icon": "devicon-kubernetes-plain" },
-      { "name": "AWS S3", "icon": "devicon-amazonwebservices-original" },
-      { "name": "Vercel", "icon": "devicon-vercel-original" }
+      {
+        "name": "Docker",
+        "icon": "devicon-docker-plain"
+      },
+      {
+        "name": "Kubernetes",
+        "icon": "devicon-kubernetes-plain"
+      },
+      {
+        "name": "AWS S3",
+        "icon": "devicon-amazonwebservices-original"
+      },
+      {
+        "name": "Vercel",
+        "icon": "devicon-vercel-original"
+      }
     ]
   },
   "projects": {
