@@ -3,18 +3,19 @@
     "name": "Shravan Revanna",
     "title": "AI Full-Stack Developer",
     "subtitle": "Building AI-powered applications and automation solutions",
-    "description": "I see problems, I build solutions. AI-first full-stack developer who tries to build & automate everything.",
+    "description": "I over-engineer for fun and automate out of frustration. AI full-stack dev turning problems into shipped products.",
     "email": "shravanrevanna@gmail.com",
     "phone": "+91 9945332995",
     "location": "Bengaluru, India",
     "bio": "Full-stack developer (with 150+ production projects) obsessed with shipping fast and automating everything. I dive into fundamentals, over-engineer when needed, and turn every friction point into a solved problem. Specializing in GenAI applications, AI Agentic Workflows, and production-ready systems.",
     "intro": [
-      "AI full-stack developer currently working at udaanCapital, building risk assessment systems.",
+      "Product Engineer at Klydo, building fashion-tech quick commerce. Previously shipped AI systems at Graphene AI and Udaan.",
       "Built 150+ projects including production applications with thousands of active users.",
       "Specialized in automation, GenAI solutions, and full-stack development with modern frameworks.",
       "Creator of NoteRep - a study platform serving 200+ active users with 85K+ views.",
       "I write about tech, build tools that save time, and contribute to meaningful projects."
     ],
+    "tagline": "Ex-MLE @GrapheneAI | Ex-SDE @Udaan",
     "goal": "I build automation tools and AI-powered solutions that eliminate manual processes and save people time.",
     "profileImages": [
       "profile_0.jpg",
@@ -258,11 +259,23 @@
   ],
   "work": [
     {
+      "company": "Klydo",
+      "position": "Product Engineer",
+      "status": "Current",
+      "startDate": "Jan-2026",
+      "endDate": "Present",
+      "website": "https://klydo.in",
+      "description": [
+        "Building and shipping features on the growth team for a fashion-tech quick commerce platform.",
+        "Driving product development and feature delivery to enhance user experience and platform growth."
+      ]
+    },
+    {
       "company": "Graphene AI",
       "position": "Machine Learning Engineering",
-      "status": "Current",
+      "status": "Previous",
       "startDate": "Oct-2025",
-      "endDate": "Present",
+      "endDate": "Dec-2025",
       "website": "https://grapheneai.com",
       "description": [
         "Architecting and restructuring microservices to power critical operational workflows.",

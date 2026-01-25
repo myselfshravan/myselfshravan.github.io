@@ -423,7 +423,7 @@ export function Hero() {
         setTerminalOutput((prev) => [
           ...prev,
           portfolioData.personal.bio,
-          `Current Role: MLE at Graphene`,
+          `Current Role: ${portfolioData.work[0].position} at ${portfolioData.work[0].company}`,
           `Projects Shipped: 150+`,
           `Passionate about: AI, Full-Stack Development, Automation`,
           '',
@@ -654,42 +654,41 @@ export function Hero() {
                     transition={{ delay: 2.5, duration: 0.3 }}
                     className="text-muted-foreground pt-2"
                   >
-                    Currently building @{''}
+                    Currently shipping at{' '}
                     <a
                       href="https://klydo.in"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
+                      className="text-primary hover:text-primary/80 transition-colors"
                     >
-                     Klydo
+                      @Klydo
                     </a>{' '}
-                    | AI-first products to automate R&D workflows | Ex Machine Learning Engineer @
-                    {''}
+                    (fashion-tech). Ex-MLE{' '}
                     <a
                       href="https://grapheneai.com/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
+                      className="text-primary hover:text-primary/80 transition-colors"
                     >
-                      GrapheneAI
+                      @GrapheneAI
                     </a>{' '}
-                    | Deep-tech automation specialist and AI Agentic Workflows | Ex-SDE Intern @
+                    | Ex-SDE{' '}
                     <a
                       href="https://udaan.com/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
+                      className="text-primary hover:text-primary/80 transition-colors"
                     >
-                      udaan
+                      @udaan
                     </a>{' '}
-                    + @
+                    +{' '}
                     <a
                       href="https://udaancapital.com/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
+                      className="text-primary hover:text-primary/80 transition-colors"
                     >
-                      udaanCapital
+                      @udaanCapital
                     </a>
                   </motion.div>
                 </>
