@@ -7,6 +7,7 @@ import { Menu, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import portfolioData from '@/lib/portfolio-data.json';
 import { trackExternalLink } from '@/lib/click-tracker';
+import posthog from 'posthog-js';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
@@ -141,7 +142,7 @@ export function Header() {
                   return (
                     <NavigationMenuItem key={item.name}>
                       <motion.button
-                        onClick={() => scrollToSection(item.href)}
+                        onClick={() => { scrollToSection(item.href); posthog.capture('nav_item_clicked', { section: item.name }); }}
                         className={cn(
                           navigationMenuTriggerStyle(),
                           'relative group px-4 py-2 text-sm font-medium transition-all duration-300 hover:bg-accent/50 focus:bg-accent/50',
@@ -225,7 +226,7 @@ export function Header() {
                       return (
                         <motion.button
                           key={item.name}
-                          onClick={() => scrollToSection(item.href)}
+                          onClick={() => { scrollToSection(item.href); posthog.capture('nav_item_clicked', { section: item.name, device: 'mobile' }); }}
                           className={cn(
                             'text-left text-lg font-medium transition-all duration-300 py-3 px-4 rounded-lg relative group',
                             isActive

@@ -7,15 +7,21 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import portfolioData from '@/lib/portfolio-data.json';
 import { trackExternalLink } from '@/lib/click-tracker';
+import posthog from 'posthog-js';
+import { useSectionTracker } from '@/hooks/use-section-tracker';
 
 export function Work() {
   const sectionRef = React.useRef<HTMLElement>(null);
+  const trackRef = useSectionTracker('work');
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   return (
     <section
       id="work"
-      ref={sectionRef}
+      ref={(el) => {
+        (sectionRef as React.MutableRefObject<HTMLElement | null>).current = el;
+        (trackRef as React.MutableRefObject<HTMLElement | null>).current = el;
+      }}
       className="py-20 bg-gradient-to-b from-muted/10 to-background"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -57,6 +63,7 @@ export function Work() {
                           <button
                             onClick={() => {
                               trackExternalLink(job.website, `Company: ${job.company}`);
+                              posthog.capture('work_company_clicked', { company: job.company });
                               window.open(job.website, '_blank');
                             }}
                             className="text-primary hover:text-primary/80 transition-colors"

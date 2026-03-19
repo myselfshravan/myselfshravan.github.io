@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import portfolioData from '@/lib/portfolio-data.json';
 import { getUserId } from '@/lib/analytics';
+import posthog from 'posthog-js';
 
 const socialIcons = {
   github: Github,
@@ -30,6 +31,7 @@ const order: SocialKey[] = ['github', 'linkedin', 'instagram', 'facebook', 'twit
 
 export function Footer() {
   const scrollToTop = () => {
+    posthog.capture('footer_scroll_to_top');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   const [trimUserId, setTrimUserId] = useState<string>('unknown');
@@ -118,7 +120,7 @@ export function Footer() {
               {navLinks.map((link) => (
                 <li key={link.name}>
                   <button
-                    onClick={() => scrollToSection(link.href)}
+                    onClick={() => { posthog.capture('footer_nav_clicked', { section: link.name }); scrollToSection(link.href); }}
                     className="text-muted-foreground hover:text-primary transition-colors text-left"
                   >
                     {link.name}
@@ -138,12 +140,13 @@ export function Footer() {
               </li>
               <li>
                 <button
-                  onClick={() =>
+                  onClick={() => {
+                    posthog.capture('footer_share_clicked');
                     navigator.share?.({
                       title: 'Shravan Revanna - Portfolio',
                       url: window.location.href,
-                    })
-                  }
+                    });
+                  }}
                   className="text-muted-foreground hover:text-primary transition-colors text-left"
                 >
                   Share
@@ -171,6 +174,7 @@ export function Footer() {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => posthog.capture('footer_social_clicked', { platform })}
                     className="p-2 bg-muted/20 hover:bg-primary/10 rounded-lg text-muted-foreground hover:text-primary transition-all duration-300"
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
@@ -187,6 +191,7 @@ export function Footer() {
                 href="https://blog.shravanrevanna.me"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => posthog.capture('footer_blog_clicked')}
                 className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center space-x-1"
               >
                 <span>Check out blogs on Hashnode</span>

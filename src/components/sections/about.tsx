@@ -14,6 +14,8 @@ import {
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import portfolioData from '@/lib/portfolio-data.json';
+import posthog from 'posthog-js';
+import { useSectionTracker } from '@/hooks/use-section-tracker';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -23,6 +25,7 @@ if (typeof window !== 'undefined') {
 
 export function About() {
   const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useSectionTracker('about');
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
   const [expandedJob, setExpandedJob] = useState<number | null>(null);
 
@@ -65,13 +68,23 @@ export function About() {
   };
 
   const toggleJobDescription = (index: number) => {
-    setExpandedJob(expandedJob === index ? null : index);
+    const isExpanding = expandedJob !== index;
+    setExpandedJob(isExpanding ? index : null);
+    if (isExpanding) {
+      posthog.capture('about_job_expanded', {
+        company: portfolioData.work[index]?.company,
+        position: portfolioData.work[index]?.position,
+      });
+    }
   };
 
   return (
     <section
       id="about"
-      ref={sectionRef}
+      ref={(el) => {
+        (sectionRef as React.MutableRefObject<HTMLElement | null>).current = el;
+        (trackRef as React.MutableRefObject<HTMLElement | null>).current = el;
+      }}
       className="py-20 bg-gradient-to-b from-background to-muted/20"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

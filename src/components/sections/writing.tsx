@@ -7,10 +7,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import portfolioData from '@/lib/portfolio-data.json';
 import { trackExternalLink } from '@/lib/click-tracker';
+import posthog from 'posthog-js';
+import { useSectionTracker } from '@/hooks/use-section-tracker';
 
 export function Writing() {
+  const sectionRef = useSectionTracker('writing');
+
   return (
-    <section id="writing" className="py-20 bg-muted/20">
+    <section id="writing" ref={sectionRef} className="py-20 bg-muted/20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -46,6 +50,7 @@ export function Writing() {
                       size="sm"
                       onClick={() => {
                         trackExternalLink(post.url, `Blog Post: ${post.title}`);
+                        posthog.capture('blog_post_clicked', { post_title: post.title, post_url: post.url });
                         window.open(post.url, '_blank');
                       }}
                       className="p-1 h-auto"
@@ -89,6 +94,7 @@ export function Writing() {
             size="lg"
             onClick={() => {
               trackExternalLink(portfolioData.writing.blog_url, 'Blog: All Posts');
+              posthog.capture('view_all_posts_clicked');
               window.open(portfolioData.writing.blog_url, '_blank');
             }}
             className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"

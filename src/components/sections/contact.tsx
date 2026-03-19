@@ -18,6 +18,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { trackExternalLink } from '@/lib/click-tracker';
 import portfolioData from '@/lib/portfolio-data.json';
+import posthog from 'posthog-js';
+import { useSectionTracker } from '@/hooks/use-section-tracker';
 import { gsap } from 'gsap';
 
 const socialIcons = {
@@ -33,6 +35,7 @@ const order: SocialKey[] = ['linkedin', 'instagram', 'facebook', 'twitter', 'you
 
 export function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useSectionTracker('contact');
   const cardsRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
@@ -92,7 +95,10 @@ export function Contact() {
   return (
     <section
       id="contact"
-      ref={sectionRef}
+      ref={(el) => {
+        (sectionRef as React.MutableRefObject<HTMLElement | null>).current = el;
+        (trackRef as React.MutableRefObject<HTMLElement | null>).current = el;
+      }}
       className="py-20 bg-gradient-to-b from-background to-muted/20"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -176,6 +182,7 @@ export function Contact() {
                                 if (method.href.startsWith('http')) {
                                   trackExternalLink(method.href, `Contact: ${method.title}`);
                                 }
+                                posthog.capture('contact_method_clicked', { method: method.title });
                                 window.open(
                                   method.href,
                                   method.href.startsWith('http') ? '_blank' : '_self',
@@ -228,6 +235,7 @@ export function Contact() {
                           key={platform}
                           onClick={() => {
                             trackExternalLink(url, `Social: ${platform.charAt(0).toUpperCase() + platform.slice(1)}`);
+                            posthog.capture('social_link_clicked', { platform });
                             window.open(url, '_blank');
                           }}
                           className="flex flex-col items-center p-4 bg-muted/20 hover:bg-primary/10 rounded-lg text-center transition-all duration-300 group cursor-pointer"
@@ -296,6 +304,7 @@ export function Contact() {
                 onClick={() => {
                   const emailUrl = `mailto:${portfolioData.personal.email}?subject=Project Collaboration`;
                   trackExternalLink(emailUrl, 'Email: Project Collaboration');
+                  posthog.capture('start_conversation_clicked');
                   window.open(emailUrl, '_self');
                 }}
                 className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"

@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { trackExternalLink } from '@/lib/click-tracker';
 import portfolioData from '@/lib/portfolio-data.json';
+import posthog from 'posthog-js';
+import { useSectionTracker } from '@/hooks/use-section-tracker';
 
 interface Project {
   name: string;
@@ -25,6 +27,7 @@ interface Project {
 
 export function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useSectionTracker('projects');
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   // Flatten all projects into a single array
@@ -110,6 +113,11 @@ export function Projects() {
                       onClick={() => {
                         if (link.url) {
                           trackExternalLink(link.url, `Project: ${project.name} - ${link.label}`);
+                          posthog.capture('project_link_clicked', {
+                            project_name: project.name,
+                            link_type: link.type,
+                            link_label: link.label,
+                          });
                           window.open(link.url, '_blank');
                         }
                       }}
@@ -131,7 +139,10 @@ export function Projects() {
   return (
     <section
       id="projects"
-      ref={sectionRef}
+      ref={(el) => {
+        (sectionRef as React.MutableRefObject<HTMLElement | null>).current = el;
+        (trackRef as React.MutableRefObject<HTMLElement | null>).current = el;
+      }}
       className="py-20 bg-gradient-to-b from-background to-muted/20"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

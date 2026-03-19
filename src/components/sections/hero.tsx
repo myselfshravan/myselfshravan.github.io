@@ -11,6 +11,7 @@ import { trackExternalLink } from '@/lib/click-tracker';
 import { useLLMChat } from '@/hooks/use-llm-chat';
 import { DEFAULT_SYSTEM_PROMPTS } from '@/lib/llm';
 import portfolioData from '@/lib/portfolio-data.json';
+import posthog from 'posthog-js';
 
 // Terminal Component for reuse
 function TerminalInterface({
@@ -219,6 +220,7 @@ export function Hero() {
     if (!isInteractive) {
       setIsInteractive(true);
       setTerminalOutput(['ℹ Terminal activated! Type "help" for commands.', '']);
+      posthog.capture('terminal_activated', { mode: 'inline' });
     } else {
       // If already interactive, clicking red dot exits interactive mode
       setIsInteractive(false);
@@ -230,6 +232,7 @@ export function Hero() {
   // Single-click activation for green dot (expand to dialog)
   const handleGreenDotClick = () => {
     setIsDialogOpen(true);
+    posthog.capture('terminal_expanded');
     if (!isInteractive) {
       setIsInteractive(true);
       setTerminalOutput([
@@ -299,6 +302,7 @@ export function Hero() {
     if (cmd && !commandHistory.includes(cmd)) {
       setCommandHistory((prev) => [...prev, cmd]);
       trackCommandNonBlocking(command, undefined, 'terminal'); // Now non-blocking!
+      posthog.capture('terminal_command_executed', { command: cmd });
     }
 
     // Add command to output
@@ -474,6 +478,7 @@ export function Hero() {
       case 'activate ai':
       case 'ai':
         setIsAIMode(true);
+        posthog.capture('terminal_ai_mode_activated');
         setTerminalOutput((prev) => [
           ...prev,
           '🤖 AI Mode activated! Now you can ask anything related to Shravan.',
@@ -785,6 +790,7 @@ export function Hero() {
               size="lg"
               onClick={() => {
                 trackExternalLink(portfolioData.social.linkedin, 'LinkedIn Profile');
+                posthog.capture('hero_linkedin_clicked');
                 window.open(portfolioData.social.linkedin, '_blank');
               }}
               className="px-6 py-3 border-primary/20 hover:bg-primary/5"
@@ -798,6 +804,7 @@ export function Hero() {
               size="lg"
               onClick={() => {
                 trackExternalLink(portfolioData.writing.blog_url, 'Personal Blog');
+                posthog.capture('hero_blog_clicked');
                 window.open(portfolioData.writing.blog_url, '_blank');
               }}
               className="px-6 py-3 border-primary/20 hover:bg-primary/5"
@@ -811,6 +818,7 @@ export function Hero() {
               size="lg"
               onClick={() => {
                 trackExternalLink(portfolioData.social.github, 'GitHub Profile');
+                posthog.capture('hero_github_clicked');
                 window.open(portfolioData.social.github, '_blank');
               }}
               className="px-6 py-3 border-primary/20 hover:bg-primary/5"
@@ -828,13 +836,13 @@ export function Hero() {
             className="flex justify-center gap-6 text-sm text-muted-foreground"
           >
             <button
-              onClick={() => scrollToSection('#projects')}
+              onClick={() => { posthog.capture('hero_quick_link_clicked', { target: 'projects' }); scrollToSection('#projects'); }}
               className="hover:text-primary transition-colors underline underline-offset-4"
             >
               projects
             </button>
             <button
-              onClick={() => scrollToSection('#work')}
+              onClick={() => { posthog.capture('hero_quick_link_clicked', { target: 'work' }); scrollToSection('#work'); }}
               className="hover:text-primary transition-colors underline underline-offset-4"
             >
               work
@@ -842,6 +850,7 @@ export function Hero() {
             <button
               onClick={() => {
                 trackExternalLink(`/${portfolioData.personal.resumeFile}`, 'Resume PDF');
+                posthog.capture('hero_resume_clicked');
                 window.open(`/${portfolioData.personal.resumeFile}`, '_blank');
               }}
               className="hover:text-primary transition-colors underline underline-offset-4"
@@ -849,7 +858,7 @@ export function Hero() {
               resume
             </button>
             <button
-              onClick={() => scrollToSection('#contact')}
+              onClick={() => { posthog.capture('hero_quick_link_clicked', { target: 'contact' }); scrollToSection('#contact'); }}
               className="hover:text-primary transition-colors underline underline-offset-4"
             >
               contact

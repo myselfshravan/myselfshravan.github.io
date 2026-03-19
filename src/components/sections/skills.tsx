@@ -4,9 +4,11 @@ import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 import portfolioData from '@/lib/portfolio-data.json';
+import { useSectionTracker } from '@/hooks/use-section-tracker';
 
 export function Skills() {
   const sectionRef = React.useRef<HTMLElement>(null);
+  const trackRef = useSectionTracker('skills');
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   const skillCategories = [
@@ -33,7 +35,10 @@ export function Skills() {
   ];
 
   return (
-    <section id="skills" ref={sectionRef} className="py-16 bg-muted/10">
+    <section id="skills" ref={(el) => {
+        (sectionRef as React.MutableRefObject<HTMLElement | null>).current = el;
+        (trackRef as React.MutableRefObject<HTMLElement | null>).current = el;
+      }} className="py-16 bg-muted/10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         <motion.div
           className="text-center mb-12"

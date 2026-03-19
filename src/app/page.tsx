@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { trackVisit } from '@/lib/analytics';
 import { Header } from '@/components/layout/header';
 import { Hero } from '@/components/sections/hero';
@@ -13,6 +13,7 @@ import { Contact } from '@/components/sections/contact';
 import { Footer } from '@/components/layout/footer';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import posthog from 'posthog-js';
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
@@ -20,6 +21,24 @@ if (typeof window !== 'undefined') {
 }
 
 export default function Home() {
+  const scrollMilestonesRef = useRef(new Set<number>());
+  const sessionStartRef = useRef(Date.now());
+
+  const trackScrollDepth = useCallback(() => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (docHeight <= 0) return;
+    const percent = Math.round((scrollTop / docHeight) * 100);
+
+    const milestones = [25, 50, 75, 100];
+    for (const milestone of milestones) {
+      if (percent >= milestone && !scrollMilestonesRef.current.has(milestone)) {
+        scrollMilestonesRef.current.add(milestone);
+        posthog.capture('scroll_depth_reached', { depth_percent: milestone });
+      }
+    }
+  }, []);
+
   useEffect(() => {
     // Check for hash in search params
     if (typeof window !== 'undefined') {
@@ -34,6 +53,27 @@ export default function Home() {
       }
     }
   }, []); // Run once on mount
+
+  // Scroll depth tracking
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    window.addEventListener('scroll', trackScrollDepth, { passive: true });
+    return () => window.removeEventListener('scroll', trackScrollDepth);
+  }, [trackScrollDepth]);
+
+  // Session duration on page unload
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleUnload = () => {
+      const duration = Math.round((Date.now() - sessionStartRef.current) / 1000);
+      posthog.capture('session_ended', { duration_seconds: duration });
+    };
+
+    window.addEventListener('beforeunload', handleUnload);
+    return () => window.removeEventListener('beforeunload', handleUnload);
+  }, []);
 
   useEffect(() => {
     // Initialize smooth scrolling and scroll-triggered animations
