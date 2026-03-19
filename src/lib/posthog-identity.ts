@@ -16,12 +16,12 @@ export function isChannel(source: string): boolean {
 }
 
 /**
- * Links the ?s= parameter to PostHog identity.
+ * Links the ?s= tracker hash to PostHog identity.
  * Must be called BEFORE any posthog.capture() calls.
  *
- * - Person source (e.g., "deepika"): calls posthog.identify() with
- *   the Firebase userId as distinct_id, sets person properties.
- * - Channel source (e.g., "instagram"): registers traffic_source as
+ * - Person hash (e.g., "deepika"): calls posthog.identify() with
+ *   the Firebase userId as distinct_id, sets tracker_hash property.
+ * - Channel hash (e.g., "instagram"): registers traffic_source as
  *   a super property on the anonymous user (no identify, cheaper).
  * - Always registers firebase_user_id on every visitor.
  */
@@ -37,6 +37,9 @@ export function identifyForPostHog(source?: string): void {
 
   const normalized = source.toLowerCase().trim();
 
+  // Always attach the tracker hash to every event in this session
+  posthog.register({ tracker_hash: normalized });
+
   if (isChannel(normalized)) {
     // Channel: don't identify, just tag events with source
     posthog.register({ traffic_source: normalized });
@@ -45,15 +48,14 @@ export function identifyForPostHog(source?: string): void {
     posthog.identify(
       userId || normalized,
       {
-        name: normalized,
-        source_name: normalized,
+        tracker_hash: normalized,
         firebase_user_id: userId,
         last_visit_at: new Date().toISOString(),
       },
       {
         first_visit_at: new Date().toISOString(),
+        first_tracker_hash: normalized,
       },
     );
-    posthog.register({ visitor_name: normalized });
   }
 }
