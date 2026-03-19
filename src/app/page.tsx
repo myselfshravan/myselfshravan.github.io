@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useCallback } from 'react';
 import { trackVisit } from '@/lib/analytics';
+import { identifyForPostHog } from '@/lib/posthog-identity';
 import { Header } from '@/components/layout/header';
 import { Hero } from '@/components/sections/hero';
 import { Skills } from '@/components/sections/skills';
@@ -45,7 +46,10 @@ export default function Home() {
       const params = new URLSearchParams(window.location.search);
       const hash = params.get('s');
 
-      // Track visit (with hash if present, or as organic)
+      // Identify in PostHog BEFORE any events fire
+      identifyForPostHog(hash || undefined);
+
+      // Track visit in Firebase
       trackVisit(hash || undefined);
       // If hash is present, remove it from URL without page reload
       if (hash) {
