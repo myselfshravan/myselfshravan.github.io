@@ -16,46 +16,45 @@ export function isChannel(source: string): boolean {
 }
 
 /**
- * Links the ?s= tracker hash to PostHog identity.
+ * Links the ?s= tracker hash and firebase_user_id to PostHog identity.
  * Must be called BEFORE any posthog.capture() calls.
  *
- * - Person hash (e.g., "deepika"): calls posthog.identify() with
- *   the Firebase userId as distinct_id, sets tracker_hash property.
- * - Channel hash (e.g., "instagram"): registers traffic_source as
- *   a super property on the anonymous user (no identify, cheaper).
- * - Always registers firebase_user_id on every visitor.
+ * Always calls posthog.identify() with the firebase userId so every
+ * visitor gets a person profile with firebase_user_id attached.
+ *
+ * - Person hash (e.g., "deepika"): sets tracker_hash as person property.
+ * - Channel hash (e.g., "instagram"): sets traffic_source as super property.
  */
 export function identifyForPostHog(source?: string): void {
   const userId = getUserId();
 
-  // Always attach firebase_user_id to every event
+  // Always identify with firebase userId — creates person profile for every visitor
   if (userId) {
-    posthog.register({ firebase_user_id: userId });
-  }
+    const personProps: Record<string, string> = {
+      firebase_user_id: userId,
+    };
+    const personPropsOnce: Record<string, string> = {
+      first_visit_at: new Date().toISOString(),
+    };
 
-  if (!source || !/^[a-zA-Z0-9]{3,20}$/.test(source)) return;
+    // Parse the tracker hash
+    const hasValidSource = source && /^[a-zA-Z0-9]{3,20}$/.test(source);
+    const normalized = hasValidSource ? source!.toLowerCase().trim() : null;
 
-  const normalized = source.toLowerCase().trim();
+    if (normalized) {
+      personProps.tracker_hash = normalized;
+      personProps.last_visit_at = new Date().toISOString();
+      personPropsOnce.first_tracker_hash = normalized;
 
-  // Always attach the tracker hash to every event in this session
-  posthog.register({ tracker_hash: normalized });
+      // Attach tracker_hash to every event in this session
+      posthog.register({ tracker_hash: normalized });
 
-  if (isChannel(normalized)) {
-    // Channel: don't identify, just tag events with source
-    posthog.register({ traffic_source: normalized });
-  } else {
-    // Person: identify so all events link to this person profile
-    posthog.identify(
-      userId || normalized,
-      {
-        tracker_hash: normalized,
-        firebase_user_id: userId,
-        last_visit_at: new Date().toISOString(),
-      },
-      {
-        first_visit_at: new Date().toISOString(),
-        first_tracker_hash: normalized,
-      },
-    );
+      if (isChannel(normalized)) {
+        personProps.traffic_source = normalized;
+        posthog.register({ traffic_source: normalized });
+      }
+    }
+
+    posthog.identify(userId, personProps, personPropsOnce);
   }
 }
