@@ -12,3 +12,4 @@ coverage/
 .vercel
 claude/*
 .claude
+latex_resume/
