@@ -191,7 +191,7 @@ This section contains the contents of the repository's files.
 
 <file path="public/assets/config.json">
 {
-  "resumeUrl": "Shravan_Resume_v9.pdf"
+  "resumeUrl": "Shravan_Resume_v19.pdf"
 }
 </file>
 
@@ -301,7 +301,7 @@ The site implements a dark/light theme toggle:
 - Project images: `assets/img/project_*.png`
 - Profile images: `assets/img/profile_*.jpg/png`
 - Education images: `assets/img/education_*.jpg`
-- Resume PDF: `Shravan_Resume_v9.pdf` (update filename in config.json when changed)
+- Resume PDF: `Shravan_Resume_v19.pdf` (update filename in config.json when changed)
 
 ## Key Features to Maintain
 
@@ -2464,7 +2464,7 @@ Please analyze the current codebase, understand the structure, and implement the
       "profile_6.png",
       "profile_7.png"
     ],
-    "resumeFile": "Shravan_Resume_v9.pdf"
+    "resumeFile": "Shravan_Resume_v19.pdf"
   },
   "social": {
     "linkedin": "https://www.linkedin.com/in/shravanrevanna",
@@ -6473,7 +6473,7 @@ export function trackExternalLink(url: string, title: string) {
       "profile_6.png",
       "profile_7.png"
     ],
-    "resumeFile": "Shravan_Resume_v9.pdf"
+    "resumeFile": "Shravan_Resume_v19.pdf"
   },
   "social": {
     "linkedin": "https://www.linkedin.com/in/shravanrevanna",

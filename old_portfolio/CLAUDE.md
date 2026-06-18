@@ -53,7 +53,7 @@ The site implements a dark/light theme toggle:
 - Project images: `assets/img/project_*.png`
 - Profile images: `assets/img/profile_*.jpg/png`
 - Education images: `assets/img/education_*.jpg`
-- Resume PDF: `Shravan_Resume_v9.pdf` (update filename in config.json when changed)
+- Resume PDF: `Shravan_Resume_v19.pdf` (update filename in config.json when changed)
 
 ## Key Features to Maintain
 
