@@ -1,0 +1,5 @@
+{
+  "name": "posthog-proxy",
+  "compatibility_date": "2026-07-13",
+  "main": "cloudflare-worker.js"
+}
