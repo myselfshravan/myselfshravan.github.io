@@ -1,8 +1,0 @@
-name = "posthog-proxy"
-main = "posthog-proxy-worker.js"
-compatibility_date = "2024-09-23"
-
-# Routes - this maps s.shravanrevanna.me/* to the worker
-routes = [
-  { pattern = "s.shravanrevanna.me/*", zone_name = "shravanrevanna.me" }
-]
