@@ -51,9 +51,12 @@ export default function Home() {
 
       // Track visit in Firebase
       trackVisit(hash || undefined);
-      // If hash is present, remove it from URL without page reload
+      // If the personal-link `s` param is present, remove only it (without a
+      // page reload) so other deep-link params — e.g. `?blog=<slug>` — survive.
       if (hash) {
-        window.history.replaceState({}, '', '/');
+        params.delete('s');
+        const remaining = params.toString();
+        window.history.replaceState({}, '', remaining ? `/?${remaining}` : '/');
       }
     }
   }, []); // Run once on mount
