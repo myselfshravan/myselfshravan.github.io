@@ -7,10 +7,10 @@
     "email": "shravanrevanna@gmail.com",
     "phone": "+91 9945332995",
     "location": "Bengaluru, India",
-    "bio": "Full-stack developer (with 150+ production projects) obsessed with shipping fast and automating everything. I dive into fundamentals, over-engineer when needed, and turn every friction point into a solved problem. Specializing in GenAI applications, AI Agentic Workflows, and production-ready systems.",
+    "bio": "Full-stack developer (with 180+ production projects) obsessed with shipping fast and automating everything. I dive into fundamentals, over-engineer when needed, and turn every friction point into a solved problem. Specializing in GenAI applications, AI Agentic Workflows, and production-ready systems.",
     "intro": [
       "Product Engineer at Klydo, building fashion-tech quick commerce. Previously shipped AI systems at Graphene AI and Udaan.",
-      "Built 150+ projects including production applications with thousands of active users.",
+      "Built 180+ projects including production applications with thousands of active users.",
       "Specialized in automation, GenAI solutions, and full-stack development with modern frameworks.",
       "Creator of NoteRep - a study platform serving 200+ active users with 85K+ views.",
       "I write about tech, build tools that save time, and contribute to meaningful projects."
@@ -148,7 +148,7 @@
         "linkText": "Try Web App",
         "description": "Personalized BMI-based meal generator using Llama 70B to craft perfect calorie-matched nutrition plans tailored to your body's needs",
         "tech": "Python, Streamlit, Llama 70B LLM",
-        "metrics": "39 GitHub stars and 34 Forks"
+        "metrics": "56 GitHub stars and 41 Forks"
       },
       {
         "name": "VigilAI - IoT Health Monitor",
@@ -353,17 +353,22 @@
       {
         "title": "My 6 AI Trading Agents Turned ₹10L into ₹23L in Just 1 Week",
         "url": "https://blog.shravanrevanna.me/6-autonomous-ai-agents-trade-stocks-with-my-money-in-realtime",
-        "description": "Built a multi-agent trading system (sudo-trade) where 6 AI agents autonomously research, debate, and trade Indian stocks. Two agents argue bull vs bear before every trade. 483 debates, 148+ trades, 370K tokens — all for under a dollar a day."
+        "description": "Built a multi-agent trading system (sudo-trade) where 6 AI agents autonomously research, debate, and trade Indian stocks. Two agents argue bull vs bear before every trade. 483 debates, 148+ trades, 370K tokens, all for $0.87 a day."
       },
       {
-        "title": "How I Hacked My Smart Lights and Things Got Way Out of Hand",
+        "title": "I Built a Chrome Dino Game Environment for Humans, and Agents",
+        "url": "https://blog.shravanrevanna.me/chrome-dino-game-environment",
+        "description": "Built a WebSocket-powered Chrome Dino environment where humans, bots, and LLMs play the same game. Solved inference latency by teaching an LLM to plan ahead instead of reacting, letting it run indefinitely at full speed."
+      },
+      {
+        "title": "Building an AI Pipeline That Lets a DJI Mini 3 Fly Itself",
+        "url": "https://blog.shravanrevanna.me/dji-mini-3-ai-autonomous-drone",
+        "description": "Built an end-to-end autonomous flight stack for a stock DJI Mini 3 using RTMP streaming, YOLO object detection, object tracking, AI planning, and DJI Virtual Stick with built-in safety controls."
+      },
+      {
+        "title": "How I Hacked My Smart Lights to sync with music, video and stock market portfolios",
         "url": "https://blog.shravanrevanna.me/i-hacked-my-smart-lights-and-things-got-way-out-of-hand",
         "description": "A fun deep-dive into how I hacked my smart lights, leading to an unexpected chain of events that spiraled out of control."
-      },
-      {
-        "title": "Migrating the old portfolio website to Next.js 15 with fingerprint tracking and AI chatbot integrated inside terminal.",
-        "url": "https://blog.shravanrevanna.me/how-i-transformed-static-html-portfolio-site-to-a-nextjs-page",
-        "description": "Rebuilt my old static HTML portfolio site to Next.js 15 with Turbopack, improving performance and developer experience."
       },
       {
         "title": "Inside NoteRep's AI Chatbot - Subtle Ads in responses",
@@ -389,7 +394,7 @@
   },
   "meta": {
     "title": "Shravan Revanna | AI Full-Stack Developer | Automation & GenAI Solutions",
-    "description": "AI full-stack developer with 150+ projects. I build automation tools, GenAI applications, and scalable solutions that solve real problems. Currently at udaanCapital.",
+    "description": "AI full-stack developer with 180+ projects. I build automation tools, GenAI applications, and scalable solutions that solve real problems. Currently at udaanCapital.",
     "keywords": "shravan revanna, AI developer, full-stack developer, automation, GenAI, machine learning, python developer, next.js developer",
     "googleSiteVerification": "gbboCIIlLPMipBxgBvVtFTKE40RWFYONeLI6IDmHJ40",
     "domain": "shravanrevanna.me"
