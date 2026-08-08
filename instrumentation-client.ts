@@ -31,13 +31,31 @@ posthog.init(process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN!, {
   ui_host: 'https://us.posthog.com',
   defaults: '2026-01-30',
   person_profiles: 'always',
+
+  // --- Enrichments (explicit overrides win over the `defaults` preset) ---
+  // Pageviews fire on load (and on history changes if routes are ever added).
+  capture_pageview: true,
+  // Autocapture: element-level clicks, change, submit events with CSS selectors.
+  autocapture: true,
+  // JS exceptions and unhandled promise rejections → $exception events.
   capture_exceptions: true,
-  // Disable the two features whose lazy-loaded addons fail to load through the
-  // proxy ("could not load recorder" / "failed to load script"). The `defaults`
-  // preset enables both; explicit flags override it (explicit config is spread
-  // after the preset). We don't use session replays or dead-click analytics on a
-  // static portfolio.
-  disable_session_recording: true,
+  // Core Web Vitals (LCP/INP/CLS/FCP/TTFB) → $web_vitals events. The web-vitals
+  // code is bundled into the SDK, so it does not lazy-load through the proxy.
+  capture_performance: { web_vitals: true },
+
+  // Session replay is ON. The recorder lazy-loads from `${api_host}/static/recorder.js`,
+  // which the reverse proxy serves from us-assets.i.posthog.com — verified working.
+  // The earlier "could not load recorder" failures were caused by a stale
+  // $dead_clicks_enabled_server_side flag forcing the dead-clicks addon to load
+  // (stripped above), not by the recorder itself.
+  disable_session_recording: false,
+  // Record network activity alongside the DOM for richer replays.
+  session_recording: {
+    recordCrossOriginIframes: true,
+  },
+  // Keep dead-clicks off: its addon is the part that historically failed through
+  // the proxy and we don't act on it for a static portfolio.
   capture_dead_clicks: false,
+
   debug: process.env.NODE_ENV === 'development',
 });
