@@ -209,6 +209,11 @@
   a.src:hover { border-bottom-color: var(--accent); }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
 
+  /* dashboard screenshot figure */
+  .dashshot { margin: 26px 0 0; }
+  .dashshot img { width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 12px; box-shadow: var(--shadow); display: block; background: var(--surface-2); }
+  .dashshot figcaption { font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink-3); margin-top: 10px; line-height: 1.5; max-width: 72ch; }
+
   @media (max-width: 720px) {
     .hero-band { grid-template-columns: repeat(2, 1fr); }
     .quality-grid { grid-template-columns: 1fr; }
@@ -419,6 +424,10 @@
       <h3>One command to run, one commit to ship</h3>
       <p><b>Local:</b> <code>docker compose up --build</code> brings up the API and worker against a single Postgres. No Redis, no SQS: Procrastinate uses the same Postgres as its queue. One-time DB setup is three commands. <b>Production:</b> one Docker image, two entrypoints (<code>ops-api</code>, <code>ops-worker</code>) on AWS ECS Fargate, fully defined in <b>13 Terraform files</b> (ECS, ALB, ECR, CloudFront, IAM, Secrets). Deploys are commit-message-driven in CI: put <code>#deploy-api</code>, <code>#deploy-worker</code> or <code>#deploy</code> in the merge and it builds, pushes to ECR, and rolls the service.</p>
       <p><b>Operate from a console, not a shell.</b> A FastAPI control plane exposes <b>37 endpoints</b>: trigger and watch crawls, browse the catalog and quality metrics, inspect the queue, prune dead-letters, sync the vector index, all behind JWT + RBAC. Crawls are idempotent and resumable (per-source checkpoints), locked one-per-brand, and reaped automatically if a worker dies. Adding a brand is config-only on a shared toolkit (~20 lines); bespoke platforms get a self-contained package that never touches core.</p>
+      <figure class="dashshot">
+        <img src="screenshots/dashboard_home_latest.png" alt="Spider ops dashboard home: catalog quantum, data quality, crawl queue and source freshness in one view" loading="lazy" />
+        <figcaption>The ops console in practice: catalog quantum, data quality, the crawl queue and source freshness, all in one view. Trigger a crawl, watch it run, browse the catalog, without touching a shell.</figcaption>
+      </figure>
     </div>
     <div class="moat">
       <h3>The moat: a contract-first seam</h3>

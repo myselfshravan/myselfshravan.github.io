@@ -20,12 +20,11 @@ function loadReportHtml(slug: string): string {
   const file = path.join(process.cwd(), 'src', 'content', 'gated', `${slug}.html`);
   let html = fs.readFileSync(file, 'utf8');
 
-  // klydo_pitch references sibling `screenshots/*.png`; host them under
-  // /content/<slug>/ and rewrite the paths to absolute so they resolve inside
-  // the iframe srcDoc (which has no base URL).
-  if (slug === 'klydo_pitch') {
-    html = html.replace(/screenshots\//g, '/content/klydo_pitch/screenshots/');
-  }
+  // Reports that reference sibling `screenshots/*.png` host them under
+  // /content/<slug>/screenshots/. Rewrite those relative paths to absolute so
+  // they resolve inside the iframe srcDoc (which has no base URL). No-op for
+  // reports that don't reference screenshots.
+  html = html.replace(/screenshots\//g, `/content/${slug}/screenshots/`);
 
   return html;
 }
