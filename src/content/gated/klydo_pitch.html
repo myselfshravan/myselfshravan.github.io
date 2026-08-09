@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Klydo — What we built, and how it ended</title>
+<style>
+  :root{
+    --bg:#0a0a0d; --bg2:#0e0e13; --surface:rgba(255,255,255,.035);
+    --surface-2:rgba(255,255,255,.055); --border:rgba(255,255,255,.09);
+    --border-2:rgba(255,255,255,.14);
+    --ink:#EDEDF2; --ink-2:#A6A6B2; --muted:#6C6C79;
+    --violet:#8B7CFF; --pink:#FF7EA8; --teal:#17A08E; --ochre:#BD7A22;
+    --good:#4ECf9A;
+    --grad:linear-gradient(100deg,#9A8CFF 0%,#FF7EA8 60%,#FFB27E 100%);
+    --maxw:1080px;
+    --serif:"Georgia","Iowan Old Style","Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Segoe UI",Roboto,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--sans);
+    line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    background-image:
+      radial-gradient(60rem 40rem at 78% -8%, rgba(139,124,255,.18), transparent 60%),
+      radial-gradient(50rem 40rem at 5% 8%, rgba(255,126,168,.10), transparent 55%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  section{padding:88px 0;border-top:1px solid rgba(255,255,255,.05)}
+  section:first-of-type{border-top:none}
+  h2{font-family:var(--serif);font-weight:600;font-size:clamp(28px,4.2vw,44px);letter-spacing:-.01em;line-height:1.1}
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--violet);font-weight:600;margin-bottom:18px}
+  p.lead{color:var(--ink-2);font-size:clamp(16px,2vw,19px);max-width:62ch;margin-top:18px}
+  a{color:var(--violet);text-decoration:none}
+
+  /* ---- top bar ---- */
+  .nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+    background:rgba(10,10,13,.62);border-bottom:1px solid rgba(255,255,255,.06)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:-.01em}
+  .brand b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav nav{display:flex;gap:26px;font-size:14px;color:var(--ink-2)}
+  .nav nav a:hover{color:var(--ink)}
+  @media(max-width:720px){.nav nav{display:none}}
+
+  /* ---- hero ---- */
+  .hero{padding:96px 0 64px;position:relative}
+  .status{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;color:var(--ink-2);
+    border:1px solid var(--border);background:var(--surface);padding:7px 14px;border-radius:999px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--pink);box-shadow:0 0 0 4px rgba(255,126,168,.15)}
+  .hero h1{font-family:var(--serif);font-weight:600;letter-spacing:-.02em;line-height:1.02;
+    font-size:clamp(46px,9vw,104px);margin:24px 0 0}
+  .hero h1 .k{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .tag{font-family:var(--serif);font-style:italic;color:var(--ink-2);
+    font-size:clamp(20px,3.2vw,30px);margin-top:12px;max-width:22ch}
+  .hero p.lead{margin-top:26px}
+  .arc{margin-top:34px;display:flex;flex-wrap:wrap;gap:10px}
+  .arc span{font-size:13px;color:var(--ink-2);border:1px solid var(--border);border-radius:999px;padding:6px 13px;background:var(--surface)}
+  .arc span b{color:var(--ink);font-weight:600}
+  .hero-stats{margin-top:46px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:720px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
+  .hstat{border:1px solid var(--border);background:var(--surface);border-radius:16px;padding:18px}
+  .hstat .n{font-size:clamp(22px,3vw,30px);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .hstat .l{font-size:12.5px;color:var(--ink-2);margin-top:4px}
+
+  /* ---- generic cards / grids ---- */
+  .grid{display:grid;gap:16px}
+  .cols-2{grid-template-columns:1fr 1fr}
+  .cols-3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:820px){.cols-2,.cols-3{grid-template-columns:1fr}}
+  .card{border:1px solid var(--border);background:var(--surface);border-radius:18px;padding:26px}
+  .card:hover{border-color:var(--border-2);background:var(--surface-2)}
+  .card h3{font-size:18px;font-weight:650;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+  .card p{color:var(--ink-2);font-size:14.5px;margin-top:10px}
+  .chip-ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:15px;
+    background:rgba(139,124,255,.14);border:1px solid rgba(139,124,255,.28)}
+  .proof{margin-top:14px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--border);padding-top:12px}
+  .proof b{color:var(--ink-2);font-weight:600}
+
+  /* ---- stat grid ---- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:820px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{border:1px solid var(--border);background:var(--surface);border-radius:16px;padding:20px}
+  .stat .n{font-size:clamp(24px,3.4vw,32px);font-weight:750;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+  .stat .n small{font-size:15px;font-weight:600;color:var(--ink-2);letter-spacing:0}
+  .stat .l{font-size:13px;color:var(--ink-2);margin-top:8px}
+  .stat .s{font-size:11px;color:var(--muted);margin-top:3px}
+
+  /* ---- chart ---- */
+  .panel{border:1px solid var(--border);background:var(--surface);border-radius:20px;padding:26px 22px 14px}
+  .panel .head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;padding:0 4px 8px}
+  .panel .head .t{font-size:15px;font-weight:650}
+  .panel .head .sub{font-size:12.5px;color:var(--muted)}
+  .chartbox{position:relative;width:100%;overflow-x:auto}
+  svg .grid-l{stroke:rgba(255,255,255,.07);stroke-width:1}
+  svg .axis-t{fill:var(--muted);font-size:11px;font-family:var(--sans)}
+  .tt{position:absolute;pointer-events:none;opacity:0;transform:translate(-50%,-115%);
+    background:rgba(20,20,26,.96);border:1px solid var(--border-2);border-radius:10px;padding:8px 11px;
+    font-size:12px;white-space:nowrap;transition:opacity .1s;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+  .tt b{font-size:14px}
+  .tt .g{color:var(--ink-2)}
+
+  /* ---- payment mix bar ---- */
+  .mixbar{display:flex;gap:2px;height:22px;border-radius:7px;overflow:hidden;margin-top:6px}
+  .mixbar i{display:block;height:100%}
+  .mixleg{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px;font-size:13px;color:var(--ink-2)}
+  .mixleg span{display:inline-flex;align-items:center;gap:8px}
+  .sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+  /* ---- meter ---- */
+  .meter{height:10px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:8px}
+  .meter i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),#39c9b3)}
+
+  /* ---- spotlight ---- */
+  .spot{position:relative;border-radius:22px;padding:1.5px;margin-top:34px;
+    background:linear-gradient(135deg,rgba(139,124,255,.55),rgba(255,126,168,.28) 55%,rgba(255,178,126,.22))}
+  .spot-in{background:#0c0c11;border-radius:20px;padding:30px;display:grid;grid-template-columns:1.3fr .7fr;gap:32px;align-items:center}
+  @media(max-width:820px){.spot-in{grid-template-columns:1fr;gap:24px}}
+  .spot .flag{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--violet);font-weight:700}
+  .spot h3{font-family:var(--serif);font-size:clamp(22px,3vw,28px);font-weight:600;letter-spacing:-.01em;margin-top:8px}
+  .spot p{color:var(--ink-2);font-size:14.5px;margin-top:12px}
+  .mstrip{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+  .mstrip .m{border:1px solid var(--border);background:var(--surface);border-radius:12px;padding:13px 14px}
+  .mstrip .m .n{font-size:19px;font-weight:750;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .mstrip .m .l{font-size:11.5px;color:var(--ink-2);margin-top:3px;line-height:1.35}
+
+  /* ---- device / screenshot frames ---- */
+  .phone{border:1px solid var(--border-2);background:#0b0b0f;border-radius:26px;padding:7px;
+    box-shadow:0 20px 50px rgba(0,0,0,.5);max-width:260px;margin:0 auto}
+  .phone img{display:block;width:100%;border-radius:20px}
+  .phone.sm{flex:1 1 0;min-width:0;max-width:150px;border-radius:20px;padding:5px}
+  .phone.sm img{border-radius:15px}
+  .phone.align-center{align-self:center}
+  .shot{border:1px solid var(--border-2);background:#0b0b0f;border-radius:16px;padding:6px;
+    box-shadow:0 16px 40px rgba(0,0,0,.42);max-width:340px;margin:0 auto}
+  .shot img{display:block;width:100%;border-radius:11px}
+
+  /* ---- feature showcase ---- */
+  .showcase{margin-top:22px;display:flex;flex-direction:column;gap:20px}
+  .show{display:grid;grid-template-columns:310px 1fr;gap:34px;align-items:center;
+    border:1px solid var(--border);background:var(--surface);border-radius:20px;padding:26px}
+  .show.rev{grid-template-columns:1fr 310px}
+  .show.rev .show-media{order:2}
+  @media(max-width:760px){.show,.show.rev{grid-template-columns:1fr;gap:20px}.show.rev .show-media{order:0}}
+  .show-media{display:flex;gap:12px;justify-content:center;flex-wrap:nowrap}
+  .show h4{font-size:19px;font-weight:650;letter-spacing:-.01em;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .show .kick{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--violet);font-weight:700;margin-bottom:6px}
+  .show p{color:var(--ink-2);font-size:14.5px;margin-top:10px}
+  .bigstat{display:inline-flex;align-items:baseline;gap:10px;margin-top:16px;flex-wrap:wrap;
+    border:1px solid rgba(78,207,154,.3);background:rgba(78,207,154,.08);border-radius:11px;padding:9px 14px}
+  .bigstat .n{font-size:19px;font-weight:750;color:#7be0b5;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .bigstat .l{font-size:12px;color:var(--ink-2)}
+
+  /* ---- timeline ---- */
+  .tl{position:relative;margin-top:14px;padding-left:4px}
+  .tl-row{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:15px 0;border-bottom:1px solid var(--border)}
+  .tl-row:last-child{border-bottom:none}
+  .tl-date{font-size:13px;color:var(--violet);font-weight:600;font-variant-numeric:tabular-nums;padding-top:1px}
+  .tl-body b{font-weight:650}
+  .tl-body p{color:var(--ink-2);font-size:14px;margin-top:3px}
+  @media(max-width:600px){.tl-row{grid-template-columns:1fr;gap:4px}}
+
+  /* ---- ending ---- */
+  .quote{border-left:2px solid var(--violet);padding:6px 0 6px 22px;margin-top:22px;
+    font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.3vw,21px);color:var(--ink);max-width:60ch;line-height:1.5}
+  .endgrid{display:grid;grid-template-columns:1.15fr 1fr;gap:16px;margin-top:30px}
+  @media(max-width:820px){.endgrid{grid-template-columns:1fr}}
+
+  /* ---- chips ---- */
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:8px}
+  .chips span{font-size:12.5px;color:var(--ink-2);border:1px solid var(--border);background:var(--surface);
+    padding:6px 12px;border-radius:8px}
+  .chips span:hover{color:var(--ink);border-color:var(--border-2)}
+
+  /* footer */
+  footer{padding:52px 0 70px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,.06)}
+  footer b{color:var(--ink-2)}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+  .rv.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<div class="nav"><div class="wrap">
+  <div class="brand"><b>Klydo</b></div>
+  <nav>
+    <a href="#company">The company</a>
+    <a href="#numbers">By the numbers</a>
+    <a href="#built">What I built</a>
+    <a href="#ending">How it ended</a>
+  </nav>
+</div></div>
+
+<!-- HERO -->
+<header class="hero"><div class="wrap">
+  <div class="status"><span class="dot"></span> Consumer business wound down · July 2026 · company pivoting</div>
+  <h1><span class="k">Klydo</span></h1>
+  <div class="tag">Fashion you could try at home before you paid.</div>
+  <p class="lead">A Gen-Z fashion app in Bengaluru with same-day delivery and a Try-Now-Pay-Later credit
+    product. Built zero-to-one, scaled to ~50,000 orders in under a year, then wound down cleanly as the
+    company pivoted. This is what we built, what the numbers said, and how it ended — told from the seat
+    of a founding-era engineer.</p>
+
+  <div class="arc">
+    <span><b>Sep 2025</b> first orders</span>
+    <span><b>Mar 2026</b> peak · 14,978 orders/mo</span>
+    <span><b>Jun 2026</b> last orders</span>
+    <span><b>Jul 8 2026</b> shutdown · pivot</span>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hstat"><div class="n">₹15.65 Cr</div><div class="l">Gross merchandise value</div></div>
+    <div class="hstat"><div class="n">49,619</div><div class="l">Orders delivered / placed</div></div>
+    <div class="hstat"><div class="n">1.86 h</div><div class="l">Median delivery time</div></div>
+    <div class="hstat"><div class="n">87,133</div><div class="l">Real users acquired</div></div>
+  </div>
+</div></header>
+
+<!-- COMPANY -->
+<section id="company"><div class="wrap">
+  <div class="eyebrow rv">The company</div>
+  <h2 class="rv">What Klydo was</h2>
+  <p class="lead rv">Klydo set out to make fashion feel as instant and low-risk as it should be for people
+    who grew up online. Two ideas made it distinctive: get the clothes to your door the same day, and let
+    you <em>try them on at home and pay only for what you keep</em>. Underneath a playful shopping app sat a
+    real quick-fulfillment operation and a real consumer-credit engine.</p>
+
+  <div class="grid cols-3" style="margin-top:34px">
+    <div class="card rv"><h3><span class="chip-ic">⚡</span> Same-day fashion</h3>
+      <p>One dark store, geofenced delivery zones and slotted routing put most orders on the doorstep in
+        under two hours — fast for fashion, without pretending to be 15-minute grocery.</p>
+      <div class="proof"><b>Median 1.86 h</b> · 52% under 2 h · 99.7% same-day</div></div>
+    <div class="card rv"><h3><span class="chip-ic">💳</span> Try-Now-Pay-Later</h3>
+      <p>Receive it, try it, pay if you keep it. A great customer promise and a hard risk problem — backed
+        by automated underwriting and an LLM fraud-review pipeline with human review for the edge cases.</p>
+      <div class="proof"><b>276,045</b> users approved for credit · <b>331K</b> underwriting checks</div></div>
+    <div class="card rv"><h3><span class="chip-ic">🧩</span> Server-driven app</h3>
+      <p>Home, cart and order screens were rendered from backend-defined components (SDUI) — so
+        merchandising, multi-cart and even an iOS home-screen widget shipped without app releases.</p>
+      <div class="proof"><b>30+</b> SDUI components · Flutter + Kotlin</div></div>
+  </div>
+</div></section>
+
+<!-- NUMBERS -->
+<section id="numbers"><div class="wrap">
+  <div class="eyebrow rv">By the numbers</div>
+  <h2 class="rv">~9.5 months of operating history</h2>
+  <p class="lead rv">Every figure below is drawn from production data (19 Sep 2025 – 29 Jun 2026) and
+    reconciled against an independent migration export.</p>
+
+  <div class="stats rv" style="margin-top:34px">
+    <div class="stat"><div class="n">₹15.65<small> Cr</small></div><div class="l">GMV (gross)</div><div class="s">₹5.30 Cr net revenue</div></div>
+    <div class="stat"><div class="n">49,619</div><div class="l">Valid orders</div><div class="s">99.97% completed · 83.4K items</div></div>
+    <div class="stat"><div class="n">32,158</div><div class="l">Paying customers</div><div class="s">of 87,133 users · 24.8% repeat</div></div>
+    <div class="stat"><div class="n">737</div><div class="l">Orders in one day</div><div class="s">peak — 4 Apr 2026</div></div>
+    <div class="stat"><div class="n">276,045</div><div class="l">TNPL credit approvals</div><div class="s">331K underwriting evaluations</div></div>
+    <div class="stat"><div class="n">6,985</div><div class="l">LLM fraud checks</div><div class="s">~20.6M tokens · 765 write-offs caught</div></div>
+    <div class="stat"><div class="n">48,425</div><div class="l">SKUs in catalog</div><div class="s">15,252 products · ~93 categories</div></div>
+    <div class="stat"><div class="n">~97%</div><div class="l">Revenue from Bengaluru</div><div class="s">a focused single-city model</div></div>
+  </div>
+
+  <!-- GROWTH CHART -->
+  <div class="panel rv" style="margin-top:26px">
+    <div class="head">
+      <div class="t">Orders per month — launch, hockey-stick, peak, wind-down</div>
+      <div class="sub">Sep 2025 → Jun 2026 · hover for detail</div>
+    </div>
+    <div class="chartbox" id="chartbox">
+      <svg id="chart" viewBox="0 0 920 320" width="100%" preserveAspectRatio="xMidYMid meet" role="img"
+           aria-label="Monthly order volume from September 2025 to June 2026, peaking near 15,000 in March 2026."></svg>
+      <div class="tt" id="tt"></div>
+    </div>
+  </div>
+
+  <!-- payment mix + delivery -->
+  <div class="grid cols-2 rv" style="margin-top:16px">
+    <div class="panel">
+      <div class="head"><div class="t">How customers paid</div><div class="sub">share of orders</div></div>
+      <div style="padding:6px 4px 4px">
+        <div class="mixbar">
+          <i style="width:52%;background:var(--violet)"></i>
+          <i style="width:24%;background:var(--teal)"></i>
+          <i style="width:24%;background:var(--ochre)"></i>
+        </div>
+        <div class="mixleg">
+          <span><i class="sw" style="background:var(--violet)"></i> Prepaid <b style="color:var(--ink)">52%</b></span>
+          <span><i class="sw" style="background:var(--teal)"></i> Try-Now-Pay-Later <b style="color:var(--ink)">24%</b></span>
+          <span><i class="sw" style="background:var(--ochre)"></i> Pay-on-delivery <b style="color:var(--ink)">24%</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="head"><div class="t">Delivery speed</div><div class="sub">order → doorstep</div></div>
+      <div style="padding:6px 4px 4px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2)">
+          <span>Delivered within 2 hours</span><b style="color:var(--ink)">52%</b>
+        </div>
+        <div class="meter"><i style="width:52%"></i></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2);margin-top:14px">
+          <span>Delivered same-day (&lt;24h)</span><b style="color:var(--ink)">99.7%</b>
+        </div>
+        <div class="meter"><i style="width:99.7%"></i></div>
+        <div class="proof" style="margin-top:16px">Median <b>1.86 h</b> · mean 3.46 h · from a single dark store across 12 live delivery zones.</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- WHAT I BUILT -->
+<section id="built"><div class="wrap">
+  <div class="eyebrow rv">My contribution</div>
+  <h2 class="rv">What I built</h2>
+  <p class="lead rv">I was a founding-era engineer on a small core team — full-stack across a Kotlin/Ktor
+    backend and a Flutter app, for about six months through the company's fastest-growing period. I wasn't
+    the highest-volume committer, and I'd rather be honest about that: what I owned, I owned end-to-end.
+    Roughly <b style="color:var(--ink)">131 merged production changes</b> across the two repos.</p>
+
+  <!-- SHERLOCK SPOTLIGHT -->
+  <div class="spot rv"><div class="spot-in">
+    <div>
+      <div class="flag">Flagship · TNPL credit engine</div>
+      <h3>Sherlock — the agent that opened up credit</h3>
+      <p>For months, Try-Now-Pay-Later was a members-only privilege gated by a static risk score, because
+        manual review didn't scale. I built <b style="color:var(--ink)">Sherlock</b>: an AI order-evaluation
+        agent — a 24-signal collector, a scoring engine, and an LLM fraud reviewer — that decides which orders
+        ship on credit and routes only the genuinely ambiguous ones to a human. On one morning in April 2026
+        we deleted the old gate and opened TNPL to <em>every</em> user. Fraud stayed flat; the admin chase
+        queue emptied.</p>
+      <div class="mstrip">
+        <div class="m"><div class="n">0 → 58%</div><div class="l">of TNPL orders auto-decided end-to-end</div></div>
+        <div class="m"><div class="n">₹16.21 L</div><div class="l">shipped with zero human touch</div></div>
+        <div class="m"><div class="n">₹5.20 L</div><div class="l">fraud blocked · 100% precision (346 orders)</div></div>
+        <div class="m"><div class="n">3× faster</div><div class="l">order → payment: 1.2 → 0.4 days</div></div>
+      </div>
+      <div class="proof">First 26 days in production · 95.6% TNPL coverage · admin chase queue down <b>9×</b> · LLM upgraded to Claude Opus · shipped as <b>PRs #814 / #855 / #908 / #945</b> (mine)</div>
+    </div>
+    <div class="show-media"><div class="phone"><img src="screenshots/sherlock_metrics.png" alt="Sherlock TNPL agent performance metrics" loading="lazy"/></div></div>
+  </div></div>
+
+  <!-- FEATURE SHOWCASE -->
+  <div class="eyebrow rv" style="margin-top:52px">Growth &amp; conversion I shipped</div>
+  <div class="showcase">
+
+    <div class="show rv">
+      <div class="show-media"><div class="shot"><img src="screenshots/d2r_feature_cart_page.png" alt="Distance-to-Reward progress banner in cart" loading="lazy"/></div></div>
+      <div>
+        <div class="kick">Basket-building</div>
+        <h4>🎯 D2R — "spend ₹X more, unlock ₹Y off"</h4>
+        <p>A cart-level Distance-to-Reward banner showing live progress toward the next coupon unlock —
+          turning "add one more thing" into a visible, satisfying goal. I designed the progress model and
+          shipped it across backend and app. It became one of the most direct levers on basket size.</p>
+        <div class="bigstat"><span class="n">~₹900 → ~₹1,100</span><span class="l">average order value lifted · ≈ +22%</span></div>
+      </div>
+    </div>
+
+    <div class="show rev rv">
+      <div>
+        <div class="kick">Conversion nudges</div>
+        <h4>⏳ Urgency construct — scarcity, done honestly</h4>
+        <p>Low-stock urgency badges ("only a few left") wired into the cart and product cards, driven by
+          <em>real reservation-aware inventory</em> — not fake countdowns. A small, honest nudge that pushed
+          hesitant carts over the line without eroding trust, tunable by a stock threshold.</p>
+      </div>
+      <div class="show-media"><div class="phone"><img src="screenshots/urgency_construct_cart_page.png" alt="Low-stock urgency badge in cart" loading="lazy"/></div></div>
+    </div>
+
+    <div class="show rv">
+      <div class="show-media"><div class="phone"><img src="screenshots/referral_code_cart_page.png" alt="Referral code auto-applied in cart" loading="lazy"/></div></div>
+      <div>
+        <div class="kick">The big one</div>
+        <h4>🎁 Referral — a growth loop, end to end</h4>
+        <p>The referral system was the largest thing I owned. Deep-link capture with <em>auto-apply</em> —
+          share a link, the code lands in your cart with zero typing — plus an earnings wallet, leaderboard,
+          and post-return re-evaluation so rewards stayed honest. Frontend and backend, mine end-to-end, and
+          a real low-friction acquisition channel.</p>
+        <div class="bigstat"><span class="n">47,318</span><span class="l">referral codes generated · 3,264 rewards paid</span></div>
+      </div>
+    </div>
+
+    <div class="show rev rv">
+      <div>
+        <div class="kick">Money back in your pocket</div>
+        <h4>👛 Wallet &amp; withdrawals</h4>
+        <p>The earnings wallet that referral and cashback paid into — balances, transaction history, and a
+          real bank/UPI withdrawal flow, including the reconciliation fixes that correctly handled failed
+          payouts and payout amounts. At shutdown it held a fully-accounted balance owed, ready to settle
+          cleanly.</p>
+        <div class="bigstat"><span class="n">₹69,457</span><span class="l">wallet balance reconciled across 283 users at wind-down</span></div>
+      </div>
+      <div class="show-media">
+        <div class="phone sm"><img src="screenshots/earnings_page.png" alt="Wallet and rewards page" loading="lazy"/></div>
+        <div class="phone sm align-center"><img src="screenshots/profile_page.png" alt="Withdraw earnings flow" loading="lazy"/></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REMAINING CARDS -->
+  <div class="eyebrow rv" style="margin-top:52px">And the plumbing underneath</div>
+  <div class="grid cols-3" style="margin-top:16px">
+    <div class="card rv"><h3><span class="chip-ic">🛒</span> Cart V2 &amp; checkout</h3>
+      <p>SDUI-driven multi-cart with three payment modes (prepaid / POD / TNPL) and pay-on-delivery
+        guardrails that blocked high-risk consecutive cash orders while protecting conversion.</p>
+      <div class="proof"><b>3 payment modes</b> · coupon race &amp; post-order cleanup fixed</div></div>
+    <div class="card rv"><h3><span class="chip-ic">📡</span> Catalog distribution</h3>
+      <p>Meta Commerce + Google Merchant Center sync via an AWS Lambda ingestion endpoint, pushing a
+        ~48K-SKU catalog to external shopping surfaces with returnable/stock rules and Slack alerts.</p>
+      <div class="proof"><b>~48K SKUs</b> to Meta + GMC</div></div>
+    <div class="card rv"><h3><span class="chip-ic">🛠️</span> Production reliability</h3>
+      <p>Killed a class of 500s with R2DBC connection-pool validation, and fixed a reservation-cache
+        double-decrement that silently oversubscribed stock under concurrency. Mentored 2 interns.</p>
+      <div class="proof"><b>Fewer 500s</b> · correct stock reservations · 2 interns mentored</div></div>
+  </div>
+
+  <div class="rv" style="margin-top:34px">
+    <div class="eyebrow" style="margin-bottom:12px">The stack I worked in</div>
+    <div class="chips">
+      <span>Kotlin 2.2</span><span>Ktor 3.2</span><span>R2DBC · Exposed</span><span>PostgreSQL</span>
+      <span>Redis</span><span>Koin DI</span><span>Flutter</span><span>Riverpod</span><span>AutoRoute</span>
+      <span>Stac SDUI</span><span>Razorpay</span><span>JioOne</span><span>Juspay</span>
+      <span>OpenAI · Claude</span><span>CleverTap</span><span>Mixpanel</span><span>AWS S3 · Lambda</span>
+      <span>Meta / GMC</span><span>OpenTelemetry · SigNoz</span>
+    </div>
+  </div>
+</div></section>
+
+<!-- HOW IT ENDED -->
+<section id="ending"><div class="wrap">
+  <div class="eyebrow rv">The ending</div>
+  <h2 class="rv">How it finally ended</h2>
+  <p class="lead rv">On 8 July 2026 Klydo stopped taking new orders. There was no dramatic outage — the
+    wind-down was engineered as carefully as a launch. The backend began answering the consumer app with a
+    polite <code style="color:var(--pink)">410 Gone</code>, while admin tools, webhooks and health checks kept
+    running so order history and support stayed available. The app itself showed a farewell screen.</p>
+
+  <div class="quote rv">"We've stopped taking new orders on Klydo, effective today. The app will remain
+    available for the next few days — for order history, support, or anything else you need. Klydo is pivoting
+    in a new direction based on everything we've learned so far… This isn't goodbye. It's the beginning of
+    what's next."
+    <div style="font-family:var(--sans);font-style:normal;font-size:12.5px;color:var(--muted);margin-top:10px">— the in-app shutdown notice</div>
+  </div>
+
+  <div class="endgrid">
+    <div class="panel rv">
+      <div class="head"><div class="t">The arc, end to end</div></div>
+      <div class="tl">
+        <div class="tl-row"><div class="tl-date">Sep 2025</div><div class="tl-body"><b>First orders.</b><p>37 orders in the first partial month — the beginning of a single-city test.</p></div></div>
+        <div class="tl-row"><div class="tl-date">Oct–Dec 2025</div><div class="tl-body"><b>Finding product-market fit.</b><p>Hundreds, then a few thousand orders a month; TNPL and same-day delivery start clicking.</p></div></div>
+        <div class="tl-row"><div class="tl-date">Jan–Feb 2026</div><div class="tl-body"><b>Scaling.</b><p>4,101 → 9,076 orders/month; credit underwriting and fraud tooling hardened.</p></div></div>
+        <div class="tl-row"><div class="tl-date">Mar–Apr 2026</div><div class="tl-body"><b>Peak.</b><p>14,978 orders in March; ₹4.13 Cr GMV in April — the high-water mark.</p></div></div>
+        <div class="tl-row"><div class="tl-date">May–Jun 2026</div><div class="tl-body"><b>Wind-down.</b><p>Volume tapers as the company reconsiders direction; last orders on 29 June.</p></div></div>
+        <div class="tl-row"><div class="tl-date">8 Jul 2026</div><div class="tl-body"><b>Shutdown &amp; pivot.</b><p>Consumer app closed gracefully; the company turns toward its next chapter.</p></div></div>
+      </div>
+    </div>
+    <div class="grid" style="gap:16px">
+      <div class="card rv"><h3><span class="chip-ic">🧾</span> Wound down responsibly</h3>
+        <p>A full source-backed shutdown archive was produced: the customer identity graph, order history,
+          wallet ledger and segmentation — with a data-retention and privacy plan. Outstanding wallet
+          balances (₹69,457 across 283 users) flagged to be settled before the entity closes.</p></div>
+      <div class="card rv"><h3><span class="chip-ic">🌱</span> Not the end of the story</h3>
+        <p>The consumer business paused, but the hard parts — a credit/underwriting stack, an SDUI engine,
+          catalog connectors and a clean identity graph — are the reusable foundation the company is
+          carrying into its new direction.</p></div>
+    </div>
+  </div>
+
+  <p class="lead rv" style="margin-top:34px">Not every company continues, and this one is pivoting. What
+    stays with me isn't the outcome — it's what it felt like to ship a credit product from scratch, to get a
+    2&nbsp;a.m. page and fix it, and to watch a referral flow you wrote quietly become a real acquisition
+    channel. On to what's next.</p>
+</div></section>
+
+<footer><div class="wrap">
+  <b>Klydo</b> — Gen-Z fashion, same-day delivery &amp; Try-Now-Pay-Later · Bengaluru, 2025–2026.<br/>
+  Figures reconciled from production data (19 Sep 2025 – 29 Jun 2026) and an independent migration export.
+  Aggregate and rounded; no customer data shown. A personal engineering retrospective.
+</div></footer>
+
+<script>
+(function(){
+  // ----- growth chart -----
+  var data=[
+    {m:'Sep',orders:37,gmv:'₹0.01 Cr'},{m:'Oct',orders:393,gmv:'₹0.08 Cr'},
+    {m:'Nov',orders:909,gmv:'₹0.27 Cr'},{m:'Dec',orders:1600,gmv:'₹0.54 Cr'},
+    {m:'Jan',orders:4101,gmv:'₹1.45 Cr'},{m:'Feb',orders:9076,gmv:'₹2.67 Cr'},
+    {m:'Mar',orders:14978,gmv:'₹4.10 Cr'},{m:'Apr',orders:12497,gmv:'₹4.13 Cr'},
+    {m:'May',orders:3484,gmv:'₹1.39 Cr'},{m:'Jun',orders:1706,gmv:'₹0.69 Cr'}
+  ];
+  var W=920,H=320,pl=48,pr=24,pt=24,pb=40;
+  var iw=W-pl-pr, ih=H-pt-pb, max=15500;
+  var X=function(i){return pl + i*(iw/(data.length-1));};
+  var Y=function(v){return pt + ih - (v/max)*ih;};
+  var svg=document.getElementById('chart');
+  var NS='http://www.w3.org/2000/svg';
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e;}
+
+  [0,3000,6000,9000,12000,15000].forEach(function(g){
+    svg.appendChild(el('line',{x1:pl,y1:Y(g),x2:W-pr,y2:Y(g),'class':'grid-l'}));
+    var t=el('text',{x:pl-10,y:Y(g)+4,'class':'axis-t','text-anchor':'end'});
+    t.textContent=g>=1000?(g/1000)+'k':g; svg.appendChild(t);
+  });
+  data.forEach(function(d,i){
+    var t=el('text',{x:X(i),y:H-14,'class':'axis-t','text-anchor':'middle'});
+    t.textContent=d.m; svg.appendChild(t);
+  });
+
+  function path(close){
+    var s='';
+    for(var i=0;i<data.length;i++){
+      var x=X(i), y=Y(data[i].orders);
+      if(i===0){s+='M'+x+' '+y;}
+      else{
+        var px=X(i-1), py=Y(data[i-1].orders), cx=(px+x)/2;
+        s+='C'+cx+' '+py+' '+cx+' '+y+' '+x+' '+y;
+      }
+    }
+    if(close){ s+='L'+X(data.length-1)+' '+Y(0)+' L'+X(0)+' '+Y(0)+' Z'; }
+    return s;
+  }
+  var grad=el('linearGradient',{id:'ag',x1:0,y1:0,x2:0,y2:1});
+  grad.appendChild(el('stop',{offset:'0%','stop-color':'#8B7CFF','stop-opacity':'0.42'}));
+  grad.appendChild(el('stop',{offset:'100%','stop-color':'#8B7CFF','stop-opacity':'0'}));
+  var defs=el('defs',{}); defs.appendChild(grad); svg.appendChild(defs);
+  svg.appendChild(el('path',{d:path(true),fill:'url(#ag)'}));
+  svg.appendChild(el('path',{d:path(false),fill:'none',stroke:'#8B7CFF','stroke-width':2.5,'stroke-linecap':'round','stroke-linejoin':'round'}));
+
+  var pk=6;
+  svg.appendChild(el('circle',{cx:X(pk),cy:Y(data[pk].orders),r:4.5,fill:'#0a0a0d',stroke:'#8B7CFF','stroke-width':2.5}));
+  var pl2=el('text',{x:X(pk),y:Y(data[pk].orders)-14,'class':'axis-t','text-anchor':'middle',fill:'#EDEDF2','font-weight':'700'});
+  pl2.textContent='14,978'; svg.appendChild(pl2);
+
+  var tt=document.getElementById('tt'), box=document.getElementById('chartbox');
+  var cross=el('line',{x1:0,y1:pt,x2:0,y2:pt+ih,stroke:'rgba(255,255,255,.22)','stroke-width':1,opacity:0});
+  var hd=el('circle',{r:5,fill:'#8B7CFF',stroke:'#0a0a0d','stroke-width':2,opacity:0});
+  svg.appendChild(cross); svg.appendChild(hd);
+  var hit=el('rect',{x:0,y:0,width:W,height:H,fill:'transparent'}); svg.appendChild(hit);
+  function move(ev){
+    var r=svg.getBoundingClientRect(), sx=W/r.width;
+    var mx=(ev.clientX-r.left)*sx;
+    var i=Math.round((mx-pl)/(iw/(data.length-1)));
+    i=Math.max(0,Math.min(data.length-1,i));
+    var x=X(i), y=Y(data[i].orders);
+    cross.setAttribute('x1',x);cross.setAttribute('x2',x);cross.setAttribute('opacity',1);
+    hd.setAttribute('cx',x);hd.setAttribute('cy',y);hd.setAttribute('opacity',1);
+    tt.style.opacity=1;
+    tt.style.left=(x/sx)+'px'; tt.style.top=(y/sx)+'px';
+    tt.innerHTML='<b>'+data[i].orders.toLocaleString()+'</b> orders<br><span class="g">'+data[i].m+' · '+data[i].gmv+' GMV</span>';
+  }
+  function leave(){cross.setAttribute('opacity',0);hd.setAttribute('opacity',0);tt.style.opacity=0;}
+  svg.addEventListener('mousemove',move); svg.addEventListener('mouseleave',leave);
+  svg.addEventListener('touchmove',function(e){if(e.touches[0])move(e.touches[0]);},{passive:true});
+
+  // ----- reveal on scroll -----
+  var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.rv').forEach(function(n){obs.observe(n);});
+})();
+</script>
+</body>
+</html>

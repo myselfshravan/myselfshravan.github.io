@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spider — Acquisition &amp; Capability Brief</title>
+<style>
+  html, body { margin: 0; }
+  :root {
+    /* light (default) */
+    --bg: #E7E8E3;
+    --surface: #F6F6F2;
+    --surface-2: #FBFBF8;
+    --ink: #1A1D23;
+    --ink-2: #494D56;
+    --ink-3: #7D818B;
+    --rule: #D3D4CD;
+    --rule-soft: #E0E1DA;
+    --accent: #8E2A3B;
+    --accent-2: #A83B4C;
+    --accent-soft: rgba(142,42,59,0.10);
+    --good: #2E6A4E;
+    --good-soft: rgba(46,106,78,0.12);
+    --shadow: 0 1px 2px rgba(26,29,35,0.04), 0 8px 24px -12px rgba(26,29,35,0.14);
+    --font-display: 'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
+    --font-sans: ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --font-mono: ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,'Liberation Mono',monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #101216;
+      --surface: #191C22;
+      --surface-2: #1F232A;
+      --ink: #EAE8E2;
+      --ink-2: #B1B3B9;
+      --ink-3: #7E828B;
+      --rule: #2A2E36;
+      --rule-soft: #23272E;
+      --accent: #D2687A;
+      --accent-2: #E07E8E;
+      --accent-soft: rgba(210,104,122,0.14);
+      --good: #5DB78F;
+      --good-soft: rgba(93,183,143,0.16);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 30px -14px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #E7E8E3; --surface: #F6F6F2; --surface-2: #FBFBF8; --ink: #1A1D23; --ink-2: #494D56;
+    --ink-3: #7D818B; --rule: #D3D4CD; --rule-soft: #E0E1DA; --accent: #8E2A3B; --accent-2: #A83B4C;
+    --accent-soft: rgba(142,42,59,0.10); --good: #2E6A4E; --good-soft: rgba(46,106,78,0.12);
+    --shadow: 0 1px 2px rgba(26,29,35,0.04), 0 8px 24px -12px rgba(26,29,35,0.14);
+  }
+  :root[data-theme="dark"] {
+    --bg: #101216; --surface: #191C22; --surface-2: #1F232A; --ink: #EAE8E2; --ink-2: #B1B3B9;
+    --ink-3: #7E828B; --rule: #2A2E36; --rule-soft: #23272E; --accent: #D2687A; --accent-2: #E07E8E;
+    --accent-soft: rgba(210,104,122,0.14); --good: #5DB78F; --good-soft: rgba(93,183,143,0.16);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 30px -14px rgba(0,0,0,0.6);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-sans); line-height: 1.6;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 56px); }
+  .tnum { font-variant-numeric: tabular-nums; }
+
+  /* ---- masthead ---- */
+  .masthead { padding: clamp(40px,7vw,84px) 0 34px; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: clamp(34px,6vw,64px); }
+  .wordmark { display: flex; align-items: baseline; gap: 12px; font-family: var(--font-mono); font-size: 0.86rem; letter-spacing: 0.02em; color: var(--ink-2); }
+  .wordmark b { color: var(--ink); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+  .glyph { color: var(--accent); font-weight: 700; }
+  .toggle { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+    background: var(--surface); color: var(--ink-2); border: 1px solid var(--rule); border-radius: 999px;
+    padding: 7px 14px; cursor: pointer; transition: color .18s, border-color .18s, background .18s; }
+  .toggle:hover { color: var(--ink); border-color: var(--ink-3); }
+
+  .eyebrow { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); display: flex; align-items: center; gap: 12px; margin: 0 0 22px; }
+  .eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--accent); display: inline-block; }
+  h1 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em;
+    font-size: clamp(2.3rem, 6.2vw, 4.1rem); line-height: 1.04; margin: 0 0 26px; text-wrap: balance; max-width: 15ch; }
+  h1 em { font-style: italic; color: var(--accent); }
+  .lede { font-size: clamp(1.05rem, 2vw, 1.28rem); color: var(--ink-2); max-width: 60ch; margin: 0; line-height: 1.55; }
+  .lede b { color: var(--ink); font-weight: 600; }
+
+  .metabar { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--rule);
+    font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink-3); letter-spacing: 0.01em; }
+  .metabar span b { color: var(--ink-2); font-weight: 600; }
+
+  /* ---- hero stats ---- */
+  .hero-band { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule-soft);
+    border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); margin-top: 10px; }
+  .hstat { background: var(--surface); padding: clamp(20px,3vw,30px) clamp(16px,2.4vw,26px); display: flex; flex-direction: column; gap: 8px; }
+  .hstat .fig { font-family: var(--font-mono); font-weight: 600; font-size: clamp(1.9rem, 4.4vw, 3rem); line-height: 1;
+    letter-spacing: -0.02em; color: var(--ink); }
+  .hstat .fig .pre { color: var(--ink-3); font-weight: 400; }
+  .hstat .cap { font-size: 0.83rem; color: var(--ink-2); line-height: 1.4; }
+  .hstat .sub { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+  .hstat .sub .up { color: var(--good); font-weight: 600; }
+
+  .integrity { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; margin-top: 16px;
+    font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink-2); }
+  .zpill { display: inline-flex; align-items: center; gap: 8px; background: var(--good-soft); color: var(--good);
+    border-radius: 999px; padding: 5px 13px; font-weight: 600; letter-spacing: 0.01em; }
+  .zpill svg { width: 13px; height: 13px; }
+
+  /* ---- sections ---- */
+  section { padding: clamp(46px,7vw,80px) 0; border-top: 1px solid var(--rule); }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.55rem, 3.3vw, 2.15rem); line-height: 1.1;
+    margin: 10px 0 0; letter-spacing: -0.01em; max-width: 20ch; }
+  .sec-note { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-3); letter-spacing: 0.04em;
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 6px 11px; align-self: flex-end; }
+  .sec-intro { color: var(--ink-2); max-width: 64ch; margin: 0 0 30px; font-size: 1.02rem; }
+  .sec-intro code { font-family: var(--font-mono); font-size: 0.88em; background: var(--accent-soft); color: var(--accent);
+    padding: 1px 6px; border-radius: 5px; }
+
+  /* grain / quantum */
+  .grain { display: flex; gap: 14px; flex-wrap: wrap; }
+  .grain-card { flex: 1 1 200px; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px;
+    padding: 22px 22px 20px; display: flex; flex-direction: column; gap: 6px; }
+  .grain-card .big { font-family: var(--font-mono); font-weight: 600; font-size: 1.9rem; letter-spacing: -0.02em; color: var(--ink); }
+  .grain-card .lbl { font-weight: 600; font-size: 0.95rem; }
+  .grain-card .def { font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-3); }
+  .arrow { align-self: center; color: var(--ink-3); font-family: var(--font-mono); font-size: 1.3rem; padding: 0 2px; }
+  .leaders { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 20px; }
+  .leaders-lbl { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-right: 4px; }
+  .lead { font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-2); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 4px 11px; }
+  .lead b { color: var(--ink); font-weight: 600; }
+  .lead.muted { color: var(--ink-3); border-style: dashed; }
+
+  /* quality meters */
+  .quality-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(26px,4vw,50px); align-items: start; }
+  .meters { display: flex; flex-direction: column; gap: 15px; }
+  .meter { display: grid; grid-template-columns: 1fr auto; gap: 4px 14px; align-items: center; }
+  .meter .m-lbl { font-size: 0.9rem; color: var(--ink-2); }
+  .meter .m-val { font-family: var(--font-mono); font-weight: 600; font-size: 0.92rem; color: var(--ink); }
+  .track { grid-column: 1 / -1; height: 8px; background: var(--rule-soft); border-radius: 5px; overflow: hidden; }
+  .fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: 5px;
+    width: 0; transition: width 1.1s cubic-bezier(.22,.61,.36,1); }
+  .fill.full { background: var(--good); }
+
+  .attr-panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 24px; }
+  .attr-panel h3 { font-family: var(--font-display); font-size: 1.15rem; margin: 0 0 6px; font-weight: 600; }
+  .attr-panel p { color: var(--ink-2); font-size: 0.92rem; margin: 0 0 16px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.01em; background: var(--surface-2);
+    border: 1px solid var(--rule); color: var(--ink-2); border-radius: 6px; padding: 4px 9px; }
+  .chip.hl { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+  /* price */
+  .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 1px;
+    background: var(--rule-soft); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
+  .pcell { background: var(--surface); padding: 20px 22px; display: flex; flex-direction: column; gap: 5px; }
+  .pcell .pf { font-family: var(--font-mono); font-weight: 600; font-size: 1.55rem; letter-spacing: -0.01em; color: var(--ink); }
+  .pcell .pl { font-size: 0.8rem; color: var(--ink-2); }
+  .markdown-note { margin-top: 22px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+    background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 12px; padding: 18px 22px; }
+  .markdown-note .drop { font-family: var(--font-mono); font-weight: 700; font-size: 1.7rem; color: var(--accent); letter-spacing: -0.01em; }
+  .markdown-note .mtxt { color: var(--ink-2); font-size: 0.92rem; }
+  .markdown-note .mtxt b { color: var(--ink); }
+  .strike { text-decoration: line-through; color: var(--ink-3); }
+
+  /* platforms */
+  .plat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(238px,1fr)); gap: 12px; }
+  .plat { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 18px 18px 16px;
+    display: flex; flex-direction: column; gap: 9px; transition: transform .18s, box-shadow .18s, border-color .18s; }
+  .plat:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--ink-3); }
+  .plat .pname { font-family: var(--font-mono); font-weight: 600; font-size: 0.92rem; color: var(--ink); letter-spacing: -0.01em; }
+  .plat .papp { font-size: 0.8rem; color: var(--ink-3); }
+  .plat .pex { font-size: 0.83rem; color: var(--ink-2); margin-top: auto; }
+  .plat .pex b { color: var(--accent); font-weight: 600; }
+  .bot-note { margin-top: 22px; border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; color: var(--ink-2);
+    max-width: 70ch; font-size: 0.96rem; }
+  .bot-note b { color: var(--ink); }
+
+  /* engineering strip */
+  .eng-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 1px;
+    background: var(--rule-soft); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
+  .ecell { background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 4px; }
+  .ecell .ef { font-family: var(--font-mono); font-weight: 600; font-size: 1.5rem; color: var(--ink); letter-spacing: -0.01em; }
+  .ecell .el { font-size: 0.79rem; color: var(--ink-2); line-height: 1.35; }
+  .moat { margin-top: 26px; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: clamp(22px,3vw,30px); }
+  .moat h3 { font-family: var(--font-display); font-size: 1.2rem; margin: 0 0 10px; font-weight: 600; }
+  .moat p { color: var(--ink-2); margin: 0 0 12px; max-width: 74ch; }
+  .moat p:last-child { margin-bottom: 0; }
+  .moat b { color: var(--ink); font-weight: 600; }
+
+  /* leverage */
+  .lev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px,1fr)); gap: 12px; }
+  .lev { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 20px; }
+  .lev .lk { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; }
+  .lev h4 { font-size: 1rem; margin: 8px 0 6px; font-weight: 600; }
+  .lev p { font-size: 0.88rem; color: var(--ink-2); margin: 0; line-height: 1.5; }
+
+  /* caveats + footer */
+  .caveats { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .caveats li { padding-left: 26px; position: relative; color: var(--ink-2); max-width: 82ch; }
+  .caveats li::before { content: "§"; position: absolute; left: 0; color: var(--accent); font-family: var(--font-mono); font-weight: 700; }
+  .caveats li b { color: var(--ink); font-weight: 600; }
+  footer { border-top: 1px solid var(--rule); padding: 34px 0 60px; color: var(--ink-3);
+    font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.7; }
+  footer b { color: var(--ink-2); }
+
+  a.src { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+  a.src:hover { border-bottom-color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+  @media (max-width: 720px) {
+    .hero-band { grid-template-columns: repeat(2, 1fr); }
+    .quality-grid { grid-template-columns: 1fr; }
+    .grain { flex-direction: column; }
+    .arrow { transform: rotate(90deg); align-self: flex-start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="topbar">
+      <div class="wordmark"><span class="glyph">✳</span><b>Spider</b><span>&nbsp;· fashion-scraper</span></div>
+      <button class="toggle" id="themeToggle" aria-label="Switch color theme">Theme</button>
+    </div>
+
+    <p class="eyebrow">Acquisition &amp; Capability Brief</p>
+    <h1>A refinery that turns 120 storefronts into <em>one</em> clean catalog.</h1>
+    <p class="lede">One engine ingests dozens of fashion storefronts on ten different tech stacks, normalizes every product into <b>one universal schema</b>, keeps it fresh, tracks its prices daily, and feeds search, discovery and analytics downstream — a <b>compounding data asset</b>, not a pile of scripts.</p>
+
+    <div class="metabar tnum">
+      <span><b>Compiled</b> 2026-07-25</span>
+      <span><b>Repo</b> 119 adapters · 31k LOC · 221 tests</span>
+      <span><b>Catalog</b> 963.6K styles · 907.1K products · 4.9M SKUs · 114 sources</span>
+      <span><b>Growth</b> +13% styles week-over-week</span>
+    </div>
+  </header>
+
+  <div class="hero-band">
+    <div class="hstat">
+      <div class="fig tnum" data-count="963.6" data-decimals="1" data-suffix="K">0</div>
+      <div class="cap">Styles — storefront cards</div>
+      <div class="sub"><span class="up">↑ 13.2%</span> week-over-week</div>
+    </div>
+    <div class="hstat">
+      <div class="fig tnum" data-count="907.1" data-decimals="1" data-suffix="K">0</div>
+      <div class="cap">Products — distinct designs</div>
+      <div class="sub"><span class="up">↑ 13.7%</span> week-over-week</div>
+    </div>
+    <div class="hstat">
+      <div class="fig tnum" data-count="4.9" data-decimals="1" data-suffix="M">0</div>
+      <div class="cap">SKUs — sellable size-units</div>
+      <div class="sub"><span class="up">↑ 11.3%</span> week-over-week</div>
+    </div>
+    <div class="hstat">
+      <div class="fig tnum" data-count="114" data-decimals="0">0</div>
+      <div class="cap">Live sources / storefronts</div>
+      <div class="sub"><span class="up">↑ 55.4%</span> week-over-week</div>
+    </div>
+  </div>
+
+  <div class="integrity">
+    <span>Integrity across 4.9M SKUs&nbsp;—</span>
+    <span class="zpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>0 dead-letters</span>
+    <span class="zpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>0 duplicate keys</span>
+    <span class="zpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>0 orphan rows</span>
+  </div>
+
+  <!-- Quantum -->
+  <section>
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">01 · The data asset</p>
+        <h2>Catalog quantum at three grains</h2>
+      </div>
+      <span class="sec-note">live · 114 sources · grid ops dashboard</span>
+    </div>
+    <p class="sec-intro">Every brand collapses to the same unit model — <code>Product → Style → SKU</code>. Identity is <code>(source, style_id)</code>; writes are idempotent upserts. One catalog row = one Style = one storefront card = one vector point. Figures are the live production catalog; it has grown from <b>418K styles at 62 sources</b> to <b>963.6K at 114</b> — and is still compounding double digits every week.</p>
+    <div class="grain">
+      <div class="grain-card">
+        <div class="big tnum">907,100</div>
+        <div class="lbl">Products</div>
+        <div class="def">distinct designs · one PDP</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="grain-card">
+        <div class="big tnum">963,600</div>
+        <div class="lbl">Styles</div>
+        <div class="def">storefront cards · catalog rows</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="grain-card">
+        <div class="big tnum">4,900,000</div>
+        <div class="lbl">SKUs</div>
+        <div class="def">sellable size-units</div>
+      </div>
+    </div>
+    <div class="leaders">
+      <span class="leaders-lbl">Largest sources · products indexed</span>
+      <span class="lead"><b>Indya</b> 191.5K</span>
+      <span class="lead"><b>H&amp;M</b> 60.8K</span>
+      <span class="lead"><b>Pantaloons</b> 59K</span>
+      <span class="lead"><b>Savana</b> 40.5K</span>
+      <span class="lead"><b>Libas</b> 31.5K</span>
+      <span class="lead"><b>Monte Carlo</b> 29.3K</span>
+      <span class="lead"><b>Jack &amp; Jones</b> 23.2K</span>
+      <span class="lead"><b>Bewakoof</b> 21.3K</span>
+      <span class="lead"><b>Zara</b> 16.2K</span>
+      <span class="lead muted">+102 more</span>
+    </div>
+  </section>
+
+  <!-- Quality -->
+  <section>
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">02 · Data quality</p>
+        <h2>Verified, not asserted</h2>
+      </div>
+      <span class="sec-note">last full audit · 23–24 brands</span>
+    </div>
+    <div class="quality-grid">
+      <div>
+        <div class="meters" id="meters">
+          <div class="meter"><span class="m-lbl">Title</span><span class="m-val">100%</span><div class="track"><div class="fill full" data-w="100"></div></div></div>
+          <div class="meter"><span class="m-lbl">Main image <span style="color:var(--ink-3)">(~8/product)</span></span><span class="m-val">100%</span><div class="track"><div class="fill full" data-w="100"></div></div></div>
+          <div class="meter"><span class="m-lbl">Price</span><span class="m-val">100%</span><div class="track"><div class="fill full" data-w="100"></div></div></div>
+          <div class="meter"><span class="m-lbl">Colour</span><span class="m-val">99.4%</span><div class="track"><div class="fill" data-w="99.4"></div></div></div>
+          <div class="meter"><span class="m-lbl">Gender</span><span class="m-val">98.7%</span><div class="track"><div class="fill" data-w="98.7"></div></div></div>
+          <div class="meter"><span class="m-lbl">Auto-category</span><span class="m-val">92.7%</span><div class="track"><div class="fill" data-w="92.7"></div></div></div>
+          <div class="meter"><span class="m-lbl">Material (fabric composition)</span><span class="m-val">86.3%</span><div class="track"><div class="fill" data-w="86.3"></div></div></div>
+        </div>
+      </div>
+      <div class="attr-panel">
+        <h3>A typed spec-sheet — not just tags</h3>
+        <p>Beyond the basics, a queryable attribute set per style across <b>5 universal groups</b>, each with its own allow-listed vocabulary. <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--accent-soft);color:var(--accent);padding:1px 5px;border-radius:4px">material_composition</code> is structured, so <b>"≥95% cotton"</b> queries the whole catalog.</p>
+        <div class="chips">
+          <span class="chip hl">fit</span><span class="chip hl">pattern</span><span class="chip hl">neckline</span>
+          <span class="chip">sleeve length</span><span class="chip">closure</span><span class="chip">collar</span>
+          <span class="chip">waist rise</span><span class="chip">occasion</span><span class="chip">sheerness</span>
+          <span class="chip">heel height</span><span class="chip">sole material</span><span class="chip">gemstone</span>
+          <span class="chip">metal purity</span><span class="chip">carat</span><span class="chip">care</span>
+          <span class="chip">country of origin</span><span class="chip">IP / collab</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Price -->
+  <section>
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">03 · Price intelligence</p>
+        <h2>A live per-size time series</h2>
+      </div>
+      <span class="sec-note">daily per-size · integrity-clean</span>
+    </div>
+    <p class="sec-intro">Every crawl appends one observation of price / sale price / availability, keyed <code>(source, style_id, size)</code> — a competitive-pricing and markdown-detection dataset with the full curve queryable per size. Now running daily across the whole <b>114-source, 4.9M-SKU</b> catalog; the counts below are from an earlier audited window and compound every day.</p>
+    <div class="price-grid tnum">
+      <div class="pcell"><div class="pf">4.9M</div><div class="pl">SKUs under daily price watch</div></div>
+      <div class="pcell"><div class="pf">1.5M<span style="color:var(--ink-3)">+</span></div><div class="pl">Observations (audited window)</div></div>
+      <div class="pcell"><div class="pf">274,558</div><div class="pl">Styles with history<span style="color:var(--ink-3)"> · audit</span></div></div>
+      <div class="pcell"><div class="pf">50,890</div><div class="pl">Styles caught moving<span style="color:var(--ink-3)"> · audit</span></div></div>
+      <div class="pcell"><div class="pf">daily</div><div class="pl">Snapshot cadence</div></div>
+    </div>
+    <div class="markdown-note">
+      <div class="drop">−43.8%</div>
+      <div class="mtxt">Caught the day it happened — a Peter England formal suit repriced <span class="strike">₹17,799</span> → <b>₹9,999</b>. Not a catalog. A pricing feed.</div>
+    </div>
+  </section>
+
+  <!-- Platforms -->
+  <section>
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">04 · Integration library</p>
+        <h2>Ten platforms, one schema</h2>
+      </div>
+    </div>
+    <p class="sec-intro">A reusable toolkit per <b>open</b> surface is why "add a brand" is cheap: a new Shopify store is <b>~20 lines of config</b>. Hard platforms get a bespoke adapter that reuses shared building blocks and never touches core.</p>
+    <div class="plat-grid">
+      <div class="plat"><div class="pname">Shopify</div><div class="papp">/products.json + collections — config-only</div><div class="pex">largest cohort · <b>~27+ brands</b></div></div>
+      <div class="plat"><div class="pname">Unbxd search</div><div class="papp">public search API · reusable toolkit</div><div class="pex"><b>Indya 191.5K</b>, FabAlley</div></div>
+      <div class="plat"><div class="pname">Magento GraphQL</div><div class="papp">reusable toolkit</div><div class="pex"><b>Mufti</b>, Linen Club</div></div>
+      <div class="plat"><div class="pname">Elevate</div><div class="papp">search API · reusable toolkit</div><div class="pex"><b>H&amp;M 60.8K</b></div></div>
+      <div class="plat"><div class="pname">JSON-LD</div><div class="papp">sitemap → PDP, SSR HTML</div><div class="pex"><b>Pantaloons 59K</b>, Decathlon, Biba</div></div>
+      <div class="plat"><div class="pname">Next.js RSC</div><div class="papp">server-flight product object (ABFRL)</div><div class="pex"><b>Louis Philippe</b>, Van Heusen +5</div></div>
+      <div class="plat"><div class="pname">SFCC / Adobe AEM</div><div class="papp">sitemap → PDP → JSON-LD</div><div class="pex"><b>Manyavar</b></div></div>
+      <div class="plat"><div class="pname">Savana-platform</div><div class="papp">app APIs · bespoke, reused</div><div class="pex"><b>Savana</b> + family (72k)</div></div>
+      <div class="plat"><div class="pname">Akamai-gated API</div><div class="papp">UA-pinned JSON · no headless</div><div class="pex"><b>Zara</b> (19k)</div></div>
+      <div class="plat"><div class="pname">SSR hydration</div><div class="papp">__INITIAL_STATE__ payload</div><div class="pex"><b>Cider</b></div></div>
+    </div>
+    <p class="bot-note">Deliberately <b>not</b> an anti-bot arms race. The system finds the un-gated surface and only falls back to a real browser out-of-band — trading "we can scrape the hardest sites" for <b>"what we scrape, we scrape reliably and cheaply under unattended cron."</b> That single decision keeps a buyer's operating cost and maintenance risk low.</p>
+  </section>
+
+  <!-- Engineering -->
+  <section>
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">05 · Engineering</p>
+        <h2>Why it's an asset, not a script</h2>
+      </div>
+    </div>
+    <div class="eng-grid tnum">
+      <div class="ecell"><div class="ef">31,225</div><div class="el">Python source LOC</div></div>
+      <div class="ecell"><div class="ef">26,136</div><div class="el">Test LOC · 221 files</div></div>
+      <div class="ecell"><div class="ef">24</div><div class="el">Shared toolkit modules</div></div>
+      <div class="ecell"><div class="ef">37</div><div class="el">Ops API endpoints</div></div>
+      <div class="ecell"><div class="ef">13</div><div class="el">Terraform files (AWS IaC)</div></div>
+      <div class="ecell"><div class="ef">147</div><div class="el">Commits</div></div>
+    </div>
+    <div class="moat">
+      <h3>The moat — a contract-first seam</h3>
+      <p>Core owns the streaming pipeline, stores, normalization and the universal schema. Each brand is a self-contained package implementing three duck-typed protocols — <b>Descriptor / Scraper / Transformer</b>. Core <b>never switches on brand names</b>, so a new Shopify brand is config while a bespoke platform is a full package that never touches core. That seam is what lets the system reach 120 brands without collapsing into one-off scripts.</p>
+      <p><b>Idempotent &amp; resumable</b> — long crawls checkpoint every batch and survive a mid-run DB blip. <b>Replayable</b> — raw payloads are stored, so a parser improvement re-enriches the catalog with <b>no re-crawl</b> (this is how material coverage went 0% → ~99%). <b>Stale-row reconciliation</b> delists anything not re-seen, so no zombie listings. The ops plane runs on FastAPI + a Postgres-backed queue — <b>no Redis, no SQS</b>.</p>
+    </div>
+  </section>
+
+  <!-- Leverage -->
+  <section>
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">06 · How it's leveraged</p>
+        <h2>A platform substrate, not a dead export</h2>
+      </div>
+    </div>
+    <p class="sec-intro">It already powers semantic search (catalog ↔ <b>Qdrant</b> vectors via SageMaker), a live <b>MCP server</b> with 40+ tested analytics queries, and a Gen-Z fashion discovery app. Ways an acquirer can apply it:</p>
+    <div class="lev-grid">
+      <div class="lev"><div class="lk">Pricing</div><h4>Competitive &amp; markdown intelligence</h4><p>Daily per-size price curves across brands — detect repricing the day it lands.</p></div>
+      <div class="lev"><div class="lk">Merchandising</div><h4>Assortment &amp; gap analytics</h4><p>What's in-market by category, gender, attribute and price band — and what's missing.</p></div>
+      <div class="lev"><div class="lk">Discovery</div><h4>Search &amp; recommendations</h4><p>Vector search over a clean, normalized catalog — one Style, one point.</p></div>
+      <div class="lev"><div class="lk">Trends</div><h4>Attribute trend detection</h4><p>Structured fit / pattern / material tracked over time as the series deepens.</p></div>
+      <div class="lev"><div class="lk">Licensing</div><h4>Normalized multi-brand feed</h4><p>A single clean feed for marketplaces and aggregators to consume.</p></div>
+      <div class="lev"><div class="lk">AI</div><h4>Ready RAG / agent substrate</h4><p>Structured schema + vectors + MCP — grounding for LLM shopping agents out of the box.</p></div>
+    </div>
+  </section>
+
+  <!-- Caveats -->
+  <section>
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">07 · Diligence notes</p>
+        <h2>Honest caveats, so the pitch holds up</h2>
+      </div>
+    </div>
+    <ul class="caveats">
+      <li><b>Provenance of the numbers.</b> The headline quantum (963.6K styles · 907.1K products · 4.9M SKUs · 114 sources · week-over-week growth) is read live from the ops dashboard. The field-coverage percentages and the price detail counts are from the last full DB audit (a 23–24 brand cohort) — the quality bar the pipeline holds as brands load. A direct Postgres re-query (currently on a private VPC) will reconcile all three to the same instant at diligence.</li>
+      <li><b>Price history depth is days, not months.</b> Daily cadence since first snapshot — the flex is integrity + cadence, and it compounds every day.</li>
+      <li><b>Not an anti-bot evasion engine, by design.</b> Sites requiring sustained headless evasion are out of scope; the covered surface is the ten-platform library above.</li>
+      <li><b>Source-limited attribute gaps are category-correct.</b> A few brands under-list fit or neckline at source — e.g. neckline on trousers — which are correct nulls, not pipeline failures.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <div class="wrap" style="padding:0;max-width:none">
+      <b>Sources, in-repo —</b> docs/architecture/OVERVIEW.md · docs/CATALOG-METRICS.md · docs/PRICE-TRACKING.md · docs/architecture/grain-model.md · README.md · HANDOFF.md<br>
+      <b>Live refresh —</b> mcp__fashion-explore golden queries (catalog_quantum_total, catalog_quality_audit, price_history_availability). Repo figures counted from source on 2026-07-25.<br>
+      Prepared as an acquisition &amp; capability brief — figures are labelled by provenance throughout.
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    var order = ['auto', 'light', 'dark'];
+    function current() { return root.getAttribute('data-theme') || 'auto'; }
+    function label(m) { return m === 'auto' ? 'Auto' : m === 'light' ? 'Light' : 'Dark'; }
+    function apply(m) {
+      if (m === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', m);
+      btn.textContent = label(m);
+    }
+    apply('auto');
+    btn.addEventListener('click', function () {
+      var next = order[(order.indexOf(current()) + 1) % order.length];
+      apply(next);
+    });
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function fmt(n) { return n.toLocaleString('en-US'); }
+
+    function countUp(el) {
+      var target = parseFloat(el.getAttribute('data-count'));
+      var suffix = el.getAttribute('data-suffix') || '';
+      var dec = el.hasAttribute('data-decimals') ? parseInt(el.getAttribute('data-decimals'), 10) : 0;
+      function render(v) {
+        return (dec > 0 ? v.toFixed(dec) : fmt(Math.round(v))) + suffix;
+      }
+      if (reduce) { el.textContent = render(target); return; }
+      var dur = 1500, t0 = performance.now();
+      function step(now) {
+        var p = Math.min(1, (now - t0) / dur);
+        var e = 1 - Math.pow(1 - p, 3);
+        el.textContent = render(target * e);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function fillMeters() {
+      document.querySelectorAll('.fill').forEach(function (f) {
+        f.style.width = (f.getAttribute('data-w') || 0) + '%';
+      });
+    }
+
+    var seen = false;
+    function run() {
+      if (seen) return; seen = true;
+      document.querySelectorAll('[data-count]').forEach(countUp);
+      setTimeout(fillMeters, 150);
+    }
+
+    if ('IntersectionObserver' in window) {
+      var hero = document.querySelector('.hero-band');
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { run(); io.disconnect(); } });
+      }, { threshold: 0.2 });
+      if (hero) io.observe(hero); else run();
+    } else { run(); }
+  })();
+</script>
+</body>
+</html>

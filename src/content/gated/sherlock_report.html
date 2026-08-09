@@ -1,0 +1,2313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sherlock — TNPL Agent Performance Report</title>
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800,900&f[]=general-sans@300,400,500,600,700,400i,500i,600i&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #F1ECE2;
+      --paper-2: #E8E1D2;
+      --ink: #15120E;
+      --ink-soft: #2A241D;
+      --muted: #6B6358;
+      --rule: #D4CDBE;
+      --rule-strong: #B5AC97;
+      --safe: #4F7A3F;
+      /* deep green — approved / paid */
+      --safe-soft: #DCE7C8;
+      --danger: #B83A1E;
+      /* burnt sienna — fraud / blocked */
+      --danger-soft: #F0D5C6;
+      --warm: #C97B2C;
+      /* amber — flagged / admin */
+      --warm-soft: #F2DCBF;
+      --shadow: 0 1px 2px rgba(21, 18, 14, 0.04), 0 8px 24px rgba(21, 18, 14, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      background-image:
+        radial-gradient(circle at 20% 0%, rgba(201, 123, 44, 0.04), transparent 50%),
+        radial-gradient(circle at 80% 100%, rgba(79, 122, 63, 0.04), transparent 50%);
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* === HERO === */
+    .hero {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 80px 0 100px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 75% 30%, rgba(201, 123, 44, 0.12), transparent 45%),
+        radial-gradient(circle at 25% 70%, rgba(79, 122, 63, 0.10), transparent 45%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--warm);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .hero-tag::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--warm);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(201, 123, 44, 0.25);
+      animation: pulse 2.4s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 4px rgba(201, 123, 44, 0.25);
+      }
+
+      50% {
+        box-shadow: 0 0 0 8px rgba(201, 123, 44, 0.08);
+      }
+    }
+
+    h1.title {
+      font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      font-weight: 800;
+      font-size: clamp(64px, 10vw, 144px);
+      line-height: 0.92;
+      letter-spacing: -0.045em;
+      margin-bottom: 32px;
+    }
+
+    h1.title .italic {
+      font-style: normal;
+      font-weight: 500;
+      color: var(--warm);
+    }
+
+    .hero-sub {
+      font-family: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: clamp(20px, 2.2vw, 28px);
+      line-height: 1.35;
+      color: rgba(241, 236, 226, 0.78);
+      max-width: 680px;
+      margin-bottom: 56px;
+      font-weight: 400;
+      letter-spacing: -0.005em;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      padding-top: 32px;
+      border-top: 1px solid rgba(241, 236, 226, 0.15);
+    }
+
+    .meta-item .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(241, 236, 226, 0.55);
+      margin-bottom: 6px;
+    }
+
+    .meta-item .value {
+      font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--paper);
+    }
+
+    /* === SECTION === */
+    section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .section-eyebrow::before {
+      content: "";
+      width: 32px;
+      height: 1px;
+      background: var(--ink);
+    }
+
+    h2.section-title {
+      font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      font-weight: 700;
+      font-size: clamp(36px, 4.6vw, 60px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      max-width: 19ch;
+    }
+
+    h2.section-title em {
+      font-style: normal;
+      color: var(--warm);
+      font-weight: 500;
+    }
+
+    .section-lede {
+      font-family: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 19px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 60ch;
+      margin-bottom: 56px;
+      font-weight: 400;
+      letter-spacing: -0.005em;
+    }
+
+    /* === HEADLINE STATS === */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .stat-card {
+      padding: 36px 28px 40px;
+      border-right: 1px solid var(--rule);
+      background: var(--paper);
+      position: relative;
+    }
+
+    .stat-card:last-child {
+      border-right: none;
+    }
+
+    .stat-card .stat-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-card .stat-tag .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .dot.safe {
+      background: var(--safe);
+    }
+
+    .dot.danger {
+      background: var(--danger);
+    }
+
+    .dot.warm {
+      background: var(--warm);
+    }
+
+    .dot.ink {
+      background: var(--ink);
+    }
+
+    .stat-value {
+      font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      font-weight: 700;
+      font-size: 64px;
+      line-height: 0.92;
+      letter-spacing: -0.045em;
+      margin-bottom: 12px;
+    }
+
+    .stat-value sup {
+      font-size: 0.42em;
+      font-weight: 500;
+      vertical-align: super;
+      color: var(--muted);
+      margin-left: 2px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--ink-soft);
+      max-width: 22ch;
+    }
+
+    /* === PIVOT === */
+    .pivot {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .pivot .section-eyebrow {
+      color: var(--warm);
+    }
+
+    .pivot .section-eyebrow::before {
+      background: var(--warm);
+    }
+
+    .pivot h2.section-title {
+      color: var(--paper);
+    }
+
+    .pivot h2.section-title em {
+      color: var(--warm);
+    }
+
+    .pivot .section-lede {
+      color: rgba(241, 236, 226, 0.75);
+    }
+
+    .pivot-date {
+      font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      font-weight: 500;
+      font-size: clamp(80px, 14vw, 200px);
+      line-height: 0.85;
+      letter-spacing: -0.055em;
+      color: var(--warm);
+      margin: 48px 0 16px;
+    }
+
+    .pivot-date .day {
+      font-weight: 900;
+    }
+
+    .pivot-date .small {
+      font-size: 0.3em;
+      color: rgba(241, 236, 226, 0.6);
+      font-weight: 500;
+      margin-left: 12px;
+      letter-spacing: 0;
+    }
+
+    .pr-list {
+      margin-top: 40px;
+      border-top: 1px solid rgba(241, 236, 226, 0.15);
+    }
+
+    .pr-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 32px;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(241, 236, 226, 0.12);
+      align-items: baseline;
+    }
+
+    .pr-row:last-child {
+      border-bottom: none;
+    }
+
+    .pr-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--warm);
+      letter-spacing: 0.02em;
+    }
+
+    .pr-desc {
+      font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 22px;
+      line-height: 1.35;
+      font-weight: 500;
+      color: var(--paper);
+    }
+
+    /* === BEFORE / AFTER COMPARISON === */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--ink);
+      margin-top: 24px;
+    }
+
+    .compare-col {
+      padding: 40px 32px;
+    }
+
+    .compare-col:first-child {
+      background: var(--paper-2);
+      border-right: 1px solid var(--ink);
+    }
+
+    .compare-col:last-child {
+      background: var(--safe-soft);
+    }
+
+    .compare-head {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .compare-title {
+      font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 30px;
+      line-height: 1.1;
+      margin-bottom: 36px;
+      color: var(--ink);
+    }
+
+    .compare-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(21, 18, 14, 0.1);
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .compare-row:last-child {
+      border-bottom: none;
+    }
+
+    .compare-label {
+      font-size: 14px;
+      color: var(--ink-soft);
+    }
+
+    .compare-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .compare-val.up {
+      color: var(--safe);
+    }
+
+    .compare-val.down {
+      color: var(--danger);
+    }
+
+    .compare-val .delta {
+      font-size: 11px;
+      margin-left: 6px;
+      font-weight: 500;
+    }
+
+    /* === FLOW DIAGRAMS — minimal hairline tree === */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 24px;
+    }
+
+    .flow {
+      background: var(--paper);
+      border: none;
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding: 32px 4px 28px;
+      position: relative;
+    }
+
+    .flow-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 0 0 24px;
+      padding: 0 0 20px;
+      position: relative;
+    }
+
+    .flow-head::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-bottom: 1px dashed var(--rule-strong);
+    }
+
+    .flow-title {
+      font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .flow-period {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .flow-node {
+      border: none;
+      background: transparent;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--rule);
+      border-radius: 0;
+    }
+
+    .flow-node:last-child {
+      border-bottom: none;
+    }
+
+    /* color only on outcome leaves */
+    .flow-node.safe,
+    .flow-node.danger,
+    .flow-node.warm {
+      border-left: 3px solid transparent;
+      padding-left: 16px;
+      background: transparent;
+    }
+
+    .flow-node.safe {
+      border-left-color: var(--safe);
+    }
+
+    .flow-node.danger {
+      border-left-color: var(--danger);
+    }
+
+    .flow-node.warm {
+      border-left-color: var(--warm);
+    }
+
+    .flow-node.dark {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .flow-node .n-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .flow-node .n-value {
+      font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 500;
+      font-size: 28px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .flow-node .n-value .pct {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    .flow-node .n-sub {
+      font-family: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    /* hairline trunk between levels — replaces ↓ glyphs */
+    .flow-arrow {
+      height: 24px;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      display: block;
+    }
+
+    .flow-arrow::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--rule-strong);
+    }
+
+    .flow-arrow.labelled {
+      height: 32px;
+    }
+
+    .flow-arrow.labelled span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--paper);
+      padding: 0 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      z-index: 1;
+    }
+
+    /* splits with bracket connectors */
+    .flow-split,
+    .flow-split-3 {
+      display: grid;
+      position: relative;
+      margin: 0;
+      padding-top: 24px;
+    }
+
+    .flow-split {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .flow-split-3 {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .flow-split::before,
+    .flow-split-3::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      height: 12px;
+      border-top: 1px solid var(--rule-strong);
+      border-left: 1px solid var(--rule-strong);
+      border-right: 1px solid var(--rule-strong);
+    }
+
+    .flow-split::before {
+      left: 25%;
+      right: 25%;
+    }
+
+    .flow-split-3::before {
+      left: 16.66%;
+      right: 16.66%;
+    }
+
+    .flow-split>.flow-node,
+    .flow-split-3>.flow-node {
+      border-bottom: none;
+      padding: 4px 18px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .flow-split>.flow-node:last-child,
+    .flow-split-3>.flow-node:last-child {
+      border-right: none;
+    }
+
+    .flow-split>.flow-node.safe,
+    .flow-split>.flow-node.danger,
+    .flow-split>.flow-node.warm,
+    .flow-split-3>.flow-node.safe,
+    .flow-split-3>.flow-node.danger,
+    .flow-split-3>.flow-node.warm {
+      padding-left: 18px;
+      border-left-width: 2px;
+    }
+
+    .flow-footnote {
+      font-family: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 28px;
+      padding-top: 16px;
+      line-height: 1.55;
+      border-top: 1px dashed var(--rule);
+    }
+
+    /* === CHART === */
+    .chart-wrap {
+      margin-top: 32px;
+      background: var(--paper);
+      border: 1px solid var(--rule-strong);
+      padding: 40px 32px 24px;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 28px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--ink-soft);
+    }
+
+    .legend-swatch {
+      width: 16px;
+      height: 16px;
+      border-radius: 2px;
+    }
+
+    .chart-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* === FRAUD SIGNALS === */
+    .signals-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 40px;
+      margin-top: 24px;
+    }
+
+    .signals-table {
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .signal-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: center;
+      gap: 24px;
+    }
+
+    .signal-row:last-child {
+      border-bottom: none;
+    }
+
+    .signal-name {
+      font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .signal-desc {
+      font-family: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .signal-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 200px;
+    }
+
+    .signal-bar {
+      flex: 1;
+      height: 6px;
+      background: var(--rule);
+      border-radius: 3px;
+      overflow: hidden;
+      min-width: 80px;
+    }
+
+    .signal-bar-fill {
+      height: 100%;
+      background: var(--danger);
+      border-radius: 3px;
+    }
+
+    .signal-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      min-width: 40px;
+      text-align: right;
+    }
+
+    .quotes-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .quote {
+      background: var(--paper-2);
+      border-left: 3px solid var(--warm);
+      padding: 20px 24px;
+      font-family: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-style: italic;
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--ink);
+      position: relative;
+    }
+
+    .quote::before {
+      content: "“";
+      position: absolute;
+      top: 4px;
+      left: 12px;
+      font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 60px;
+      line-height: 1;
+      color: var(--warm);
+      opacity: 0.25;
+      font-style: normal;
+    }
+
+    .quote-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 12px;
+      font-style: normal;
+    }
+
+    /* === TIMELINE === */
+    .timeline {
+      margin-top: 32px;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 90px;
+      top: 12px;
+      bottom: 12px;
+      width: 1px;
+      background: var(--rule-strong);
+    }
+
+    .tl-item {
+      display: grid;
+      grid-template-columns: 80px 24px 1fr;
+      gap: 20px;
+      padding: 16px 0;
+      align-items: start;
+    }
+
+    .tl-pr {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--warm);
+      text-align: right;
+    }
+
+    .tl-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      margin: 7px 0 0 7px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .tl-dot.hero-dot {
+      background: var(--warm);
+      border-color: var(--warm);
+      box-shadow: 0 0 0 4px var(--warm-soft);
+    }
+
+    .tl-content {
+      padding-top: 0;
+    }
+
+    .tl-what {
+      font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.4;
+      margin-bottom: 2px;
+    }
+
+    .tl-why {
+      font-family: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* === CLOSER === */
+    .closer {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 120px 0;
+      text-align: center;
+    }
+
+    .closer .quote-big {
+      font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      font-weight: 500;
+      font-style: italic;
+      font-size: clamp(32px, 4.2vw, 52px);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      max-width: 22ch;
+      margin: 0 auto 48px;
+      color: var(--paper);
+    }
+
+    .closer .quote-big strong {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--warm);
+    }
+
+    .closer-sig {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(241, 236, 226, 0.5);
+    }
+
+    .closer-sig .dot {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background: var(--warm);
+      border-radius: 50%;
+      margin: 0 8px;
+      vertical-align: middle;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 900px) {
+      .container {
+        padding: 0 24px;
+      }
+
+      section {
+        padding: 64px 0;
+      }
+
+      .hero {
+        padding: 56px 0 72px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat-card:nth-child(2) {
+        border-right: none;
+      }
+
+      .stat-card:nth-child(1),
+      .stat-card:nth-child(2) {
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .compare-grid,
+      .flow-grid,
+      .signals-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .compare-col:first-child {
+        border-right: none;
+        border-bottom: 1px solid var(--ink);
+      }
+
+      .hero-meta {
+        gap: 24px;
+      }
+
+      .pr-row {
+        grid-template-columns: 80px 1fr;
+        gap: 16px;
+      }
+
+      .timeline::before {
+        left: 64px;
+      }
+
+      .tl-item {
+        grid-template-columns: 56px 20px 1fr;
+        gap: 12px;
+      }
+    }
+
+    /* === FLOW v2 — outcome distribution === */
+    .flow-grid-v2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .flow-v2 {
+      background: var(--paper);
+      border: 1px solid var(--rule-strong);
+      padding: 32px 32px 28px;
+      position: relative;
+    }
+
+    .flow-v2.is-post {
+      border-color: var(--ink);
+      box-shadow: 0 1px 0 var(--ink), 4px 4px 0 -1px var(--ink);
+    }
+
+    .fv2-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .fv2-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .fv2-eyebrow strong {
+      color: var(--ink);
+      font-weight: 700;
+      letter-spacing: 0.18em;
+    }
+
+    .is-post .fv2-eyebrow strong {
+      color: var(--warm);
+    }
+
+    .fv2-period {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .fv2-top-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .fv2-top-value {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 54px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.045em;
+      color: var(--ink);
+    }
+
+    .fv2-top-sub {
+      font-family: 'General Sans', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* Sherlock decision callout */
+    .fv2-sherlock {
+      margin: 24px 0;
+      padding: 16px 18px;
+      background: rgba(201, 123, 44, 0.07);
+      border: 1px solid rgba(201, 123, 44, 0.35);
+    }
+
+    .fv2-sherlock-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 12px;
+    }
+
+    .fv2-sherlock-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .fv2-sherlock-cell {
+      padding: 6px 0;
+    }
+
+    .fv2-sherlock-cell .lbl {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .fv2-sherlock-cell .val {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .fv2-sherlock-cell .sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .fv2-sherlock-admin {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(201, 123, 44, 0.3);
+      display: flex;
+      gap: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .fv2-sherlock-admin strong {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 700;
+      color: var(--ink);
+      margin-right: 4px;
+    }
+
+    /* Stage section */
+    .fv2-stage {
+      margin-top: 24px;
+    }
+
+    .fv2-stage-title {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+      margin-bottom: 12px;
+      text-transform: none;
+    }
+
+    /* Stacked horizontal bar */
+    .fv2-bar {
+      display: flex;
+      width: 100%;
+      height: 40px;
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      overflow: hidden;
+    }
+
+    .fv2-seg {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6px;
+      border-right: 1px solid var(--ink);
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--paper);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .fv2-seg:last-child {
+      border-right: none;
+    }
+
+    .fv2-seg.s-paid {
+      background: var(--safe);
+      color: var(--paper);
+    }
+
+    .fv2-seg.s-partial {
+      background: #8FAA72;
+      color: var(--paper);
+    }
+
+    .fv2-seg.s-noret {
+      background: var(--danger-soft);
+      color: var(--danger);
+    }
+
+    .fv2-seg.s-ship {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .fv2-seg.s-cancel {
+      background: var(--paper-2);
+      color: var(--ink);
+    }
+
+    .fv2-seg.s-pending {
+      background: var(--rule);
+      color: var(--ink);
+    }
+
+    /* Item rows below bar */
+    .fv2-list {
+      margin-top: 14px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .fv2-item {
+      display: grid;
+      grid-template-columns: 14px 1fr auto auto;
+      gap: 14px;
+      align-items: baseline;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .fv2-item:last-child {
+      border-bottom: none;
+    }
+
+    .fv2-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      margin-top: 6px;
+    }
+
+    .fv2-dot.d-paid {
+      background: var(--safe);
+    }
+
+    .fv2-dot.d-partial {
+      background: #8FAA72;
+    }
+
+    .fv2-dot.d-noret {
+      background: var(--danger-soft);
+      border: 1px solid var(--danger);
+    }
+
+    .fv2-dot.d-rto {
+      background: var(--danger);
+    }
+
+    .fv2-dot.d-ship {
+      background: var(--ink);
+    }
+
+    .fv2-dot.d-cancel {
+      background: var(--paper-2);
+      border: 1px solid var(--rule-strong);
+    }
+
+    .fv2-dot.d-pending {
+      background: var(--rule);
+    }
+
+    .fv2-item-name {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .fv2-item-name span {
+      display: block;
+      font-family: 'General Sans', sans-serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .fv2-item-val {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .fv2-item-pct {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      min-width: 46px;
+      text-align: right;
+      font-weight: 500;
+    }
+
+    /* Bottom highlight */
+    .fv2-highlight {
+      margin-top: 24px;
+      padding: 18px 20px;
+      background: var(--ink);
+      color: var(--paper);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .fv2-highlight .lbl {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(241, 236, 226, 0.6);
+    }
+
+    .fv2-highlight .val {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 26px;
+      letter-spacing: -0.025em;
+    }
+
+    .is-post .fv2-highlight .val {
+      color: var(--warm);
+    }
+
+    .fv2-foot {
+      margin-top: 14px;
+      font-family: 'General Sans', sans-serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .fv2-rto-note {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: var(--danger-soft);
+      border-left: 3px solid var(--danger);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+
+    .fv2-rto-note strong {
+      color: var(--danger);
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      .flow-grid-v2 {
+        grid-template-columns: 1fr;
+      }
+
+      .fv2-top-value {
+        font-size: 44px;
+      }
+    }
+
+    /* small motion */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.8s ease-out forwards;
+    }
+
+    /* Time to Pay section overrides */
+    .ttp-section .section-eyebrow::before {
+      background: var(--warm);
+    }
+
+    .ttp-section h2.section-title em {
+      color: var(--warm);
+      font-weight: 700;
+    }
+
+    .fade-in.d1 {
+      animation-delay: 0.1s;
+    }
+
+    .fade-in.d2 {
+      animation-delay: 0.25s;
+    }
+
+    .fade-in.d3 {
+      animation-delay: 0.4s;
+    }
+
+    .fade-in.d4 {
+      animation-delay: 0.55s;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="container hero-inner">
+      <div class="hero-tag fade-in">Internal Report · Klydo Eng · TNPL Risk</div>
+
+      <h1 class="title fade-in d1">
+        Sherlock
+      </h1>
+
+      <p class="hero-sub fade-in d2">
+        An AI agent that quietly turned TNPL from a Klub-only privilege into a universal product —
+        while keeping fraud out and the admin queue empty.
+      </p>
+
+      <div class="hero-meta fade-in d3">
+        <div class="meta-item">
+          <div class="label">Window</div>
+          <div class="value">Mar 1 → May 13, 2026</div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Agent Live</div>
+          <div class="value">Apr 17, 2026</div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Days In Production</div>
+          <div class="value">26</div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Coverage</div>
+          <div class="value">95.6% of TNPL orders</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HEADLINE STATS ============ -->
+  <section>
+    <div class="container">
+      <div class="section-eyebrow">The numbers, up front</div>
+      <h2 class="section-title">26 days, four main metrics.</h2>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-tag"><span class="dot safe"></span>Auto-shipped</div>
+          <div class="stat-value">₹16<sup>.21L</sup></div>
+          <div class="stat-label">of TNPL orders shipped without a single human touching them.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-tag"><span class="dot danger"></span>Fraud blocked</div>
+          <div class="stat-value">₹5<sup>.20L</sup></div>
+          <div class="stat-label">across 346 orders. Zero of these later paid — admin rejections are 100% precision.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-tag"><span class="dot warm"></span>Autonomy</div>
+          <div class="stat-value">58<sup>%</sup></div>
+          <div class="stat-label">of TNPL orders now auto-decided end-to-end. Up from 0% on launch day.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-tag"><span class="dot ink"></span>Time to pay</div>
+          <div class="stat-value">0.4<sup>days</sup></div>
+          <div class="stat-label">avg from order to payment. Down from 1.2 days pre-agent — <strong>3x faster</strong>.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TIME TO PAY ============ -->
+  <section class="ttp-section" style="background:var(--ink);color:var(--paper);">
+    <div class="container">
+      <div class="section-eyebrow" style="color:var(--warm);">The metric that matters</div>
+      <h2 class="section-title" style="color:var(--paper);max-width:22ch;">
+        Orders close <em>three times faster.</em>
+      </h2>
+      <p class="section-lede" style="color:rgba(241,236,226,0.75);max-width:62ch;">
+        From the moment an order is placed to the moment money lands in the bank.
+        The agent doesn't just decide — it surfaces the right orders, in the right sequence,
+        so trusted customers pay almost instantly and fraud never becomes next week's chase problem.
+      </p>
+
+      <!-- Headline duo: 1.2 -> 0.4 days -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:48px;border-top:1px solid rgba(241,236,226,0.2);border-bottom:1px solid rgba(241,236,226,0.2);">
+        <div style="padding:48px 32px 48px 0;border-right:1px solid rgba(241,236,226,0.15);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(241,236,226,0.55);margin-bottom:20px;">Before Sherlock · 2,552 paid orders</div>
+          <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:96px;font-weight:800;line-height:0.9;letter-spacing:-0.04em;color:rgba(241,236,226,0.6);">1.2<span style="font-size:0.35em;font-weight:500;color:rgba(241,236,226,0.45);margin-left:8px;">days avg</span></div>
+          <div style="margin-top:16px;font-family:'General Sans',sans-serif;font-size:15px;color:rgba(241,236,226,0.65);line-height:1.5;">
+            p95 = 5.8 days · 103 orders took more than a week
+          </div>
+        </div>
+        <div style="padding:48px 0 48px 32px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--warm);margin-bottom:20px;">With Sherlock · 1,133 paid orders</div>
+          <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:96px;font-weight:800;line-height:0.9;letter-spacing:-0.04em;color:var(--paper);">0.4<span style="font-size:0.35em;font-weight:500;color:rgba(241,236,226,0.55);margin-left:8px;">days avg</span></div>
+          <div style="margin-top:16px;font-family:'General Sans',sans-serif;font-size:15px;color:rgba(241,236,226,0.78);line-height:1.5;">
+            p95 = 1.1 days · only 3 orders took more than a week
+          </div>
+        </div>
+      </div>
+
+      <!-- Horizontal time-bars -->
+      <div style="margin-top:48px;display:grid;grid-template-columns:1fr;gap:20px;">
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(241,236,226,0.7);">% paid within 3 days</div>
+            <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--paper);">91.6% → 98.9%</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <div style="flex:0 0 60px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(241,236,226,0.5);text-align:right;">pre</div>
+            <div style="flex:1;height:10px;background:rgba(241,236,226,0.1);position:relative;">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:91.6%;background:rgba(241,236,226,0.4);"></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:4px;">
+            <div style="flex:0 0 60px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--warm);text-align:right;">post</div>
+            <div style="flex:1;height:10px;background:rgba(241,236,226,0.1);position:relative;">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:98.9%;background:var(--warm);"></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(241,236,226,0.7);">p95 — slowest 5% of orders</div>
+            <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--paper);">5.8 → 1.1 days &nbsp;<span style="color:var(--warm);">↓ 5x</span></div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <div style="flex:0 0 60px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(241,236,226,0.5);text-align:right;">pre</div>
+            <div style="flex:1;height:10px;background:rgba(241,236,226,0.1);position:relative;">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:82%;background:rgba(241,236,226,0.4);"></div>
+              <div style="position:absolute;right:-3px;top:-5px;bottom:-5px;width:2px;background:var(--paper);"></div>
+              <div style="position:absolute;left:84%;top:-22px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(241,236,226,0.6);">5.8d</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:4px;">
+            <div style="flex:0 0 60px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--warm);text-align:right;">post</div>
+            <div style="flex:1;height:10px;background:rgba(241,236,226,0.1);position:relative;">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:15.5%;background:var(--warm);"></div>
+              <div style="position:absolute;left:17%;top:-3px;bottom:-3px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(241,236,226,0.75);padding-left:4px;">1.1d</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- The chase queue story -->
+      <div style="margin-top:64px;padding:36px 32px;background:rgba(201,123,44,0.08);border:1px solid rgba(201,123,44,0.3);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--warm);margin-bottom:14px;">The ops impact</div>
+        <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:30px;line-height:1.15;font-weight:700;letter-spacing:-0.02em;color:var(--paper);max-width:30ch;margin-bottom:28px;">
+          The admin chase queue dropped <span style="color:var(--warm);">9x</span>.
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;">
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(241,236,226,0.55);margin-bottom:6px;">3+ days late</div>
+            <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:32px;font-weight:700;line-height:1;color:var(--paper);">4.6 → 0.5<span style="font-size:0.45em;font-weight:500;color:rgba(241,236,226,0.55);margin-left:6px;">/day</span></div>
+          </div>
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(241,236,226,0.55);margin-bottom:6px;">5+ days late</div>
+            <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:32px;font-weight:700;line-height:1;color:var(--paper);">3.1 → 0.2<span style="font-size:0.45em;font-weight:500;color:rgba(241,236,226,0.55);margin-left:6px;">/day</span></div>
+          </div>
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(241,236,226,0.55);margin-bottom:6px;">7+ days late</div>
+            <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:32px;font-weight:700;line-height:1;color:var(--paper);">2.2 → 0.1<span style="font-size:0.45em;font-weight:500;color:rgba(241,236,226,0.55);margin-left:6px;">/day</span></div>
+          </div>
+        </div>
+        <div style="margin-top:24px;font-family:'General Sans',sans-serif;font-style:italic;font-size:15px;color:rgba(241,236,226,0.7);line-height:1.55;max-width:64ch;">
+          Pre-agent, admin chased ~5 late TNPL orders every day. Today, less than one. The agent isn't just deciding — it's filtering the orders that would have become tomorrow's recovery problem.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE PIVOT ============ -->
+  <section class="pivot">
+    <div class="container">
+      <div class="section-eyebrow">The moment that mattered</div>
+      <h2 class="section-title">The day we <em>opened the gates</em>.</h2>
+      <p class="section-lede">
+        For months, TNPL was a Klub-only privilege gated by a static risk score. Manual admin review
+        didn't scale. On a single morning, three pull requests shipped together — and the product
+        changed shape.
+      </p>
+
+      <div class="pivot-date">April <span class="day">17</span><span class="small">2026 · 10:31 UTC</span></div>
+
+      <div class="pr-list">
+        <div class="pr-row">
+          <div class="pr-num">#814</div>
+          <div class="pr-desc">TNPL Order Evaluation System — Sherlock — launches.</div>
+        </div>
+        <div class="pr-row">
+          <div class="pr-num">#855</div>
+          <div class="pr-desc">"Show TNPL on cart to all guest users" — the Klub gate is removed.</div>
+        </div>
+        <div class="pr-row">
+          <div class="pr-num">#908</div>
+          <div class="pr-desc">Legacy risk-score gate deleted. Sherlock replaces it.</div>
+        </div>
+        <div class="pr-row">
+          <div class="pr-num">#854</div>
+          <div class="pr-desc">Trusted customer limit raised to ₹5,000.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BEFORE / AFTER ============ -->
+  <section>
+    <div class="container">
+      <div class="section-eyebrow">Apples to apples</div>
+      <h2 class="section-title">Before the agent vs. <em>after</em>.</h2>
+      <p class="section-lede">
+        Same product, same customer base, same warehouse. The only thing that changed is who
+        decides what ships. GMV figures are in selling price.
+      </p>
+
+      <div class="compare-grid">
+        <div class="compare-col">
+          <div class="compare-head">Pre-agent</div>
+          <div class="compare-title">Mar 1 → Apr 16<br>47 days · Klub-only</div>
+
+          <div class="compare-row"><span class="compare-label">TNPL orders placed</span><span class="compare-val">6,560</span></div>
+          <div class="compare-row"><span class="compare-label">Delivered</span><span class="compare-val">4,984 <span class="delta" style="color:var(--muted)">76.0%</span></span></div>
+          <div class="compare-row"><span class="compare-label">Paid (of delivered)</span><span class="compare-val">51.3%</span></div>
+          <div class="compare-row"><span class="compare-label">RTO / forced return</span><span class="compare-val">11.5%</span></div>
+          <div class="compare-row"><span class="compare-label">Placed GMV</span><span class="compare-val">₹1.11 cr</span></div>
+          <div class="compare-row"><span class="compare-label">Paid GMV</span><span class="compare-val">₹42.06 L</span></div>
+          <div class="compare-row"><span class="compare-label">Admin cancels / day</span><span class="compare-val">≈ 2</span></div>
+          <div class="compare-row"><span class="compare-label">Auto-decision rate</span><span class="compare-val">0%</span></div>
+        </div>
+        <div class="compare-col">
+          <div class="compare-head">Post-agent</div>
+          <div class="compare-title">Apr 17 → May 12<br>26 days · open to all</div>
+
+          <div class="compare-row"><span class="compare-label">TNPL orders placed</span><span class="compare-val">3,335</span></div>
+          <div class="compare-row"><span class="compare-label">Delivered</span><span class="compare-val">2,105 <span class="delta" style="color:var(--muted)">63.1%</span></span></div>
+          <div class="compare-row"><span class="compare-label">Paid (of delivered)</span><span class="compare-val up">53.8% <span class="delta">+2.5pt</span></span></div>
+          <div class="compare-row"><span class="compare-label">RTO / forced return</span><span class="compare-val up">11.0% <span class="delta">−0.5pt</span></span></div>
+          <div class="compare-row"><span class="compare-label">Placed GMV</span><span class="compare-val">₹45.0 L</span></div>
+          <div class="compare-row"><span class="compare-label">Paid GMV</span><span class="compare-val">₹15.5 L</span></div>
+          <div class="compare-row"><span class="compare-label">Admin reviews / day</span><span class="compare-val">≈ 78</span></div>
+          <div class="compare-row"><span class="compare-label">Auto-decision rate</span><span class="compare-val up">58%</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FLOW DIAGRAMS ============ -->
+  <section>
+    <div class="container">
+      <div class="section-eyebrow">Where every order ends up</div>
+      <h2 class="section-title">Same product. <em>Different outcomes.</em></h2>
+      <p class="section-lede">
+        Six thousand orders before, three thousand after. The shape of what happened to each
+        is the comparison that matters — how many got cancelled, how many shipped, and of those
+        shipped, how many actually paid.
+      </p>
+
+      <div class="flow-grid-v2">
+
+        <!-- ===== PRE ===== -->
+        <div class="flow-v2">
+          <div class="fv2-head">
+            <div class="fv2-eyebrow"><strong>Before Sherlock</strong></div>
+            <div class="fv2-period">Mar 1 → Apr 16 · 47 days</div>
+          </div>
+
+          <div>
+            <div class="fv2-top-label">TNPL orders placed</div>
+            <div class="fv2-top-value">6,560</div>
+            <div class="fv2-top-sub">₹1.11 cr placed GMV · gated to Klub members only</div>
+          </div>
+
+          <!-- Stage 1: pre-ship outcome -->
+          <div class="fv2-stage">
+            <div class="fv2-stage-title">1 · Did the order make it to shipping?</div>
+            <div class="fv2-bar">
+              <div class="fv2-seg s-cancel" style="width:24%;">24%</div>
+              <div class="fv2-seg s-ship" style="width:76%;">76%</div>
+            </div>
+            <div class="fv2-list">
+              <div class="fv2-item">
+                <div class="fv2-dot d-cancel"></div>
+                <div class="fv2-item-name">Cancelled pre-ship<span>1,482 customer · 93 admin — barely 2/day</span></div>
+                <div class="fv2-item-val">1,576</div>
+                <div class="fv2-item-pct">24.0%</div>
+              </div>
+              <div class="fv2-item">
+                <div class="fv2-dot d-ship"></div>
+                <div class="fv2-item-name">Shipped<span>no Sherlock — hope-for-the-best</span></div>
+                <div class="fv2-item-val">4,984</div>
+                <div class="fv2-item-pct">76.0%</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stage 2: shipped outcome -->
+          <div class="fv2-stage">
+            <div class="fv2-stage-title">2 · Of the 4,984 shipped, what happened?</div>
+            <div class="fv2-bar">
+              <div class="fv2-seg s-paid" style="width:34.0%;">34%</div>
+              <div class="fv2-seg s-partial" style="width:17.3%;">17%</div>
+              <div class="fv2-seg s-noret" style="width:48.7%;">49%</div>
+            </div>
+            <div class="fv2-list">
+              <div class="fv2-item">
+                <div class="fv2-dot d-paid"></div>
+                <div class="fv2-item-name">Fully paid<span>kept everything, paid in full</span></div>
+                <div class="fv2-item-val">1,694</div>
+                <div class="fv2-item-pct">34.0%</div>
+              </div>
+              <div class="fv2-item">
+                <div class="fv2-dot d-partial"></div>
+                <div class="fv2-item-name">Partial keep + paid<span>kept some items, returned others</span></div>
+                <div class="fv2-item-val">862</div>
+                <div class="fv2-item-pct">17.3%</div>
+              </div>
+              <div class="fv2-item">
+                <div class="fv2-dot d-noret"></div>
+                <div class="fv2-item-name">Fully returned, no payment<span>tried everything, kept nothing</span></div>
+                <div class="fv2-item-val">2,428</div>
+                <div class="fv2-item-pct">48.7%</div>
+              </div>
+            </div>
+            <div class="fv2-rto-note">
+              <strong>+ 575 RTO</strong> (11.5%) — packages refused at door · fraud-adjacent · trending up 5% → 14%
+            </div>
+          </div>
+
+          <!-- Bottom -->
+          <div class="fv2-highlight">
+            <div>
+              <div class="lbl">Total paying orders</div>
+            </div>
+            <div class="val">2,556 <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:rgba(241,236,226,0.6);font-weight:500;margin-left:6px;">51.3% of shipped</span></div>
+          </div>
+          <div class="fv2-foot">
+            ₹42.06 L paid GMV. No agent in the loop — admin touched 93 of 6,560 orders. There was no scalable way to vet new users, so TNPL stayed locked to Klub.
+          </div>
+        </div>
+
+        <!-- ===== POST ===== -->
+        <div class="flow-v2 is-post">
+          <div class="fv2-head">
+            <div class="fv2-eyebrow">With <strong>Sherlock</strong></div>
+            <div class="fv2-period">Apr 17 → May 13 · 26 days</div>
+          </div>
+
+          <div>
+            <div class="fv2-top-label">TNPL orders placed</div>
+            <div class="fv2-top-value">3,335</div>
+            <div class="fv2-top-sub">₹45.0 L placed GMV · open to every guest user</div>
+          </div>
+
+          <!-- Sherlock decision step -->
+          <div class="fv2-sherlock">
+            <div class="fv2-sherlock-eyebrow">Sherlock evaluates · 3,227 orders · 95.6% coverage</div>
+            <div class="fv2-sherlock-row">
+              <div class="fv2-sherlock-cell">
+                <div class="lbl">Auto-approve</div>
+                <div class="val">1,177</div>
+                <div class="sub">₹16.21 L · ships clean</div>
+              </div>
+              <div class="fv2-sherlock-cell">
+                <div class="lbl">→ Admin queue</div>
+                <div class="val">2,036</div>
+                <div class="sub">ambiguous middle</div>
+              </div>
+              <div class="fv2-sherlock-cell">
+                <div class="lbl">Auto-reject</div>
+                <div class="val">23</div>
+                <div class="sub">₹0.35 L · since May 7</div>
+              </div>
+            </div>
+            <div class="fv2-sherlock-admin">
+              <div><strong>717</strong> admin approve · ₹9.98 L</div>
+              <div><strong>323</strong> admin reject · ₹4.85 L · 100% precision</div>
+            </div>
+          </div>
+
+          <!-- Stage 1: pre-ship outcome -->
+          <div class="fv2-stage">
+            <div class="fv2-stage-title">1 · Did the order make it to shipping?</div>
+            <div class="fv2-bar">
+              <div class="fv2-seg s-cancel" style="width:24.3%;">24%</div>
+              <div class="fv2-seg s-ship" style="width:63.1%;">63%</div>
+              <div class="fv2-seg s-pending" style="width:12.6%;">13%</div>
+            </div>
+            <div class="fv2-list">
+              <div class="fv2-item">
+                <div class="fv2-dot d-cancel"></div>
+                <div class="fv2-item-name">Cancelled pre-ship<span>customer + admin-rejected + auto-rejected</span></div>
+                <div class="fv2-item-val">810</div>
+                <div class="fv2-item-pct">24.3%</div>
+              </div>
+              <div class="fv2-item">
+                <div class="fv2-dot d-ship"></div>
+                <div class="fv2-item-name">Shipped<span>agent or admin gave the green light</span></div>
+                <div class="fv2-item-val">2,105</div>
+                <div class="fv2-item-pct">63.1%</div>
+              </div>
+              <div class="fv2-item">
+                <div class="fv2-dot d-pending"></div>
+                <div class="fv2-item-name">Still in flight<span>recent orders awaiting decision or delivery</span></div>
+                <div class="fv2-item-val">420</div>
+                <div class="fv2-item-pct">12.6%</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stage 2: shipped outcome -->
+          <div class="fv2-stage">
+            <div class="fv2-stage-title">2 · Of the 2,105 shipped, what happened?</div>
+            <div class="fv2-bar">
+              <div class="fv2-seg s-paid" style="width:36.8%;">37%</div>
+              <div class="fv2-seg s-partial" style="width:17.1%;">17%</div>
+              <div class="fv2-seg s-noret" style="width:46.1%;">46%</div>
+            </div>
+            <div class="fv2-list">
+              <div class="fv2-item">
+                <div class="fv2-dot d-paid"></div>
+                <div class="fv2-item-name">Fully paid<span>kept everything, paid in full</span></div>
+                <div class="fv2-item-val">774</div>
+                <div class="fv2-item-pct">36.8%</div>
+              </div>
+              <div class="fv2-item">
+                <div class="fv2-dot d-partial"></div>
+                <div class="fv2-item-name">Partial keep + paid<span>kept some items, returned others</span></div>
+                <div class="fv2-item-val">359</div>
+                <div class="fv2-item-pct">17.1%</div>
+              </div>
+              <div class="fv2-item">
+                <div class="fv2-dot d-noret"></div>
+                <div class="fv2-item-name">Fully returned, no payment<span>tried everything, kept nothing</span></div>
+                <div class="fv2-item-val">971</div>
+                <div class="fv2-item-pct">46.1%</div>
+              </div>
+            </div>
+            <div class="fv2-rto-note">
+              <strong>+ 231 RTO</strong> (11.0%) — packages refused at door · agent kept this steady even as gates opened
+            </div>
+          </div>
+
+          <!-- Bottom -->
+          <div class="fv2-highlight">
+            <div>
+              <div class="lbl">Total paying orders</div>
+            </div>
+            <div class="val">1,133 <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:rgba(241,236,226,0.6);font-weight:500;margin-left:6px;">53.8% of shipped</span></div>
+          </div>
+          <div class="fv2-foot">
+            ₹15.5 L paid GMV. Auto-reject was unblocked May 7 (PR #945). All 23 auto-rejects so far have been confirmed by ops. Both faces of the agent are now live.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRAJECTORY CHART ============ -->
+  <section>
+    <div class="container">
+      <div class="section-eyebrow">The trajectory</div>
+      <h2 class="section-title">From <em>0% to 58%</em> autonomous in five weeks.</h2>
+      <p class="section-lede">
+        Week by week, the agent took over more of the decision space. Auto-approve grew steadily;
+        auto-reject came online May 7. Admin moved from doing everything to handling only the
+        genuinely ambiguous middle.
+      </p>
+
+      <div class="chart-wrap">
+        <div class="chart-legend">
+          <div class="legend-item"><span class="legend-swatch" style="background:var(--safe);"></span>Auto-approved</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:var(--warm);"></span>Sent to admin (approved)</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:var(--danger);"></span>Rejected (admin + auto)</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:var(--rule);"></span>Pending / no decision yet</div>
+        </div>
+
+        <svg class="chart-svg" viewBox="0 0 1000 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+          <!-- Grid lines -->
+          <g stroke="#D4CDBE" stroke-width="1" stroke-dasharray="2 4">
+            <line x1="80" y1="60" x2="980" y2="60" />
+            <line x1="80" y1="135" x2="980" y2="135" />
+            <line x1="80" y1="210" x2="980" y2="210" />
+            <line x1="80" y1="285" x2="980" y2="285" />
+            <line x1="80" y1="360" x2="980" y2="360" />
+          </g>
+          <!-- Y axis labels -->
+          <g font-family="JetBrains Mono, monospace" font-size="10" fill="#6B6358">
+            <text x="70" y="64" text-anchor="end">100%</text>
+            <text x="70" y="139" text-anchor="end">75%</text>
+            <text x="70" y="214" text-anchor="end">50%</text>
+            <text x="70" y="289" text-anchor="end">25%</text>
+            <text x="70" y="364" text-anchor="end">0%</text>
+          </g>
+
+          <!-- Bars: x positions for 5 weeks; bar width 110 -->
+          <!-- Week 1: Apr 13-19 — Auto 0%, Admin-app 27%, Reject 22%, Pending 51% -->
+          <!-- Week 2: Apr 20-26 — Auto 34%, Admin-app 28%, Reject 18%, Pending 20% -->
+          <!-- Week 3: Apr 27-May 3 — Auto 50%, Admin-app 22%, Reject 18%, Pending 10% -->
+          <!-- Week 4: May 4-10 — Auto 49%, Admin-app 25%, Reject 19%, Pending 7% -->
+          <!-- Week 5: May 11-13 — Auto 58%, Admin-app 22%, Reject 14%, Pending 6% -->
+          <g>
+            <!-- bar bg = 300px from y=60 to y=360 -->
+            <!-- Week 1 -->
+            <g transform="translate(140,0)">
+              <rect x="0" y="360" width="110" height="0" fill="#4F7A3F" />
+              <rect x="0" y="279" width="110" height="81" fill="#C97B2C" />
+              <rect x="0" y="213" width="110" height="66" fill="#B83A1E" />
+              <rect x="0" y="60" width="110" height="153" fill="#D4CDBE" />
+            </g>
+            <!-- Week 2 -->
+            <g transform="translate(310,0)">
+              <rect x="0" y="258" width="110" height="102" fill="#4F7A3F" />
+              <rect x="0" y="174" width="110" height="84" fill="#C97B2C" />
+              <rect x="0" y="120" width="110" height="54" fill="#B83A1E" />
+              <rect x="0" y="60" width="110" height="60" fill="#D4CDBE" />
+            </g>
+            <!-- Week 3 -->
+            <g transform="translate(480,0)">
+              <rect x="0" y="210" width="110" height="150" fill="#4F7A3F" />
+              <rect x="0" y="144" width="110" height="66" fill="#C97B2C" />
+              <rect x="0" y="90" width="110" height="54" fill="#B83A1E" />
+              <rect x="0" y="60" width="110" height="30" fill="#D4CDBE" />
+            </g>
+            <!-- Week 4 -->
+            <g transform="translate(650,0)">
+              <rect x="0" y="213" width="110" height="147" fill="#4F7A3F" />
+              <rect x="0" y="138" width="110" height="75" fill="#C97B2C" />
+              <rect x="0" y="81" width="110" height="57" fill="#B83A1E" />
+              <rect x="0" y="60" width="110" height="21" fill="#D4CDBE" />
+            </g>
+            <!-- Week 5 -->
+            <g transform="translate(820,0)">
+              <rect x="0" y="186" width="110" height="174" fill="#4F7A3F" />
+              <rect x="0" y="120" width="110" height="66" fill="#C97B2C" />
+              <rect x="0" y="78" width="110" height="42" fill="#B83A1E" />
+              <rect x="0" y="60" width="110" height="18" fill="#D4CDBE" />
+            </g>
+          </g>
+
+          <!-- X axis labels -->
+          <g font-family="JetBrains Mono, monospace" font-size="10" fill="#6B6358" text-anchor="middle">
+            <text x="195" y="385">APR 13–19</text>
+            <text x="195" y="400" font-family="General Sans" font-size="11" fill="#15120E" font-weight="600">482 evals</text>
+            <text x="365" y="385">APR 20–26</text>
+            <text x="365" y="400" font-family="General Sans" font-size="11" fill="#15120E" font-weight="600">1,172 evals</text>
+            <text x="535" y="385">APR 27–MAY 3</text>
+            <text x="535" y="400" font-family="General Sans" font-size="11" fill="#15120E" font-weight="600">797 evals</text>
+            <text x="705" y="385">MAY 4–10</text>
+            <text x="705" y="400" font-family="General Sans" font-size="11" fill="#15120E" font-weight="600">620 evals</text>
+            <text x="875" y="385">MAY 11–13</text>
+            <text x="875" y="400" font-family="General Sans" font-size="11" fill="#15120E" font-weight="600">156 evals</text>
+          </g>
+        </svg>
+
+        <div style="margin-top:20px;padding-top:16px;border-top:1px dashed var(--rule);font-family:'General Sans',sans-serif;font-style:italic;font-size:15px;color:var(--muted);line-height:1.5;text-align:center;">
+          Apr 21 — v1 auto-decision turned on &nbsp;·&nbsp; Apr 28 — v2 flip to Claude Opus &nbsp;·&nbsp; May 7 — auto-reject unblocked
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FRAUD PREVENTION ============ -->
+  <section style="background:var(--paper-2);">
+    <div class="container">
+      <div class="section-eyebrow">Fraud prevention, in plain English</div>
+      <h2 class="section-title">Sherlock catches what a human would catch — <em>at machine speed</em>.</h2>
+      <p class="section-lede">
+        The agent reads the order, the address, the user history, the device, the velocity. Then it
+        explains its verdict in plain English. Here's what it actually says, in production.
+      </p>
+
+      <div class="signals-grid">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Top fraud signals fired on rejected orders</div>
+          <div class="signals-table">
+            <div class="signal-row">
+              <div>
+                <div class="signal-name">Fast signup</div>
+                <div class="signal-desc">Account &lt; 60 min old before ordering</div>
+              </div>
+              <div class="signal-bar-wrap">
+                <div class="signal-bar">
+                  <div class="signal-bar-fill" style="width:60%"></div>
+                </div>
+                <div class="signal-count">141</div>
+              </div>
+            </div>
+            <div class="signal-row">
+              <div>
+                <div class="signal-name">Empty address line 1</div>
+                <div class="signal-desc">Vague or undeliverable</div>
+              </div>
+              <div class="signal-bar-wrap">
+                <div class="signal-bar">
+                  <div class="signal-bar-fill" style="width:51%"></div>
+                </div>
+                <div class="signal-count">119</div>
+              </div>
+            </div>
+            <div class="signal-row">
+              <div>
+                <div class="signal-name">Low GMV first order</div>
+                <div class="signal-desc">Small order — testing the system</div>
+              </div>
+              <div class="signal-bar-wrap">
+                <div class="signal-bar">
+                  <div class="signal-bar-fill" style="width:43%"></div>
+                </div>
+                <div class="signal-count">100</div>
+              </div>
+            </div>
+            <div class="signal-row">
+              <div>
+                <div class="signal-name">Fraud pincode</div>
+                <div class="signal-desc">Known high-fraud area</div>
+              </div>
+              <div class="signal-bar-wrap">
+                <div class="signal-bar">
+                  <div class="signal-bar-fill" style="width:28%"></div>
+                </div>
+                <div class="signal-count">65</div>
+              </div>
+            </div>
+            <div class="signal-row">
+              <div>
+                <div class="signal-name">Receiver mismatch</div>
+                <div class="signal-desc">Delivery name ≠ account name</div>
+              </div>
+              <div class="signal-bar-wrap">
+                <div class="signal-bar">
+                  <div class="signal-bar-fill" style="width:18%"></div>
+                </div>
+                <div class="signal-count">42</div>
+              </div>
+            </div>
+            <div class="signal-row">
+              <div>
+                <div class="signal-name">Garbage address</div>
+                <div class="signal-desc">School, station, restaurant, salon…</div>
+              </div>
+              <div class="signal-bar-wrap">
+                <div class="signal-bar">
+                  <div class="signal-bar-fill" style="width:8%"></div>
+                </div>
+                <div class="signal-count">18</div>
+              </div>
+            </div>
+            <div class="signal-row">
+              <div>
+                <div class="signal-name">Same-day TNPL velocity</div>
+                <div class="signal-desc">Multiple TNPL orders same day</div>
+              </div>
+              <div class="signal-bar-wrap">
+                <div class="signal-bar">
+                  <div class="signal-bar-fill" style="width:7%"></div>
+                </div>
+                <div class="signal-count">17</div>
+              </div>
+            </div>
+            <div class="signal-row">
+              <div>
+                <div class="signal-name">Shared phone / address</div>
+                <div class="signal-desc">Fraud-ring signature</div>
+              </div>
+              <div class="signal-bar-wrap">
+                <div class="signal-bar">
+                  <div class="signal-bar-fill" style="width:4%"></div>
+                </div>
+                <div class="signal-count">18</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:32px;padding:20px 24px;background:var(--paper);border:1px solid var(--rule-strong);">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Who gets blocked</div>
+            <div style="display:flex;gap:24px;flex-wrap:wrap;">
+              <div>
+                <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:28px;font-weight:500;line-height:1;">95.9%</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:4px;">New users · no history</div>
+              </div>
+              <div>
+                <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:28px;font-weight:500;line-height:1;">3.8%</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:4px;">Proven · prepaid history</div>
+              </div>
+              <div>
+                <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:28px;font-weight:500;line-height:1;">0.3%</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:4px;">Trusted · TNPL-paid before</div>
+              </div>
+            </div>
+            <div style="font-family:'General Sans',sans-serif;font-style:italic;font-size:14px;color:var(--muted);margin-top:14px;line-height:1.5;">
+              Surgical targeting. Repeat payers almost never get blocked — only 2 of 747 Trusted users were rejected in 26 days.
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Real auto-reject reasoning · production</div>
+          <div class="quotes-wrap">
+            <div class="quote">
+              Address apartment field is a commercial retail establishment — provision store / grocery shop — not a residential location.
+              <div class="quote-meta">— Sherlock · May 9 · auto-reject</div>
+            </div>
+            <div class="quote">
+              Address points to "Al Shifa Clinic" — a medical clinic, a commercial / non-residential location where items cannot be physically recovered.
+              <div class="quote-meta">— Sherlock · May 10 · auto-reject</div>
+            </div>
+            <div class="quote">
+              Address contains "ObjectWin Technology" and "MICO bus stop" as the apartment field. This is a commercial / office location — items cannot be reliably recovered from a corporate office.
+              <div class="quote-meta">— Sherlock · May 11 · auto-reject</div>
+            </div>
+            <div class="quote">
+              Address is "Clique Unisex Salon" — a commercial salon, not a residential location.
+              <div class="quote-meta">— Sherlock · May 12 · auto-reject</div>
+            </div>
+          </div>
+          <div style="margin-top:24px;font-family:'General Sans',sans-serif;font-style:italic;font-size:16px;line-height:1.55;color:var(--ink-soft);">
+            A human admin reading 130 orders a day would burn out flagging "Clique Unisex Salon."
+            The agent does it in six seconds, on every order, around the clock.
+          </div>
+        </div>
+      </div>
+
+      <!-- THE SAFETY NET -->
+      <div style="margin-top:80px;padding:40px 36px;background:var(--ink);color:var(--paper);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--warm);margin-bottom:20px;">The two-way safety net</div>
+        <div style="font-style:italic;margin-bottom:32px;max-width:32ch;">
+          346 fraud orders blocked — split between the agent surfacing and the human catching.
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">
+          <div style="border-top:1px solid rgba(241,236,226,0.2);padding-top:16px;">
+            <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:36px;font-weight:500;color:var(--paper);line-height:1;">23</div>
+            <div style="font-size:13px;color:rgba(241,236,226,0.7);margin-top:8px;line-height:1.4;">Agent rejected outright — admin never had to look.</div>
+          </div>
+          <div style="border-top:1px solid rgba(241,236,226,0.2);padding-top:16px;">
+            <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:36px;font-weight:500;color:var(--paper);line-height:1;">58</div>
+            <div style="font-size:13px;color:rgba(241,236,226,0.7);margin-top:8px;line-height:1.4;">Agent said reject, admin confirmed.</div>
+          </div>
+          <div style="border-top:1px solid rgba(241,236,226,0.2);padding-top:16px;">
+            <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:36px;font-weight:500;color:var(--paper);line-height:1;">182</div>
+            <div style="font-size:13px;color:rgba(241,236,226,0.7);margin-top:8px;line-height:1.4;">Agent flagged, admin reviewed → reject.</div>
+          </div>
+          <div style="border-top:1px solid rgba(241,236,226,0.2);padding-top:16px;">
+            <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:36px;font-weight:500;color:var(--paper);line-height:1;">95</div>
+            <div style="font-size:13px;color:rgba(241,236,226,0.7);margin-top:8px;line-height:1.4;">Agent would have shipped — admin overrode.</div>
+          </div>
+        </div>
+        <div style="margin-top:24px;font-family:'General Sans',sans-serif;font-style:italic;font-size:16px;color:rgba(241,236,226,0.75);line-height:1.55;max-width:70ch;">
+          The agent isn't a replacement for admin — it's an amplifier. It surfaces the right orders for human eyes, handles the obvious ones autonomously, and admin catches what the agent misses. Both sides cover each other.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ENGINEERING TIMELINE ============ -->
+  <section>
+    <div class="container">
+      <div class="section-eyebrow">How we got here</div>
+      <h2 class="section-title">Ten pull requests that <em>built the trust</em>.</h2>
+      <p class="section-lede">
+        Each PR tightened something specific — recall, latency, false flags, the auto-reject gate.
+        Trust grew commit by commit, until the business raised the TNPL limit twice.
+      </p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-pr">#814</div>
+          <div class="tl-dot hero-dot"></div>
+          <div class="tl-content">
+            <div class="tl-what">Initial agent + scoring engine ship.</div>
+            <div class="tl-why">The starting line. Apr 17, 10:31 UTC.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-pr">#822 · #824</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-what">Console + visibility.</div>
+            <div class="tl-why">Ops gets eyes on every decision.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-pr">#853</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-what">Agent v2 — LLM as independent evaluator, richer signals, new user profiles.</div>
+            <div class="tl-why">Fraud recall jumped 62.7% → 82.6% in labelled backtest.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-pr">#889</div>
+          <div class="tl-dot hero-dot"></div>
+          <div class="tl-content">
+            <div class="tl-what">Flip live traffic to v2 — Claude Opus, new prompt, new weights.</div>
+            <div class="tl-why">Auto-rate jumped 24% → 50% in 24 hours.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-pr">#890 · #891</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-what">Terminal Default risk flag + behaviour underwriting cron.</div>
+            <div class="tl-why">Real-time late-closure signals feed the next eval.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-pr">#893</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-what">Stop conflating RTO with customer returns in prompt.</div>
+            <div class="tl-why">Reduced false flags on legitimate customers.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-pr">#897</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-what">Stop labelling Prepaid/POD priors as UNPAID.</div>
+            <div class="tl-why">Stopped penalising genuine customers.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-pr">#894</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-what">Slack alerts for manual review + admin decisions.</div>
+            <div class="tl-why">Closed-loop visibility for ops.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-pr">#945</div>
+          <div class="tl-dot hero-dot"></div>
+          <div class="tl-content">
+            <div class="tl-what">Unblock auto-reject — score floor 45→0, confidence 0.8→0.85.</div>
+            <div class="tl-why">First autonomous rejections fire May 7. Second face of the agent comes online.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-pr">#958</div>
+          <div class="tl-dot hero-dot"></div>
+          <div class="tl-content">
+            <div class="tl-what">TNPL cart limit raised ₹2,000 → ₹2,600.</div>
+            <div class="tl-why">Business confidence in the agent is high enough to expand exposure.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSER ============ -->
+  <section class="closer">
+    <div class="container">
+      <div class="quote-big">
+        Apr 17, we opened TNPL to every guest user — and Sherlock kept us safe.
+        In 26 days: <strong>₹16.2 L auto-shipped</strong>, <strong>₹5.2 L of fraud blocked</strong>,
+        pay-rate held at <strong>53.8%</strong>, and the agent now auto-decides
+        <strong>58% of orders</strong> without a human in the loop.
+      </div>
+      <div class="closer-sig">
+        Sherlock <span class="dot"></span> v4.0 <span class="dot"></span> Claude Opus <span class="dot"></span> Klydo Risk Eng
+      </div>
+    </div>
+  </section>
+
+</body>
+
+</html>
