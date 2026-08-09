@@ -35,7 +35,7 @@ export function generateMetadata({ params }: { params: Promise<{ slug: string }>
   return params.then((p) => {
     const report = GATED_REPORT_BY_SLUG[p.slug];
     return {
-      title: report ? `${report.title} — Shravan Revanna` : 'Report — Shravan Revanna',
+      title: report ? `${report.title} - Shravan Revanna` : 'Report - Shravan Revanna',
       robots: { index: false, follow: false }, // never index gated content
     };
   });

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spider — Acquisition &amp; Capability Brief</title>
+<title>Spider - Acquisition &amp; Capability Brief</title>
 <style>
   html, body { margin: 0; }
   :root {
@@ -232,41 +232,41 @@
 
     <p class="eyebrow">Acquisition &amp; Capability Brief</p>
     <h1>A refinery that turns 120 storefronts into <em>one</em> clean catalog.</h1>
-    <p class="lede">One engine ingests dozens of fashion storefronts on ten different tech stacks, normalizes every product into <b>one universal schema</b>, keeps it fresh, tracks its prices daily, and feeds search, discovery and analytics downstream — a <b>compounding data asset</b>, not a pile of scripts.</p>
+    <p class="lede">One production-grade engine ingests dozens of fashion storefronts across ten tech stacks and normalizes every product into <b>one universal schema</b>. It's a <b>ready-to-deploy codebase</b>  crawl it on a schedule, operate it from a console, serve it over an API  validated by the <b>catalog it has already produced</b>, not a pile of scripts.</p>
 
     <div class="metabar tnum">
       <span><b>Compiled</b> 2026-07-25</span>
       <span><b>Repo</b> 119 adapters · 31k LOC · 221 tests</span>
       <span><b>Catalog</b> 963.6K styles · 907.1K products · 4.9M SKUs · 114 sources</span>
-      <span><b>Growth</b> +13% styles week-over-week</span>
+      <span><b>Status</b> ready-to-deploy codebase</span>
     </div>
   </header>
 
   <div class="hero-band">
     <div class="hstat">
       <div class="fig tnum" data-count="963.6" data-decimals="1" data-suffix="K">0</div>
-      <div class="cap">Styles — storefront cards</div>
-      <div class="sub"><span class="up">↑ 13.2%</span> week-over-week</div>
+      <div class="cap">Styles  storefront cards</div>
+      <div class="sub">produced by one crawl</div>
     </div>
     <div class="hstat">
       <div class="fig tnum" data-count="907.1" data-decimals="1" data-suffix="K">0</div>
-      <div class="cap">Products — distinct designs</div>
-      <div class="sub"><span class="up">↑ 13.7%</span> week-over-week</div>
+      <div class="cap">Products  distinct designs</div>
+      <div class="sub">deduplicated designs</div>
     </div>
     <div class="hstat">
       <div class="fig tnum" data-count="4.9" data-decimals="1" data-suffix="M">0</div>
-      <div class="cap">SKUs — sellable size-units</div>
-      <div class="sub"><span class="up">↑ 11.3%</span> week-over-week</div>
+      <div class="cap">SKUs  sellable size-units</div>
+      <div class="sub">refreshable on a cron</div>
     </div>
     <div class="hstat">
       <div class="fig tnum" data-count="114" data-decimals="0">0</div>
       <div class="cap">Live sources / storefronts</div>
-      <div class="sub"><span class="up">↑ 55.4%</span> week-over-week</div>
+      <div class="sub">adapters shipped</div>
     </div>
   </div>
 
   <div class="integrity">
-    <span>Integrity across 4.9M SKUs&nbsp;—</span>
+    <span>Integrity across 4.9M SKUs&nbsp;</span>
     <span class="zpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>0 dead-letters</span>
     <span class="zpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>0 duplicate keys</span>
     <span class="zpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>0 orphan rows</span>
@@ -279,9 +279,9 @@
         <p class="eyebrow">01 · The data asset</p>
         <h2>Catalog quantum at three grains</h2>
       </div>
-      <span class="sec-note">live · 114 sources · grid ops dashboard</span>
+      <span class="sec-note">114 sources · reproducible crawl</span>
     </div>
-    <p class="sec-intro">Every brand collapses to the same unit model — <code>Product → Style → SKU</code>. Identity is <code>(source, style_id)</code>; writes are idempotent upserts. One catalog row = one Style = one storefront card = one vector point. Figures are the live production catalog; it has grown from <b>418K styles at 62 sources</b> to <b>963.6K at 114</b> — and is still compounding double digits every week.</p>
+    <p class="sec-intro">Every brand collapses to the same unit model: <code>Product → Style → SKU</code>. Identity is <code>(source, style_id)</code>; writes are idempotent upserts. One catalog row = one Style = one storefront card = one vector point. Figures are the catalog this codebase has already produced and validated: the same crawl re-runs on your schedule to keep it fresh.</p>
     <div class="grain">
       <div class="grain-card">
         <div class="big tnum">907,100</div>
@@ -338,7 +338,7 @@
         </div>
       </div>
       <div class="attr-panel">
-        <h3>A typed spec-sheet — not just tags</h3>
+        <h3>A typed spec-sheet  not just tags</h3>
         <p>Beyond the basics, a queryable attribute set per style across <b>5 universal groups</b>, each with its own allow-listed vocabulary. <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--accent-soft);color:var(--accent);padding:1px 5px;border-radius:4px">material_composition</code> is structured, so <b>"≥95% cotton"</b> queries the whole catalog.</p>
         <div class="chips">
           <span class="chip hl">fit</span><span class="chip hl">pattern</span><span class="chip hl">neckline</span>
@@ -361,7 +361,7 @@
       </div>
       <span class="sec-note">daily per-size · integrity-clean</span>
     </div>
-    <p class="sec-intro">Every crawl appends one observation of price / sale price / availability, keyed <code>(source, style_id, size)</code> — a competitive-pricing and markdown-detection dataset with the full curve queryable per size. Now running daily across the whole <b>114-source, 4.9M-SKU</b> catalog; the counts below are from an earlier audited window and compound every day.</p>
+    <p class="sec-intro">Every crawl appends one observation of price / sale price / availability, keyed <code>(source, style_id, size)</code>: a competitive-pricing and markdown-detection dataset with the full curve queryable per size. Designed for a daily per-size snapshot across the full <b>114-source, 4.9M-SKU</b> catalog: schedule it on a cron and it appends one clean observation per size, per day. Counts below are from a validated audit window.</p>
     <div class="price-grid tnum">
       <div class="pcell"><div class="pf">4.9M</div><div class="pl">SKUs under daily price watch</div></div>
       <div class="pcell"><div class="pf">1.5M<span style="color:var(--ink-3)">+</span></div><div class="pl">Observations (audited window)</div></div>
@@ -371,7 +371,7 @@
     </div>
     <div class="markdown-note">
       <div class="drop">−43.8%</div>
-      <div class="mtxt">Caught the day it happened — a Peter England formal suit repriced <span class="strike">₹17,799</span> → <b>₹9,999</b>. Not a catalog. A pricing feed.</div>
+      <div class="mtxt">Caught the day it happened  a Peter England formal suit repriced <span class="strike">₹17,799</span> → <b>₹9,999</b>. Not a catalog. A pricing feed.</div>
     </div>
   </section>
 
@@ -385,7 +385,7 @@
     </div>
     <p class="sec-intro">A reusable toolkit per <b>open</b> surface is why "add a brand" is cheap: a new Shopify store is <b>~20 lines of config</b>. Hard platforms get a bespoke adapter that reuses shared building blocks and never touches core.</p>
     <div class="plat-grid">
-      <div class="plat"><div class="pname">Shopify</div><div class="papp">/products.json + collections — config-only</div><div class="pex">largest cohort · <b>~27+ brands</b></div></div>
+      <div class="plat"><div class="pname">Shopify</div><div class="papp">/products.json + collections  config-only</div><div class="pex">largest cohort · <b>~27+ brands</b></div></div>
       <div class="plat"><div class="pname">Unbxd search</div><div class="papp">public search API · reusable toolkit</div><div class="pex"><b>Indya 191.5K</b>, FabAlley</div></div>
       <div class="plat"><div class="pname">Magento GraphQL</div><div class="papp">reusable toolkit</div><div class="pex"><b>Mufti</b>, Linen Club</div></div>
       <div class="plat"><div class="pname">Elevate</div><div class="papp">search API · reusable toolkit</div><div class="pex"><b>H&amp;M 60.8K</b></div></div>
@@ -396,15 +396,15 @@
       <div class="plat"><div class="pname">Akamai-gated API</div><div class="papp">UA-pinned JSON · no headless</div><div class="pex"><b>Zara</b> (19k)</div></div>
       <div class="plat"><div class="pname">SSR hydration</div><div class="papp">__INITIAL_STATE__ payload</div><div class="pex"><b>Cider</b></div></div>
     </div>
-    <p class="bot-note">Deliberately <b>not</b> an anti-bot arms race. The system finds the un-gated surface and only falls back to a real browser out-of-band — trading "we can scrape the hardest sites" for <b>"what we scrape, we scrape reliably and cheaply under unattended cron."</b> That single decision keeps a buyer's operating cost and maintenance risk low.</p>
+    <p class="bot-note">Deliberately <b>not</b> an anti-bot arms race. The system finds the un-gated surface and only falls back to a real browser out-of-band  trading "we can scrape the hardest sites" for <b>"what we scrape, we scrape reliably and cheaply under unattended cron."</b> That single decision keeps a buyer's operating cost and maintenance risk low.</p>
   </section>
 
   <!-- Engineering -->
   <section>
     <div class="sec-head">
       <div>
-        <p class="eyebrow">05 · Engineering</p>
-        <h2>Why it's an asset, not a script</h2>
+        <p class="eyebrow">05 · Deploy &amp; operate</p>
+        <h2>Run it in an afternoon, manage it from a console</h2>
       </div>
     </div>
     <div class="eng-grid tnum">
@@ -416,9 +416,14 @@
       <div class="ecell"><div class="ef">147</div><div class="el">Commits</div></div>
     </div>
     <div class="moat">
-      <h3>The moat — a contract-first seam</h3>
-      <p>Core owns the streaming pipeline, stores, normalization and the universal schema. Each brand is a self-contained package implementing three duck-typed protocols — <b>Descriptor / Scraper / Transformer</b>. Core <b>never switches on brand names</b>, so a new Shopify brand is config while a bespoke platform is a full package that never touches core. That seam is what lets the system reach 120 brands without collapsing into one-off scripts.</p>
-      <p><b>Idempotent &amp; resumable</b> — long crawls checkpoint every batch and survive a mid-run DB blip. <b>Replayable</b> — raw payloads are stored, so a parser improvement re-enriches the catalog with <b>no re-crawl</b> (this is how material coverage went 0% → ~99%). <b>Stale-row reconciliation</b> delists anything not re-seen, so no zombie listings. The ops plane runs on FastAPI + a Postgres-backed queue — <b>no Redis, no SQS</b>.</p>
+      <h3>One command to run, one commit to ship</h3>
+      <p><b>Local:</b> <code>docker compose up --build</code> brings up the API and worker against a single Postgres. No Redis, no SQS: Procrastinate uses the same Postgres as its queue. One-time DB setup is three commands. <b>Production:</b> one Docker image, two entrypoints (<code>ops-api</code>, <code>ops-worker</code>) on AWS ECS Fargate, fully defined in <b>13 Terraform files</b> (ECS, ALB, ECR, CloudFront, IAM, Secrets). Deploys are commit-message-driven in CI: put <code>#deploy-api</code>, <code>#deploy-worker</code> or <code>#deploy</code> in the merge and it builds, pushes to ECR, and rolls the service.</p>
+      <p><b>Operate from a console, not a shell.</b> A FastAPI control plane exposes <b>37 endpoints</b>: trigger and watch crawls, browse the catalog and quality metrics, inspect the queue, prune dead-letters, sync the vector index, all behind JWT + RBAC. Crawls are idempotent and resumable (per-source checkpoints), locked one-per-brand, and reaped automatically if a worker dies. Adding a brand is config-only on a shared toolkit (~20 lines); bespoke platforms get a self-contained package that never touches core.</p>
+    </div>
+    <div class="moat">
+      <h3>The moat: a contract-first seam</h3>
+      <p>Core owns the streaming pipeline, stores, normalization and the universal schema. Each brand is a self-contained package implementing three duck-typed protocols  <b>Descriptor / Scraper / Transformer</b>. Core <b>never switches on brand names</b>, so a new Shopify brand is config while a bespoke platform is a full package that never touches core. That seam is what lets the system reach 120 brands without collapsing into one-off scripts.</p>
+      <p><b>Idempotent &amp; resumable</b>  long crawls checkpoint every batch and survive a mid-run DB blip. <b>Replayable</b>  raw payloads are stored, so a parser improvement re-enriches the catalog with <b>no re-crawl</b> (this is how material coverage went 0% → ~99%). <b>Stale-row reconciliation</b> delists anything not re-seen, so no zombie listings. The ops plane runs on FastAPI + a Postgres-backed queue  <b>no Redis, no SQS</b>.</p>
     </div>
   </section>
 
@@ -430,14 +435,14 @@
         <h2>A platform substrate, not a dead export</h2>
       </div>
     </div>
-    <p class="sec-intro">It already powers semantic search (catalog ↔ <b>Qdrant</b> vectors via SageMaker), a live <b>MCP server</b> with 40+ tested analytics queries, and a Gen-Z fashion discovery app. Ways an acquirer can apply it:</p>
+    <p class="sec-intro">The schema, vectors and query layer ship in-repo and ready to wire: semantic search (catalog ↔ <b>Qdrant</b> via SageMaker embeddings), an <b>MCP server</b> with 40+ tested analytics queries, and a normalized multi-brand feed. Ways an acquirer can apply it:</p>
     <div class="lev-grid">
-      <div class="lev"><div class="lk">Pricing</div><h4>Competitive &amp; markdown intelligence</h4><p>Daily per-size price curves across brands — detect repricing the day it lands.</p></div>
-      <div class="lev"><div class="lk">Merchandising</div><h4>Assortment &amp; gap analytics</h4><p>What's in-market by category, gender, attribute and price band — and what's missing.</p></div>
-      <div class="lev"><div class="lk">Discovery</div><h4>Search &amp; recommendations</h4><p>Vector search over a clean, normalized catalog — one Style, one point.</p></div>
+      <div class="lev"><div class="lk">Pricing</div><h4>Competitive &amp; markdown intelligence</h4><p>Daily per-size price curves across brands  detect repricing the day it lands.</p></div>
+      <div class="lev"><div class="lk">Merchandising</div><h4>Assortment &amp; gap analytics</h4><p>What's in-market by category, gender, attribute and price band  and what's missing.</p></div>
+      <div class="lev"><div class="lk">Discovery</div><h4>Search &amp; recommendations</h4><p>Vector search over a clean, normalized catalog  one Style, one point.</p></div>
       <div class="lev"><div class="lk">Trends</div><h4>Attribute trend detection</h4><p>Structured fit / pattern / material tracked over time as the series deepens.</p></div>
       <div class="lev"><div class="lk">Licensing</div><h4>Normalized multi-brand feed</h4><p>A single clean feed for marketplaces and aggregators to consume.</p></div>
-      <div class="lev"><div class="lk">AI</div><h4>Ready RAG / agent substrate</h4><p>Structured schema + vectors + MCP — grounding for LLM shopping agents out of the box.</p></div>
+      <div class="lev"><div class="lk">AI</div><h4>Ready RAG / agent substrate</h4><p>Structured schema + vectors + MCP  grounding for LLM shopping agents out of the box.</p></div>
     </div>
   </section>
 
@@ -450,18 +455,19 @@
       </div>
     </div>
     <ul class="caveats">
-      <li><b>Provenance of the numbers.</b> The headline quantum (963.6K styles · 907.1K products · 4.9M SKUs · 114 sources · week-over-week growth) is read live from the ops dashboard. The field-coverage percentages and the price detail counts are from the last full DB audit (a 23–24 brand cohort) — the quality bar the pipeline holds as brands load. A direct Postgres re-query (currently on a private VPC) will reconcile all three to the same instant at diligence.</li>
-      <li><b>Price history depth is days, not months.</b> Daily cadence since first snapshot — the flex is integrity + cadence, and it compounds every day.</li>
+      <li><b>Provenance of the numbers.</b> The headline quantum (963.6K styles · 907.1K products · 4.9M SKUs · 114 sources) is the catalog this codebase produced in its deployed crawl run. The field-coverage percentages and the price detail counts are from the last full DB audit (a 23 to 24 brand cohort): the quality bar the pipeline holds as brands load. The queries in <code>docs/CATALOG-METRICS.md</code> reproduce every figure against a fresh Postgres at diligence.</li>
+      <li><b>Crawl cadence is operator-set.</b> Periodic housekeeping (stalled-job reaper, stale-run reconcile, sync sweep) ships wired on a cron; per-brand full-crawl schedules are added by the operator via Procrastinate's <code>@app.periodic</code>. The plumbing is in, the cadence is yours to choose.</li>
+      <li><b>Price history depth is days, not months.</b> Integrity + cadence are the flex: run it daily and the series extends itself.</li>
       <li><b>Not an anti-bot evasion engine, by design.</b> Sites requiring sustained headless evasion are out of scope; the covered surface is the ten-platform library above.</li>
-      <li><b>Source-limited attribute gaps are category-correct.</b> A few brands under-list fit or neckline at source — e.g. neckline on trousers — which are correct nulls, not pipeline failures.</li>
+      <li><b>Source-limited attribute gaps are category-correct.</b> A few brands under-list fit or neckline at source  e.g. neckline on trousers  which are correct nulls, not pipeline failures.</li>
     </ul>
   </section>
 
   <footer>
     <div class="wrap" style="padding:0;max-width:none">
-      <b>Sources, in-repo —</b> docs/architecture/OVERVIEW.md · docs/CATALOG-METRICS.md · docs/PRICE-TRACKING.md · docs/architecture/grain-model.md · README.md · HANDOFF.md<br>
-      <b>Live refresh —</b> mcp__fashion-explore golden queries (catalog_quantum_total, catalog_quality_audit, price_history_availability). Repo figures counted from source on 2026-07-25.<br>
-      Prepared as an acquisition &amp; capability brief — figures are labelled by provenance throughout.
+      <b>Sources, in-repo </b> docs/architecture/OVERVIEW.md · docs/CATALOG-METRICS.md · docs/PRICE-TRACKING.md · docs/architecture/grain-model.md · README.md · HANDOFF.md<br>
+      <b>Live refresh </b> mcp__fashion-explore golden queries (catalog_quantum_total, catalog_quality_audit, price_history_availability). Repo figures counted from source on 2026-07-25.<br>
+      Prepared as an acquisition &amp; capability brief  figures are labelled by provenance throughout.
     </div>
   </footer>
 

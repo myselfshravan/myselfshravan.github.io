@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Klydo — What we built, and how it ended</title>
+<title>Klydo - What we built, and how it ended</title>
 <style>
   :root{
     --bg:#0a0a0d; --bg2:#0e0e13; --surface:rgba(255,255,255,.035);
@@ -203,7 +203,7 @@
   <div class="tag">Fashion you could try at home before you paid.</div>
   <p class="lead">A Gen-Z fashion app in Bengaluru with same-day delivery and a Try-Now-Pay-Later credit
     product. Built zero-to-one, scaled to ~50,000 orders in under a year, then wound down cleanly as the
-    company pivoted. This is what we built, what the numbers said, and how it ended — told from the seat
+    company pivoted. This is what we built, what the numbers said, and how it ended  told from the seat
     of a founding-era engineer.</p>
 
   <div class="arc">
@@ -233,14 +233,14 @@
   <div class="grid cols-3" style="margin-top:34px">
     <div class="card rv"><h3><span class="chip-ic">⚡</span> Same-day fashion</h3>
       <p>One dark store, geofenced delivery zones and slotted routing put most orders on the doorstep in
-        under two hours — fast for fashion, without pretending to be 15-minute grocery.</p>
+        under two hours  fast for fashion, without pretending to be 15-minute grocery.</p>
       <div class="proof"><b>Median 1.86 h</b> · 52% under 2 h · 99.7% same-day</div></div>
     <div class="card rv"><h3><span class="chip-ic">💳</span> Try-Now-Pay-Later</h3>
-      <p>Receive it, try it, pay if you keep it. A great customer promise and a hard risk problem — backed
+      <p>Receive it, try it, pay if you keep it. A great customer promise and a hard risk problem  backed
         by automated underwriting and an LLM fraud-review pipeline with human review for the edge cases.</p>
       <div class="proof"><b>276,045</b> users approved for credit · <b>331K</b> underwriting checks</div></div>
     <div class="card rv"><h3><span class="chip-ic">🧩</span> Server-driven app</h3>
-      <p>Home, cart and order screens were rendered from backend-defined components (SDUI) — so
+      <p>Home, cart and order screens were rendered from backend-defined components (SDUI)  so
         merchandising, multi-cart and even an iOS home-screen widget shipped without app releases.</p>
       <div class="proof"><b>30+</b> SDUI components · Flutter + Kotlin</div></div>
   </div>
@@ -257,7 +257,7 @@
     <div class="stat"><div class="n">₹15.65<small> Cr</small></div><div class="l">GMV (gross)</div><div class="s">₹5.30 Cr net revenue</div></div>
     <div class="stat"><div class="n">49,619</div><div class="l">Valid orders</div><div class="s">99.97% completed · 83.4K items</div></div>
     <div class="stat"><div class="n">32,158</div><div class="l">Paying customers</div><div class="s">of 87,133 users · 24.8% repeat</div></div>
-    <div class="stat"><div class="n">737</div><div class="l">Orders in one day</div><div class="s">peak — 4 Apr 2026</div></div>
+    <div class="stat"><div class="n">737</div><div class="l">Orders in one day</div><div class="s">peak  4 Apr 2026</div></div>
     <div class="stat"><div class="n">276,045</div><div class="l">TNPL credit approvals</div><div class="s">331K underwriting evaluations</div></div>
     <div class="stat"><div class="n">6,985</div><div class="l">LLM fraud checks</div><div class="s">~20.6M tokens · 765 write-offs caught</div></div>
     <div class="stat"><div class="n">48,425</div><div class="l">SKUs in catalog</div><div class="s">15,252 products · ~93 categories</div></div>
@@ -267,7 +267,7 @@
   <!-- GROWTH CHART -->
   <div class="panel rv" style="margin-top:26px">
     <div class="head">
-      <div class="t">Orders per month — launch, hockey-stick, peak, wind-down</div>
+      <div class="t">Orders per month  launch, hockey-stick, peak, wind-down</div>
       <div class="sub">Sep 2025 → Jun 2026 · hover for detail</div>
     </div>
     <div class="chartbox" id="chartbox">
@@ -315,7 +315,7 @@
 <section id="built"><div class="wrap">
   <div class="eyebrow rv">My contribution</div>
   <h2 class="rv">What I built</h2>
-  <p class="lead rv">I was a founding-era engineer on a small core team — full-stack across a Kotlin/Ktor
+  <p class="lead rv">I was a founding-era engineer on a small core team  full-stack across a Kotlin/Ktor
     backend and a Flutter app, for about six months through the company's fastest-growing period. I wasn't
     the highest-volume committer, and I'd rather be honest about that: what I owned, I owned end-to-end.
     Roughly <b style="color:var(--ink)">131 merged production changes</b> across the two repos.</p>
@@ -324,10 +324,10 @@
   <div class="spot rv"><div class="spot-in">
     <div>
       <div class="flag">Flagship · TNPL credit engine</div>
-      <h3>Sherlock — the agent that opened up credit</h3>
+      <h3>Sherlock  the agent that opened up credit</h3>
       <p>For months, Try-Now-Pay-Later was a members-only privilege gated by a static risk score, because
         manual review didn't scale. I built <b style="color:var(--ink)">Sherlock</b>: an AI order-evaluation
-        agent — a 24-signal collector, a scoring engine, and an LLM fraud reviewer — that decides which orders
+        agent  a 24-signal collector, a scoring engine, and an LLM fraud reviewer  that decides which orders
         ship on credit and routes only the genuinely ambiguous ones to a human. On one morning in April 2026
         we deleted the old gate and opened TNPL to <em>every</em> user. Fraud stayed flat; the admin chase
         queue emptied.</p>
@@ -350,8 +350,8 @@
       <div class="show-media"><div class="shot"><img src="screenshots/d2r_feature_cart_page.png" alt="Distance-to-Reward progress banner in cart" loading="lazy"/></div></div>
       <div>
         <div class="kick">Basket-building</div>
-        <h4>🎯 D2R — "spend ₹X more, unlock ₹Y off"</h4>
-        <p>A cart-level Distance-to-Reward banner showing live progress toward the next coupon unlock —
+        <h4>🎯 D2R  "spend ₹X more, unlock ₹Y off"</h4>
+        <p>A cart-level Distance-to-Reward banner showing live progress toward the next coupon unlock 
           turning "add one more thing" into a visible, satisfying goal. I designed the progress model and
           shipped it across backend and app. It became one of the most direct levers on basket size.</p>
         <div class="bigstat"><span class="n">~₹900 → ~₹1,100</span><span class="l">average order value lifted · ≈ +22%</span></div>
@@ -361,9 +361,9 @@
     <div class="show rev rv">
       <div>
         <div class="kick">Conversion nudges</div>
-        <h4>⏳ Urgency construct — scarcity, done honestly</h4>
+        <h4>⏳ Urgency construct  scarcity, done honestly</h4>
         <p>Low-stock urgency badges ("only a few left") wired into the cart and product cards, driven by
-          <em>real reservation-aware inventory</em> — not fake countdowns. A small, honest nudge that pushed
+          <em>real reservation-aware inventory</em>  not fake countdowns. A small, honest nudge that pushed
           hesitant carts over the line without eroding trust, tunable by a stock threshold.</p>
       </div>
       <div class="show-media"><div class="phone"><img src="screenshots/urgency_construct_cart_page.png" alt="Low-stock urgency badge in cart" loading="lazy"/></div></div>
@@ -373,9 +373,9 @@
       <div class="show-media"><div class="phone"><img src="screenshots/referral_code_cart_page.png" alt="Referral code auto-applied in cart" loading="lazy"/></div></div>
       <div>
         <div class="kick">The big one</div>
-        <h4>🎁 Referral — a growth loop, end to end</h4>
-        <p>The referral system was the largest thing I owned. Deep-link capture with <em>auto-apply</em> —
-          share a link, the code lands in your cart with zero typing — plus an earnings wallet, leaderboard,
+        <h4>🎁 Referral  a growth loop, end to end</h4>
+        <p>The referral system was the largest thing I owned. Deep-link capture with <em>auto-apply</em> 
+          share a link, the code lands in your cart with zero typing  plus an earnings wallet, leaderboard,
           and post-return re-evaluation so rewards stayed honest. Frontend and backend, mine end-to-end, and
           a real low-friction acquisition channel.</p>
         <div class="bigstat"><span class="n">47,318</span><span class="l">referral codes generated · 3,264 rewards paid</span></div>
@@ -386,7 +386,7 @@
       <div>
         <div class="kick">Money back in your pocket</div>
         <h4>👛 Wallet &amp; withdrawals</h4>
-        <p>The earnings wallet that referral and cashback paid into — balances, transaction history, and a
+        <p>The earnings wallet that referral and cashback paid into  balances, transaction history, and a
           real bank/UPI withdrawal flow, including the reconciliation fixes that correctly handled failed
           payouts and payout amounts. At shutdown it held a fully-accounted balance owed, ready to settle
           cleanly.</p>
@@ -432,26 +432,26 @@
 <section id="ending"><div class="wrap">
   <div class="eyebrow rv">The ending</div>
   <h2 class="rv">How it finally ended</h2>
-  <p class="lead rv">On 8 July 2026 Klydo stopped taking new orders. There was no dramatic outage — the
+  <p class="lead rv">On 8 July 2026 Klydo stopped taking new orders. There was no dramatic outage  the
     wind-down was engineered as carefully as a launch. The backend began answering the consumer app with a
     polite <code style="color:var(--pink)">410 Gone</code>, while admin tools, webhooks and health checks kept
     running so order history and support stayed available. The app itself showed a farewell screen.</p>
 
   <div class="quote rv">"We've stopped taking new orders on Klydo, effective today. The app will remain
-    available for the next few days — for order history, support, or anything else you need. Klydo is pivoting
+    available for the next few days  for order history, support, or anything else you need. Klydo is pivoting
     in a new direction based on everything we've learned so far… This isn't goodbye. It's the beginning of
     what's next."
-    <div style="font-family:var(--sans);font-style:normal;font-size:12.5px;color:var(--muted);margin-top:10px">— the in-app shutdown notice</div>
+    <div style="font-family:var(--sans);font-style:normal;font-size:12.5px;color:var(--muted);margin-top:10px"> the in-app shutdown notice</div>
   </div>
 
   <div class="endgrid">
     <div class="panel rv">
       <div class="head"><div class="t">The arc, end to end</div></div>
       <div class="tl">
-        <div class="tl-row"><div class="tl-date">Sep 2025</div><div class="tl-body"><b>First orders.</b><p>37 orders in the first partial month — the beginning of a single-city test.</p></div></div>
+        <div class="tl-row"><div class="tl-date">Sep 2025</div><div class="tl-body"><b>First orders.</b><p>37 orders in the first partial month  the beginning of a single-city test.</p></div></div>
         <div class="tl-row"><div class="tl-date">Oct–Dec 2025</div><div class="tl-body"><b>Finding product-market fit.</b><p>Hundreds, then a few thousand orders a month; TNPL and same-day delivery start clicking.</p></div></div>
         <div class="tl-row"><div class="tl-date">Jan–Feb 2026</div><div class="tl-body"><b>Scaling.</b><p>4,101 → 9,076 orders/month; credit underwriting and fraud tooling hardened.</p></div></div>
-        <div class="tl-row"><div class="tl-date">Mar–Apr 2026</div><div class="tl-body"><b>Peak.</b><p>14,978 orders in March; ₹4.13 Cr GMV in April — the high-water mark.</p></div></div>
+        <div class="tl-row"><div class="tl-date">Mar–Apr 2026</div><div class="tl-body"><b>Peak.</b><p>14,978 orders in March; ₹4.13 Cr GMV in April  the high-water mark.</p></div></div>
         <div class="tl-row"><div class="tl-date">May–Jun 2026</div><div class="tl-body"><b>Wind-down.</b><p>Volume tapers as the company reconsiders direction; last orders on 29 June.</p></div></div>
         <div class="tl-row"><div class="tl-date">8 Jul 2026</div><div class="tl-body"><b>Shutdown &amp; pivot.</b><p>Consumer app closed gracefully; the company turns toward its next chapter.</p></div></div>
       </div>
@@ -459,23 +459,23 @@
     <div class="grid" style="gap:16px">
       <div class="card rv"><h3><span class="chip-ic">🧾</span> Wound down responsibly</h3>
         <p>A full source-backed shutdown archive was produced: the customer identity graph, order history,
-          wallet ledger and segmentation — with a data-retention and privacy plan. Outstanding wallet
+          wallet ledger and segmentation  with a data-retention and privacy plan. Outstanding wallet
           balances (₹69,457 across 283 users) flagged to be settled before the entity closes.</p></div>
       <div class="card rv"><h3><span class="chip-ic">🌱</span> Not the end of the story</h3>
-        <p>The consumer business paused, but the hard parts — a credit/underwriting stack, an SDUI engine,
-          catalog connectors and a clean identity graph — are the reusable foundation the company is
+        <p>The consumer business paused, but the hard parts  a credit/underwriting stack, an SDUI engine,
+          catalog connectors and a clean identity graph  are the reusable foundation the company is
           carrying into its new direction.</p></div>
     </div>
   </div>
 
   <p class="lead rv" style="margin-top:34px">Not every company continues, and this one is pivoting. What
-    stays with me isn't the outcome — it's what it felt like to ship a credit product from scratch, to get a
+    stays with me isn't the outcome  it's what it felt like to ship a credit product from scratch, to get a
     2&nbsp;a.m. page and fix it, and to watch a referral flow you wrote quietly become a real acquisition
     channel. On to what's next.</p>
 </div></section>
 
 <footer><div class="wrap">
-  <b>Klydo</b> — Gen-Z fashion, same-day delivery &amp; Try-Now-Pay-Later · Bengaluru, 2025–2026.<br/>
+  <b>Klydo</b>  Gen-Z fashion, same-day delivery &amp; Try-Now-Pay-Later · Bengaluru, 2025–2026.<br/>
   Figures reconciled from production data (19 Sep 2025 – 29 Jun 2026) and an independent migration export.
   Aggregate and rounded; no customer data shown. A personal engineering retrospective.
 </div></footer>

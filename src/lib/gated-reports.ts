@@ -19,9 +19,9 @@ export interface GatedReport {
 }
 
 export const GATED_REPORTS: GatedReport[] = [
-  { slug: 'klydo_pitch', title: 'Klydo — Pitch', description: 'What we built, and how it ended.' },
-  { slug: 'acquisition_brief', title: 'Spider — Acquisition & Capability Brief' },
-  { slug: 'sherlock_report', title: 'Sherlock — TNPL Agent Performance Report' },
+  { slug: 'klydo_pitch', title: 'Klydo - Pitch', description: 'What we built, and how it ended.' },
+  { slug: 'spider', title: 'Spider - Acquisition & Capability Brief' },
+  { slug: 'sherlock_report', title: 'Sherlock - TNPL Agent Performance Report' },
 ];
 
 export const GATED_SLUGS = GATED_REPORTS.map((r) => r.slug);
