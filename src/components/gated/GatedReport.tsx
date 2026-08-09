@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import posthog from 'posthog-js';
 import { checkAccess, type AccessCheckResult } from '@/lib/access-keys';
 import { identifyForPostHog } from '@/lib/posthog-identity';
@@ -83,13 +84,13 @@ export function GatedReport({ slug, title, html }: { slug: string; title: string
             click to the "report" source so it shows up in tracking like any
             other share link. Sits above the iframe (iframe sandbox is unaffected
             since this lives in the parent shell). */}
-        <a
+        <Link
           href="/?s=report"
           className="fixed left-3 top-3 z-50 flex items-center gap-1.5 rounded-full border border-border/60 bg-background/80 px-3 py-1.5 text-xs font-medium text-foreground shadow-sm backdrop-blur transition-colors hover:bg-background"
           title="Back to portfolio"
         >
           <span aria-hidden>←</span> Portfolio
-        </a>
+        </Link>
         <iframe
           title={title}
           srcDoc={html}
@@ -153,12 +154,12 @@ export function GatedReport({ slug, title, html }: { slug: string; title: string
           </a>
           .
         </p>
-        <a
+        <Link
           href="/?s=report"
           className="mt-4 inline-block text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground"
         >
           ← Back to portfolio
-        </a>
+        </Link>
       </div>
     </div>
   );
