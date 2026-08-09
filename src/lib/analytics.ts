@@ -11,7 +11,7 @@ import {
 } from 'firebase/firestore';
 import { Command, UserData, ButtonInteraction, ExternalLinkClick } from './types';
 import { detectDeviceInfo } from './deviceInfo';
-import { lookupHashMapping, validateHash } from './hash-utils';
+import { lookupHashMapping, validateHash, type HashMapping } from './hash-utils';
 
 const USER_ID_KEY = 'portfolio_user_id';
 const USERS_COLLECTION = 'portfolio_users_prod';
@@ -49,9 +49,19 @@ export const trackVisit = async (hash?: string) => {
     const hashToLookup = hash && validateHash(hash) ? hash : 'organic';
     const hashMapping = await lookupHashMapping(hashToLookup, userId);
 
-    if (!hashMapping) {
-      throw new Error(`Hash mapping not found for hash: ${hashToLookup}`);
-    }
+    // If the mapping doc doesn't exist (common for `organic`, which may never
+    // have been seeded), don't abort — that would silently drop the visit from
+    // the user record entirely. Fall back to a synthetic mapping so the visit
+    // is still recorded on the user doc. lookupHashMapping already attempted to
+    // record on the mapping collection; a missing doc just means nothing to
+    // record there.
+    const mapping =
+      hashMapping ??
+      ({
+        hash: hashToLookup,
+        name: hashToLookup === 'organic' ? 'Organic' : hashToLookup,
+        createdAt: new Date(),
+      } as HashMapping);
 
     if (!userDoc.exists()) {
       // First visit - create new user
@@ -63,8 +73,8 @@ export const trackVisit = async (hash?: string) => {
         device: deviceInfo,
         hashMappings: [
           {
-            hash: hashMapping.hash,
-            name: hashMapping.name,
+            hash: mapping.hash,
+            name: mapping.name,
             timestamp: timestamp,
           },
         ],
@@ -85,8 +95,8 @@ export const trackVisit = async (hash?: string) => {
 
       // Always add hash mapping (organic or from hash)
       const newMapping = {
-        hash: hashMapping.hash,
-        name: hashMapping.name,
+        hash: mapping.hash,
+        name: mapping.name,
         timestamp: timestamp,
       };
       updateData.hashMappings = arrayUnion(newMapping);
