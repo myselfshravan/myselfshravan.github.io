@@ -290,14 +290,14 @@
     },
     {
       "company": "Graphene AI",
-      "position": "Machine Learning Engineering",
+      "position": "Machine Learning Engineer",
       "status": "Previous",
       "startDate": "Oct-2025",
       "endDate": "Dec-2025",
       "website": "https://grapheneai.com",
       "description": [
-        "Architecting and restructuring microservices to power critical operational workflows.",
-        "Building in-house AI systems that enhance decision-making, automate processes, and improve team efficiency."
+        "Architected and restructured microservices to power critical operational workflows.",
+        "Built in-house AI systems that enhanced decision-making, automated manual processes, and improved team efficiency."
       ]
     },
     {
@@ -308,15 +308,15 @@
       "endDate": "Sep-2025",
       "website": "https://udaancapital.com",
       "description": [
-        "Working on onboarding systems to improve application conversion flow.",
-        "Contributing to internal tools that support operations and credit risk evaluation.",
-        "Leverging AI to automate and enhance the risk assessment models."
+        "Worked on onboarding systems to improve application conversion flow.",
+        "Contributed to internal tools supporting operations and credit risk evaluation.",
+        "Leveraged AI to automate and enhance the risk assessment models."
       ]
     },
     {
       "company": "Udaan",
       "position": "SDE Intern",
-      "status": "previous",
+      "status": "Previous",
       "startDate": "Jan-2025",
       "endDate": "May-2025",
       "website": "https://udaan.com",
