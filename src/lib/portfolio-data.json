@@ -50,16 +50,16 @@
         "icon": "devicon-python-plain"
       },
       {
-        "name": "JavaScript",
-        "icon": "devicon-javascript-plain"
-      },
-      {
         "name": "TypeScript",
         "icon": "devicon-typescript-plain"
       },
       {
         "name": "Kotlin",
         "icon": "devicon-kotlin-plain"
+      },
+      {
+        "name": "Golang",
+        "icon": "devicon-go-original-wordmark"
       }
     ],
     "frameworks": [
