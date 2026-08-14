@@ -52,7 +52,7 @@ export default function Home() {
       // Track visit in Firebase
       trackVisit(hash || undefined);
       // If the personal-link `s` param is present, remove only it (without a
-      // page reload) so other deep-link params — e.g. `?blog=<slug>` — survive.
+      // page reload) so other deep-link params (e.g. `?blog=<slug>`) survive.
       if (hash) {
         params.delete('s');
         const remaining = params.toString();

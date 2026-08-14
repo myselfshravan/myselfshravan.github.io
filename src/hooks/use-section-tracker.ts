@@ -90,10 +90,10 @@ export function useSectionTracker(sectionName: string) {
       if (!isInViewport.current) return;
 
       if (document.hidden) {
-        // Tab hidden — pause the timer by flushing elapsed into accumulated
+        // Tab hidden: pause the timer by flushing elapsed into accumulated
         flushTime();
       } else {
-        // Tab visible again — restart the clock
+        // Tab visible again: restart the clock
         if (hasViewed.current) {
           entryTime.current = Date.now();
         }

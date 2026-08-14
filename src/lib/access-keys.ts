@@ -7,7 +7,7 @@ import { getUserId } from './analytics';
  * Doc id = the key. Shape (created in the admin dashboard):
  *   { id, key, page, name, createdAt, visits: [{ userId, timestamp, referrer }] }
  *
- * `page` binds a key to a single report slug — a key for `klydo_pitch` cannot
+ * `page` binds a key to a single report slug; a key for `klydo_pitch` cannot
  * open `sherlock_report`.
  *
  * The portfolio reads these docs publicly from the browser (same posture as
@@ -65,7 +65,7 @@ export async function checkAccess(
         }),
       });
     } catch {
-      // Visit log write failed — don't block the viewer. The PostHog event
+      // Visit log write failed; don't block the viewer. The PostHog event
       // still captures the view.
     }
 

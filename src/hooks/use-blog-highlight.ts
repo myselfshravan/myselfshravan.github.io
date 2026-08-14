@@ -16,7 +16,7 @@ const HEADER_OFFSET = 80;
  * post (by its derived URL slug), that card is scrolled into view and flagged
  * as highlighted so the UI can ring/pulse it.
  *
- * The highlight PERSISTS for as long as `?blog=` remains in the URL — it does
+ * The highlight PERSISTS for as long as `?blog=` remains in the URL; it does
  * not auto-clear. Because page.tsx preserves the `blog` param, a refresh (or
  * sharing the same URL) re-applies the highlight. If the param is absent or
  * unmatched, nothing happens.

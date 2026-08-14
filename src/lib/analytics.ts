@@ -50,7 +50,7 @@ export const trackVisit = async (hash?: string) => {
     const hashMapping = await lookupHashMapping(hashToLookup, userId);
 
     // If the mapping doc doesn't exist (common for `organic`, which may never
-    // have been seeded), don't abort — that would silently drop the visit from
+    // have been seeded), don't abort, since that would silently drop the visit from
     // the user record entirely. Fall back to a synthetic mapping so the visit
     // is still recorded on the user doc. lookupHashMapping already attempted to
     // record on the mapping collection; a missing doc just means nothing to

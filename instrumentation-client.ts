@@ -1,7 +1,7 @@
 import posthog from 'posthog-js';
 
 // PostHog reads the server-side dead-clicks flag ($dead_clicks_enabled_server_side)
-// from persisted storage at init time — BEFORE the /decide response arrives to
+// from persisted storage at init time, BEFORE the /decide response arrives to
 // correct it. Earlier testing left a stale `true` here, which made posthog
 // lazy-load the dead-clicks addon on every page load; that load fails through
 // the reverse proxy and logs "failed to load script". /decide now correctly
@@ -21,12 +21,12 @@ if (typeof window !== 'undefined') {
       }
     }
   } catch {
-    // localStorage unavailable/corrupt — safe to ignore.
+    // localStorage unavailable/corrupt; safe to ignore.
   }
 }
 
 posthog.init(process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN!, {
-  // Reverse proxy on our own domain — bypasses ad blockers
+  // Reverse proxy on our own domain; bypasses ad blockers
   api_host: 'https://s.shravanrevanna.me',
   ui_host: 'https://us.posthog.com',
   defaults: '2026-01-30',
@@ -44,7 +44,7 @@ posthog.init(process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN!, {
   capture_performance: { web_vitals: true },
 
   // Session replay is ON. The recorder lazy-loads from `${api_host}/static/recorder.js`,
-  // which the reverse proxy serves from us-assets.i.posthog.com — verified working.
+  // which the reverse proxy serves from us-assets.i.posthog.com (verified working).
   // The earlier "could not load recorder" failures were caused by a stale
   // $dead_clicks_enabled_server_side flag forcing the dead-clicks addon to load
   // (stripped above), not by the recorder itself.

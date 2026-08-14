@@ -28,7 +28,7 @@ export function isChannel(source: string): boolean {
 export function identifyForPostHog(source?: string): void {
   const userId = getUserId();
 
-  // Always identify with firebase userId — creates person profile for every visitor
+  // Always identify with firebase userId; creates person profile for every visitor
   if (userId) {
     const personProps: Record<string, string> = {
       firebase_user_id: userId,

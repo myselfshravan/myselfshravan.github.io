@@ -267,7 +267,7 @@
       "website": "https://confido.health",
       "description": [
         "Building industry-leading voice AI that answers every patient call and completes the task end-to-end, freeing up staff time to focus on patient care.",
-        "Working on the AI operating layer for specialty healthcare — agents that read from and write back into the EHR across scheduling, refills, insurance, billing and recall workflows.",
+        "Working on the AI operating layer for specialty healthcare: agents that read from and write back into the EHR across scheduling, refills, insurance, billing and recall workflows.",
         "Shipping on a platform live across 1,000+ clinic locations, handling millions of patient interactions in 20+ languages."
       ]
     },
@@ -281,11 +281,11 @@
       "reportUrl": "/view/klydo_pitch?key=portfolio",
       "reportLabel": "Read the full retrospective",
       "description": [
-        "Founding-era engineer on a Gen-Z fashion app with same-day delivery and Try-Now-Pay-Later credit — ₹15.65 Cr GMV, 49,619 orders and 87K users, built zero-to-one.",
+        "Founding-era engineer on a Gen-Z fashion app with same-day delivery and Try-Now-Pay-Later credit. Built zero-to-one to ₹15.65 Cr GMV, 49,619 orders and 87K users.",
         "Built Sherlock, an AI order-evaluation agent (24 signals + LLM fraud review) that took TNPL from members-only to open to everyone: 58% of credit orders auto-decided, ₹5.20 L fraud blocked at 100% precision, order-to-payment 3× faster.",
-        "Owned the referral growth loop end to end — deep-link auto-apply, earnings wallet and UPI/bank withdrawals — 47K codes generated and 3,264 rewards paid.",
+        "Owned the referral growth loop end to end: deep-link auto-apply, earnings wallet and UPI/bank withdrawals. 47K codes generated and 3,264 rewards paid.",
         "Shipped the cart-level Distance-to-Reward banner that lifted average order value ~22% (₹900 → ₹1,100), plus Cart V2 with three payment modes and ~48K SKU catalog sync to Meta and Google Merchant Center.",
-        "Consumer business wound down cleanly in July 2026 as the company pivoted — helped engineer the graceful shutdown and reconcile every outstanding wallet balance."
+        "Consumer business wound down cleanly in July 2026 as the company pivoted. Helped engineer the graceful shutdown and reconcile every outstanding wallet balance."
       ]
     },
     {

@@ -32,7 +32,7 @@ export function Writing() {
         setCopiedSlug((prev) => (prev === slug ? null : prev));
       }, 2000);
     } catch {
-      // Clipboard unavailable (e.g. insecure context) — fall back to a prompt.
+      // Clipboard unavailable (e.g. insecure context); fall back to a prompt.
       window.prompt('Copy this link to share:', url);
     }
   }, []);

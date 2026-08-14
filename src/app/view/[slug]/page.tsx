@@ -12,7 +12,7 @@ export function generateStaticParams() {
 
 /**
  * Read the report HTML at BUILD time and embed it in the static page payload
- * (this is the "bundle-embedded" mechanism — no public URL exposes the raw
+ * (this is the "bundle-embedded" mechanism; no public URL exposes the raw
  * HTML; it only ships inside this page's payload). The client gate component
  * decides whether to render it based on the access key.
  */
