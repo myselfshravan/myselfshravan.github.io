@@ -68,16 +68,16 @@
         "icon": "devicon-nextjs-original"
       },
       {
-        "name": "React",
-        "icon": "devicon-react-original"
+        "name": "Ktor",
+        "icon": "devicon-ktor-plain"
       },
       {
         "name": "Node.js",
         "icon": "devicon-nodejs-plain"
       },
       {
-        "name": "Flask",
-        "icon": "devicon-flask-plain"
+        "name": "FastAPI",
+        "icon": "devicon-fastapi-plain"
       }
     ],
     "databases": [
