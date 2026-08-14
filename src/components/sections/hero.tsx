@@ -659,16 +659,25 @@ export function Hero() {
                     transition={{ delay: 2.5, duration: 0.3 }}
                     className="text-muted-foreground pt-2"
                   >
-                    Currently shipping at{' '}
+                    Currently shipping voice AI at{' '}
                     <a
-                      href="https://klydo.in"
+                      href="https://confido.health"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:text-primary/80 transition-colors"
+                    >
+                      Confido Health
+                    </a>
+                    . Ex{' '}
+                    <a
+                      href="https://www.linkedin.com/company/klydo-app/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary hover:text-primary/80 transition-colors"
                     >
                       @Klydo
                     </a>{' '}
-                    (fashion-tech). Ex-MLE{' '}
+                    | Ex-MLE{' '}
                     <a
                       href="https://grapheneai.com/"
                       target="_blank"

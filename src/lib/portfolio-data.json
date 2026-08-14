@@ -9,13 +9,13 @@
     "location": "Bengaluru, India",
     "bio": "Full-stack developer (with 180+ production projects) obsessed with shipping fast and automating everything. I dive into fundamentals, over-engineer when needed, and turn every friction point into a solved problem. Specializing in GenAI applications, AI Agentic Workflows, and production-ready systems.",
     "intro": [
-      "Product Engineer at Klydo, building fashion-tech quick commerce. Previously shipped AI systems at Graphene AI and Udaan.",
+      "Product Engineer at Confido Health, building industry-leading voice AI for US healthcare. Previously built Klydo zero-to-one and shipped AI systems at Graphene AI and Udaan.",
       "Built 180+ projects including production applications with thousands of active users.",
       "Specialized in automation, GenAI solutions, and full-stack development with modern frameworks.",
       "Creator of NoteRep - a study platform serving 200+ active users with 85K+ views.",
       "I write about tech, build tools that save time, and contribute to meaningful projects."
     ],
-    "tagline": "Ex-MLE @GrapheneAI | Ex-SDE @Udaan",
+    "tagline": "Product Engineer at Confido Health | Ex-Klydo | Ex-MLE @GrapheneAI | Ex-SDE @Udaan",
     "goal": "I build automation tools and AI-powered solutions that eliminate manual processes and save people time.",
     "profileImages": [
       "profile_0.jpg",
@@ -259,15 +259,33 @@
   ],
   "work": [
     {
-      "company": "Klydo",
+      "company": "Confido Health",
       "position": "Product Engineer",
       "status": "Current",
-      "startDate": "Jan-2026",
+      "startDate": "Aug-2026",
       "endDate": "Present",
-      "website": "https://klydo.in",
+      "website": "https://confido.health",
       "description": [
-        "Building and shipping features on the growth team for a fashion-tech quick commerce platform.",
-        "Driving product development and feature delivery to enhance user experience and platform growth."
+        "Building industry-leading voice AI that answers every patient call and completes the task end-to-end, freeing up staff time to focus on patient care.",
+        "Working on the AI operating layer for specialty healthcare — agents that read from and write back into the EHR across scheduling, refills, insurance, billing and recall workflows.",
+        "Shipping on a platform live across 1,000+ clinic locations, handling millions of patient interactions in 20+ languages."
+      ]
+    },
+    {
+      "company": "Klydo",
+      "position": "Product Engineer",
+      "status": "Previous",
+      "startDate": "Jan-2026",
+      "endDate": "Jul-2026",
+      "website": "https://www.linkedin.com/company/klydo-app/",
+      "reportUrl": "/view/klydo_pitch?key=portfolio",
+      "reportLabel": "Read the full retrospective",
+      "description": [
+        "Founding-era engineer on a Gen-Z fashion app with same-day delivery and Try-Now-Pay-Later credit — ₹15.65 Cr GMV, 49,619 orders and 87K users, built zero-to-one.",
+        "Built Sherlock, an AI order-evaluation agent (24 signals + LLM fraud review) that took TNPL from members-only to open to everyone: 58% of credit orders auto-decided, ₹5.20 L fraud blocked at 100% precision, order-to-payment 3× faster.",
+        "Owned the referral growth loop end to end — deep-link auto-apply, earnings wallet and UPI/bank withdrawals — 47K codes generated and 3,264 rewards paid.",
+        "Shipped the cart-level Distance-to-Reward banner that lifted average order value ~22% (₹900 → ₹1,100), plus Cart V2 with three payment modes and ~48K SKU catalog sync to Meta and Google Merchant Center.",
+        "Consumer business wound down cleanly in July 2026 as the company pivoted — helped engineer the graceful shutdown and reconcile every outstanding wallet balance."
       ]
     },
     {
@@ -394,8 +412,8 @@
   },
   "meta": {
     "title": "Shravan Revanna | AI Full-Stack Developer | Automation & GenAI Solutions",
-    "description": "AI full-stack developer with 180+ projects. I build automation tools, GenAI applications, and scalable solutions that solve real problems. Currently at udaanCapital.",
-    "keywords": "shravan revanna, AI developer, full-stack developer, automation, GenAI, machine learning, python developer, next.js developer",
+    "description": "AI full-stack developer with 180+ projects. I build automation tools, GenAI applications, and scalable solutions that solve real problems. Currently building voice AI at Confido Health.",
+    "keywords": "shravan revanna, AI developer, full-stack developer, automation, GenAI, voice AI, AI agents, healthcare AI, confido health, machine learning, python developer, next.js developer",
     "googleSiteVerification": "gbboCIIlLPMipBxgBvVtFTKE40RWFYONeLI6IDmHJ40",
     "domain": "shravanrevanna.me"
   }
