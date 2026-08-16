@@ -131,6 +131,23 @@
         "metrics": "200+ active users, 95K+ views till date and #1 in Google search index"
       },
       {
+        "name": "sudo-trade - 6 Autonomous AI Trading Agents",
+        "blog_url": "https://blog.shravanrevanna.me/6-autonomous-ai-agents-trade-stocks-with-my-money-in-realtime",
+        "linkText": "Read the Story",
+        "description": "Six AI agents that autonomously research, debate and trade Indian stocks with real money. Before every trade a bull agent and a bear agent argue the position, then the system commits.",
+        "tech": "Multi-agent orchestration, LLMs, real-time market data",
+        "metrics": "483 debates, 148+ trades, 370K tokens, all running at $0.87 a day"
+      },
+      {
+        "name": "DroneMind - Autonomous DJI Mini 3",
+        "github_url": "https://github.com/myselfshravan/dronemind",
+        "blog_url": "https://blog.shravanrevanna.me/dji-mini-3-ai-autonomous-drone",
+        "linkText": "View Project",
+        "description": "Turns a stock DJI Mini 3 into an AI agent running a perceive-reason-act loop: live RTMP vision, object detection and tracking, AI planning, then flight commands back through DJI Virtual Stick.",
+        "tech": "Python, RTMP, YOLO, DJI Virtual Stick",
+        "metrics": "Live vision co-pilot and follow-me autonomy with built-in safety controls"
+      },
+      {
         "name": "ParseFi - AI Statement Analyzer",
         "image": "project_hdfc_statement_analyser.png",
         "website_url": "https://hdfc-account-explorer.vercel.app",
@@ -139,6 +156,22 @@
         "description": "AI-powered HDFC bank statement explorer with MCP-driven financial insights (Chatbot) and smart tagging with auto reconciliation of Statements and Transactions",
         "tech": "React, LLM Integration (text2sql), Supabase - PostgreSQL",
         "metrics": "B-tree optimized queries, auto tagging of Tnx, Smart Reconciliation"
+      },
+      {
+        "name": "third-eye - Page Intelligence API",
+        "github_url": "https://github.com/myselfshravan/third-eye",
+        "linkText": "View Project",
+        "description": "Open-source API that screenshots any page and pulls structured product data (title, brand, price, sizes) off it, including sites sitting behind bot protection. Self-hosted and free.",
+        "tech": "TypeScript, Patchright stealth, Playwright, Fastify",
+        "metrics": "Structured extraction from bot-protected pages, self-hosted"
+      },
+      {
+        "name": "T-CRIS - Cancer Recurrence Intelligence",
+        "github_url": "https://github.com/myselfshravan/project-bcrs",
+        "linkText": "View Project",
+        "description": "Cancer recurrence prediction built on survival models with counterfactual analysis, surfaced through an interactive dashboard a clinician can actually interrogate.",
+        "tech": "Python, survival modelling, counterfactual analysis",
+        "metrics": "Survival models plus counterfactuals behind a clinical dashboard"
       },
       {
         "name": "Forkcast - Plan your meals",
@@ -183,6 +216,24 @@
       }
     ],
     "automation": [
+      {
+        "name": "Wiz-Hack - Smart Light Takeover",
+        "github_url": "https://github.com/myselfshravan/wiz-hack",
+        "blog_url": "https://blog.shravanrevanna.me/i-hacked-my-smart-lights-and-things-got-way-out-of-hand",
+        "linkText": "View Project",
+        "description": "Sniffed Philips Wiz bulbs, found they take raw JSON over UDP 38899, and turned them into a music visualizer, a DIY Ambilight and a live stock-market ticker.",
+        "tech": "Python, local UDP API, Groww API",
+        "metrics": "19 GitHub stars, ~93ms Ambilight sync, earned official Groww API access"
+      },
+      {
+        "name": "PariScrapper - Betting Arbitrage Monitor",
+        "github_url": "https://github.com/myselfshravan/pariScrapper",
+        "blog_url": "https://blog.shravanrevanna.me/building-a-real-time-betting-odds-monitor-with-arbitrage-detection",
+        "linkText": "View Project",
+        "description": "Real-time odds monitor that scrapes bookmakers, computes their margins and flags guaranteed-profit arbitrage windows the moment they open.",
+        "tech": "Python, Flask, Selenium, WebSockets, Streamlit",
+        "metrics": "Live margin math and arbitrage detection across bookmakers"
+      },
       {
         "name": "Clicks before Chopsticks",
         "blog_url": "https://blog.shravanrevanna.me/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
