@@ -120,6 +120,14 @@
   "projects": {
     "personal": [
       {
+        "name": "Spider - Fashion Catalog Engine",
+        "brief_url": "/view/spider?key=w90i-d",
+        "linkText": "Read the Brief",
+        "description": "A refinery that turns 114 fashion storefronts across ten different tech stacks into one clean catalog, normalizing every product into a single Product/Style/SKU schema. Crawls on a schedule, runs from a console, serves over an API. Available to acquire.",
+        "tech": "Python, 119 storefront adapters, universal schema, idempotent upserts",
+        "metrics": "963.6K styles, 4.9M SKUs under daily price watch, 114 sources, 31k LOC, 221 tests, zero dead-letters"
+      },
+      {
         "name": "NoteRep",
         "image": "project_noterep.png",
         "website_url": "https://noterep.vercel.app",
