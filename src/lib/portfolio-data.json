@@ -428,6 +428,11 @@
     "blog_url": "https://blog.shravanrevanna.me",
     "featured_posts": [
       {
+        "title": "Reverse-Engineering a Xiaomi Camera Into a Self-Tracking Robot",
+        "url": "https://blog.shravanrevanna.me/reverse-engineering-a-xiaomi-camera-into-a-self-tracking-robot",
+        "description": "Turned a sealed Xiaomi camera into a self-tracking robot on stock firmware, with no flashing and no cloud. Measured a 1.4s gap between command and visible motion that caps the control loop at 0.5Hz, then built the whole thing around it. Follows a person, a named object, or any box you drag on the frame."
+      },
+      {
         "title": "My 6 AI Trading Agents Turned ₹10L into ₹23L in Just 1 Week",
         "url": "https://blog.shravanrevanna.me/6-autonomous-ai-agents-trade-stocks-with-my-money-in-realtime",
         "description": "Built a multi-agent trading system (sudo-trade) where 6 AI agents autonomously research, debate, and trade Indian stocks. Two agents argue bull vs bear before every trade. 483 debates, 148+ trades, 370K tokens, all for $0.87 a day."
