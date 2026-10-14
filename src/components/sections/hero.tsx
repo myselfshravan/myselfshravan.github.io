@@ -659,7 +659,7 @@ export function Hero() {
                     transition={{ delay: 2.5, duration: 0.3 }}
                     className="text-muted-foreground pt-2"
                   >
-                    Currently shipping voice AI at{' '}
+                    Currently building healthcare AI agents at{' '}
                     <a
                       href="https://confido.health"
                       target="_blank"
