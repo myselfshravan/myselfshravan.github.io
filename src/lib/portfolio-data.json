@@ -1,22 +1,22 @@
 {
   "personal": {
     "name": "Shravan Revanna",
-    "title": "AI Full-Stack Developer",
-    "subtitle": "Building AI-powered applications and automation solutions",
-    "description": "I over-engineer for fun and automate out of frustration. AI full-stack dev turning problems into shipped products.",
+    "title": "AI Engineer",
+    "subtitle": "Building AI agents that take action",
+    "description": "I build AI agents that don't just answer, they act: in US healthcare, on the stock market, and inside hardware that was never meant to be hacked.",
     "email": "shravanrevanna@gmail.com",
     "phone": "+91 9945332995",
     "location": "Bengaluru, India",
-    "bio": "Full-stack developer (with 180+ production projects) obsessed with shipping fast and automating everything. I dive into fundamentals, over-engineer when needed, and turn every friction point into a solved problem. Specializing in GenAI applications, AI Agentic Workflows, and production-ready systems.",
+    "bio": "AI Engineer building agents that take real actions. By day I ship CareOS at Confido Health, AI agents running the front office for 3,200+ US providers. By night I hand real money to trading agents, put AI in the pilot seat of a DJI drone, and reverse-engineer cameras and smart bulbs into robots. 180+ projects shipped, from zero-to-one consumer apps to production agent systems.",
     "intro": [
-      "AI Engineer at Confido Health, building CareOS: AI agents that move US healthcare from systems of record to systems of action. Previously built Klydo zero-to-one and shipped AI systems at Graphene AI and Udaan.",
-      "Built 180+ projects including production applications with thousands of active users.",
-      "Specialized in automation, GenAI solutions, and full-stack development with modern frameworks.",
-      "Creator of NoteRep - a study platform serving 200+ active users with 85K+ views.",
-      "I write about tech, build tools that save time, and contribute to meaningful projects."
+      "AI Engineer at Confido Health, building CareOS: AI agents that move US healthcare from systems of record to systems of action, reaching 1 in 50 Americans.",
+      "Built Klydo zero-to-one to ₹15.65 Cr GMV and 87K users, including Sherlock, an AI fraud agent that auto-decides 58% of credit orders and blocked ₹5.20 L of fraud at 100% precision.",
+      "Outside work, my agents trade real money on Indian markets, fly a stock DJI Mini 3, and turn a sealed Xiaomi camera into a self-tracking robot.",
+      "Created NoteRep, the go-to study platform for 2,000+ students: 95K+ views, ~50K Google impressions and ~6K search clicks.",
+      "180+ projects shipped, with the best hacks written up on my blog, from smart-light takeovers to arbitrage bots."
     ],
     "tagline": "AI Engineer at Confido Health | Ex-Klydo | Ex-MLE @GrapheneAI | Ex-SDE @Udaan",
-    "goal": "I build automation tools and AI-powered solutions that eliminate manual processes and save people time.",
+    "goal": "I build AI agents that take real action, so people get their time back for the work that matters.",
     "profileImages": [
       "profile_0.jpg",
       "profile_1.jpg",
@@ -44,6 +44,23 @@
     "stackoverflow": "https://stackoverflow.com/users/17003616/shravan"
   },
   "skills": {
+    "ai": [
+      {
+        "name": "LLM Agents"
+      },
+      {
+        "name": "Multi-Agent Systems"
+      },
+      {
+        "name": "MCP & Tool Use"
+      },
+      {
+        "name": "RAG"
+      },
+      {
+        "name": "Computer Vision"
+      }
+    ],
     "core": [
       {
         "name": "Python",
@@ -128,17 +145,6 @@
         "metrics": "963.6K styles, 4.9M SKUs under daily price watch, 114 sources, 31k LOC, 221 tests, zero dead-letters"
       },
       {
-        "name": "NoteRep",
-        "image": "project_noterep.png",
-        "website_url": "https://noterep.vercel.app",
-        "github_url": "https://github.com/myselfshravan/noterep",
-        "blog_url": "https://blog.shravanrevanna.me/story-behind-noterep-the-popular-site-of-college",
-        "linkText": "Visit Website",
-        "description": "The go-to platform for 2000+ students who ace their exams with last-minute prep, featuring 10+ features/tools including live timetables, real-time calendars, AI Chatbot, Mini SIS and open-source community content",
-        "tech": "Next.js, TypeScript, Firebase, Vercel",
-        "metrics": "200+ active users, 95K+ views till date and #1 in Google search index"
-      },
-      {
         "name": "sudo-trade - 6 Autonomous AI Trading Agents",
         "blog_url": "https://blog.shravanrevanna.me/6-autonomous-ai-agents-trade-stocks-with-my-money-in-realtime",
         "linkText": "Read the Story",
@@ -156,14 +162,33 @@
         "metrics": "Live vision co-pilot and follow-me autonomy with built-in safety controls"
       },
       {
+        "name": "Xiaomi Camera Robot - Self-Tracking on Stock Firmware",
+        "blog_url": "https://blog.shravanrevanna.me/reverse-engineering-a-xiaomi-camera-into-a-self-tracking-robot",
+        "linkText": "Read the Story",
+        "description": "Reverse-engineered a sealed Xiaomi camera into a self-tracking robot on stock firmware: no flashing, no cloud. Follows a person, a named object, or any box you drag on the frame.",
+        "tech": "Reverse engineering, Python, object detection, closed-loop control",
+        "metrics": "Control loop engineered around a measured 1.4s command-to-motion lag"
+      },
+      {
+        "name": "NoteRep",
+        "image": "project_noterep.png",
+        "website_url": "https://noterep.vercel.app",
+        "github_url": "https://github.com/myselfshravan/noterep",
+        "blog_url": "https://blog.shravanrevanna.me/story-behind-noterep-the-popular-site-of-college",
+        "linkText": "Visit Website",
+        "description": "The go-to exam-prep platform for 2,000+ students, packing 10+ tools into one place: live timetables, real-time calendars, an AI chatbot, a mini SIS and open-source community notes.",
+        "tech": "Next.js, TypeScript, Firebase, Vercel",
+        "metrics": "2,000+ students, 95K+ views, ~50K Google impressions and ~6K search clicks in 16 months, #1 on Google search"
+      },
+      {
         "name": "ParseFi - AI Statement Analyzer",
         "image": "project_hdfc_statement_analyser.png",
         "website_url": "https://hdfc-account-explorer.vercel.app",
         "github_url": "https://github.com/myselfshravan/hdfc-statement-explorer",
         "linkText": "Try It Out",
-        "description": "AI-powered HDFC bank statement explorer with MCP-driven financial insights (Chatbot) and smart tagging with auto reconciliation of Statements and Transactions",
+        "description": "AI-powered HDFC bank statement explorer: chat with your finances over MCP, with smart auto-tagging and automatic reconciliation of statements and transactions.",
         "tech": "React, LLM Integration (text2sql), Supabase - PostgreSQL",
-        "metrics": "B-tree optimized queries, auto tagging of Tnx, Smart Reconciliation"
+        "metrics": "Text-to-SQL chat, B-tree optimized queries, auto-tagged transactions, smart reconciliation"
       },
       {
         "name": "third-eye - Page Intelligence API",
@@ -209,7 +234,7 @@
         "linkText": "Play Game",
         "description": "AI manipulation game where players must prompt to make LLMs respond with the specified phrases without directly asking.",
         "tech": "Streamlit, Llama-2-70b, Firebase",
-        "metrics": "Social engineering for AI systems"
+        "metrics": "Prompt-injection game: social engineering, but for LLMs"
       },
       {
         "name": "F&B QR Ordering System",
@@ -255,15 +280,15 @@
         "name": "IPL Ticket Automation",
         "url": "https://blog.shravanrevanna.me/automating-the-ipl-ticket-booking-for-rcb-match",
         "linkText": "Read Article",
-        "description": "Automated ticket booking system for high-demand IPL matches, and ticket release notifier",
+        "description": "Automated booking for sell-out IPL matches, plus a notifier that fires the moment tickets drop.",
         "tech": "Python, Web Automation",
-        "metrics": "Successfully booked tickets"
+        "metrics": "Booked tickets for sell-out RCB matches"
       },
       {
         "name": "GetPlaced Email Organizer",
         "website_url": "https://getplaced.vercel.app/",
         "linkText": "Private Tool",
-        "description": "Automated and AI-powered college placement email organizer with LLM-driven JD summarization and keyword extraction that prevents missing job opportunities",
+        "description": "AI-powered placement email organizer that summarizes JDs and extracts keywords with LLMs, so no job opportunity slips through.",
         "tech": "Python, Email APIs, LLMs",
         "metrics": "No more missed opportunities"
       }
@@ -286,7 +311,7 @@
         "linkText": "View Project",
         "description": "Multi-API LLM playground with community-driven prompt templates showcasing the art of prompt engineering",
         "tech": "React, Firebase, Multiple LLM APIs",
-        "metrics": "Community prompt sharing"
+        "metrics": "Community-shared prompt templates across multiple LLM APIs"
       }
     ]
   },
@@ -355,8 +380,8 @@
       "endDate": "Dec-2025",
       "website": "https://grapheneai.com",
       "description": [
-        "Architected and restructured microservices to power critical operational workflows.",
-        "Built in-house AI systems that enhanced decision-making, automated manual processes, and improved team efficiency."
+        "Re-architected core microservices powering critical operational workflows.",
+        "Built in-house AI systems that automated manual processes and sharpened team decision-making."
       ]
     },
     {
@@ -367,9 +392,9 @@
       "endDate": "Sep-2025",
       "website": "https://udaancapital.com",
       "description": [
-        "Worked on onboarding systems to improve application conversion flow.",
-        "Contributed to internal tools supporting operations and credit risk evaluation.",
-        "Leveraged AI to automate and enhance the risk assessment models."
+        "Rebuilt onboarding systems to lift application conversion.",
+        "Built internal tools for operations and credit-risk evaluation.",
+        "Brought AI into risk-assessment models to automate and strengthen credit decisions."
       ]
     },
     {
@@ -381,7 +406,7 @@
       "website": "https://udaan.com",
       "description": [
         "Shipped production features in Kotlin and TypeScript across multiple internal business consoles.",
-        "Reverse engineered and completely automated competitor API integrations, removing hours of manual work.",
+        "Reverse-engineered competitor APIs and fully automated the integrations, eliminating hours of manual work.",
         "Engineered resilient pricing pipelines with 99% uptime and real-time visibility."
       ]
     },
@@ -393,9 +418,9 @@
       "endDate": "Apr-2024",
       "website": "https://cadreodr.com",
       "description": [
-        "Built real-time grievance system using ChromaDB + Mistral 7B for government department navigation.",
-        "Fine-tuned BART model for zero-shot classification of government departments and AI chatbot to help users navigate accurately.",
-        "Developed completely automated classification system for efficient grievance routing."
+        "Built a real-time RAG grievance system (ChromaDB + Mistral 7B) that routes citizens to the right government department.",
+        "Fine-tuned BART for zero-shot department classification, powering an AI chatbot that guides users accurately.",
+        "Fully automated grievance routing end to end."
       ]
     },
     {
@@ -406,9 +431,9 @@
       "endDate": "Jan-2024",
       "website": "https://nextwealth.com",
       "description": [
-        "Automated document processing with GenAI, reducing task handling time by 5 minutes per task.",
-        "Eliminated entire QC layer through AI workflows, streamlining client operations.",
-        "Developed AI prototypes solving complex financial document challenges, reducing operational costs."
+        "Automated document processing with GenAI, cutting 5 minutes off every task.",
+        "Eliminated an entire QC layer with AI workflows.",
+        "Prototyped AI systems for complex financial documents that cut operational costs."
       ]
     },
     {
@@ -419,8 +444,8 @@
       "endDate": "Aug-2023",
       "website": "#",
       "description": [
-        "Architected and developed scalable backend systems for a subscription-based food delivery platform.",
-        "Built admin panel with role-based access controls and dynamic user management features."
+        "Architected scalable backend systems for a subscription food-delivery platform.",
+        "Built the admin panel with role-based access control and dynamic user management."
       ]
     }
   ],
@@ -448,36 +473,36 @@
         "description": "Built an end-to-end autonomous flight stack for a stock DJI Mini 3 using RTMP streaming, YOLO object detection, object tracking, AI planning, and DJI Virtual Stick with built-in safety controls."
       },
       {
-        "title": "How I Hacked My Smart Lights to sync with music, video and stock market portfolios",
+        "title": "How I Hacked My Smart Lights to Sync with Music, Video and My Stock Portfolio",
         "url": "https://blog.shravanrevanna.me/i-hacked-my-smart-lights-and-things-got-way-out-of-hand",
-        "description": "A fun deep-dive into how I hacked my smart lights, leading to an unexpected chain of events that spiraled out of control."
+        "description": "Sniffed my Philips Wiz bulbs, found an open UDP API, and turned them into a music visualizer, a DIY Ambilight and a live stock-portfolio ticker. Then things got way out of hand."
       },
       {
-        "title": "Inside NoteRep's AI Chatbot - Subtle Ads in responses",
+        "title": "Inside NoteRep's AI Chatbot: Subtle Ads in Responses",
         "url": "https://blog.shravanrevanna.me/a-brief-look-at-how-the-noterep-ai-chatbot-works",
-        "description": "How I Built a Groq-powered chatbot for NoteRep that delivers blazing-fast responses, remembers context, and sneakily integrates ads into conversations without breaking flow which can be tracked and monetized."
+        "description": "How I built a Groq-powered chatbot for NoteRep that answers almost instantly, remembers context, and weaves trackable, monetizable ads into its replies without breaking the flow."
       },
       {
-        "title": "Building a Real-Time Betting Odds Monitor with guaranteed profits on every single bet made",
+        "title": "Building a Real-Time Betting Odds Monitor That Finds Guaranteed-Profit Arbitrage",
         "url": "https://blog.shravanrevanna.me/building-a-real-time-betting-odds-monitor-with-arbitrage-detection",
-        "description": "Built a Flask + WebSocket system to scrape live betting odds, calculates bookmaker margins, and detects arbitrage opportunities at two diffrent instances in real time."
+        "description": "Built a Flask + WebSocket system that scrapes live odds, computes bookmaker margins, and flags guaranteed-profit arbitrage windows in real time."
       },
       {
-        "title": "Automating Table Reservations with Script - Clicks before Chopsticks",
+        "title": "Clicks Before Chopsticks: Automating Sell-Out Restaurant Reservations",
         "url": "https://blog.shravanrevanna.me/automating-the-unautomatable-how-i-built-a-python-bot-to-snag-coveted-restaurant-reservations",
-        "description": "Wrote a Python script to secure restaurant reservations faster than manual booking for high-demand restaurant (like Naru Noodels Bar) out of frustration."
+        "description": "Wrote a Python bot that books Naru Noodle Bar faster than any human, beating its 2-minute Monday sellout every time."
       },
       {
-        "title": "How I can access any students data in our college",
+        "title": "How I Could Access Any Student's Data in My College",
         "url": "https://blog.shravanrevanna.me/how-i-can-access-any-students-data-in-our-college",
-        "description": "Discovered a vulnerability in our college's student information system that allowed me to access any student's data, highlighting the importance of robust security measures."
+        "description": "Found a vulnerability in my college's student information system that exposed every student's records, and what it says about access control."
       }
     ]
   },
   "meta": {
-    "title": "Shravan Revanna | AI Full-Stack Developer | Automation & GenAI Solutions",
-    "description": "AI full-stack developer with 180+ projects. I build automation tools, GenAI applications, and scalable solutions that solve real problems. Currently building AI agents for healthcare at Confido Health.",
-    "keywords": "shravan revanna, AI developer, full-stack developer, automation, GenAI, AI agents, healthcare AI agents, CareOS, healthcare AI, confido health, machine learning, python developer, next.js developer",
+    "title": "Shravan Revanna | AI Engineer | Building AI Agents That Take Action",
+    "description": "AI Engineer at Confido Health building CareOS, AI agents for US healthcare. Built Klydo zero-to-one and ships autonomous agents for trading, drones and robotics, with 180+ projects to show for it.",
+    "keywords": "shravan revanna, AI engineer, AI agents, agentic AI, multi-agent systems, healthcare AI agents, CareOS, confido health, LLM engineer, autonomous agents, computer vision, full-stack developer, python developer, next.js developer",
     "googleSiteVerification": "gbboCIIlLPMipBxgBvVtFTKE40RWFYONeLI6IDmHJ40",
     "domain": "shravanrevanna.me"
   }

@@ -13,6 +13,11 @@ export function Skills() {
 
   const skillCategories = [
     {
+      title: 'AI & Agents',
+      icon: '🤖',
+      skills: portfolioData.skills.ai.map((s) => s.name),
+    },
+    {
       title: 'Languages',
       icon: '🔧',
       skills: portfolioData.skills.core.map((s) => s.name),
@@ -55,7 +60,7 @@ export function Skills() {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-4"
+          className="grid grid-cols-2 lg:grid-cols-5 gap-4"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -63,7 +68,7 @@ export function Skills() {
           {skillCategories.map((category, index) => (
             <motion.div
               key={category.title}
-              className="space-y-3"
+              className={index === 0 ? 'space-y-3 col-span-2 lg:col-span-1' : 'space-y-3'}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.1 }}

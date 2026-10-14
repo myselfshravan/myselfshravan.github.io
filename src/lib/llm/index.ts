@@ -5,6 +5,7 @@ export * from './chat-service';
 import { GroqProvider } from './groq-provider';
 import { ChatService } from './chat-service';
 import type { LLMConfig } from './types';
+import portfolioData from '../portfolio-data.json';
 
 export function createGroqChatService(
   config: LLMConfig = {},
@@ -15,16 +16,34 @@ export function createGroqChatService(
   return new ChatService(provider, config, systemPrompt);
 }
 
-// Portfolio context that gets injected into every AI conversation
+// Portfolio context that gets injected into every AI conversation, built from
+// portfolio-data.json so the clone stays in sync with the site
+const { personal, work, projects, writing, social } = portfolioData;
+const allProjects = [...projects.personal, ...projects.automation, ...projects.tools];
+
 const PORTFOLIO_CONTEXT = `
 PORTFOLIO OWNER CONTEXT:
-- Name: Shravan Revanna
-- Email: shravanrevanna@gmail.com
-- Key Project: NoteRep (opensource notes sharing platform) and some more projects like: ParseFi - AI Statement Analyzer, Forkcast - Plan your meals.
-- More projects at /#projects section.
-- Focus: Building AI-powered applications, automation solutions, and production-ready systems
-- Philosophy: "I see problems, I build solutions" - obsessed with automating everything and eliminating manual work
-- Interests: GenAI, automation, full-stack development, technical writing
+- Name: ${personal.name}, ${personal.title} based in ${personal.location}
+- Email: ${personal.email}
+- Links: LinkedIn ${social.linkedin}, GitHub ${social.github}, Blog ${social.blog}
+- Bio: ${personal.bio}
+- Highlights:
+${personal.intro.map((line) => `  - ${line}`).join('\n')}
+
+WORK EXPERIENCE:
+${work
+  .map(
+    (w) =>
+      `- ${w.position} at ${w.company} (${w.startDate} to ${w.endDate})\n${w.description.map((d) => `  - ${d}`).join('\n')}`,
+  )
+  .join('\n')}
+
+PROJECTS (more at /#projects):
+${allProjects.map((p) => `- ${p.name}: ${p.description} (${p.metrics})`).join('\n')}
+
+BLOG POSTS (${writing.blog_url}):
+${writing.featured_posts.map((p) => `- ${p.title}`).join('\n')}
+
 You are assisting visitors to Shravan's portfolio website. Use this context to provide relevant, personalized responses.
 `;
 
