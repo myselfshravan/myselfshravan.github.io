@@ -111,7 +111,10 @@ export function Header() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <button
-              onClick={() => scrollToSection('#top')}
+              onClick={() => {
+                scrollToSection('#top');
+                posthog.capture('logo_clicked');
+              }}
               className="flex items-center hover:scale-105 transition-all duration-300 cursor-pointer"
               aria-label="Scroll to top"
             >

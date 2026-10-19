@@ -611,10 +611,11 @@ export function Hero() {
                 <X className="w-2 h-2 opacity-0 group-hover:opacity-100 transition-opacity text-red-900" />
               </div>
 
-              {/* Yellow Dot - Minimize */}
-              <div className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-all cursor-pointer group relative flex items-center justify-center">
-                <Minus className="w-2 h-2 opacity-0 group-hover:opacity-100 transition-opacity text-yellow-900" />
-              </div>
+              {/* Yellow Dot - decorative: the inline terminal has nothing to minimize to */}
+              <div
+                className="w-3 h-3 rounded-full bg-yellow-500/80 cursor-default"
+                aria-hidden="true"
+              />
 
               {/* Green Dot - Expand */}
               <div
@@ -736,10 +737,20 @@ export function Hero() {
                   >
                     <X className="w-2 h-2 opacity-0 group-hover:opacity-100 transition-opacity text-red-900" />
                   </div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-all cursor-pointer group relative flex items-center justify-center">
+                  {/* Minimize and restore both return to the inline terminal, which
+                      keeps its session, so they share the close behaviour. */}
+                  <div
+                    className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-all cursor-pointer group relative flex items-center justify-center"
+                    onClick={() => setIsDialogOpen(false)}
+                    title="Minimize to inline terminal"
+                  >
                     <Minus className="w-2 h-2 opacity-0 group-hover:opacity-100 transition-opacity text-yellow-900" />
                   </div>
-                  <div className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-all cursor-pointer group relative flex items-center justify-center">
+                  <div
+                    className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-all cursor-pointer group relative flex items-center justify-center"
+                    onClick={() => setIsDialogOpen(false)}
+                    title="Restore inline terminal"
+                  >
                     <Square className="w-2 h-2 opacity-0 group-hover:opacity-100 transition-opacity text-green-900" />
                   </div>
                   <span className="ml-2 text-xs text-primary">
