@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 import posthog from 'posthog-js';
+import { engagedMsSince, onResumeFromIdle } from '@/lib/user-activity';
 
 /**
  * Tracks time spent in a section and fires events for:
@@ -9,7 +10,8 @@ import posthog from 'posthog-js';
  * - section_time_spent: when section leaves viewport, with duration
  *
  * Pauses the timer when the tab is hidden (fixes inflated durations from
- * users switching tabs while a section is in view).
+ * users switching tabs while a section is in view) and while the visitor is
+ * idle (a tab left open on a visible section is not time spent reading it).
  */
 export function useSectionTracker(sectionName: string) {
   const ref = useRef<HTMLElement>(null);
@@ -21,22 +23,28 @@ export function useSectionTracker(sectionName: string) {
 
   const flushTime = useCallback(() => {
     if (entryTime.current === null) return;
-    const elapsed = Math.round((Date.now() - entryTime.current) / 1000);
+    const elapsed = Math.round(engagedMsSince(entryTime.current) / 1000);
     accumulatedTime.current += elapsed;
     entryTime.current = null;
   }, []);
 
-  const fireSectionTimeSpent = useCallback(() => {
+  const fireSectionTimeSpent = useCallback((isUnloading = false) => {
     // Flush any running timer
     if (entryTime.current !== null) {
       flushTime();
     }
     const duration = accumulatedTime.current;
     if (duration >= 2) {
-      posthog.capture('section_time_spent', {
-        section: sectionName,
-        duration_seconds: duration,
-      });
+      posthog.capture(
+        'section_time_spent',
+        {
+          section: sectionName,
+          duration_seconds: duration,
+        },
+        // posthog-js flushes its queue on its own pagehide listener, which runs
+        // before this one, so unload-time events must be beaconed directly.
+        isUnloading ? { transport: 'sendBeacon', send_instantly: true } : undefined,
+      );
     }
     accumulatedTime.current = 0;
   }, [sectionName, flushTime]);
@@ -102,19 +110,32 @@ export function useSectionTracker(sectionName: string) {
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
-    // Fire time_spent on page unload if section is still visible
+    // Visitor came back after idling: close the segment where idling began
+    // and restart the clock from now.
+    const unsubscribeIdle = onResumeFromIdle((idleStartedAt) => {
+      if (entryTime.current === null) return;
+      accumulatedTime.current += Math.max(
+        0,
+        Math.round((idleStartedAt - entryTime.current) / 1000),
+      );
+      entryTime.current = Date.now();
+    });
+
+    // Fire time_spent on page unload if section is still visible. `pagehide`
+    // (not `beforeunload`) because mobile Safari never fires beforeunload.
     const handleUnload = () => {
       if (isInViewport.current) {
-        fireSectionTimeSpent();
+        fireSectionTimeSpent(true);
       }
     };
 
-    window.addEventListener('beforeunload', handleUnload);
+    window.addEventListener('pagehide', handleUnload);
 
     return () => {
       observer.disconnect();
       document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('beforeunload', handleUnload);
+      window.removeEventListener('pagehide', handleUnload);
+      unsubscribeIdle();
       if (visibilityTimer.current) {
         clearTimeout(visibilityTimer.current);
       }

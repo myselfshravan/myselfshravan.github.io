@@ -15,6 +15,7 @@ import { Footer } from '@/components/layout/footer';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import posthog from 'posthog-js';
+import { engagedMsSince, onResumeFromIdle } from '@/lib/user-activity';
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
@@ -69,17 +70,55 @@ export default function Home() {
     return () => window.removeEventListener('scroll', trackScrollDepth);
   }, [trackScrollDepth]);
 
-  // Session duration on page unload
+  // Session duration on page unload. `duration_seconds` stays wall-clock for
+  // continuity with historical data; `active_seconds` counts only time the tab
+  // was visible and the visitor was not idle.
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const handleUnload = () => {
-      const duration = Math.round((Date.now() - sessionStartRef.current) / 1000);
-      posthog.capture('session_ended', { duration_seconds: duration });
+    let activeMs = 0;
+    let activeSince: number | null = document.hidden ? null : Date.now();
+    let sent = false;
+
+    const pause = () => {
+      if (activeSince === null) return;
+      activeMs += engagedMsSince(activeSince);
+      activeSince = null;
     };
 
-    window.addEventListener('beforeunload', handleUnload);
-    return () => window.removeEventListener('beforeunload', handleUnload);
+    const handleVisibilityChange = () => {
+      if (document.hidden) pause();
+      else activeSince = Date.now();
+    };
+
+    const unsubscribeIdle = onResumeFromIdle((idleStartedAt) => {
+      if (activeSince === null) return;
+      activeMs += Math.max(0, idleStartedAt - activeSince);
+      activeSince = Date.now();
+    });
+
+    // `pagehide` fires on mobile Safari, where `beforeunload` does not. The
+    // event is beaconed directly because posthog-js has already flushed its
+    // queue in its own pagehide listener by the time this one runs.
+    const handleUnload = () => {
+      if (sent) return;
+      sent = true;
+      pause();
+      const duration = Math.round((Date.now() - sessionStartRef.current) / 1000);
+      posthog.capture(
+        'session_ended',
+        { duration_seconds: duration, active_seconds: Math.round(activeMs / 1000) },
+        { transport: 'sendBeacon', send_instantly: true },
+      );
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pagehide', handleUnload);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pagehide', handleUnload);
+      unsubscribeIdle();
+    };
   }, []);
 
   useEffect(() => {
