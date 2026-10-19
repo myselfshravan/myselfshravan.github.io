@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import {
   Mail,
@@ -13,6 +13,8 @@ import {
   Twitter,
   Youtube,
   Rss,
+  Copy,
+  Check,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -38,6 +40,33 @@ export function Contact() {
   const trackRef = useSectionTracker('contact');
   const cardsRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
+  const [emailCopied, setEmailCopied] = useState(false);
+  const emailRef = useRef<HTMLSpanElement>(null);
+
+  const collaborationMailto = `mailto:${portfolioData.personal.email}?subject=${encodeURIComponent('Project Collaboration')}`;
+  const whatsappUrl = `https://wa.me/${portfolioData.personal.phone.replace(/\D/g, '')}`;
+
+  // A mailto: link does nothing for visitors without a mail client, so the CTA
+  // also shows the address with a copy button.
+  const handleCopyEmail = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(portfolioData.personal.email);
+      setEmailCopied(true);
+      posthog.capture('contact_email_copied', { placement: 'cta' });
+      window.setTimeout(() => setEmailCopied(false), 2000);
+    } catch {
+      // Clipboard unavailable (e.g. insecure context); select the address so
+      // the visitor can copy it by hand.
+      const el = emailRef.current;
+      const selection = window.getSelection();
+      if (el && selection) {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && cardsRef.current) {
@@ -85,7 +114,7 @@ export function Contact() {
       icon: MessageCircle,
       title: 'WhatsApp',
       value: "Let's Chat",
-      href: `https://wa.me/${portfolioData.personal.phone.replace(/\D/g, '')}`,
+      href: whatsappUrl,
       description: 'Message on WhatsApp',
       gradient: 'from-emerald-500/10 to-emerald-600/10',
       iconColor: 'text-emerald-500',
@@ -305,19 +334,56 @@ export function Contact() {
                 Let&apos;s discuss how we can bring your ideas to life with cutting-edge technology
                 and creative solutions.
               </p>
-              <Button
-                size="lg"
-                onClick={() => {
-                  const emailUrl = `mailto:${portfolioData.personal.email}?subject=Project Collaboration`;
-                  trackExternalLink(emailUrl, 'Email: Project Collaboration');
-                  posthog.capture('start_conversation_clicked');
-                  window.open(emailUrl, '_self');
-                }}
-                className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              >
-                <Send className="mr-2 h-5 w-5" />
-                Start a Conversation
-              </Button>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                >
+                  <a
+                    href={collaborationMailto}
+                    onClick={() => {
+                      trackExternalLink(collaborationMailto, 'Email: Project Collaboration');
+                      posthog.capture('start_conversation_clicked', { channel: 'email' });
+                    }}
+                  >
+                    <Send className="mr-2 h-5 w-5" />
+                    Start a Conversation
+                  </a>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-primary/20">
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      trackExternalLink(whatsappUrl, 'WhatsApp: Project Collaboration');
+                      posthog.capture('start_conversation_clicked', { channel: 'whatsapp' });
+                    }}
+                  >
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    WhatsApp
+                  </a>
+                </Button>
+              </div>
+              <div className="mt-4 flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                <span ref={emailRef} className="font-mono select-all">
+                  {portfolioData.personal.email}
+                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleCopyEmail}
+                  className="p-1 h-auto"
+                  aria-label="Copy email address"
+                >
+                  {emailCopied ? (
+                    <Check className="h-4 w-4 text-primary" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </motion.div>
