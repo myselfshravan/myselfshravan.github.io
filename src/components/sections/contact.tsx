@@ -76,7 +76,7 @@ export function Contact() {
       icon: Phone,
       title: 'Phone',
       value: portfolioData.personal.phone,
-      href: `tel:${portfolioData.personal.phone}`,
+      href: `tel:${portfolioData.personal.phone.replace(/\s/g, '')}`,
       description: 'Give me a call',
       gradient: 'from-green-500/10 to-green-600/10',
       iconColor: 'text-green-500',
@@ -166,6 +166,12 @@ export function Contact() {
                               </p>
                               <a
                                 href={method.href}
+                                onClick={() =>
+                                  posthog.capture('contact_method_clicked', {
+                                    method: method.title,
+                                    placement: 'link',
+                                  })
+                                }
                                 className="text-primary hover:underline font-medium text-sm sm:text-base truncate block"
                                 target={method.href.startsWith('http') ? '_blank' : undefined}
                                 rel={
@@ -182,7 +188,7 @@ export function Contact() {
                                 if (method.href.startsWith('http')) {
                                   trackExternalLink(method.href, `Contact: ${method.title}`);
                                 }
-                                posthog.capture('contact_method_clicked', { method: method.title });
+                                posthog.capture('contact_method_clicked', { method: method.title, placement: 'button' });
                                 window.open(
                                   method.href,
                                   method.href.startsWith('http') ? '_blank' : '_self',

@@ -116,6 +116,7 @@ export function Writing() {
                             posthog.capture('blog_post_clicked', {
                               post_title: post.title,
                               post_url: post.url,
+                              placement: 'icon',
                             });
                             window.open(post.url, '_blank');
                           }}
@@ -150,6 +151,11 @@ export function Writing() {
                       variant="outline"
                       onClick={() => {
                         trackExternalLink(post.url, `Blog Post: ${post.title}`);
+                        posthog.capture('blog_post_clicked', {
+                          post_title: post.title,
+                          post_url: post.url,
+                          placement: 'cta',
+                        });
                         window.open(post.url, '_blank');
                       }}
                       className="w-full text-sm border-primary/20 hover:bg-primary/5"
