@@ -227,11 +227,7 @@ export function Footer() {
           >
             <p className="text-xs text-muted-foreground">
               Last Updated:{' '}
-              {new Date().toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
+{process.env.NEXT_PUBLIC_BUILD_DATE}
             </p>
 
             <Button
