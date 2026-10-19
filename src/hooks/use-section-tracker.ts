@@ -4,9 +4,23 @@ import { useEffect, useRef, useCallback } from 'react';
 import posthog from 'posthog-js';
 import { engagedMsSince, onResumeFromIdle } from '@/lib/user-activity';
 
+// A section counts as "in view" when 30% of it is visible OR it fills 30% of
+// the viewport. The second rule matters for sections taller than ~3.3
+// viewports (Projects on mobile), which can never reach a 30% ratio.
+const VISIBLE_FRACTION = 0.3;
+const OBSERVER_THRESHOLDS = [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.5, 0.75, 1];
+
+function isSectionInView(entry: IntersectionObserverEntry): boolean {
+  if (!entry.isIntersecting) return false;
+  if (entry.intersectionRatio >= VISIBLE_FRACTION) return true;
+  const viewportHeight = entry.rootBounds?.height ?? window.innerHeight;
+  return entry.intersectionRect.height >= viewportHeight * VISIBLE_FRACTION;
+}
+
 /**
  * Tracks time spent in a section and fires events for:
- * - section_viewed: when section becomes visible (>30% in viewport for 1s)
+ * - section_viewed: when section becomes visible (30% of it, or 30% of the
+ *   viewport, for 1s)
  * - section_time_spent: when section leaves viewport, with duration
  *
  * Pauses the timer when the tab is hidden (fixes inflated durations from
@@ -52,7 +66,7 @@ export function useSectionTracker(sectionName: string) {
   const handleIntersect = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+        if (isSectionInView(entry)) {
           isInViewport.current = true;
           // Start a 1s timer to confirm it's not just scrolling past
           if (!visibilityTimer.current) {
@@ -68,6 +82,9 @@ export function useSectionTracker(sectionName: string) {
             }, 1000);
           }
         } else {
+          // Several thresholds fire while the section is partly visible; only
+          // act on the transition out of view.
+          if (!isInViewport.current && !visibilityTimer.current) return;
           isInViewport.current = false;
           // Clear timer if user scrolled past before 1s
           if (visibilityTimer.current) {
@@ -88,7 +105,7 @@ export function useSectionTracker(sectionName: string) {
     if (!el || typeof window === 'undefined') return;
 
     const observer = new IntersectionObserver(handleIntersect, {
-      threshold: 0.3,
+      threshold: OBSERVER_THRESHOLDS,
     });
 
     observer.observe(el);
