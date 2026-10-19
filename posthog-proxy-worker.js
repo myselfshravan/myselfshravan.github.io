@@ -25,6 +25,11 @@ export default {
     const targetHost = path.startsWith('/static/') ? POSTHOG_ASSETS_HOST : POSTHOG_HOST;
     const targetUrl = `https://${targetHost}${path}${url.search}`;
 
+    // Real visitor IP, read before the Cloudflare headers are stripped below.
+    // PostHog geolocates from X-Forwarded-For; without it every event resolves
+    // to this worker's egress IP (US, no city).
+    const clientIp = request.headers.get('cf-connecting-ip');
+
     // Clean headers
     const requestHeaders = new Headers(request.headers);
     requestHeaders.delete('host');
@@ -35,6 +40,9 @@ export default {
     requestHeaders.delete('x-forwarded-for');
     requestHeaders.delete('x-forwarded-proto');
     requestHeaders.delete('x-real-ip');
+    if (clientIp) {
+      requestHeaders.set('x-forwarded-for', clientIp);
+    }
 
     const proxyRequest = new Request(targetUrl, {
       method: request.method,
