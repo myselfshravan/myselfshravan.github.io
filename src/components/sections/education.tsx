@@ -308,7 +308,7 @@ export function Education() {
               },
               {
                 title: 'Project Experience',
-                value: '180+ Projects',
+                value: '300+ Projects',
                 icon: '🚀',
                 description: 'Built during academic journey',
               },

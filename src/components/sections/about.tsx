@@ -471,7 +471,7 @@ export function About() {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           {[
-            { number: '180+', label: 'Projects Built' },
+            { number: '300+', label: 'Projects Built' },
             { number: '6', label: 'Companies Worked' },
             { number: '3+', label: 'Years Experience' },
             { number: '∞', label: 'Learning Never Stops' },

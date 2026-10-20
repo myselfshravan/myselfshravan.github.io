@@ -7,13 +7,13 @@
     "email": "shravanrevanna@gmail.com",
     "phone": "+91 9945332995",
     "location": "Bengaluru, India",
-    "bio": "AI Engineer building agents that take real actions. By day I ship CareOS at Confido Health, AI agents running the front office for 3,200+ US providers. By night I hand six AI agents a ₹10L portfolio and let them fight over every trade, put AI in the pilot seat of a DJI drone, and reverse-engineer cameras and smart bulbs into robots. 180+ projects shipped, from zero-to-one consumer apps to production agent systems.",
+    "bio": "AI Engineer building agents that take real actions. By day I ship CareOS at Confido Health, AI agents running the front office for 3,200+ US providers. By night I hand six AI agents a ₹10L portfolio and let them fight over every trade, put AI in the pilot seat of a DJI drone, and reverse-engineer cameras and smart bulbs into robots. 300+ projects shipped, from zero-to-one consumer apps to production agent systems.",
     "intro": [
       "AI Engineer at Confido Health, building CareOS: AI agents that move US healthcare from systems of record to systems of action, reaching 1 in 50 Americans.",
       "Built Klydo zero-to-one to ₹15.65 Cr GMV and 87K users, including Sherlock, an AI fraud agent that auto-decides 58% of credit orders and blocked ₹5.20 L of fraud at 100% precision.",
       "Outside work, my AI agents turned a ₹10L paper portfolio into ₹23.66L in 10 days, fly a stock DJI Mini 3, and turn a sealed Xiaomi camera into a self-tracking robot.",
       "Created NoteRep, the go-to study platform for 2,000+ students: 95K+ views, ~50K Google impressions and ~6K search clicks.",
-      "180+ projects shipped, with the best hacks written up on my blog, from smart-light takeovers to arbitrage bots."
+      "300+ projects shipped, every one mapped in Atlas, with the best hacks written up on my blog, from smart-light takeovers to arbitrage bots."
     ],
     "tagline": "AI Engineer at Confido Health | Ex-Klydo | Ex-MLE @GrapheneAI | Ex-SDE @Udaan",
     "goal": "I build AI agents that take real action, so people get their time back for the work that matters.",
@@ -41,7 +41,8 @@
     "blog": "https://blog.shravanrevanna.me/",
     "youtube": "https://www.youtube.com/channel/UC5NNBFQqhbuU2f5wprDVaVg",
     "telegram": "https://telegram.me/shravan_mr",
-    "stackoverflow": "https://stackoverflow.com/users/17003616/shravan"
+    "stackoverflow": "https://stackoverflow.com/users/17003616/shravan",
+    "atlas": "https://atlas.shravanrevanna.me/#/universe"
   },
   "skills": {
     "ai": [
@@ -140,6 +141,14 @@
         "description": "Six AI agents that argue bull vs bear before every trade, then pull the trigger. Dropped into the March 2026 crash with a ₹10L book, they turned it into ₹23.66L in 10 days. Live market data, paper fills, and real execution is one place_order() away.",
         "tech": "Multi-agent orchestration, LLMs, real-time market data",
         "metrics": "₹10L → ₹23.66L in 10 days, 483 debates, 148 trades, all for $0.87 a day"
+      },
+      {
+        "name": "Atlas - Every Project I've Ever Shipped, as a Universe",
+        "website_url": "https://atlas.shravanrevanna.me/#/universe",
+        "linkText": "Explore the Universe",
+        "description": "Every project I've ever built, indexed and turned into an explorable 3D universe. Zoom from the cosmos into galaxies of work, into star systems where each project's languages orbit as planets, down to code cities where every file is a tower. A ray-traced black hole sits at the centre and a time machine replays 2021 to now month by month.",
+        "tech": "Python + SQLite FTS5 indexer, three.js, HDR bloom, MCP server, Cloudflare Pages",
+        "metrics": "347 projects, 1.17M lines of code, 4,979 commits, 28K symbols, 248 HTTP endpoints, 2021 to 2026"
       },
       {
         "name": "Spider - Fashion Catalog Engine",
@@ -498,7 +507,7 @@
   },
   "meta": {
     "title": "Shravan Revanna | AI Engineer | Building AI Agents That Take Action",
-    "description": "AI Engineer at Confido Health building CareOS, AI agents for US healthcare. Built Klydo zero-to-one and ships autonomous agents for trading, drones and robotics, with 180+ projects to show for it.",
+    "description": "AI Engineer at Confido Health building CareOS, AI agents for US healthcare. Built Klydo zero-to-one and ships autonomous agents for trading, drones and robotics, with 300+ projects to show for it.",
     "keywords": "shravan revanna, AI engineer, AI agents, agentic AI, multi-agent systems, healthcare AI agents, CareOS, confido health, LLM engineer, autonomous agents, computer vision, full-stack developer, python developer, next.js developer",
     "googleSiteVerification": "gbboCIIlLPMipBxgBvVtFTKE40RWFYONeLI6IDmHJ40",
     "domain": "shravanrevanna.me"

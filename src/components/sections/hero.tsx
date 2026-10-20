@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { trackCommandNonBlocking } from '@/lib/click-tracker';
-import { FileText, ArrowDown, X, Minus, Square } from 'lucide-react';
+import { FileText, ArrowDown, X, Minus, Square, Orbit } from 'lucide-react';
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
@@ -478,6 +478,7 @@ export function Hero() {
           '  ai        - Talk to Shravan\'s AI clone (it can act on this page)',
           '  ask <q>   - Ask the AI one question, e.g. "ask what is CareOS?"',
           '  resume    - Open resume',
+          '  atlas     - Fly through every project he has ever shipped (3D)',
           '  clear     - Clear terminal screen',
           '  whoami    - Display user info',
           '  about     - About this portfolio',
@@ -567,7 +568,7 @@ export function Hero() {
       case 'ls':
         setTerminalOutput((prev) => [
           ...prev,
-          'portfolio/     projects/     skills/     experience/',
+          'portfolio/     projects/     skills/     experience/     universe/',
           'about.txt      contact.info  resume.pdf  blog/',
           '',
         ]);
@@ -592,7 +593,7 @@ export function Hero() {
           ...prev,
           portfolioData.personal.bio,
           `Current Role: ${portfolioData.work[0].position} at ${portfolioData.work[0].company}`,
-          `Projects Shipped: 180+`,
+          `Projects Shipped: 300+`,
           `Passionate about: AI, Full-Stack Development, Automation`,
           '',
         ]);
@@ -643,6 +644,19 @@ export function Hero() {
       case 'ai':
         enterAIMode();
         setTerminalOutput((prev) => [...prev, ...AI_WELCOME]);
+        break;
+
+      case 'atlas':
+      case 'universe':
+      case 'cd universe':
+        setTerminalOutput((prev) => [
+          ...prev,
+          '✔ Launching Atlas: every project Shravan has ever shipped, as a 3D universe...',
+          `ℹ ${portfolioData.social.atlas}`,
+          '',
+        ]);
+        posthog.capture('terminal_atlas_opened');
+        window.open(portfolioData.social.atlas, '_blank', 'noopener,noreferrer');
         break;
 
       case 'resume':
@@ -698,6 +712,7 @@ export function Hero() {
     'ai',
     'ask ',
     'resume',
+    'atlas',
     'sudo',
   ];
 
@@ -1019,6 +1034,20 @@ export function Hero() {
             >
               <LinkedInLogoIcon className="mr-2 h-4 w-4" />
               connect
+            </Button>
+
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => {
+                trackExternalLink(portfolioData.social.atlas, 'Atlas Universe');
+                posthog.capture('hero_atlas_clicked');
+                window.open(portfolioData.social.atlas, '_blank');
+              }}
+              className="px-6 py-3 border-primary/20 hover:bg-primary/5"
+            >
+              <Orbit className="mr-2 h-4 w-4" />
+              explore my universe
             </Button>
 
             <Button
