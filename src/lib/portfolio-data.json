@@ -7,11 +7,11 @@
     "email": "shravanrevanna@gmail.com",
     "phone": "+91 9945332995",
     "location": "Bengaluru, India",
-    "bio": "AI Engineer building agents that take real actions. By day I ship CareOS at Confido Health, AI agents running the front office for 3,200+ US providers. By night I hand real money to trading agents, put AI in the pilot seat of a DJI drone, and reverse-engineer cameras and smart bulbs into robots. 180+ projects shipped, from zero-to-one consumer apps to production agent systems.",
+    "bio": "AI Engineer building agents that take real actions. By day I ship CareOS at Confido Health, AI agents running the front office for 3,200+ US providers. By night I hand six AI agents a ₹10L portfolio and let them fight over every trade, put AI in the pilot seat of a DJI drone, and reverse-engineer cameras and smart bulbs into robots. 180+ projects shipped, from zero-to-one consumer apps to production agent systems.",
     "intro": [
       "AI Engineer at Confido Health, building CareOS: AI agents that move US healthcare from systems of record to systems of action, reaching 1 in 50 Americans.",
       "Built Klydo zero-to-one to ₹15.65 Cr GMV and 87K users, including Sherlock, an AI fraud agent that auto-decides 58% of credit orders and blocked ₹5.20 L of fraud at 100% precision.",
-      "Outside work, my agents trade real money on Indian markets, fly a stock DJI Mini 3, and turn a sealed Xiaomi camera into a self-tracking robot.",
+      "Outside work, my AI agents turned a ₹10L paper portfolio into ₹23.66L in 10 days, fly a stock DJI Mini 3, and turn a sealed Xiaomi camera into a self-tracking robot.",
       "Created NoteRep, the go-to study platform for 2,000+ students: 95K+ views, ~50K Google impressions and ~6K search clicks.",
       "180+ projects shipped, with the best hacks written up on my blog, from smart-light takeovers to arbitrage bots."
     ],
@@ -145,9 +145,9 @@
         "name": "sudo-trade - 6 Autonomous AI Trading Agents",
         "blog_url": "https://blog.shravanrevanna.me/6-autonomous-ai-agents-trade-stocks-with-my-money-in-realtime",
         "linkText": "Read the Story",
-        "description": "Six AI agents that autonomously research, debate and trade Indian stocks with real money. Before every trade a bull agent and a bear agent argue the position, then the system commits.",
+        "description": "Six AI agents that argue bull vs bear before every trade, then pull the trigger. Dropped into the March 2026 crash with a ₹10L book, they turned it into ₹23.66L in 10 days. Live market data, paper fills, and real execution is one place_order() away.",
         "tech": "Multi-agent orchestration, LLMs, real-time market data",
-        "metrics": "483 debates, 148+ trades, 370K tokens, all running at $0.87 a day"
+        "metrics": "₹10L → ₹23.66L in 10 days, 483 debates, 148 trades, all for $0.87 a day"
       },
       {
         "name": "DroneMind - Autonomous DJI Mini 3",
@@ -455,9 +455,9 @@
         "description": "Turned a sealed Xiaomi camera into a self-tracking robot on stock firmware, with no flashing and no cloud. Measured a 1.4s gap between command and visible motion that caps the control loop at 0.5Hz, then built the whole thing around it. Follows a person, a named object, or any box you drag on the frame."
       },
       {
-        "title": "My 6 AI Trading Agents Turned ₹10L into ₹23L in Just 1 Week",
+        "title": "6 AI Agents Ran a Hedge Fund for $0.87 a Day. ₹10 Lakh Became ₹23.66 Lakh in 10 Days.",
         "url": "https://blog.shravanrevanna.me/6-autonomous-ai-agents-trade-stocks-with-my-money-in-realtime",
-        "description": "Built a multi-agent trading system (sudo-trade) where 6 AI agents autonomously research, debate, and trade Indian stocks. Two agents argue bull vs bear before every trade. 483 debates, 148+ trades, 370K tokens, all for $0.87 a day."
+        "description": "Built a multi-agent trading system (sudo-trade) where A bull agent and a bear agent fight over every trade before the system commits. Through the March 2026 crash, a ₹10L paper book became ₹23.66L in 10 days: 483 debates, 148 trades, 370K tokens, all for $0.87 a day."
       },
       {
         "title": "I Built a Chrome Dino Game Environment for Humans, and Agents",
