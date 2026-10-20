@@ -106,22 +106,27 @@ export class ChatService {
       // Models often answer an action request with only a tool call. Run a
       // second, tool-free turn so the visitor hears what was done and why.
       if (actions.length && !fullResponse.trim()) {
-        for await (const event of this.provider.stream({
-          systemPrompt: this.systemPrompt,
-          messages: [
-            ...this.messages,
-            { role: 'assistant', content: `[actions taken: ${actions.join(', ')}]` },
-            {
-              role: 'system',
-              content:
-                'Those actions already ran on the page. Now reply to the visitor in plain text, phrased as done, adding the most useful detail. Do not call tools.',
-            },
-          ],
-          ...this.config,
-        })) {
-          if (event.type !== 'text') continue;
-          fullResponse += event.content;
-          yield event;
+        try {
+          for await (const event of this.provider.stream({
+            systemPrompt: this.systemPrompt,
+            messages: [
+              ...this.messages,
+              { role: 'assistant', content: `[actions taken: ${actions.join(', ')}]` },
+              {
+                role: 'system',
+                content:
+                  'Those actions already ran on the page. Now reply to the visitor in plain text, phrased as done, adding the most useful detail. Do not call tools.',
+              },
+            ],
+            ...this.config,
+          })) {
+            if (event.type !== 'text') continue;
+            fullResponse += event.content;
+            yield event;
+          }
+        } catch {
+          // The actions already ran, so a failed recap (e.g. Groq's 400 when
+          // the model tries another tool call) must not turn into an error.
         }
       }
     } catch (err) {
