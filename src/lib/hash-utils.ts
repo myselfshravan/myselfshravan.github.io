@@ -73,7 +73,8 @@ export const lookupHashMapping = async (
 export const validateHash = (hash: string): boolean => {
   if (!hash || typeof hash !== 'string') return false;
 
-  // Basic validation: hash should be alphanumeric and reasonable length
-  const hashRegex = /^[a-zA-Z0-9]{3,20}$/;
+  // Same alphabet as access keys: generated hashes can contain - and _
+  // (e.g. "qqi5n-"), and rejecting them silently logged those visits as organic.
+  const hashRegex = /^[a-zA-Z0-9_-]{3,40}$/;
   return hashRegex.test(hash);
 };

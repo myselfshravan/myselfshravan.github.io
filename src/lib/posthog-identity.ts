@@ -1,5 +1,6 @@
 import posthog from 'posthog-js';
 import { getUserId } from './analytics';
+import { validateHash } from './hash-utils';
 
 const KNOWN_CHANNELS = new Set([
   'instagram', 'linkedin', 'twitter', 'x',
@@ -38,7 +39,7 @@ export function identifyForPostHog(source?: string): void {
     };
 
     // Parse the tracker hash
-    const hasValidSource = source && /^[a-zA-Z0-9]{3,20}$/.test(source);
+    const hasValidSource = source && validateHash(source);
     const normalized = hasValidSource ? source!.toLowerCase().trim() : null;
 
     if (normalized) {
