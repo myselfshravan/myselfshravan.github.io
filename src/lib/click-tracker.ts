@@ -126,8 +126,9 @@ class ClickTracker {
 
     this.queue.push(queuedCommand);
 
-    // Sync more frequently for commands to ensure they're saved
-    if (this.isOnline && this.queue.length >= 3) {
+    // Commands are rare and visitors often leave right after asking, so save
+    // each one now instead of waiting for a batch or the 30s timer.
+    if (this.isOnline) {
       this.syncToFirebase();
     }
   }
