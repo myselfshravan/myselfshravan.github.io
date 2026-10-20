@@ -148,7 +148,8 @@
         "linkText": "Explore the Universe",
         "description": "Every project I've ever built, indexed and turned into an explorable 3D universe. Zoom from the cosmos into galaxies of work, into star systems where each project's languages orbit as planets, down to code cities where every file is a tower. A ray-traced black hole sits at the centre and a time machine replays 2021 to now month by month.",
         "tech": "Python + SQLite FTS5 indexer, three.js, HDR bloom, MCP server, Cloudflare Pages",
-        "metrics": "347 projects, 1.17M lines of code, 4,979 commits, 28K symbols, 248 HTTP endpoints, 2021 to 2026"
+        "metrics": "347 projects, 1.17M lines of code, 4,979 commits, 28K symbols, 248 HTTP endpoints, 2021 to 2026",
+        "live_stats": "atlas"
       },
       {
         "name": "Spider - Fashion Catalog Engine",

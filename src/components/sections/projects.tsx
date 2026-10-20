@@ -10,6 +10,7 @@ import { trackExternalLink } from '@/lib/click-tracker';
 import portfolioData from '@/lib/portfolio-data.json';
 import posthog from 'posthog-js';
 import { useSectionTracker } from '@/hooks/use-section-tracker';
+import { formatAtlasMetrics, useAtlasStats } from '@/hooks/use-atlas-stats';
 
 interface Project {
   name: string;
@@ -25,12 +26,15 @@ interface Project {
   description?: string;
   tech?: string;
   metrics?: string;
+  /** Replace `metrics` with live numbers from this source once they load. */
+  live_stats?: string;
 }
 
 export function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useSectionTracker('projects');
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
+  const atlasStats = useAtlasStats(isInView);
 
   // Flatten all projects into a single array
   const allProjects = [
@@ -40,6 +44,10 @@ export function Projects() {
   ];
 
   const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+    const metrics =
+      project.live_stats === 'atlas' && atlasStats
+        ? formatAtlasMetrics(atlasStats)
+        : project.metrics;
     // Get all available URLs
     const urls = [
       {
@@ -92,13 +100,13 @@ export function Projects() {
               </div>
             )}
 
-            {project.metrics && (
+            {metrics && (
               <div className="space-y-2">
                 <div className="text-xs font-mono text-muted-foreground tracking-tight">
                   stdout →
                 </div>
                 <div className="text-xs text-green-400 font-mono bg-green-400/5 px-2 py-1 rounded border border-green-400/20">
-                  {project.metrics}
+                  {metrics}
                 </div>
               </div>
             )}
