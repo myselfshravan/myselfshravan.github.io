@@ -134,20 +134,20 @@
   "projects": {
     "personal": [
       {
-        "name": "Spider - Fashion Catalog Engine",
-        "brief_url": "/view/spider?key=w90i-d",
-        "linkText": "Read the Brief",
-        "description": "A refinery that turns 114 fashion storefronts across ten different tech stacks into one clean catalog, normalizing every product into a single Product/Style/SKU schema. Crawls on a schedule, runs from a console, serves over an API. Available to acquire.",
-        "tech": "Python, 119 storefront adapters, universal schema, idempotent upserts",
-        "metrics": "963.6K styles, 4.9M SKUs under daily price watch, 114 sources, 31k LOC, 221 tests, zero dead-letters"
-      },
-      {
         "name": "sudo-trade - 6 Autonomous AI Trading Agents",
         "blog_url": "https://blog.shravanrevanna.me/6-autonomous-ai-agents-trade-stocks-with-my-money-in-realtime",
         "linkText": "Read the Story",
         "description": "Six AI agents that argue bull vs bear before every trade, then pull the trigger. Dropped into the March 2026 crash with a ₹10L book, they turned it into ₹23.66L in 10 days. Live market data, paper fills, and real execution is one place_order() away.",
         "tech": "Multi-agent orchestration, LLMs, real-time market data",
         "metrics": "₹10L → ₹23.66L in 10 days, 483 debates, 148 trades, all for $0.87 a day"
+      },
+      {
+        "name": "Spider - Fashion Catalog Engine",
+        "brief_url": "/view/spider?key=w90i-d",
+        "linkText": "Read the Brief",
+        "description": "A refinery that turns 114 fashion storefronts across ten different tech stacks into one clean catalog, normalizing every product into a single Product/Style/SKU schema. Crawls on a schedule, runs from a console, serves over an API. Available to acquire.",
+        "tech": "Python, 119 storefront adapters, universal schema, idempotent upserts",
+        "metrics": "963.6K styles, 4.9M SKUs under daily price watch, 114 sources, 31k LOC, 221 tests, zero dead-letters"
       },
       {
         "name": "DroneMind - Autonomous DJI Mini 3",
@@ -450,14 +450,14 @@
     "blog_url": "https://blog.shravanrevanna.me",
     "featured_posts": [
       {
-        "title": "Reverse-Engineering a Xiaomi Camera Into a Self-Tracking Robot",
-        "url": "https://blog.shravanrevanna.me/reverse-engineering-a-xiaomi-camera-into-a-self-tracking-robot",
-        "description": "Turned a sealed Xiaomi camera into a self-tracking robot on stock firmware, with no flashing and no cloud. Measured a 1.4s gap between command and visible motion that caps the control loop at 0.5Hz, then built the whole thing around it. Follows a person, a named object, or any box you drag on the frame."
-      },
-      {
         "title": "6 AI Agents Ran a Hedge Fund for $0.87 a Day. ₹10 Lakh Became ₹23.66 Lakh in 10 Days.",
         "url": "https://blog.shravanrevanna.me/6-autonomous-ai-agents-trade-stocks-with-my-money-in-realtime",
         "description": "Built a multi-agent trading system (sudo-trade) where A bull agent and a bear agent fight over every trade before the system commits. Through the March 2026 crash, a ₹10L paper book became ₹23.66L in 10 days: 483 debates, 148 trades, 370K tokens, all for $0.87 a day."
+      },
+      {
+        "title": "Reverse-Engineering a Xiaomi Camera Into a Self-Tracking Robot",
+        "url": "https://blog.shravanrevanna.me/reverse-engineering-a-xiaomi-camera-into-a-self-tracking-robot",
+        "description": "Turned a sealed Xiaomi camera into a self-tracking robot on stock firmware, with no flashing and no cloud. Measured a 1.4s gap between command and visible motion that caps the control loop at 0.5Hz, then built the whole thing around it. Follows a person, a named object, or any box you drag on the frame."
       },
       {
         "title": "I Built a Chrome Dino Game Environment for Humans, and Agents",

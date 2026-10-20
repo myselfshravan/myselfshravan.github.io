@@ -62,6 +62,7 @@ function looksLikeQuestion(input: string): boolean {
 // Starter questions for visitors who don't know what to ask the AI.
 const AI_SUGGESTIONS = [
   'What is Shravan building right now?',
+  'How did his AI agents turn ₹10L into ₹23.66L?',
   'Show me his best projects',
   'Why should I hire him?',
 ];
