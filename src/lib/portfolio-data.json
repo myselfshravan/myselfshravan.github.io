@@ -8,6 +8,7 @@
     "phone": "+91 9945332995",
     "location": "Bengaluru, India",
     "bio": "AI Engineer building agents that take real actions. By day I ship CareOS at Confido Health, AI agents running the front office for 3,200+ US providers. By night I hand six AI agents a ₹10L portfolio and let them fight over every trade, put AI in the pilot seat of a DJI drone, and reverse-engineer cameras and smart bulbs into robots. 300+ projects shipped, from zero-to-one consumer apps to production agent systems.",
+    "heroBio": "I ship something almost every day: 300+ projects, 4,979 commits, over a million lines of code and 200+ GitHub stars so far. So many that I built Atlas, a 3D universe, just to map them all.",
     "intro": [
       "AI Engineer at Confido Health, building CareOS: AI agents that move US healthcare from systems of record to systems of action, reaching 1 in 50 Americans.",
       "Built Klydo zero-to-one to ₹15.65 Cr GMV and 87K users, including Sherlock, an AI fraud agent that auto-decides 58% of credit orders and blocked ₹5.20 L of fraud at 100% precision.",
@@ -462,7 +463,7 @@
       {
         "title": "6 AI Agents Ran a Hedge Fund for $0.87 a Day. ₹10 Lakh Became ₹23.66 Lakh in 10 Days.",
         "url": "https://blog.shravanrevanna.me/6-autonomous-ai-agents-trade-stocks-with-my-money-in-realtime",
-        "description": "Built a multi-agent trading system (sudo-trade) where A bull agent and a bear agent fight over every trade before the system commits. Through the March 2026 crash, a ₹10L paper book became ₹23.66L in 10 days: 483 debates, 148 trades, 370K tokens, all for $0.87 a day."
+        "description": "Built sudo-trade, a multi-agent trading system where a bull agent and a bear agent fight over every trade before the system commits. Through the March 2026 crash, a ₹10L paper book became ₹23.66L in 10 days: 483 debates, 148 trades, 370K tokens, all for $0.87 a day."
       },
       {
         "title": "Reverse-Engineering a Xiaomi Camera Into a Self-Tracking Robot",

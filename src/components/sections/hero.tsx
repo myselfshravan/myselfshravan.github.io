@@ -37,11 +37,11 @@ function linkify(line: string): React.ReactNode {
   );
 }
 
-type AISource = 'typed' | 'suggestion' | 'cta' | 'ask' | 'fallthrough';
+type AISource = 'typed' | 'cta' | 'ask' | 'fallthrough';
 
 const AI_WELCOME = [
   "🤖 AI mode on. I'm Shravan's AI clone, and I can act on this page too.",
-  'Ask about his work, projects or writing, or say "show me his projects".',
+  'Try: "what is he building right now?" or "show me his best projects".',
   'Type "clear" to reset the chat and "exit" to go back to the terminal.',
   '',
 ];
@@ -59,14 +59,6 @@ function looksLikeQuestion(input: string): boolean {
   return input.endsWith('?') || input.split(/\s+/).length >= 3;
 }
 
-// Starter questions for visitors who don't know what to ask the AI.
-const AI_SUGGESTIONS = [
-  'What is Shravan building right now?',
-  'How did his AI agents turn ₹10L into ₹23.66L?',
-  'Show me his best projects',
-  'Why should I hire him?',
-];
-
 // Terminal Component for reuse
 function TerminalInterface({
   terminalOutput,
@@ -77,7 +69,6 @@ function TerminalInterface({
   placeholderText = "Type 'help' or '?' for commands...",
   isAIMode = false,
   isThinking = false,
-  onSuggestion,
 }: {
   terminalOutput: string[];
   currentInput: string;
@@ -87,7 +78,6 @@ function TerminalInterface({
   placeholderText?: string;
   isAIMode?: boolean;
   isThinking?: boolean;
-  onSuggestion?: (question: string) => void;
 }) {
   const terminalOutputRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -150,21 +140,6 @@ function TerminalInterface({
           </motion.div>
         ))}
       </div>
-
-      {isAIMode && onSuggestion && !isThinking && (
-        <div className="flex flex-wrap gap-2 mb-2">
-          {AI_SUGGESTIONS.map((question) => (
-            <button
-              key={question}
-              type="button"
-              onClick={() => onSuggestion(question)}
-              className="text-xs px-2 py-1 rounded border border-primary/30 text-primary hover:bg-primary/10 transition-colors"
-            >
-              {question}
-            </button>
-          ))}
-        </div>
-      )}
 
       {/* Command input */}
       <div className="flex items-center text-green-400">
@@ -896,7 +871,7 @@ export function Hero() {
                     initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 3, duration: 0.3 }}
-                    className="pt-3 space-y-2"
+                    className="pt-3"
                   >
                     <button
                       type="button"
@@ -906,18 +881,6 @@ export function Hero() {
                       <span>$ ask my AI clone anything</span>
                       <span className="animate-pulse">▍</span>
                     </button>
-                    <div className="flex flex-wrap gap-2">
-                      {AI_SUGGESTIONS.map((question) => (
-                        <button
-                          key={question}
-                          type="button"
-                          onClick={() => startAI(question, 'suggestion')}
-                          className="text-xs px-2 py-1 rounded border border-primary/30 text-primary hover:bg-primary/10 transition-colors"
-                        >
-                          {question}
-                        </button>
-                      ))}
-                    </div>
                   </motion.div>
                 </>
               ) : (
@@ -929,7 +892,6 @@ export function Hero() {
                   handleTerminalKeyDown={handleTerminalKeyDown}
                   isAIMode={isAIMode}
                   isThinking={isLoading}
-                  onSuggestion={(question) => void handleAIInput(question, 'suggestion')}
                   placeholderText={
                     isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."
                   }
@@ -984,8 +946,7 @@ export function Hero() {
                     isExpanded={true}
                     isAIMode={isAIMode}
                     isThinking={isLoading}
-                    onSuggestion={(question) => void handleAIInput(question, 'suggestion')}
-                    placeholderText={
+                      placeholderText={
                       isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."
                     }
                   />
@@ -1001,8 +962,8 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="max-w-2xl mx-auto"
           >
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {portfolioData.personal.bio}
+            <p className="text-lg text-muted-foreground leading-relaxed text-pretty">
+              {portfolioData.personal.heroBio}
             </p>
           </motion.div>
 
