@@ -9,9 +9,62 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { trackExternalLink } from '@/lib/click-tracker';
 import { useLLMChat } from '@/hooks/use-llm-chat';
-import { DEFAULT_SYSTEM_PROMPTS } from '@/lib/llm';
+import { DEFAULT_SYSTEM_PROMPTS, TERMINAL_TOOLS, executeTerminalTool } from '@/lib/llm';
 import portfolioData from '@/lib/portfolio-data.json';
 import posthog from 'posthog-js';
+
+const URL_PATTERN = /(https?:\/\/[^\s,)]+|\/view\/[^\s,)]+)/g;
+
+// AI replies mention links; make them clickable without trusting any markup.
+function linkify(line: string): React.ReactNode {
+  const parts = line.split(URL_PATTERN);
+  if (parts.length === 1) return line;
+  return parts.map((part, index) =>
+    index % 2 === 1 ? (
+      <a
+        key={index}
+        href={part}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary underline underline-offset-2 hover:opacity-80 break-all"
+        onClick={() => posthog.capture('terminal_link_clicked', { url: part })}
+      >
+        {part}
+      </a>
+    ) : (
+      part
+    ),
+  );
+}
+
+type AISource = 'typed' | 'suggestion' | 'cta' | 'ask' | 'fallthrough';
+
+const AI_WELCOME = [
+  "🤖 AI mode on. I'm Shravan's AI clone, and I can act on this page too.",
+  'Ask about his work, projects or writing, or say "show me his projects".',
+  'Type "clear" to reset the chat and "exit" to go back to the terminal.',
+  '',
+];
+
+// The model is told to skip markdown but sometimes doesn't; a terminal shows it raw.
+function toTerminalText(text: string): string {
+  return text
+    .trimStart()
+    .replace(/\*\*|__|`/g, '')
+    .replace(/^#{1,6}\s+/gm, '');
+}
+
+// Unknown input that reads like a sentence is a question for the AI, not a typo.
+function looksLikeQuestion(input: string): boolean {
+  return input.endsWith('?') || input.split(/\s+/).length >= 3;
+}
+
+// Starter questions for visitors who don't know what to ask the AI.
+const AI_SUGGESTIONS = [
+  'What is Shravan building right now?',
+  'Show me his best projects',
+  'Why should I hire him?',
+];
 
 // Terminal Component for reuse
 function TerminalInterface({
@@ -22,6 +75,8 @@ function TerminalInterface({
   isExpanded = false,
   placeholderText = "Type 'help' or '?' for commands...",
   isAIMode = false,
+  isThinking = false,
+  onSuggestion,
 }: {
   terminalOutput: string[];
   currentInput: string;
@@ -30,6 +85,8 @@ function TerminalInterface({
   isExpanded?: boolean;
   placeholderText?: string;
   isAIMode?: boolean;
+  isThinking?: boolean;
+  onSuggestion?: (question: string) => void;
 }) {
   const terminalOutputRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -70,9 +127,13 @@ function TerminalInterface({
               delay: index * 0.02,
               ease: 'easeOut',
             }}
-            className={`whitespace-pre-wrap ${
-              line.startsWith('shravan_revanna@portfolio:~$')
+            className={`whitespace-pre-wrap break-words ${
+              line.startsWith('shravan_revanna@portfolio:~$') || line.startsWith('🤖 ai>')
                 ? 'text-green-400'
+                : line.startsWith('↪')
+                ? 'text-purple-400'
+                : line.startsWith('🤖')
+                ? 'text-foreground'
                 : line.startsWith('✔') || line.includes('✔')
                 ? 'text-green-500'
                 : line.startsWith('ℹ') || line.includes('ℹ')
@@ -84,10 +145,25 @@ function TerminalInterface({
                 : 'text-muted-foreground'
             }`}
           >
-            {line}
+            {linkify(line)}
           </motion.div>
         ))}
       </div>
+
+      {isAIMode && onSuggestion && !isThinking && (
+        <div className="flex flex-wrap gap-2 mb-2">
+          {AI_SUGGESTIONS.map((question) => (
+            <button
+              key={question}
+              type="button"
+              onClick={() => onSuggestion(question)}
+              className="text-xs px-2 py-1 rounded border border-primary/30 text-primary hover:bg-primary/10 transition-colors"
+            >
+              {question}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Command input */}
       <div className="flex items-center text-green-400">
@@ -106,8 +182,11 @@ function TerminalInterface({
           onChange={(e) => setCurrentInput(e.target.value)}
           onKeyDown={handleTerminalKeyDown}
           className="flex-1 bg-transparent outline-none text-green-400 font-mono"
+          aria-label={isAIMode ? 'Ask the AI' : 'Terminal command'}
           placeholder={
-            isAIMode
+            isThinking
+              ? 'Thinking...'
+              : isAIMode
               ? isMobile
                 ? "Ask me anything... or type 'exit'" // short mobile placeholder
                 : "Ask me anything... (type 'exit' to return)" // desktop placeholder
@@ -136,8 +215,9 @@ export function Hero() {
   const fullText = `shravan_revanna@portfolio:~$ whoami`;
 
   // AI Chat functionality
-  const { isLoading, sendMessage, clearMessages } = useLLMChat({
+  const { isLoading, streamMessage, clearMessages } = useLLMChat({
     systemPrompt: DEFAULT_SYSTEM_PROMPTS.terminal,
+    tools: TERMINAL_TOOLS,
   });
 
   // Track visits
@@ -243,9 +323,45 @@ export function Hero() {
     }
   };
 
+  const enterAIMode = () => {
+    setIsAIMode(true);
+    posthog.capture('terminal_ai_mode_activated');
+  };
+
+  // Opens the inline terminal straight into AI mode, optionally asking a question.
+  const startAI = (question?: string, source: AISource = 'cta') => {
+    if (!isInteractive) {
+      setIsInteractive(true);
+      posthog.capture('terminal_activated', { mode: 'ai_cta' });
+    }
+    if (!isAIMode) {
+      enterAIMode();
+      setTerminalOutput((prev) => [...(isInteractive ? prev : []), ...AI_WELCOME]);
+    }
+    if (question) void handleAIInput(question, source);
+  };
+
+  const replaceLine = (index: number, line: string) => {
+    setTerminalOutput((prev) => {
+      if (index >= prev.length) return prev; // cleared mid-answer
+      const next = [...prev];
+      next[index] = line;
+      return next;
+    });
+  };
+
+  const appendLine = (line: string): Promise<number> =>
+    new Promise((resolve) => {
+      setTerminalOutput((prev) => {
+        resolve(prev.length);
+        return [...prev, line];
+      });
+    });
+
   // Handle AI mode input separately
-  const handleAIInput = async (input: string) => {
+  const handleAIInput = async (input: string, source: AISource = 'typed') => {
     const cmd = input.toLowerCase().trim();
+    if (!cmd) return;
 
     // Check for exit commands in AI mode
     if (cmd === 'exit' || cmd === 'exit ai' || cmd === 'quit') {
@@ -260,29 +376,64 @@ export function Hero() {
       return;
     }
 
-    // Add user input to terminal output
-    setTerminalOutput((prev) => [...prev, '🤖 ai> ' + input]);
-
-    // Show loading indicator
     if (isLoading) {
-      setTerminalOutput((prev) => [...prev, '⏳ AI is thinking...']);
+      setTerminalOutput((prev) => [...prev, '⚠ Still answering, one sec...']);
+      return;
     }
 
+    setTerminalOutput((prev) => [...prev, '🤖 ai> ' + input]);
+    const replyIndex = await appendLine('🤖 thinking...');
+    const startedAt = performance.now();
+    const actions: string[] = [];
+
     try {
-      // Use sendMessage and get the response directly
-      const response = await sendMessage(input);
+      const result = await streamMessage(input, {
+        onText: (text) => replaceLine(replyIndex, '🤖 ' + toTerminalText(text)),
+        onToolCall: async (call) => {
+          const outcome = await executeTerminalTool(call, {
+            scrollTo: (sectionId) => {
+              setIsDialogOpen(false);
+              // Let the dialog close before scrolling the page underneath it.
+              setTimeout(() => scrollToSection(sectionId), 150);
+            },
+            openUrl: (url) => {
+              const opened = window.open(url, '_blank', 'noopener,noreferrer');
+              if (!opened) void appendLine(`↪ Popup blocked, open it here: ${url}`);
+            },
+          });
+          actions.push(call.name);
+          void appendLine(`↪ ${outcome.ok ? '' : '⚠ '}${outcome.message}`);
+        },
+      });
 
-      if (response?.content) {
-        setTerminalOutput((prev) => [...prev, '🤖 ' + response.content, '']);
-
-        // Track AI conversation to Firebase
-        trackCommandNonBlocking(input, response.content, 'ai');
+      if (!result.content.trim()) {
+        replaceLine(
+          replyIndex,
+          actions.length ? '🤖 On it.' : "🤖 Hmm, I've got nothing. Try asking another way?",
+        );
       }
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-      setTerminalOutput((prev) => [...prev, `❌ AI Error: ${errorMessage}`, '']);
+      setTerminalOutput((prev) => [...prev, '']);
 
-      // Track failed AI conversation
+      posthog.capture('terminal_ai_message', {
+        source,
+        model: result.model,
+        latency_ms: Math.round(performance.now() - startedAt),
+        reply_chars: result.content.length,
+        tool_calls: result.toolCalls.map((call) => call.name),
+      });
+      trackCommandNonBlocking(input, result.content, 'ai');
+    } catch (err) {
+      const status = (err as { status?: number })?.status;
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      replaceLine(
+        replyIndex,
+        status === 429
+          ? `⚠ The AI is getting a lot of love right now. Try again in a few seconds, or email ${portfolioData.personal.email}.`
+          : `⚠ The AI hit a snag (${status ?? 'network'}). Try again, or type "help" for offline commands.`,
+      );
+      setTerminalOutput((prev) => [...prev, '']);
+
+      posthog.capture('terminal_ai_error', { source, status, message: errorMessage.slice(0, 200) });
       trackCommandNonBlocking(input, `Error: ${errorMessage}`, 'ai');
     }
   };
@@ -297,6 +448,14 @@ export function Hero() {
 
     const cmd = command.toLowerCase().trim();
     const prompt = 'shravan_revanna@portfolio:~$';
+
+    // "ask <question>" goes straight to the AI without a mode switch first.
+    if (cmd.startsWith('ask ')) {
+      setTerminalOutput((prev) => [...prev, `${prompt} ${command}`]);
+      enterAIMode();
+      await handleAIInput(command.trim().slice(4), 'ask');
+      return;
+    }
 
     // Add command to history and track it (non-blocking)
     if (cmd && !commandHistory.includes(cmd)) {
@@ -315,7 +474,9 @@ export function Hero() {
           ...prev,
           '✔ Available commands:',
           '  help      - Show this help message',
-          '  ai        - Enter AI assistant mode',
+          '  ai        - Talk to Shravan\'s AI clone (it can act on this page)',
+          '  ask <q>   - Ask the AI one question, e.g. "ask what is CareOS?"',
+          '  resume    - Open resume',
           '  clear     - Clear terminal screen',
           '  whoami    - Display user info',
           '  about     - About this portfolio',
@@ -330,7 +491,8 @@ export function Hero() {
           '  expand    - Expand terminal to fullscreen',
           '',
           '🤖 AI Mode:',
-          '  "ai mode" or "activate ai" - Start LLM interaction',
+          '  Ask anything about Shravan. It can scroll the page, open projects,',
+          '  open the resume and copy his email for you.',
           '  In AI mode: "exit" to return, "clear" to reset chat',
           '',
         ]);
@@ -386,6 +548,7 @@ export function Hero() {
         setTerminalOutput((prev) => [
           ...prev,
           '✔ Technical Skills:',
+          `  🤖 AI: ${portfolioData.skills.ai.map((s) => s.name).join(', ')}`,
           `  💻 Core: ${portfolioData.skills.core.map((s) => s.name).join(', ')}`,
           `  ⚛️ Frameworks: ${portfolioData.skills.frameworks.map((s) => s.name).join(', ')}`,
           `  🗄️ Databases: ${portfolioData.skills.databases.map((s) => s.name).join(', ')}`,
@@ -428,7 +591,7 @@ export function Hero() {
           ...prev,
           portfolioData.personal.bio,
           `Current Role: ${portfolioData.work[0].position} at ${portfolioData.work[0].company}`,
-          `Projects Shipped: 150+`,
+          `Projects Shipped: 180+`,
           `Passionate about: AI, Full-Stack Development, Automation`,
           '',
         ]);
@@ -477,20 +640,19 @@ export function Hero() {
       case 'ai mode':
       case 'activate ai':
       case 'ai':
-        setIsAIMode(true);
-        posthog.capture('terminal_ai_mode_activated');
-        setTerminalOutput((prev) => [
-          ...prev,
-          '🤖 AI Mode activated! Now you can ask anything related to Shravan.',
-          "Type your questions. Yeah! its kinda like shravan's clone 😅.",
-          'Type "clear" to clear the chat history and "exit" to return to terminal.',
-          '',
-        ]);
+        enterAIMode();
+        setTerminalOutput((prev) => [...prev, ...AI_WELCOME]);
+        break;
+
+      case 'resume':
+      case 'cat resume.pdf':
+        setTerminalOutput((prev) => [...prev, '✔ Opening resume...', '']);
+        window.open(`/${portfolioData.personal.resumeFile}`, '_blank', 'noopener,noreferrer');
         break;
 
       case 'visit projects':
       case 'cd projects':
-        setTerminalOutput((prev) => [...prev, '✔ Scroling to projects page...', '']);
+        setTerminalOutput((prev) => [...prev, '✔ Scrolling to projects...', '']);
         scrollToSection('#projects');
         break;
 
@@ -501,11 +663,16 @@ export function Hero() {
             "sudo: command not found (and you probably shouldn't try that here! 😅)",
             '',
           ]);
+        } else if (looksLikeQuestion(cmd)) {
+          // Visitors type questions, not commands: hand them to the AI.
+          setTerminalOutput((prev) => [...prev, 'ℹ Not a command, so asking the AI clone (type "exit" to leave).']);
+          enterAIMode();
+          await handleAIInput(command, 'fallthrough');
         } else {
           setTerminalOutput((prev) => [
             ...prev,
             `Command not found: ${cmd}`,
-            'Type "help" for available commands.',
+            'Type "help" for commands, or just ask a question in plain English.',
             '',
           ]);
         }
@@ -528,6 +695,8 @@ export function Hero() {
     'ai mode',
     'activate ai',
     'ai',
+    'ask ',
+    'resume',
     'sudo',
   ];
 
@@ -706,6 +875,34 @@ export function Hero() {
                       @udaanCapital
                     </a>
                   </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 3, duration: 0.3 }}
+                    className="pt-3 space-y-2"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => startAI()}
+                      className="group flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors"
+                    >
+                      <span>$ ask my AI clone anything</span>
+                      <span className="animate-pulse">▍</span>
+                    </button>
+                    <div className="flex flex-wrap gap-2">
+                      {AI_SUGGESTIONS.map((question) => (
+                        <button
+                          key={question}
+                          type="button"
+                          onClick={() => startAI(question, 'suggestion')}
+                          className="text-xs px-2 py-1 rounded border border-primary/30 text-primary hover:bg-primary/10 transition-colors"
+                        >
+                          {question}
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
                 </>
               ) : (
                 // Interactive terminal
@@ -715,6 +912,8 @@ export function Hero() {
                   setCurrentInput={setCurrentInput}
                   handleTerminalKeyDown={handleTerminalKeyDown}
                   isAIMode={isAIMode}
+                  isThinking={isLoading}
+                  onSuggestion={(question) => void handleAIInput(question, 'suggestion')}
                   placeholderText={
                     isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."
                   }
@@ -768,6 +967,8 @@ export function Hero() {
                     handleTerminalKeyDown={handleTerminalKeyDown}
                     isExpanded={true}
                     isAIMode={isAIMode}
+                    isThinking={isLoading}
+                    onSuggestion={(question) => void handleAIInput(question, 'suggestion')}
                     placeholderText={
                       isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."
                     }

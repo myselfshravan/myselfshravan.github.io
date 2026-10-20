@@ -2,12 +2,30 @@
 
 import { useState, useCallback, useRef } from 'react';
 import { createGroqChatService, DEFAULT_SYSTEM_PROMPTS } from '@/lib/llm';
-import type { ChatMessage, LLMConfig, LLMResponse } from '@/lib/llm/types';
+import type {
+  ChatMessage,
+  LLMConfig,
+  LLMResponse,
+  ToolCall,
+  ToolDefinition,
+} from '@/lib/llm/types';
+
+interface StreamHandlers {
+  onText?: (fullText: string) => void;
+  onToolCall?: (call: ToolCall) => void;
+}
+
+export interface StreamResult {
+  content: string;
+  model: string;
+  toolCalls: ToolCall[];
+}
 
 interface UseLLMChatOptions {
   systemPrompt?: string;
   config?: LLMConfig;
   apiKey?: string;
+  tools?: ToolDefinition[];
 }
 
 interface UseLLMChatReturn {
@@ -15,7 +33,7 @@ interface UseLLMChatReturn {
   isLoading: boolean;
   error: string | null;
   sendMessage: (content: string) => Promise<LLMResponse | null>;
-  streamMessage: (content: string) => Promise<void>;
+  streamMessage: (content: string, handlers?: StreamHandlers) => Promise<StreamResult>;
   clearMessages: () => void;
   setSystemPrompt: (prompt: string) => void;
   updateConfig: (config: Partial<LLMConfig>) => void;
@@ -25,6 +43,7 @@ export function useLLMChat({
   systemPrompt = DEFAULT_SYSTEM_PROMPTS.terminal,
   config = {},
   apiKey,
+  tools,
 }: UseLLMChatOptions = {}): UseLLMChatReturn {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -53,44 +72,42 @@ export function useLLMChat({
     [isLoading],
   );
 
-  const streamMessage = useCallback(
-    async (content: string) => {
-      if (isLoading) return;
+  const isStreamingRef = useRef(false);
 
+  // Streams one reply. Text arrives through onText as the accumulated reply;
+  // tool calls arrive once complete. Errors are rethrown for the caller to show.
+  const streamMessage = useCallback(
+    async (content: string, handlers: StreamHandlers = {}): Promise<StreamResult> => {
+      if (isStreamingRef.current) throw new Error('Still answering the last question');
+
+      isStreamingRef.current = true;
       setIsLoading(true);
       setError(null);
 
+      const result: StreamResult = { content: '', model: '', toolCalls: [] };
       try {
-        chatServiceRef.current.addUserMessage(content);
-        setMessages([...chatServiceRef.current.getMessages()]);
-
-        let streamedContent = '';
-        const assistantMessage: ChatMessage = { role: 'assistant', content: '' };
-
-        for await (const chunk of chatServiceRef.current.streamMessage(content)) {
-          streamedContent += chunk;
-          assistantMessage.content = streamedContent;
-
-          setMessages((prev) => {
-            const newMessages = [...prev];
-            const lastMessage = newMessages[newMessages.length - 1];
-
-            if (lastMessage?.role === 'assistant') {
-              newMessages[newMessages.length - 1] = { ...assistantMessage };
-            } else {
-              newMessages.push({ ...assistantMessage });
-            }
-
-            return newMessages;
-          });
+        for await (const event of chatServiceRef.current.streamMessage(content, tools)) {
+          if (event.type === 'text') {
+            result.content += event.content;
+            handlers.onText?.(result.content);
+          } else if (event.type === 'tool_call') {
+            result.toolCalls.push(event.call);
+            handlers.onToolCall?.(event.call);
+          } else {
+            result.model = event.model;
+          }
         }
+        return result;
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
+        throw err;
       } finally {
+        setMessages(chatServiceRef.current.getMessages());
+        isStreamingRef.current = false;
         setIsLoading(false);
       }
     },
-    [isLoading],
+    [tools],
   );
 
   const clearMessages = useCallback(() => {

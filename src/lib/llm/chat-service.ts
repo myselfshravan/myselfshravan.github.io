@@ -2,7 +2,9 @@ import type {
   LLMProvider, 
   ChatMessage, 
   LLMConfig,
-  LLMResponse 
+  LLMResponse,
+  StreamEvent,
+  ToolDefinition
 } from "./types";
 
 export class ChatService {
@@ -77,7 +79,7 @@ export class ChatService {
     return response;
   }
 
-  async *streamMessage(content: string): AsyncIterable<string> {
+  async *streamMessage(content: string, tools?: ToolDefinition[]): AsyncIterable<StreamEvent> {
     this.addUserMessage(content);
     
     if (!this.provider.stream) {
@@ -85,17 +87,52 @@ export class ChatService {
     }
 
     let fullResponse = '';
-    
-    for await (const chunk of this.provider.stream({
-      systemPrompt: this.systemPrompt,
-      messages: this.messages,
-      ...this.config,
-    })) {
-      fullResponse += chunk;
-      yield chunk;
+    const actions: string[] = [];
+
+    try {
+      for await (const event of this.provider.stream({
+        systemPrompt: this.systemPrompt,
+        messages: this.messages,
+        tools,
+        ...this.config,
+      })) {
+        if (event.type === 'text') fullResponse += event.content;
+        if (event.type === 'tool_call') {
+          actions.push(`${event.call.name}(${JSON.stringify(event.call.arguments)})`);
+        }
+        yield event;
+      }
+
+      // Models often answer an action request with only a tool call. Run a
+      // second, tool-free turn so the visitor hears what was done and why.
+      if (actions.length && !fullResponse.trim()) {
+        for await (const event of this.provider.stream({
+          systemPrompt: this.systemPrompt,
+          messages: [
+            ...this.messages,
+            { role: 'assistant', content: `[actions taken: ${actions.join(', ')}]` },
+            {
+              role: 'system',
+              content:
+                'Those actions already ran on the page. Now reply to the visitor in plain text, phrased as done, adding the most useful detail. Do not call tools.',
+            },
+          ],
+          ...this.config,
+        })) {
+          if (event.type !== 'text') continue;
+          fullResponse += event.content;
+          yield event;
+        }
+      }
+    } catch (err) {
+      // Drop the unanswered question so the next turn starts clean.
+      this.messages.pop();
+      throw err;
     }
 
-    this.addAssistantMessage(fullResponse);
+    // History is plain text, so record what the tools did alongside the reply.
+    const note = actions.length ? `\n[actions taken: ${actions.join(', ')}]` : '';
+    this.addAssistantMessage(fullResponse + note);
   }
 
   updateConfig(config: Partial<LLMConfig>): void {
