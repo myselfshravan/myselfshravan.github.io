@@ -37,14 +37,106 @@ function linkify(line: string): React.ReactNode {
   );
 }
 
-type AISource = 'typed' | 'cta' | 'ask' | 'fallthrough';
+type AISource = 'typed' | 'cta' | 'ask' | 'fallthrough' | 'suggestion';
 
 const AI_WELCOME = [
   "🤖 AI mode on. I'm Shravan's AI clone, and I can act on this page too.",
-  'Try: "what is he building right now?" or "show me his best projects".',
+  'No idea what to ask? Watch the prompt line and hit Enter on one you like.',
   'Type "clear" to reset the chat and "exit" to go back to the terminal.',
   '',
 ];
+
+// Cycled through the empty AI prompt line, best demos first: the first one
+// makes the AI act on the page, the next ones land the strongest stories.
+const AI_SUGGESTIONS = [
+  'show me his best projects',
+  'how did his AI agents turn ₹10L into ₹23.66L?',
+  'what is he building right now?',
+  "what's the craziest hardware hack he's done?",
+  'take me to everything he has built',
+  'open his drone project',
+  'why should I hire him?',
+  'copy his email, I want to talk',
+];
+
+const SCRAMBLE_GLYPHS = '!<>-_/\\[]{}=+*^?#%&01';
+
+function scrambleNoise(length: number): string {
+  let noise = '';
+  for (let i = 0; i < length; i++) {
+    noise += SCRAMBLE_GLYPHS[Math.floor(Math.random() * SCRAMBLE_GLYPHS.length)];
+  }
+  return noise;
+}
+
+interface GhostPrompt {
+  prompt: string;
+  shown: string;
+  noise: string;
+  settled: boolean;
+}
+
+// Decodes each suggestion in behind a scrambled tail, holds it, then dissolves
+// it and moves on. Resumes from the same suggestion when it becomes active again.
+function useGhostPrompt(prompts: string[], active: boolean): GhostPrompt | null {
+  const [ghost, setGhost] = useState<GhostPrompt | null>(null);
+  const indexRef = useRef(0);
+
+  useEffect(() => {
+    if (!active || prompts.length === 0) {
+      setGhost(null);
+      return;
+    }
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let timer: ReturnType<typeof setTimeout>;
+
+    const next = () => {
+      indexRef.current = (indexRef.current + 1) % prompts.length;
+      run();
+    };
+
+    const run = () => {
+      const prompt = prompts[indexRef.current];
+      if (reducedMotion) {
+        setGhost({ prompt, shown: prompt, noise: '', settled: true });
+        timer = setTimeout(next, 4000);
+        return;
+      }
+
+      let revealed = 0;
+      const decode = () => {
+        revealed += 1;
+        const done = revealed >= prompt.length;
+        setGhost({
+          prompt,
+          shown: prompt.slice(0, revealed),
+          noise: done ? '' : scrambleNoise(Math.min(4, prompt.length - revealed)),
+          settled: done,
+        });
+        timer = done ? setTimeout(dissolve, 3000) : setTimeout(decode, 28);
+      };
+
+      let kept = prompt.length;
+      const dissolve = () => {
+        kept = Math.max(0, kept - 2);
+        setGhost({
+          prompt,
+          shown: prompt.slice(0, kept),
+          noise: kept ? scrambleNoise(Math.min(3, prompt.length - kept)) : '',
+          settled: false,
+        });
+        timer = kept ? setTimeout(dissolve, 14) : setTimeout(next, 300);
+      };
+
+      decode();
+    };
+
+    timer = setTimeout(run, 500);
+    return () => clearTimeout(timer);
+  }, [active, prompts]);
+
+  return ghost;
+}
 
 // The model is told to skip markdown but sometimes doesn't; a terminal shows it raw.
 function toTerminalText(text: string): string {
@@ -69,6 +161,8 @@ function TerminalInterface({
   placeholderText = "Type 'help' or '?' for commands...",
   isAIMode = false,
   isThinking = false,
+  suggestions = [],
+  onSendSuggestion,
 }: {
   terminalOutput: string[];
   currentInput: string;
@@ -78,9 +172,38 @@ function TerminalInterface({
   placeholderText?: string;
   isAIMode?: boolean;
   isThinking?: boolean;
+  suggestions?: string[];
+  onSendSuggestion?: (prompt: string) => void;
 }) {
   const terminalOutputRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const ghost = useGhostPrompt(suggestions, isAIMode && !isThinking && !currentInput);
+
+  const fillSuggestion = (how: 'tab' | 'tap') => {
+    if (!ghost) return;
+    setCurrentInput(ghost.prompt);
+    inputRef.current?.focus();
+    posthog.capture('terminal_ai_suggestion_used', { how, prompt: ghost.prompt });
+  };
+
+  // On an empty AI prompt, Tab or → takes the shown question and Enter sends it.
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (ghost && !currentInput) {
+      if (e.key === 'Tab' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        fillSuggestion('tab');
+        return;
+      }
+      if (e.key === 'Enter' && onSendSuggestion) {
+        e.preventDefault();
+        posthog.capture('terminal_ai_suggestion_used', { how: 'enter', prompt: ghost.prompt });
+        onSendSuggestion(ghost.prompt);
+        return;
+      }
+    }
+    handleTerminalKeyDown(e);
+  };
 
   useEffect(() => {
     if (terminalOutputRef.current) {
@@ -152,26 +275,52 @@ function TerminalInterface({
             ? '~$'
             : 'shravan_revanna@portfolio:~$'}
         </span>
-        <input
-          type="text"
-          value={currentInput}
-          onChange={(e) => setCurrentInput(e.target.value)}
-          onKeyDown={handleTerminalKeyDown}
-          className="flex-1 bg-transparent outline-none text-green-400 font-mono"
-          aria-label={isAIMode ? 'Ask the AI' : 'Terminal command'}
-          placeholder={
-            isThinking
-              ? 'Thinking...'
-              : isAIMode
-              ? isMobile
-                ? "Ask me anything... or type 'exit'" // short mobile placeholder
-                : "Ask me anything... (type 'exit' to return)" // desktop placeholder
-              : isMobile
-              ? "Type 'help'..." // short mobile placeholder
-              : placeholderText // normal desktop one
-          }
-          autoFocus
-        />
+        <div className="relative flex-1 min-w-0">
+          <input
+            ref={inputRef}
+            type="text"
+            value={currentInput}
+            onChange={(e) => setCurrentInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="w-full bg-transparent outline-none text-green-400 font-mono"
+            aria-label={isAIMode ? 'Ask the AI' : 'Terminal command'}
+            placeholder={
+              ghost
+                ? ''
+                : isThinking
+                ? 'Thinking...'
+                : isAIMode
+                ? isMobile
+                  ? "Ask me anything... or type 'exit'" // short mobile placeholder
+                  : "Ask me anything... (type 'exit' to return)" // desktop placeholder
+                : isMobile
+                ? "Type 'help'..." // short mobile placeholder
+                : placeholderText // normal desktop one
+            }
+            autoFocus
+          />
+          {ghost && (
+            <div className="pointer-events-none absolute inset-0 flex items-center gap-2 overflow-hidden whitespace-nowrap font-mono">
+              <span aria-hidden="true" className="min-w-0 truncate text-green-400/45">
+                {ghost.shown}
+                <span className="text-green-300/80">{ghost.noise}</span>
+              </span>
+              {ghost.settled && (
+                <motion.button
+                  type="button"
+                  initial={{ opacity: 0, x: -4 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2 }}
+                  onClick={() => fillSuggestion('tap')}
+                  aria-label={`Use suggestion: ${ghost.prompt}`}
+                  className="pointer-events-auto shrink-0 rounded border border-green-400/30 px-1.5 text-[10px] uppercase tracking-wider text-green-400/70 hover:border-green-300/60 hover:text-green-300 transition-colors"
+                >
+                  {isMobile ? 'use' : 'tab ⇥'}
+                </motion.button>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -412,6 +561,11 @@ export function Hero() {
       posthog.capture('terminal_ai_error', { source, status, message: errorMessage.slice(0, 200) });
       trackCommandNonBlocking(input, `Error: ${errorMessage}`, 'ai');
     }
+  };
+
+  const sendSuggestion = (prompt: string) => {
+    setHistoryIndex(-1);
+    void handleAIInput(prompt, 'suggestion');
   };
 
   // Command parsing and execution
@@ -892,6 +1046,8 @@ export function Hero() {
                   handleTerminalKeyDown={handleTerminalKeyDown}
                   isAIMode={isAIMode}
                   isThinking={isLoading}
+                  suggestions={AI_SUGGESTIONS}
+                  onSendSuggestion={sendSuggestion}
                   placeholderText={
                     isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."
                   }
@@ -946,6 +1102,8 @@ export function Hero() {
                     isExpanded={true}
                     isAIMode={isAIMode}
                     isThinking={isLoading}
+                    suggestions={AI_SUGGESTIONS}
+                    onSendSuggestion={sendSuggestion}
                       placeholderText={
                       isMobile ? "Type 'help'..." : "Type 'help' or '?' for commands..."
                     }
