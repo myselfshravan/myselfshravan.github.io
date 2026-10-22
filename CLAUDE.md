@@ -103,6 +103,14 @@ The site uses a sophisticated animation architecture:
 - Implement proper cleanup in useEffect hooks
 - Test animations across different screen sizes
 
+## Blog (`blog/` submodule)
+
+`blog/` is a git submodule of [blog.shravanrevanna.me](https://github.com/myselfshravan/blog.shravanrevanna.me): the full Markdown of every post on the Hashnode blog, one file per post, named by Hashnode post id. Read it for context on posts (titles, numbers, stories) when writing portfolio copy or the terminal AI's context.
+
+- It is a one-way backup from Hashnode. Edit posts in the Hashnode editor (`https://hashnode.com/edit/<post id>`), never in `blog/`; changes there are overwritten.
+- Pull the latest posts with `git submodule update --remote blog`, then commit the new pointer.
+- After a fresh clone, run `git submodule update --init`. The site build doesn't need it.
+
 ## Important Notes
 
 - **Static Export**: Site builds to `/out` directory for GitHub Pages
