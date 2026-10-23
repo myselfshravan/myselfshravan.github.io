@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ExternalLink, FileText, Play, ScrollText } from 'lucide-react';
+import { ExternalLink, FileText, Play, ScrollText, Youtube } from 'lucide-react';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -19,6 +19,7 @@ interface Project {
   github_url?: string;
   blog_url?: string;
   demo_url?: string;
+  video_url?: string;
   /** Gated capability/acquisition brief under /view/<slug>?key=... */
   brief_url?: string;
   url?: string;
@@ -64,6 +65,7 @@ export function Projects() {
       },
       { type: 'blog', url: project.blog_url, icon: FileText, label: 'Blog' },
       { type: 'demo', url: project.demo_url, icon: Play, label: 'Demo' },
+      { type: 'video', url: project.video_url, icon: Youtube, label: 'Music Video' },
       { type: 'brief', url: project.brief_url, icon: ScrollText, label: 'Capability Brief' },
       { type: 'url', url: project.url, icon: ExternalLink, label: 'View' }, // fallback for old structure
     ].filter((link) => link.url);

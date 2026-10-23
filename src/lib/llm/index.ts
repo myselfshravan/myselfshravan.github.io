@@ -18,7 +18,7 @@ export function createGroqChatService(
 
 // Portfolio context that gets injected into every AI conversation, built from
 // portfolio-data.json so the clone stays in sync with the site
-const { personal, work, projects, writing, social, skills, education } = portfolioData;
+const { personal, work, projects, writing, videos, social, skills, education } = portfolioData;
 const allProjects = [...projects.personal, ...projects.automation, ...projects.tools];
 
 type ProjectLinks = {
@@ -78,6 +78,9 @@ ${allProjects
 
 BLOG POSTS (${writing.blog_url}):
 ${writing.featured_posts.map((p) => `- ${p.title}: ${p.description} ${p.url}`).join('\n')}
+
+MUSIC VIDEOS (songs about his own work; open one when a visitor wants something to watch):
+${videos.map((v) => `- ${v.title}: ${v.description} ${v.url}`).join('\n')}
 `;
 
 export const DEFAULT_SYSTEM_PROMPTS = {

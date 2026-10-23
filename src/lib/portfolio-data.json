@@ -146,6 +146,7 @@
       {
         "name": "Atlas - Every Project I've Ever Shipped, as a Universe",
         "website_url": "https://atlas.shravanrevanna.me/#/universe",
+        "video_url": "https://www.youtube.com/watch?v=kkhV2IoSPMg",
         "linkText": "Explore the Universe",
         "description": "Every project I've ever built, indexed and turned into an explorable 3D universe. Zoom from the cosmos into galaxies of work, into star systems where each project's languages orbit as planets, down to code cities where every file is a tower. A ray-traced black hole sits at the centre and a time machine replays 2021 to now month by month.",
         "tech": "Python + SQLite FTS5 indexer, three.js, HDR bloom, MCP server, Cloudflare Pages",
@@ -507,6 +508,23 @@
       }
     ]
   },
+  "videos": [
+    {
+      "title": "Supermassive Heart",
+      "url": "https://www.youtube.com/watch?v=kkhV2IoSPMg",
+      "description": "A music video flown through Atlas: 440 projects as a universe, every frame rendered by Atlas itself."
+    },
+    {
+      "title": "Your Honor, He Got In",
+      "url": "https://www.youtube.com/watch?v=InLA1MXe6Ig",
+      "description": "His own projects put on trial in a courtroom music video, every frame rendered in TypeScript and GLSL."
+    },
+    {
+      "title": "Never Meant to Be Hacked",
+      "url": "https://www.youtube.com/watch?v=N6bzjr_z9ho",
+      "description": "Every project he has built turned into a heist music video, ~14k frames rendered in code."
+    }
+  ],
   "meta": {
     "title": "Shravan Revanna | AI Engineer | Building AI Agents That Take Action",
     "description": "AI Engineer at Confido Health building CareOS, AI agents for US healthcare. Built Klydo zero-to-one and ships autonomous agents for trading, drones and robotics, with 300+ projects to show for it.",

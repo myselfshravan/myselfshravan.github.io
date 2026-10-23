@@ -33,6 +33,7 @@ const ALLOWED_LINKS = collectLinks(
     projects: portfolioData.projects,
     work: portfolioData.work,
     writing: portfolioData.writing,
+    videos: portfolioData.videos,
     social: portfolioData.social,
   },
   new Set(),
