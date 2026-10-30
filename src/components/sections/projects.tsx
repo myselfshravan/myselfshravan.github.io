@@ -66,7 +66,12 @@ export function Projects() {
       { type: 'blog', url: project.blog_url, icon: FileText, label: 'Blog' },
       { type: 'demo', url: project.demo_url, icon: Play, label: 'Demo' },
       { type: 'video', url: project.video_url, icon: Youtube, label: 'Music Video' },
-      { type: 'brief', url: project.brief_url, icon: ScrollText, label: 'Capability Brief' },
+      {
+        type: 'brief',
+        url: project.brief_url,
+        icon: ScrollText,
+        label: project.linkText ?? 'Capability Brief',
+      },
       { type: 'url', url: project.url, icon: ExternalLink, label: 'View' }, // fallback for old structure
     ].filter((link) => link.url);
 
