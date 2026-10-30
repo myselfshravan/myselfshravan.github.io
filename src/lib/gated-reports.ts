@@ -21,6 +21,7 @@ export interface GatedReport {
 export const GATED_REPORTS: GatedReport[] = [
   { slug: 'klydo_pitch', title: 'Klydo - Pitch', description: 'What we built, and how it ended.' },
   { slug: 'spider', title: 'Spider - Acquisition & Capability Brief' },
+  { slug: 'oracle', title: 'Oracle - A Queryable Model of Your Relationships' },
   { slug: 'sherlock_report', title: 'Sherlock - TNPL Agent Performance Report' },
 ];
 

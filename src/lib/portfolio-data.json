@@ -162,6 +162,14 @@
         "metrics": "963.6K styles, 4.9M SKUs under daily price watch, 114 sources, 31k LOC, 221 tests, zero dead-letters"
       },
       {
+        "name": "Oracle - A Queryable Model of Your Relationships",
+        "brief_url": "/view/oracle?key=oracle-portfolio",
+        "linkText": "Read the Project Page",
+        "description": "Turns years of chat exports into a living dossier for every relationship, a measured model of what your messages actually do to people, and a reply tool tuned to your own voice. Quotes are verified in code, and effects only ship if they replicate on held-out days. Headed for open source.",
+        "tech": "Node.js ESM pipeline, Claude Opus + Haiku, TypeSafe Jev, local embeddings, React viewer",
+        "metrics": "129K messages, 34K replies measured, 380 quotes machine-verified, voice match 39.9% to 45.7% against a 50% ceiling, 56 tests"
+      },
+      {
         "name": "DroneMind - Autonomous DJI Mini 3",
         "github_url": "https://github.com/myselfshravan/dronemind",
         "blog_url": "https://blog.shravanrevanna.me/dji-mini-3-ai-autonomous-drone",
