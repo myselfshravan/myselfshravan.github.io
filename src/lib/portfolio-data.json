@@ -170,6 +170,16 @@
         "metrics": "129K messages, 34K replies measured, 380 quotes machine-verified, voice match 39.9% to 45.7% against a 50% ceiling, 56 tests"
       },
       {
+        "name": "WhisperTxt - Transcribe Anything in Your Browser",
+        "image": "project_whispertxt.png",
+        "website_url": "https://whispertxt.vercel.app",
+        "github_url": "https://github.com/myselfshravan/whispertxt",
+        "linkText": "Try It Live",
+        "description": "Drop any audio or video and get the words back, with no server anywhere. Your browser decodes the file, slices it into overlapping chunks and sends them straight to Groq Whisper on your own API key. Words light up as you listen, every transcript is searchable, and a rate limit or a closed tab never costs you progress. Open source, and a strict CSP proves your files only ever go to Groq.",
+        "tech": "React 19, TypeScript, Web Workers, WebCodecs, ffmpeg.wasm, IndexedDB, Groq Whisper",
+        "metrics": "19-minute recording transcribed in under 8 seconds, zero servers, 41 unit tests, 9 browser tests"
+      },
+      {
         "name": "DroneMind - Autonomous DJI Mini 3",
         "github_url": "https://github.com/myselfshravan/dronemind",
         "blog_url": "https://blog.shravanrevanna.me/dji-mini-3-ai-autonomous-drone",
